@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../Firebase/Firebase.init";
+
+const provider = new GoogleAuthProvider();
 
 const Signup = () => {
   const [user, setUser] = useState({
@@ -9,11 +13,22 @@ const Signup = () => {
     confirmPassword: "",
   });
 
+  const navigate = useNavigate();
+
+  const googleAuth = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+      });
+  };
+
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const navigate = useNavigate();
   return (
     <div className="flex w-full h-screen">
       <div className="w-full flex items-center justify-center lg:w-1/2 bg-white">
@@ -70,7 +85,9 @@ const Signup = () => {
                 Sign up
               </button>
               <div className="divider text-base font-semibold">OR</div>
-              <button className="flex items-center justify-center border-2 border-gray-100 py-3 rounded-xl gap-2 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all">
+              <button
+                className="flex items-center justify-center border-2 border-gray-100 py-3 rounded-xl gap-2 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all"
+                onClick={googleAuth}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
