@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const onChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
   const navigate = useNavigate();
   return (
     <div className="flex w-full h-screen">
@@ -17,35 +28,48 @@ const Signup = () => {
           <p className="font-medium text-lg text-gray-500 mt-4 text-center">
             Please Enter Your Details.
           </p>
-          <div className="mt-8">
+          <div className="mt-5">
             <div>
               <label className="text-lg font-semibold">Name</label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
                 placeholder="Ener your name"
                 type="name"
+                name="name"
               />
             </div>
             <div>
               <label className="text-lg font-semibold">Email</label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
                 placeholder="Ener your email"
                 type="email"
+                name="email"
               />
             </div>
             <div>
               <label className="text-lg font-semibold">Password</label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
                 placeholder="Ener your password"
                 type="password"
+                name="password"
               />
             </div>
-            <div className="mt-8 flex flex-col gap-y-4">
+            <div>
+              <label className="text-lg font-semibold">Confirm Password</label>
+              <input
+                className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
+                placeholder="Retype your password"
+                type="password"
+                name="confirmPassword"
+              />
+            </div>
+            <div className="mt-8 flex flex-col gap-y-2">
               <button className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold">
                 Sign up
               </button>
+              <div className="divider text-base font-semibold">OR</div>
               <button className="flex items-center justify-center border-2 border-gray-100 py-3 rounded-xl gap-2 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +83,7 @@ const Signup = () => {
                 Sign up with Google
               </button>
             </div>
-            <div className="mt-8 flex justify-center items-center">
+            <div className="mt-4 flex justify-center items-center">
               <p className="font-medium text-base">Already have an account?</p>
               <button className="text-violet-500 text-base font-medium ml-2">
                 <Link to="/">Log In</Link>

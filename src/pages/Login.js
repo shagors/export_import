@@ -35,12 +35,7 @@ const Login = () => {
               />
             </div>
             <div className="mt-6 flex justify-between items-center">
-              <div>
-                <input type="checkbox" id="remeber" />
-                <label className="ml-2 font-medium text-base" htmlFor="remeber">
-                  Remember me!
-                </label>
-              </div>
+              <div></div>
               <button className="font-medium text-base text-violet-400">
                 <Link to="/forgotpassword">Forgot Password</Link>
               </button>
@@ -49,6 +44,7 @@ const Login = () => {
               <button className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold">
                 Sign in
               </button>
+              <div className="divider text-base font-semibold">OR</div>
               <button className="flex items-center justify-center border-2 border-gray-100 py-3 rounded-xl gap-2 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
