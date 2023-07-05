@@ -5,7 +5,6 @@ import { auth } from "../../Firebase/Firebase.init";
 const PrivateRoute = () => {
   const location = useLocation();
   const user = auth?.currentUser;
-  console.log(user);
   if (!user) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
