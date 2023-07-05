@@ -1,8 +1,24 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../Firebase/Firebase.init";
+
+const provider = new GoogleAuthProvider();
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const googleAuth = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+      });
+
+    navigate("/exportimport");
+  };
   return (
     <div className="flex w-full h-screen">
       <div className="w-full flex items-center justify-center lg:w-1/2 bg-white">
@@ -13,9 +29,9 @@ const Login = () => {
             background: "#e0e0e0",
             boxShadow: "20px 20px 60px #bebebe, -20px -20px 60px #ffffff",
           }}>
-          <h1 className="text-5xl font-semibold">Welcome Back</h1>
-          <p className="font-medium text-lg text-gray-500 mt-4 text-center">
-            Please Enter Your Details.
+          <h1 className="text-4xl font-semibold text-center">Welcome Back</h1>
+          <p className="font-medium text-base text-gray-500 mt-4 text-center">
+            Please Enter Your Details
           </p>
           <div className="mt-8">
             <div>
@@ -34,18 +50,20 @@ const Login = () => {
                 type="password"
               />
             </div>
-            <div className="mt-6 flex justify-between items-center">
+            <div className="mt-4 flex justify-between items-center">
               <div></div>
               <button className="font-medium text-base text-violet-400">
                 <Link to="/forgotpassword">Forgot Password</Link>
               </button>
             </div>
-            <div className="mt-8 flex flex-col gap-y-4">
+            <div className="mt-5 flex flex-col gap-y-4">
               <button className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold">
                 Sign in
               </button>
               <div className="divider text-base font-semibold">OR</div>
-              <button className="flex items-center justify-center border-2 border-gray-100 py-3 rounded-xl gap-2 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all">
+              <button
+                className="flex items-center justify-center border-2 border-gray-100 py-3 rounded-xl gap-2 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all"
+                onClick={googleAuth}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -59,7 +77,7 @@ const Login = () => {
               </button>
             </div>
             <div className="mt-8 flex justify-center items-center">
-              <p className="font-medium text-base">Don't have an account?</p>
+              <p className="font-normal text-base">Don't have an account?</p>
               <button className="text-violet-500 text-base font-medium ml-2">
                 <Link to="/signup">Sign Up</Link>
               </button>
@@ -67,7 +85,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
+      <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center">
         <div className="w-60 h-60 bg-gradient-to-tr from-violet-500 to-pink-500 rounded-full animate-bounce" />
         <div className="w-full h-1/2 absolute bottom-0 bg-white/10 backdrop-blur-lg " />
       </div>

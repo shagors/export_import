@@ -23,6 +23,8 @@ const Signup = () => {
       .catch((error) => {
         const errorMessage = error.message;
       });
+
+    navigate("/");
   };
 
   const onChange = (e) => {
@@ -40,8 +42,8 @@ const Signup = () => {
             boxShadow: "20px 20px 60px #bebebe, -20px -20px 60px #ffffff",
           }}>
           <h1 className="text-4xl font-semibold">Welcome To Registration </h1>
-          <p className="font-medium text-lg text-gray-500 mt-4 text-center">
-            Please Enter Your Details.
+          <p className="font-medium text-base text-gray-500 mt-4 text-center">
+            Please Enter Your Details
           </p>
           <div className="mt-5">
             <div>
@@ -101,7 +103,7 @@ const Signup = () => {
               </button>
             </div>
             <div className="mt-4 flex justify-center items-center">
-              <p className="font-medium text-base">Already have an account?</p>
+              <p className="font-normal text-base">Already have an account?</p>
               <button className="text-violet-500 text-base font-medium ml-2">
                 <Link to="/">Log In</Link>
               </button>
