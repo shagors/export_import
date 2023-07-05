@@ -1,7 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { auth } from "../../Firebase/Firebase.init";
 
 const Navbar = () => {
+  const { pathName } = useLocation();
+  const [user, setUser] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser({});
+      }
+    });
+  }, []);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+    navigate("/");
+  };
+
   return (
     <div className="navbar bg-violet-500 text-white">
       <div className="navbar-start">
@@ -25,37 +50,53 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-violet-500 rounded-box w-52 font-bold ">
             <li>
-              <Link to="/export">Export</Link>
+              <NavLink to="/export">Export</NavLink>
             </li>
             <li>
-              <Link to="/import">Import</Link>
+              <NavLink to="/import">Import</NavLink>
             </li>
             <li>
-              <Link to="/dashboard">Dashboard</Link>
+              <NavLink to="/dashboard">Dashboard</NavLink>
             </li>
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
+        <NavLink to="/" className="btn btn-ghost normal-case text-xl">
           THT
-        </Link>
+        </NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to="/export">Export</Link>
+            <NavLink className="hover:font-bold hover:text-white" to="/export">
+              Export
+            </NavLink>
           </li>
           <li>
-            <Link to="/import">Import</Link>
+            <NavLink
+              className="hover:font-bold hover:text-white mx-2"
+              to="/import">
+              Import
+            </NavLink>
           </li>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <NavLink
+              className="hover:font-bold hover:text-white"
+              to="/dashboard">
+              Dashboard
+            </NavLink>
           </li>
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to="/" className="">
-          Sign In
-        </Link>
+        {user?.uid ? (
+          <p style={{ cursor: "pointer" }} onClick={handleLogout}>
+            Log Out
+          </p>
+        ) : (
+          <NavLink to="/" className="">
+            Sign In
+          </NavLink>
+        )}
       </div>
     </div>
   );

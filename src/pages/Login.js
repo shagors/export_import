@@ -12,12 +12,11 @@ const Login = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
+        navigate("/exportimport");
       })
       .catch((error) => {
         const errorMessage = error.message;
       });
-
-    navigate("/exportimport");
   };
   return (
     <div className="flex w-full h-screen">
@@ -35,19 +34,27 @@ const Login = () => {
           </p>
           <div className="mt-8">
             <div>
-              <label className="text-lg font-semibold">Email</label>
+              <label className="text-lg font-semibold" htmlFor="email">
+                Email
+              </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Ener your email"
                 type="email"
+                name="email"
+                id="email"
               />
             </div>
             <div>
-              <label className="text-lg font-semibold">Password</label>
+              <label className="text-lg font-semibold" htmlFor="password">
+                Password
+              </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Ener your password"
                 type="password"
+                name="password"
+                id="password"
               />
             </div>
             <div className="mt-4 flex justify-between items-center">
@@ -57,7 +64,9 @@ const Login = () => {
               </button>
             </div>
             <div className="mt-5 flex flex-col gap-y-4">
-              <button className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold">
+              <button
+                className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
+                type="submit">
                 Sign in
               </button>
               <div className="divider text-base font-semibold">OR</div>

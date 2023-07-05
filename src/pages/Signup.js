@@ -19,12 +19,11 @@ const Signup = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
+        navigate("/exportimport");
       })
       .catch((error) => {
         const errorMessage = error.message;
       });
-
-    navigate("/");
   };
 
   const onChange = (e) => {
