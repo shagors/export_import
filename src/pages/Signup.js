@@ -18,6 +18,16 @@ const Signup = () => {
     confirmPassword: "",
   });
 
+  const [name, setName] = useState({ value: "", error: "" });
+  const [email, setEmail] = useState({ value: "", error: "" });
+  const [password, setPassword] = useState({ value: "", error: "" });
+  const [confirmPassword, setConfirmPassword] = useState({
+    value: "",
+    error: "",
+  });
+
+  console.log(name, email, password);
+
   const navigate = useNavigate();
 
   const googleAuth = () => {
@@ -30,6 +40,36 @@ const Signup = () => {
       .catch((error) => {
         toast.error("Something Wrong");
       });
+  };
+
+  const handleName = (e) => {
+    setName({ value: e, error: "" });
+  };
+
+  const handleEmail = (e) => {
+    if (/^\S+@\S+\.\S+$/.test(e)) {
+      setEmail({ value: e, error: "" });
+    } else {
+      setEmail({
+        value: "",
+        error: "Invalid Email. please give right email address",
+      });
+    }
+  };
+
+  const handlePassword = (e) => {
+    if (e.length < 7) {
+      setPassword({
+        value: "",
+        error: "Password too short minimum 8 characters",
+      });
+    } else {
+      setPassword({ value: e, error: "" });
+    }
+  };
+
+  const handleConfirmPassword = (e) => {
+    setConfirmPassword(e);
   };
 
   const handleSignup = (e) => {
@@ -75,6 +115,7 @@ const Signup = () => {
                   type="name"
                   name="name"
                   id="name"
+                  onBlur={(e) => handleName(e.target.value)}
                 />
               </div>
               <div>
@@ -87,7 +128,11 @@ const Signup = () => {
                   type="email"
                   name="email"
                   id="email"
+                  onBlur={(e) => handleEmail(e.target.value)}
                 />
+                {email?.error && (
+                  <p className="mt-2 text-red-500 font-normal">{email.error}</p>
+                )}
               </div>
               <div>
                 <label className="text-lg font-semibold" htmlFor="password">
@@ -99,7 +144,13 @@ const Signup = () => {
                   type="password"
                   name="password"
                   id="password"
+                  onBlur={(e) => handlePassword(e.target.value)}
                 />
+                {password?.error && (
+                  <p className="mt-2 text-red-500 font-normal">
+                    {password.error}
+                  </p>
+                )}
               </div>
               <div>
                 <label
@@ -113,6 +164,7 @@ const Signup = () => {
                   type="password"
                   name="confirmPassword"
                   id="confirm-password"
+                  onBlur={(e) => handleConfirmPassword(e.target.value)}
                 />
               </div>
               <div className="mt-8 flex flex-col gap-y-2">
