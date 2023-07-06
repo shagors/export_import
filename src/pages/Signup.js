@@ -26,8 +26,6 @@ const Signup = () => {
     error: "",
   });
 
-  console.log(name, email, password);
-
   const navigate = useNavigate();
 
   const googleAuth = () => {
@@ -61,7 +59,7 @@ const Signup = () => {
     if (e.length < 7) {
       setPassword({
         value: "",
-        error: "Password too short minimum 8 characters",
+        error: "Password too short. minimum 8 characters",
       });
     } else {
       setPassword({ value: e, error: "" });
@@ -69,24 +67,44 @@ const Signup = () => {
   };
 
   const handleConfirmPassword = (e) => {
-    setConfirmPassword(e);
+    if (e === password.value) {
+      setConfirmPassword({ value: e, error: "" });
+    } else {
+      setConfirmPassword({ value: "", error: "Password don't match" });
+    }
   };
 
   const handleSignup = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const password = e.target.password.value;
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        toast.success("Successfully login");
-        navigate("/");
-      })
-      .catch((error) => {
-        toast.error("something Went wrong");
-      });
+    if (email.value === "") {
+      setEmail({ value: "", error: "Email is required" });
+    }
+
+    if (password.value === "") {
+      setPassword({ value: "", error: "Password is required" });
+    }
+
+    if (
+      email.value &&
+      password.value &&
+      confirmPassword.value === password.value
+    ) {
+      createUserWithEmailAndPassword(auth, email.value, password.value)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          toast.success("Successfully login");
+          navigate("/");
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          if (errorMessage.includes("email-already-in-use")) {
+            toast.error("User Already Exists");
+          } else {
+            toast.error("Something went wrong");
+          }
+        });
+    }
   };
 
   return (
@@ -166,6 +184,11 @@ const Signup = () => {
                   id="confirm-password"
                   onBlur={(e) => handleConfirmPassword(e.target.value)}
                 />
+                {confirmPassword?.error && (
+                  <p className="mt-2 text-red-500 font-normal">
+                    {confirmPassword.error}
+                  </p>
+                )}
               </div>
               <div className="mt-8 flex flex-col gap-y-2">
                 <button
