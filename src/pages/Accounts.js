@@ -1,10 +1,20 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
 
 const Accounts = () => {
-  const date = new Date().toLocaleDateString();
   const [startDate, setStartDate] = useState(new Date());
+
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleSelectChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const formSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  console.log(selectedOption);
   return (
     <>
       <div>
@@ -13,17 +23,23 @@ const Accounts = () => {
             Add Accounts Data :
           </h1>
           <div className="mt-5 lg:flex justify-center items-center">
-            <form className="card lg:w-[700px] bg-base-100 shadow-xl">
+            <form
+              className="card lg:w-[700px] bg-base-100 shadow-xl"
+              onSubmit={formSubmit}>
               <div className="lg:flex justify-between items-center">
                 <div className="form-control card-body">
-                  <div className="input-group">
-                    <select className="select select-bordered">
+                  <div className="input-group  flex lg:flex-none justify-center items-center">
+                    <select
+                      className="select select-bordered"
+                      id="selectOption"
+                      value={selectedOption}
+                      onChange={handleSelectChange}>
                       <option disabled selected>
                         Pick the propduct
                       </option>
-                      <option>Attendance check-check</option>
-                      <option>Thermal printer</option>
-                      <option>Dot printer</option>
+                      <option value="attendance">Attendance check-check</option>
+                      <option value="thermal">Thermal printer</option>
+                      <option value="dot">Dot printer</option>
                     </select>
                   </div>
                 </div>
@@ -35,16 +51,8 @@ const Accounts = () => {
                   />
                 </div>
               </div>
-              <div className="lg:flex justify-between items-center px-8 mt-4 lg:mt-0">
-                <div className="join">
-                  <input
-                    className="input input-bordered join-item"
-                    placeholder="Quantity"
-                    type="number"
-                  />
-                  <p className="btn join-item rounded-r-full">Pcs</p>
-                </div>
-                <div className="join mt-4 lg:mt-0">
+              <div className="flex-col flex justify-between items-center px-8 mt-4 lg:mt-0">
+                <div className="join mb-4">
                   <div>
                     <div>
                       <input
@@ -55,10 +63,20 @@ const Accounts = () => {
                     </div>
                   </div>
                 </div>
+                <div className="join">
+                  <input
+                    className="input input-bordered join-item"
+                    placeholder="Quantity"
+                    type="number"
+                  />
+                  <p className="btn join-item rounded-r-full">Pcs</p>
+                </div>
               </div>
-              <Link to="" className="flex justify-end items-center mr-7 py-5">
-                <button className="btn btn-secondary btn-sm">Save</button>
-              </Link>
+              <div className="flex justify-end items-center mr-7 py-5">
+                <button className="btn btn-secondary btn-sm" type="submit">
+                  Save
+                </button>
+              </div>
             </form>
           </div>
         </div>
