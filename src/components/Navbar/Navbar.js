@@ -50,13 +50,13 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-slate-200 rounded-box w-52 font-bold ">
             <li>
-              <NavLink to="/export">Export</NavLink>
+              <NavLink to="/accounts">Accounts</NavLink>
             </li>
             <li>
-              <NavLink to="/import">Import</NavLink>
+              <NavLink to="/warehouse">Warehouse</NavLink>
             </li>
             <li>
-              <NavLink to="/dashboard">Dashboard</NavLink>
+              <NavLink to="/admin">Admin</NavLink>
             </li>
           </ul>
         </div>
@@ -67,22 +67,22 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <NavLink className="hover:font-bold hover:text-white" to="/export">
-              Export
+            <NavLink
+              className="hover:font-bold hover:text-white"
+              to="/accounts">
+              Accounts
             </NavLink>
           </li>
           <li>
             <NavLink
               className="hover:font-bold hover:text-white mx-2"
-              to="/import">
-              Import
+              to="/warehouse">
+              Warehouse
             </NavLink>
           </li>
           <li>
-            <NavLink
-              className="hover:font-bold hover:text-white"
-              to="/dashboard">
-              Dashboard
+            <NavLink className="hover:font-bold hover:text-white" to="/admin">
+              Admin
             </NavLink>
           </li>
         </ul>

@@ -1,7 +1,6 @@
 import React from "react";
 import Routers from "../../routers/Routers";
 import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
 
 const Layout = () => {
   return (
@@ -9,7 +8,6 @@ const Layout = () => {
       <div className="container mx-auto">
         <Navbar />
         <Routers />
-        {/* <Footer /> */}
       </div>
     </>
   );

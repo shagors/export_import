@@ -11,13 +11,6 @@ import { toast } from "react-toastify";
 const provider = new GoogleAuthProvider();
 
 const Signup = () => {
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
   const [name, setName] = useState({ value: "", error: "" });
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
@@ -129,7 +122,7 @@ const Signup = () => {
                 </label>
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
-                  placeholder="Ener your name"
+                  placeholder="Enter your name"
                   type="name"
                   name="name"
                   id="name"
@@ -142,7 +135,7 @@ const Signup = () => {
                 </label>
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
-                  placeholder="Ener your email"
+                  placeholder="Enter your email"
                   type="email"
                   name="email"
                   id="email"
@@ -158,7 +151,7 @@ const Signup = () => {
                 </label>
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
-                  placeholder="Ener your password"
+                  placeholder="Enter your password"
                   type="password"
                   name="password"
                   id="password"

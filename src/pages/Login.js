@@ -64,7 +64,7 @@ const Login = () => {
                 </label>
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Ener your email"
+                  placeholder="Enter your email"
                   type="email"
                   name="email"
                   id="email"
@@ -76,7 +76,7 @@ const Login = () => {
                 </label>
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Ener your password"
+                  placeholder="Enter your password"
                   type="password"
                   name="password"
                   id="password"

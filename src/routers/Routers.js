@@ -9,6 +9,9 @@ import AdminRoute from "../components/PrivateRoute/AdminRoute";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Export from "../pages/Export";
 import Import from "../pages/Import";
+import Accounts from "../pages/Accounts";
+import Warehouse from "../pages/Warehouse";
+import Admin from "../pages/Admin";
 
 const Routers = () => {
   return (
@@ -20,9 +23,12 @@ const Routers = () => {
         <Route path="/exportimport" element={<ExportImport />} />
         <Route path="/export" element={<Export />} />
         <Route path="/import" element={<Import />} />
+        <Route path="/accounts" element={<Accounts />} />
+        <Route path="/warehouse" element={<Warehouse />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<Admin />} />
       </Route>
     </Routes>
   );
