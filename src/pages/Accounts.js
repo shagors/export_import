@@ -32,7 +32,7 @@ const Accounts = () => {
     <>
       <div>
         <div className="">
-          <h1 className="flex justify-center items-center text-3xl my-4 uppercase text-info font-medium ">
+          <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
             Add Accounts Data :
           </h1>
           <div className="mt-5 lg:flex justify-center items-center">
@@ -42,7 +42,7 @@ const Accounts = () => {
               <div className="form-control mt-5">
                 <div className="input-group  flex lg:flex-none justify-center items-center">
                   <select
-                    className="select select-info select-bordered"
+                    className="select select-info w-full max-w-xs"
                     id="selectOption"
                     value={formData.typeOfProduct}
                     name="typeOfProduct"
@@ -58,7 +58,7 @@ const Accounts = () => {
                 <div className="form-control card-body">
                   <div className="input-group  flex lg:flex-none justify-center items-center">
                     <select
-                      className="select select-info select-bordered"
+                      className="select select-info w-full max-w-xs"
                       id="selectOption"
                       value={formData.productName}
                       name="productName"
@@ -79,42 +79,53 @@ const Accounts = () => {
                     onChange={(date) => setStartDate(date)}
                     name="date"
                     value={formData.date}
-                    className="border-2 select-info"
+                    className="border-2 select-info rounded-md"
                   />
                 </div>
               </div>
-              <div className="flex-col flex justify-between items-center px-8 mt-4 lg:mt-0">
+              <div className="flex flex-col  justify-between items-center px-8 mt-4 lg:mt-0 w-full">
                 <div className="join mb-4">
-                  <div>
-                    <div className="">
-                      <input
-                        className="input input-bordered join-item select-info"
-                        placeholder="Product Brand Name"
-                        type="text"
-                        name="productBrand"
+                  <div className="form-control">
+                    <div className="input-group  flex lg:flex-none justify-center items-center">
+                      <select
+                        className="select select-info w-full max-w-xs"
+                        id="selectOption"
                         value={formData.productBrand}
-                        onChange={handleChange}
-                      />
+                        name="productBrand"
+                        onChange={handleChange}>
+                        <option disabled selected>
+                          Pick the Brand
+                        </option>
+                        <option value="geoMaster">Geo Master</option>
+                        <option value="grozziie">Grozziie</option>
+                      </select>
                     </div>
                   </div>
                 </div>
                 <div className="join mb-4">
-                  <div>
-                    <div>
-                      <input
-                        className="input input-bordered join-item select-info"
-                        placeholder="Product Model No"
-                        type="text"
-                        name="modelNo"
+                  <div className="form-control">
+                    <div className="input-group  flex lg:flex-none justify-center items-center">
+                      <select
+                        className="select select-info w-full max-w-xs"
+                        id="selectOption"
                         value={formData.modelNo}
-                        onChange={handleChange}
-                      />
+                        name="modelNo"
+                        onChange={handleChange}>
+                        <option disabled selected>
+                          Pick the Model
+                        </option>
+                        <option value="tp598">TP598</option>
+                        <option value="tp876">TP876</option>
+                        <option value="tp518">TP518</option>
+                        <option value="tp210">TP210</option>
+                        <option value="tp230">TP230</option>
+                      </select>
                     </div>
                   </div>
                 </div>
-                <div className="join">
+                <div className="join mb-4">
                   <input
-                    className="input input-bordered join-item select-info"
+                    className="input input-bordered rounded-md join-item select-info"
                     placeholder="Quantity"
                     type="number"
                     name="productQuantity"
