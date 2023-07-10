@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Accounts = () => {
@@ -14,6 +15,8 @@ const Accounts = () => {
     productQuantity: "",
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -25,6 +28,7 @@ const Accounts = () => {
     e.preventDefault();
     toast.success("File added");
     console.log(formData);
+    navigate("/transport");
   };
 
   // console.log(formData);

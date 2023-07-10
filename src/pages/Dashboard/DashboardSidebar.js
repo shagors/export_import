@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const DashboardSidebar = ({ children }) => {
   return (
@@ -13,10 +14,12 @@ const DashboardSidebar = ({ children }) => {
           <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
             {/* Sidebar content here */}
             <li>
-              <a className="text-xl font-medium">Export Products</a>
+              <Link to="/dashboard/export" className="text-xl font-medium">
+                Export Products
+              </Link>
             </li>
             <li>
-              <a className="text-xl font-medium">Import Products</a>
+              <Link className="text-xl font-medium">Import Products</Link>
             </li>
           </ul>
         </div>

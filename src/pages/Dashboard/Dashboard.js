@@ -1,11 +1,14 @@
 import React from "react";
 import DashboardSidebar from "./DashboardSidebar";
+import Export from "./Export";
+import Import from "./Import";
 
 const Dashboard = () => {
   return (
     <>
       <DashboardSidebar>
-        <h1>THT</h1>
+        <Export />
+        <Import />
       </DashboardSidebar>
     </>
   );
