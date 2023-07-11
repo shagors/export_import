@@ -1,6 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { TfiAngleLeft } from "react-icons/tfi";
+
+const navLinks = [
+  {
+    path: "/dashboard",
+    display: "Dashboard",
+  },
+  {
+    path: "/export",
+    display: "Export",
+  },
+  {
+    path: "/import",
+    display: "Import",
+  },
+];
 
 const DashboardSidebar = ({ children }) => {
   const [open, setOpen] = useState(true);
@@ -19,6 +34,19 @@ const DashboardSidebar = ({ children }) => {
         <div>
           <h1 className={`cursor-pointer duration-500`}>THT</h1>
         </div>
+        <hr className="bg-white mt-6 h-[5px]" />
+
+        <div>
+          <div>
+            <ul>
+              {navLinks?.map((item, index) => (
+                <li>
+                  <NavLink to={item.path}>{item.display}</NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
         <div className="mt-5 w-full hover:bg-cyan-400 hover:py-1 duration-500 pl-2 rounded-md">
           <Link
             to="/export"
@@ -33,9 +61,6 @@ const DashboardSidebar = ({ children }) => {
             Import
           </Link>
         </div>
-      </div>
-      <div className="p-5 text-xl font-semibold flex-1 h-screen">
-        <h1>Export</h1>
       </div>
     </div>
   );

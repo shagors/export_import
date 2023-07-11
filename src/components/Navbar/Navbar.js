@@ -60,7 +60,9 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <NavLink to="/" className="btn btn-ghost normal-case text-xl">
+        <NavLink
+          to="/exportimport"
+          className="btn btn-ghost normal-case text-xl">
           THT
         </NavLink>
       </div>

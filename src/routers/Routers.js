@@ -22,7 +22,7 @@ const Routers = () => {
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route element={<PrivateRoute />}>
         <Route path="/exportimport" element={<ExportImport />} />
-        <Route path="/dashboard/export" element={<Export />} />
+        <Route path="/export" element={<Export />} />
         <Route path="/import" element={<Import />} />
         <Route path="/accounts" element={<Accounts />} />
         <Route path="/warehouse" element={<Warehouse />} />
