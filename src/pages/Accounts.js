@@ -3,15 +3,15 @@ import DatePicker from "react-datepicker";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Accounts = () => {
+const Accounts = ({ brand, model }) => {
   const [startDate, setStartDate] = useState(new Date());
 
   const [formData, setFormData] = useState({
     typeOfProduct: "",
     productName: "",
     date: startDate,
-    productBrand: "",
-    modelNo: "",
+    productBrand: brand,
+    modelNo: model,
     productQuantity: "",
   });
 
@@ -94,7 +94,7 @@ const Accounts = () => {
                       <Link to="/brandpick" className="btn btn-info">
                         Pick the Brand
                       </Link>
-                      {<p>Your Selected Brand is:</p>}
+                      {<p>Your Selected Brand is: {brand}</p>}
                     </div>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ const Accounts = () => {
                       <Link to="/modelpick" className="btn btn-info">
                         Pick the Model
                       </Link>
-                      {<p>Your Selected Model is:</p>}
+                      {<p>Your Selected Model is: {model}</p>}
                     </div>
                   </div>
                 </div>

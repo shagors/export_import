@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const BrandPick = () => {
+const BrandPick = ({ setBrand }) => {
   const [values, setValues] = useState([]);
 
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -15,11 +15,10 @@ const BrandPick = () => {
 
   const submit = (e) => {
     e.preventDefault();
-
+    setBrand(selectedBrand);
     navigate("/accounts");
-    console.log(e.target.value);
   };
-  // console.log(values);
+  // console.log(selectedBrand);
   return (
     <div className="flex justify-center items-center">
       <div>
@@ -30,8 +29,7 @@ const BrandPick = () => {
           <div className="flex flex-col gap-2">
             <form onSubmit={submit}>
               {values?.map((data, index) => (
-                // <p key={index}>{data.name}</p>
-                <div className="form-control">
+                <div className="form-control" key={index}>
                   <label className="label cursor-pointer">
                     <span className="label-text">{data.name}</span>
                     <input

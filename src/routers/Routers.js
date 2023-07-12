@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -17,6 +17,8 @@ import BrandPick from "../pages/BrandPick";
 import ModelPick from "../pages/ModelPick";
 
 const Routers = () => {
+  const [brand, setBrand] = useState("");
+  const [model, setModel] = useState("");
   return (
     <Routes>
       <Route path="/" element={<Login />} />
@@ -26,11 +28,14 @@ const Routers = () => {
         <Route path="/exportimport" element={<ExportImport />} />
         <Route path="/export" element={<Export />} />
         <Route path="/import" element={<Import />} />
-        <Route path="/accounts" element={<Accounts />} />
+        <Route
+          path="/accounts"
+          element={<Accounts brand={brand} model={model} />}
+        />
         <Route path="/warehouse" element={<Warehouse />} />
         <Route path="/transport" element={<Transport />} />
-        <Route path="/brandpick" element={<BrandPick />} />
-        <Route path="/modelpick" element={<ModelPick />} />
+        <Route path="/brandpick" element={<BrandPick setBrand={setBrand} />} />
+        <Route path="/modelpick" element={<ModelPick setModel={setModel} />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
