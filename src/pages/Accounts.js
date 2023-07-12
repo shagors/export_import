@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Accounts = () => {
@@ -51,7 +51,7 @@ const Accounts = () => {
                     value={formData.typeOfProduct}
                     name="typeOfProduct"
                     onChange={handleChange}>
-                    <option selected value="export">
+                    <option defaultValue="Export" value="export">
                       Export
                     </option>
                     <option value="import">Import</option>
@@ -67,7 +67,7 @@ const Accounts = () => {
                       value={formData.productName}
                       name="productName"
                       onChange={handleChange}>
-                      <option disabled selected>
+                      <option disabled defaultValue="Pick the propduct">
                         Pick the propduct
                       </option>
                       <option value="attendance">Attendance check-check</option>
@@ -90,40 +90,21 @@ const Accounts = () => {
               <div className="flex flex-col  justify-between items-center px-8 mt-4 lg:mt-0 w-full">
                 <div className="join mb-4">
                   <div className="form-control">
-                    <div className="input-group  flex lg:flex-none justify-center items-center">
-                      <select
-                        className="select select-info w-full max-w-xs"
-                        id="selectOption"
-                        value={formData.productBrand}
-                        name="productBrand"
-                        onChange={handleChange}>
-                        <option disabled selected>
-                          Pick the Brand
-                        </option>
-                        <option value="geoMaster">Geo Master</option>
-                        <option value="grozziie">Grozziie</option>
-                      </select>
+                    <div className="input-group  flex lg:flex-none justify-center items-center gap-5">
+                      <Link to="/brandpick" className="btn btn-info">
+                        Pick the Brand
+                      </Link>
+                      {<p>Your Selected Brand is:</p>}
                     </div>
                   </div>
                 </div>
                 <div className="join mb-4">
                   <div className="form-control">
-                    <div className="input-group  flex lg:flex-none justify-center items-center">
-                      <select
-                        className="select select-info w-full max-w-xs"
-                        id="selectOption"
-                        value={formData.modelNo}
-                        name="modelNo"
-                        onChange={handleChange}>
-                        <option disabled selected>
-                          Pick the Model
-                        </option>
-                        <option value="tp598">TP598</option>
-                        <option value="tp876">TP876</option>
-                        <option value="tp518">TP518</option>
-                        <option value="tp210">TP210</option>
-                        <option value="tp230">TP230</option>
-                      </select>
+                    <div className="input-group  flex lg:flex-none justify-center items-center gap-5">
+                      <Link to="/modelpick" className="btn btn-info">
+                        Pick the Model
+                      </Link>
+                      {<p>Your Selected Model is:</p>}
                     </div>
                   </div>
                 </div>

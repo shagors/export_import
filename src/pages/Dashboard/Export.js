@@ -1,8 +1,7 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Export = () => {
-  const navigate = useNavigate();
   return (
     <div>
       <h1 className="text-center text-3xl my-5 text-info font-bold">

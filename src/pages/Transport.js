@@ -42,7 +42,7 @@ const Transport = () => {
                     value={formData.transportWay}
                     name="transportWay"
                     onChange={handleChange}>
-                    <option selected value="road">
+                    <option defaultValue="By Road" value="road">
                       By Road
                     </option>
                     <option value="air">By Air</option>
@@ -57,7 +57,7 @@ const Transport = () => {
                   value={formData.transportCost}
                   name="transportCost"
                   onChange={handleChange}>
-                  <option selected value="3500">
+                  <option defaultValue="3500" value="3500">
                     $3500
                   </option>
                   <option value="7000">$7000</option>

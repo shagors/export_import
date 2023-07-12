@@ -13,6 +13,8 @@ import Admin from "../pages/Admin";
 import Transport from "../pages/Transport";
 import Export from "../pages/Dashboard/Export";
 import Import from "../pages/Dashboard/Import";
+import BrandPick from "../pages/BrandPick";
+import ModelPick from "../pages/ModelPick";
 
 const Routers = () => {
   return (
@@ -27,6 +29,8 @@ const Routers = () => {
         <Route path="/accounts" element={<Accounts />} />
         <Route path="/warehouse" element={<Warehouse />} />
         <Route path="/transport" element={<Transport />} />
+        <Route path="/brandpick" element={<BrandPick />} />
+        <Route path="/modelpick" element={<ModelPick />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
