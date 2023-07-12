@@ -15,10 +15,15 @@ import Export from "../pages/Dashboard/Export";
 import Import from "../pages/Dashboard/Import";
 import BrandPick from "../pages/BrandPick";
 import ModelPick from "../pages/ModelPick";
+import TransportRoutes from "../pages/TransportRoutes";
+import TransportCost from "../pages/TransportCost";
 
 const Routers = () => {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
+  const [transportroutes, setTransportroutes] = useState("");
+  const [transportcost, setTransportcost] = useState("");
+
   return (
     <Routes>
       <Route path="/" element={<Login />} />
@@ -33,9 +38,25 @@ const Routers = () => {
           element={<Accounts brand={brand} model={model} />}
         />
         <Route path="/warehouse" element={<Warehouse />} />
-        <Route path="/transport" element={<Transport />} />
+        <Route
+          path="/transport"
+          element={
+            <Transport
+              transportroutes={transportroutes}
+              transportcost={transportcost}
+            />
+          }
+        />
         <Route path="/brandpick" element={<BrandPick setBrand={setBrand} />} />
         <Route path="/modelpick" element={<ModelPick setModel={setModel} />} />
+        <Route
+          path="/transportroutes"
+          element={<TransportRoutes setTransportroutes={setTransportroutes} />}
+        />
+        <Route
+          path="/transportcost"
+          element={<TransportCost setTransportcost={setTransportcost} />}
+        />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />

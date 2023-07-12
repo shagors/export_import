@@ -2,20 +2,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Transport = () => {
+const Transport = ({ transportroutes, transportcost }) => {
   const [formData, setFormData] = useState({
-    transportWay: "",
+    transportWay: transportroutes,
     transportCost: "",
   });
 
   const navigate = useNavigate();
-
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  };
 
   const formSubmit = (e) => {
     e.preventDefault();
@@ -36,33 +29,25 @@ const Transport = () => {
               onSubmit={formSubmit}>
               <div className="form-control my-5">
                 <div className="input-group  flex lg:flex-none justify-center items-center">
-                  <select
-                    className="select select-info w-full max-w-xs"
-                    id="selectOption"
-                    value={formData.transportWay}
-                    name="transportWay"
-                    onChange={handleChange}>
-                    <option defaultValue="By Road" value="road">
-                      By Road
-                    </option>
-                    <option value="air">By Air</option>
-                    <option value="ship">By Ship</option>
-                  </select>
+                  <div className="form-control">
+                    <div className="input-group  flex lg:flex-none justify-center items-center gap-5">
+                      <Link to="/transportroutes" className="btn btn-info">
+                        Pick the Transportation
+                      </Link>
+                      {<p>Your Selected Transport is: {transportroutes}</p>}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex justify-center items-center">
-                <select
-                  className="select select-info w-full max-w-xs"
-                  id="selectOption"
-                  value={formData.transportCost}
-                  name="transportCost"
-                  onChange={handleChange}>
-                  <option defaultValue="3500" value="3500">
-                    $3500
-                  </option>
-                  <option value="7000">$7000</option>
-                  <option value="1800">$1800</option>
-                </select>
+                <div className="form-control">
+                  <div className="input-group  flex lg:flex-none justify-center items-center gap-5">
+                    <Link to="/transportcost" className="btn btn-info">
+                      Pick the Transportation
+                    </Link>
+                    {<p>Your Selected Transport is: {}</p>}
+                  </div>
+                </div>
               </div>
               <div className="flex justify-end items-center mr-7 py-5 gap-4">
                 <Link
