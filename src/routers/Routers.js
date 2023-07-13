@@ -17,6 +17,7 @@ import BrandPick from "../pages/BrandPick";
 import ModelPick from "../pages/ModelPick";
 import TransportRoutes from "../pages/TransportRoutes";
 import TransportCost from "../pages/TransportCost";
+import DataInput from "../pages/DataInput";
 
 const Routers = () => {
   const [brand, setBrand] = useState("");
@@ -57,6 +58,7 @@ const Routers = () => {
           path="/transportcost"
           element={<TransportCost setTransportcost={setTransportcost} />}
         />
+        <Route path="/datainput" element={<DataInput />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />

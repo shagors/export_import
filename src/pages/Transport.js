@@ -42,10 +42,10 @@ const Transport = ({ transportroutes, transportcost }) => {
               <div className="flex justify-center items-center">
                 <div className="form-control">
                   <div className="input-group  flex lg:flex-none justify-center items-center gap-5">
-                    <Link to="/transportcost" className="btn btn-info">
+                    {/* <Link to="/transportcost" className="btn btn-info">
                       Pick the Transportation
-                    </Link>
-                    {<p>Your Selected Transport is: {}</p>}
+                    </Link> */}
+                    {<p>Your Transport Cost is: $2000</p>}
                   </div>
                 </div>
               </div>
