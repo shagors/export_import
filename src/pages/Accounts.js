@@ -15,6 +15,8 @@ const Accounts = ({ brand, model }) => {
   });
   const [localData, setLocalData] = useState([]);
 
+  const [newData, setNewData] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,10 +39,18 @@ const Accounts = ({ brand, model }) => {
 
   const formSubmit = (e) => {
     e.preventDefault();
+    localStorage?.setItem("newData", JSON.stringify([newData]));
     toast.success("File added");
     console.log(formData);
     navigate("/transport");
   };
+
+  // useEffect(() => {
+  //   const newStoreData = localStorage?.setItem("newData");
+  //   if (newStoreData) {
+  //     setLocalData(JSON.parse(newStoreData));
+  //   }
+  // }, []);
 
   // console.log(localData);
   return (
