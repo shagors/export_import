@@ -4,11 +4,18 @@ import { toast } from "react-toastify";
 
 const Transport = ({ transportroutes, transportcost }) => {
   const [formData, setFormData] = useState({
-    transportWay: transportroutes,
+    transportWay: "",
     transportCost: "",
   });
 
   const navigate = useNavigate();
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const formSubmit = (e) => {
     e.preventDefault();
@@ -29,24 +36,38 @@ const Transport = ({ transportroutes, transportcost }) => {
               onSubmit={formSubmit}>
               <div className="form-control my-5">
                 <div className="input-group  flex lg:flex-none justify-center items-center">
-                  <div className="form-control">
-                    <div className="input-group  flex lg:flex-none justify-center items-center gap-5">
-                      <Link to="/transportroutes" className="btn btn-info">
-                        Pick the Transportation
-                      </Link>
-                      {<p>Your Selected Transport is: {transportroutes}</p>}
-                    </div>
+                  <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                      <span className="bg-white font-bold text-lg">
+                        Transport ?
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      name="transportWay"
+                      placeholder="Type here Transport"
+                      className="input input-bordered w-full max-w-xs input-info"
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
                 </div>
               </div>
               <div className="flex justify-center items-center">
-                <div className="form-control">
-                  <div className="input-group  flex lg:flex-none justify-center items-center gap-5">
-                    {/* <Link to="/transportcost" className="btn btn-info">
-                      Pick the Transportation
-                    </Link> */}
-                    {<p>Your Transport Cost is: $2000</p>}
-                  </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="bg-white font-bold text-lg">
+                      Transport Cost ?
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    name="transportCost"
+                    placeholder="Type here Transport Cost"
+                    className="input input-bordered w-full max-w-xs input-info"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
               </div>
               <div className="flex justify-end items-center mr-7 py-5 gap-4">

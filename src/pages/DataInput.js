@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const DataInput = () => {
@@ -11,6 +11,8 @@ const DataInput = () => {
     productModel: "",
   });
 
+  const [localData, setLocalData] = useState([]);
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -19,13 +21,22 @@ const DataInput = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    localStorage?.setItem("formData", JSON.stringify([...localData, formData]));
     toast.success("Successfully Uploaded to server");
     navigate("/exportimport");
   };
+
+  useEffect(() => {
+    const storeData = localStorage?.getItem("formData");
+    if (storeData) {
+      setLocalData(JSON.parse(storeData));
+    }
+  }, []);
   return (
     <div>
-      <h1 className="text-3xl font-bold text-info">Data Entry Form</h1>
+      <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
+        Data Entry Form
+      </h1>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-8">
@@ -40,6 +51,7 @@ const DataInput = () => {
                 name="productName"
                 id="productName"
                 onChange={handleChange}
+                required
               />
             </div>
             <div>
@@ -53,6 +65,7 @@ const DataInput = () => {
                 name="productBrand"
                 id="productBrand"
                 onChange={handleChange}
+                required
               />
             </div>
             <div>
@@ -66,6 +79,7 @@ const DataInput = () => {
                 name="productModel"
                 id="productModel"
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="mt-5 flex flex-col gap-y-4">

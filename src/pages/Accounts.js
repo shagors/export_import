@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Accounts = ({ brand, model }) => {
   const [startDate, setStartDate] = useState(new Date());
 
   const [formData, setFormData] = useState({
-    typeOfProduct: "",
+    productModel: "",
     productName: "",
     date: startDate,
-    productBrand: brand,
-    modelNo: model,
+    productBrand: "",
     productQuantity: "",
   });
+  const [localData, setLocalData] = useState([]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storeData = localStorage?.getItem("formData");
+    if (storeData) {
+      setLocalData(JSON.parse(storeData));
+    }
+  }, []);
+
+  if (!localData) {
+    return toast.error("Data is empty");
+  }
 
   const handleChange = (event) => {
     setFormData({
@@ -31,7 +42,7 @@ const Accounts = ({ brand, model }) => {
     navigate("/transport");
   };
 
-  // console.log(formData);
+  // console.log(localData);
   return (
     <>
       <div>
@@ -44,7 +55,7 @@ const Accounts = ({ brand, model }) => {
               className="card lg:w-[700px] bg-base-100 shadow-xl mt-5"
               onSubmit={formSubmit}>
               <div className="form-control mt-5">
-                <div className="input-group  flex lg:flex-none justify-center items-center">
+                {/* <div className="input-group  flex lg:flex-none justify-center items-center">
                   <select
                     className="select select-info w-full max-w-xs"
                     id="selectOption"
@@ -56,10 +67,15 @@ const Accounts = ({ brand, model }) => {
                     </option>
                     <option value="import">Import</option>
                   </select>
-                </div>
+                </div> */}
               </div>
               <div className="lg:flex justify-between items-center">
                 <div className="form-control card-body">
+                  <label className="text-center mb-3">
+                    <span className="lebel-text text-lg font-semibold">
+                      Pick Product Name
+                    </span>
+                  </label>
                   <div className="input-group  flex lg:flex-none justify-center items-center">
                     <select
                       className="select select-info w-full max-w-xs"
@@ -67,15 +83,14 @@ const Accounts = ({ brand, model }) => {
                       value={formData.productName}
                       name="productName"
                       onChange={handleChange}>
-                      <option disabled defaultValue="Pick the propduct">
-                        Pick the propduct
-                      </option>
-                      <option value="attendance">Attendance check-check</option>
-                      <option value="thermal">Thermal printer</option>
-                      <option value="dot">Dot printer</option>
+                      <option selected>Pick product</option>
+                      {localData?.map((product, index) => (
+                        <option key={index}>{product.productName}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
+                {/* date field */}
                 <div className="lg:pr-2 text-center flex justify-center items-center">
                   <p className="pr-2">Date : </p>
                   <DatePicker
@@ -90,34 +105,61 @@ const Accounts = ({ brand, model }) => {
               <div className="flex flex-col  justify-between items-center px-8 mt-4 lg:mt-0 w-full">
                 <div className="join mb-4">
                   <div className="form-control">
-                    <div className="input-group  flex lg:flex-none justify-center items-center gap-5">
-                      <Link to="/brandpick" className="btn btn-info">
-                        Pick the Brand
-                      </Link>
-                      {<p>Your Selected Brand is: {brand}</p>}
-                    </div>
+                    <label className="text-center mb-3">
+                      <span className="lebel-text text-lg font-semibold">
+                        Pick Product Brand
+                      </span>
+                    </label>
+                    <select
+                      className="select select-info w-full max-w-xs"
+                      id="selectOption"
+                      value={formData.productBrand}
+                      name="productBrand"
+                      onChange={handleChange}>
+                      <option selected>Pick product Brand</option>
+                      {localData?.map((product, index) => (
+                        <option key={index}>{product.productBrand}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div className="join mb-4">
                   <div className="form-control">
-                    <div className="input-group  flex lg:flex-none justify-center items-center gap-5">
-                      <Link to="/modelpick" className="btn btn-info">
-                        Pick the Model
-                      </Link>
-                      {<p>Your Selected Model is: {model}</p>}
-                    </div>
+                    <label className="text-center mb-3">
+                      <span className="lebel-text text-lg font-semibold">
+                        Pick Product Model
+                      </span>
+                    </label>
+                    <select
+                      className="select select-info w-full max-w-xs"
+                      id="selectOption"
+                      value={formData.productModel}
+                      name="productModel"
+                      onChange={handleChange}>
+                      <option selected>Pick product Brand</option>
+                      {localData?.map((product, index) => (
+                        <option key={index}>{product.productModel}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div className="join mb-4">
-                  <input
-                    className="input input-bordered rounded-md join-item select-info"
-                    placeholder="Quantity"
-                    type="number"
-                    name="productQuantity"
-                    value={formData.productQuantity}
-                    onChange={handleChange}
-                  />
-                  <p className="btn join-item rounded-r-full">Pcs</p>
+                  <div>
+                    <label className="label">
+                      <span className="lebel-text text-lg font-semibold">
+                        Product Quantity
+                      </span>
+                    </label>
+                    <input
+                      className="input input-bordered rounded-md join-item select-info"
+                      placeholder="Quantity"
+                      type="number"
+                      name="productQuantity"
+                      value={formData.productQuantity}
+                      onChange={handleChange}
+                    />
+                    <p className="btn join-item rounded-r-full">Pcs</p>
+                  </div>
                 </div>
               </div>
               <div className="flex justify-end items-center mr-7 py-5">
