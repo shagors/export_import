@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -7,6 +7,7 @@ const Transport = () => {
     transportWay: "",
     transportCost: "",
   });
+  const [localData, setLocalData] = useState([]);
 
   const navigate = useNavigate();
 
@@ -17,12 +18,25 @@ const Transport = () => {
     });
   };
 
+  useEffect(() => {
+    const storeData = localStorage?.getItem("formTransportData");
+    if (storeData) {
+      setLocalData(JSON.parse(storeData));
+    }
+  }, []);
+
+  if (!localData) {
+    return toast.error("Data is empty");
+  }
+
   const formSubmit = (e) => {
     e.preventDefault();
     toast.success("File added");
     console.log(formData);
     navigate("/export");
   };
+
+  console.log(localData);
   return (
     <div>
       <div className="flex justify-center items-center">
@@ -36,20 +50,25 @@ const Transport = () => {
               onSubmit={formSubmit}>
               <div className="form-control my-5">
                 <div className="input-group  flex lg:flex-none justify-center items-center">
-                  <div className="form-control w-full max-w-xs">
-                    <label className="label">
-                      <span className="bg-white font-bold text-lg">
-                        Transport ?
+                  <div className="form-control card-body">
+                    <label className="text-center mb-3">
+                      <span className="lebel-text text-lg font-semibold bg-white">
+                        Pick Transport Way
                       </span>
                     </label>
-                    <input
-                      type="text"
-                      name="transportWay"
-                      placeholder="Type here Transport"
-                      className="input input-bordered w-full max-w-xs input-info"
-                      onChange={handleChange}
-                      required
-                    />
+                    <div className="input-group  flex lg:flex-none justify-center items-center">
+                      <select
+                        className="select select-info w-full max-w-xs"
+                        id="selectOption"
+                        value={formData.transportWay}
+                        name="productName"
+                        onChange={handleChange}>
+                        <option selected>Pick Tranport Way</option>
+                        {localData?.map((product, index) => (
+                          <option key={index}>{product.transportWay}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>

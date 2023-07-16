@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Accounts = ({ brand, model }) => {
-  const [startDate, setStartDate] = useState(new Date());
-
   const [newData, setNewData] = useState([]);
 
   const [localData, setLocalData] = useState([]);
@@ -106,7 +103,7 @@ const Accounts = ({ brand, model }) => {
                     onChange={handleChange}
                     name="date"
                     value={formData.date}
-                    className="border-2 select-info rounded-md"
+                    className="border-2 select-info rounded-md text-lg p-[6px]"
                   />
                 </div>
               </div>
