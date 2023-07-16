@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Transport = ({ transportroutes, transportcost }) => {
+const Transport = () => {
   const [formData, setFormData] = useState({
     transportWay: "",
     transportCost: "",
@@ -86,42 +86,6 @@ const Transport = ({ transportroutes, transportcost }) => {
           </div>
         </div>
       </div>
-
-      {/* <div className="bg-slate-200 mt-6">
-        <h3 className="text-center text-info font-semibold text-3xl py-5">
-          How Many Days Your Products Arrvied?
-        </h3>
-        <form>
-          <div className="flex justify-center items-center mt-6">
-            <div>
-              <select className="select select-info w-full max-w-xs">
-                <option disabled selected>
-                  Select Exporter
-                </option>
-                <option>Bangladesh</option>
-              </select>
-            </div>
-            <p className="mx-5">to</p>
-            <div>
-              <select className="select select-info w-full max-w-xs">
-                <option disabled selected>
-                  Select Your Country
-                </option>
-                <option>China</option>
-                <option>Singapor</option>
-                <option>Vietnam</option>
-                <option>Thiland</option>
-                <option>Philipines</option>
-                <option>Malaysia</option>
-                <option>Thiland</option>
-              </select>
-            </div>
-          </div>
-          <div className="flex justify-center py-4">
-            <button className="btn btn-info btn-sm">Calculate Time</button>
-          </div>
-        </form>
-      </div> */}
     </div>
   );
 };

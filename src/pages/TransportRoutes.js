@@ -1,56 +1,88 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const TransportRoutes = ({ setTransportroutes }) => {
-  const [values, setValues] = useState([]);
-
-  const [selectedRoute, setSelectedRoute] = useState("");
+  const [formTransportData, setFormTransportData] = useState({
+    transportWay: "",
+    transportCost: "",
+  });
 
   const navigate = useNavigate();
 
+  const [localTransportData, setLocalTransportData] = useState([]);
+
+  const handleChange = (event) => {
+    setFormTransportData({
+      ...formTransportData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    localStorage?.setItem(
+      "formTransportData",
+      JSON.stringify([...localTransportData, formTransportData])
+    );
+    toast.success("File added");
+    console.log(formTransportData);
+    navigate("/exportimport");
+  };
+
   useEffect(() => {
-    axios.get("productBrand.json").then((res) => setValues(res.data));
+    const storeData = localStorage?.getItem("formTransportData");
+    if (storeData) {
+      setLocalTransportData(JSON.parse(storeData));
+    }
   }, []);
 
-  const submit = (e) => {
-    e.preventDefault();
-    setTransportroutes(selectedRoute);
-    navigate("/transport");
-  };
-  // console.log(selectedBrand);
   return (
-    <div className="flex justify-center items-center">
-      <div>
-        <h1 className="text-center text-3xl text-info font-bold my-6">
-          Your Selected Product Brands - {selectedRoute}
-        </h1>
-        <div className="card lg:w-[600px] lg:h-[350px] p-10 bg-base-100 shadow-xl mt-5 text-center ">
-          <div className="flex flex-col gap-2">
-            <form onSubmit={submit}>
-              {values?.map((data, index) => (
-                <div className="form-control" key={index}>
-                  <label className="label cursor-pointer">
-                    <span className="label-text">{data.name}</span>
-                    <input
-                      type="radio"
-                      name="brand"
-                      value={data.name}
-                      className="radio checkbox-info"
-                      onChange={(e) => setSelectedRoute(e.target.value)}
-                    />
-                  </label>
-                </div>
-              ))}
-
-              <div className="flex justify-end items-center align-bottom mt-8">
-                <button className="btn btn-info btn-sm" type="submit">
-                  Save
-                </button>
-              </div>
-            </form>
+    <div>
+      <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
+        Data Entry Form
+      </h1>
+      <div className="flex justify-center items-center">
+        <form onSubmit={handleSubmit} className="w-[70%]">
+          <div className="mt-8">
+            <div>
+              <label className="text-lg font-semibold" htmlFor="productName">
+                Create Routes
+              </label>
+              <input
+                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                placeholder="Enter Transport way"
+                type="text"
+                name="transportWay"
+                id="transportWay"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label className="text-lg font-semibold" htmlFor="productBrand">
+                Create Routes Cost
+              </label>
+              <input
+                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                placeholder="Enter Transport Cost"
+                type="number"
+                name="transportCost"
+                id="transportCost"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mt-5 flex flex-col gap-y-4">
+              <button
+                className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
+                type="submit">
+                Save
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

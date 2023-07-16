@@ -6,18 +6,23 @@ import { toast } from "react-toastify";
 const Accounts = ({ brand, model }) => {
   const [startDate, setStartDate] = useState(new Date());
 
-  const [formData, setFormData] = useState({
-    productModel: "",
-    productName: "",
-    date: startDate,
-    productBrand: "",
-    productQuantity: "",
-  });
-  const [localData, setLocalData] = useState([]);
-
   const [newData, setNewData] = useState([]);
 
+  const [localData, setLocalData] = useState([]);
+
+  const [formData, setFormData] = useState([
+    {
+      productModel: newData.productModel,
+      productName: newData.productName,
+      date: newData.date,
+      productBrand: newData.productBrand,
+      productQuantity: newData.productQuantity,
+    },
+  ]);
+
   const navigate = useNavigate();
+
+  console.log(formData);
 
   useEffect(() => {
     const storeData = localStorage?.getItem("formData");
@@ -39,18 +44,11 @@ const Accounts = ({ brand, model }) => {
 
   const formSubmit = (e) => {
     e.preventDefault();
-    localStorage?.setItem("newData", JSON.stringify([newData]));
+    localStorage?.setItem("newData", JSON.stringify([formData]));
     toast.success("File added");
-    console.log(formData);
+    setNewData(formData);
     navigate("/transport");
   };
-
-  // useEffect(() => {
-  //   const newStoreData = localStorage?.setItem("newData");
-  //   if (newStoreData) {
-  //     setLocalData(JSON.parse(newStoreData));
-  //   }
-  // }, []);
 
   // console.log(localData);
   return (
@@ -64,8 +62,8 @@ const Accounts = ({ brand, model }) => {
             <form
               className="card lg:w-[700px] bg-base-100 shadow-xl mt-5"
               onSubmit={formSubmit}>
-              <div className="form-control mt-5">
-                {/* <div className="input-group  flex lg:flex-none justify-center items-center">
+              {/* <div className="form-control mt-5">
+                <div className="input-group  flex lg:flex-none justify-center items-center">
                   <select
                     className="select select-info w-full max-w-xs"
                     id="selectOption"
@@ -77,8 +75,8 @@ const Accounts = ({ brand, model }) => {
                     </option>
                     <option value="import">Import</option>
                   </select>
-                </div> */}
-              </div>
+                </div>
+              </div> */}
               <div className="lg:flex justify-between items-center">
                 <div className="form-control card-body">
                   <label className="text-center mb-3">
@@ -103,9 +101,9 @@ const Accounts = ({ brand, model }) => {
                 {/* date field */}
                 <div className="lg:pr-2 text-center flex justify-center items-center">
                   <p className="pr-2">Date : </p>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
+                  <input
+                    type="date"
+                    onChange={handleChange}
                     name="date"
                     value={formData.date}
                     className="border-2 select-info rounded-md"

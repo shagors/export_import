@@ -17,6 +17,11 @@ const Export = () => {
     return toast.error("Data is empty");
   }
 
+  const handleDelete = (index) => {
+    localStorage.removeItem("formData");
+    console.log(index);
+  };
+
   console.log(localData);
   return (
     <div>
@@ -52,7 +57,7 @@ const Export = () => {
                     <Link to="">
                       <AiFillEdit className="w-6 h-6" />
                     </Link>
-                    <button>
+                    <button onClick={() => handleDelete(index)}>
                       <AiFillDelete className="text-error w-6 h-6 hover:text-red-600" />
                     </button>
                   </div>

@@ -7,9 +7,12 @@ const ExportImport = () => {
       <h1 className="text-xl lg:text-4xl mt-10 text-center font-bold text-violet-500 uppercase tracking-wide">
         Which Mode you want go?
       </h1>
-      <div className="flex justify-center items-center mt-7">
+      <div className="flex justify-center items-center gap-5 mt-7">
         <button className="btn btn-info w-80 text-white font-bold text-2xl">
-          <Link to="/datainput">Data Entry</Link>
+          <Link to="/datainput">Product Data</Link>
+        </button>
+        <button className="btn btn-info w-80 text-white font-bold text-2xl">
+          <Link to="/transportroutes">Transport Way</Link>
         </button>
       </div>
       <div className="lg:flex justify-around items-center gap-6 mt-10 lg:mt-7">
