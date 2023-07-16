@@ -41,17 +41,17 @@ const TransportRoutes = ({ setTransportroutes }) => {
   return (
     <div>
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
-        Data Entry Form
+        Transport-Way Entry Form
       </h1>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-8">
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
-                Create Routes
+                Create Transport Way
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-3 bg-transparent"
                 placeholder="Enter Transport way"
                 type="text"
                 name="transportWay"
@@ -60,12 +60,12 @@ const TransportRoutes = ({ setTransportroutes }) => {
                 required
               />
             </div>
-            <div>
+            <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productBrand">
-                Create Routes Cost
+                Transport Way Cost
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-3 bg-transparent"
                 placeholder="Enter Transport Cost"
                 type="number"
                 name="transportCost"

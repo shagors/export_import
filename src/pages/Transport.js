@@ -36,7 +36,7 @@ const Transport = () => {
     navigate("/export");
   };
 
-  console.log(localData);
+  // console.log(localData);
   return (
     <div>
       <div className="flex justify-center items-center">
@@ -46,7 +46,7 @@ const Transport = () => {
           </h1>
           <div>
             <form
-              className="card lg:w-[600px] h-[300px] bg-base-100 shadow-xl mt-5"
+              className="card lg:w-[600px] h-[500px] bg-base-100 shadow-xl mt-5"
               onSubmit={formSubmit}>
               <div className="form-control my-5">
                 <div className="input-group  flex lg:flex-none justify-center items-center">
@@ -61,7 +61,7 @@ const Transport = () => {
                         className="select select-info w-full max-w-xs"
                         id="selectOption"
                         value={formData.transportWay}
-                        name="productName"
+                        name="transportWay"
                         onChange={handleChange}>
                         <option selected>Pick Tranport Way</option>
                         {localData?.map((product, index) => (
@@ -74,19 +74,28 @@ const Transport = () => {
               </div>
               <div className="flex justify-center items-center">
                 <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="bg-white font-bold text-lg">
-                      Transport Cost ?
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    name="transportCost"
-                    placeholder="Type here Transport Cost"
-                    className="input input-bordered w-full max-w-xs input-info"
-                    onChange={handleChange}
-                    required
-                  />
+                  <div className="input-group  flex lg:flex-none justify-center items-center">
+                    <div className="form-control card-body">
+                      <label className="text-center mb-3">
+                        <span className="lebel-text text-lg font-semibold bg-white">
+                          Transport Cost
+                        </span>
+                      </label>
+                      <div className="input-group  flex lg:flex-none justify-center items-center">
+                        <select
+                          className="select select-info w-full max-w-xs"
+                          id="selectOption"
+                          value={formData.transportCost}
+                          name="transportCost"
+                          onChange={handleChange}>
+                          <option selected>Tranport Cost</option>
+                          {localData?.map((product, index) => (
+                            <option key={index}>{product.transportCost}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex justify-end items-center mr-7 py-5 gap-4">

@@ -19,8 +19,6 @@ const Accounts = ({ brand, model }) => {
 
   const navigate = useNavigate();
 
-  console.log(formData);
-
   useEffect(() => {
     const storeData = localStorage?.getItem("formData");
     if (storeData) {

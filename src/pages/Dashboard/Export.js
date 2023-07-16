@@ -22,7 +22,7 @@ const Export = () => {
     console.log(index);
   };
 
-  console.log(localData);
+  // console.log(localData);
   return (
     <div>
       <h1 className="text-center text-3xl my-5 text-info font-bold">
