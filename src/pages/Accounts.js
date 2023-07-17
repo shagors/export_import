@@ -86,7 +86,7 @@ const Accounts = ({ brand, model }) => {
                       value={formData.productName}
                       name="productName"
                       onChange={handleChange}>
-                      <option selected>Pick product</option>
+                      <option selected>---- Pick product Name ----</option>
                       {localData?.map((product, index) => (
                         <option key={index}>{product.productName}</option>
                       ))}
@@ -119,7 +119,7 @@ const Accounts = ({ brand, model }) => {
                       value={formData.productBrand}
                       name="productBrand"
                       onChange={handleChange}>
-                      <option selected>Pick product Brand</option>
+                      <option selected>---- Pick product Brand ----</option>
                       {localData?.map((product, index) => (
                         <option key={index}>{product.productBrand}</option>
                       ))}
@@ -139,7 +139,7 @@ const Accounts = ({ brand, model }) => {
                       value={formData.productModel}
                       name="productModel"
                       onChange={handleChange}>
-                      <option selected>Pick product Brand</option>
+                      <option selected>---- Pick product Brand ----</option>
                       {localData?.map((product, index) => (
                         <option key={index}>{product.productModel}</option>
                       ))}
@@ -155,7 +155,7 @@ const Accounts = ({ brand, model }) => {
                     </label>
                     <input
                       className="input input-bordered rounded-md join-item select-info"
-                      placeholder="Quantity"
+                      placeholder="Quantity of Product"
                       type="number"
                       name="productQuantity"
                       value={formData.productQuantity}
