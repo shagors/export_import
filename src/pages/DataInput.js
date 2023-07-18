@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -19,19 +20,17 @@ const DataInput = () => {
       [event.target.name]: event.target.value,
     });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage?.setItem("formData", JSON.stringify([...localData, formData]));
+    axios
+      .post("http://localhost:5001/products", formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     toast.success("Successfully Uploaded to server");
     navigate("/exportimport");
   };
 
-  useEffect(() => {
-    const storeData = localStorage?.getItem("formData");
-    if (storeData) {
-      setLocalData(JSON.parse(storeData));
-    }
-  }, []);
   return (
     <div>
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -9,21 +10,21 @@ const Accounts = ({ brand, model }) => {
 
   const [formData, setFormData] = useState([
     {
-      productModel: newData.productModel,
-      productName: newData.productName,
-      date: newData.date,
-      productBrand: newData.productBrand,
-      productQuantity: newData.productQuantity,
+      productModel: localData.productModel,
+      productName: localData.productName,
+      date: localData.date,
+      productBrand: localData.productBrand,
+      productQuantity: localData.productQuantity,
     },
   ]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storeData = localStorage?.getItem("formData");
-    if (storeData) {
-      setLocalData(JSON.parse(storeData));
-    }
+    axios
+      .get("http://localhost:5001/products")
+      .then((res) => setLocalData(res.data))
+      .catch((error) => setLocalData(error));
   }, []);
 
   if (!localData) {
@@ -43,9 +44,10 @@ const Accounts = ({ brand, model }) => {
     toast.success("File added");
     setNewData(formData);
     navigate("/transport");
+    console.log(formData);
   };
 
-  // console.log(localData);
+  // console.log(newData);
   return (
     <>
       <div>

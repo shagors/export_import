@@ -76,7 +76,7 @@ const TransportRoutes = ({ setTransportroutes }) => {
             </div>
             <div className="mt-5 flex flex-col gap-y-4">
               <button
-                className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
+                className="active:scale-[.9] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
                 type="submit">
                 Save
               </button>
