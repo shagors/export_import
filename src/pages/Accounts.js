@@ -4,17 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Accounts = ({ brand, model }) => {
-  const [newData, setNewData] = useState([]);
-
   const [localData, setLocalData] = useState([]);
 
   const [formData, setFormData] = useState([
     {
-      productModel: localData.productModel,
-      productName: localData.productName,
-      date: localData.date,
-      productBrand: localData.productBrand,
-      productQuantity: localData.productQuantity,
+      productModel: "",
+      productName: "",
+      date: "",
+      productBrand: "",
+      productQuantity: "",
     },
   ]);
 
@@ -27,10 +25,6 @@ const Accounts = ({ brand, model }) => {
       .catch((error) => setLocalData(error));
   }, []);
 
-  if (!localData) {
-    return toast.error("Data is empty");
-  }
-
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -40,14 +34,15 @@ const Accounts = ({ brand, model }) => {
 
   const formSubmit = (e) => {
     e.preventDefault();
-    localStorage?.setItem("newData", JSON.stringify([formData]));
-    toast.success("File added");
-    setNewData(formData);
-    navigate("/transport");
-    console.log(formData);
+    axios
+      .post("http://localhost:5001/office_accounts", formData)
+      .then((res) => {
+        toast.success("Successfully File added to server");
+        navigate("/transport");
+        console.log(res);
+      })
+      .catch((err) => toast.error(err));
   };
-
-  // console.log(newData);
   return (
     <>
       <div>
@@ -78,7 +73,7 @@ const Accounts = ({ brand, model }) => {
                 <div className="form-control card-body">
                   <label className="text-center mb-3">
                     <span className="lebel-text text-lg font-semibold">
-                      Pick Product Name
+                      Product Name
                     </span>
                   </label>
                   <div className="input-group  flex lg:flex-none justify-center items-center">
@@ -112,7 +107,7 @@ const Accounts = ({ brand, model }) => {
                   <div className="form-control">
                     <label className="text-center mb-3">
                       <span className="lebel-text text-lg font-semibold">
-                        Pick Product Brand
+                        Product Brand
                       </span>
                     </label>
                     <select
@@ -132,7 +127,7 @@ const Accounts = ({ brand, model }) => {
                   <div className="form-control">
                     <label className="text-center mb-3">
                       <span className="lebel-text text-lg font-semibold">
-                        Pick Product Model
+                        Product Model
                       </span>
                     </label>
                     <select

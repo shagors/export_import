@@ -12,8 +12,6 @@ const DataInput = () => {
     productModel: "",
   });
 
-  const [localData, setLocalData] = useState([]);
-
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -25,10 +23,12 @@ const DataInput = () => {
     e.preventDefault();
     axios
       .post("http://localhost:5001/products", formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    toast.success("Successfully Uploaded to server");
-    navigate("/exportimport");
+      .then((res) => {
+        toast.success("Successfully Uploaded to server");
+        navigate("/exportimport");
+        console.log(res);
+      })
+      .catch((err) => toast.error(err));
   };
 
   return (
