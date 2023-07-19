@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -16,6 +16,7 @@ import Import from "../pages/Dashboard/Import";
 import TransportRoutes from "../pages/TransportRoutes";
 import DataInput from "../pages/DataInput";
 import TransportCountry from "../pages/TransportCountry";
+import Purchase from "../pages/Purchase";
 
 const Routers = () => {
   return (
@@ -33,6 +34,7 @@ const Routers = () => {
         <Route path="/transportroutes" element={<TransportRoutes />} />
         <Route path="/datainput" element={<DataInput />} />
         <Route path="/transportcountry" element={<TransportCountry />} />
+        <Route path="/purchase" element={<Purchase />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />

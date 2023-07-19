@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Accounts = ({ brand, model }) => {
-  const [localData, setLocalData] = useState([]);
+  const [serverData, setServerData] = useState([]);
 
   const [formData, setFormData] = useState([
     {
@@ -21,8 +21,8 @@ const Accounts = ({ brand, model }) => {
   useEffect(() => {
     axios
       .get("http://localhost:5001/products")
-      .then((res) => setLocalData(res.data))
-      .catch((error) => setLocalData(error));
+      .then((res) => setServerData(res.data))
+      .catch((error) => setServerData(error));
   }, []);
 
   const handleChange = (event) => {
@@ -38,7 +38,7 @@ const Accounts = ({ brand, model }) => {
       .post("http://localhost:5001/office_accounts", formData)
       .then((res) => {
         toast.success("Successfully File added to server");
-        navigate("/exportimport");
+        navigate("/purchase");
         console.log(res);
       })
       .catch((err) => toast.error(err.sqlMessage));
@@ -84,7 +84,7 @@ const Accounts = ({ brand, model }) => {
                       name="productName"
                       onChange={handleChange}>
                       <option selected>---- Pick product Name ----</option>
-                      {localData?.map((product, index) => (
+                      {serverData?.map((product, index) => (
                         <option key={index}>{product.productName}</option>
                       ))}
                     </select>
@@ -117,7 +117,7 @@ const Accounts = ({ brand, model }) => {
                       name="productBrand"
                       onChange={handleChange}>
                       <option selected>---- Pick product Brand ----</option>
-                      {localData?.map((product, index) => (
+                      {serverData?.map((product, index) => (
                         <option key={index}>{product.productBrand}</option>
                       ))}
                     </select>
@@ -137,7 +137,7 @@ const Accounts = ({ brand, model }) => {
                       name="productModel"
                       onChange={handleChange}>
                       <option selected>---- Pick product Brand ----</option>
-                      {localData?.map((product, index) => (
+                      {serverData?.map((product, index) => (
                         <option key={index}>{product.productModel}</option>
                       ))}
                     </select>
