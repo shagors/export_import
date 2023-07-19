@@ -13,15 +13,11 @@ import Admin from "../pages/Admin";
 import Transport from "../pages/Transport";
 import Export from "../pages/Dashboard/Export";
 import Import from "../pages/Dashboard/Import";
-import BrandPick from "../pages/BrandPick";
-import ModelPick from "../pages/ModelPick";
 import TransportRoutes from "../pages/TransportRoutes";
 import DataInput from "../pages/DataInput";
+import TransportCountry from "../pages/TransportCountry";
 
 const Routers = () => {
-  const [brand, setBrand] = useState("");
-  const [model, setModel] = useState("");
-
   return (
     <Routes>
       <Route path="/" element={<Login />} />
@@ -31,16 +27,12 @@ const Routers = () => {
         <Route path="/exportimport" element={<ExportImport />} />
         <Route path="/export" element={<Export />} />
         <Route path="/import" element={<Import />} />
-        <Route
-          path="/accounts"
-          element={<Accounts brand={brand} model={model} />}
-        />
+        <Route path="/accounts" element={<Accounts />} />
         <Route path="/warehouse" element={<Warehouse />} />
         <Route path="/transport" element={<Transport />} />
-        <Route path="/brandpick" element={<BrandPick setBrand={setBrand} />} />
-        <Route path="/modelpick" element={<ModelPick setModel={setModel} />} />
         <Route path="/transportroutes" element={<TransportRoutes />} />
         <Route path="/datainput" element={<DataInput />} />
+        <Route path="/transportcountry" element={<TransportCountry />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />

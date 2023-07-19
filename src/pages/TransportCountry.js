@@ -3,13 +3,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const DataInput = () => {
+const TransportCountry = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    productName: "",
-    productBrand: "",
-    productModel: "",
+    countryName: "",
+    countryPort: "",
   });
 
   const handleChange = (event) => {
@@ -22,7 +21,7 @@ const DataInput = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5001/products", formData)
+      .post("http://localhost:5001/transport_country", formData)
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");
@@ -30,53 +29,38 @@ const DataInput = () => {
       })
       .catch((err) => toast.error(err));
   };
-
   return (
     <div>
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
-        Data Entry Form
+        Entry Form For Export Country
       </h1>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-8">
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
-                Product Name
+                Export Country Name
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Product Name"
+                placeholder="Enter Country Name"
                 type="text"
-                name="productName"
-                id="productName"
+                name="countryName"
+                id="countryName"
                 onChange={handleChange}
                 required
               />
             </div>
             <div>
               <label className="text-lg font-semibold" htmlFor="productBrand">
-                Product Brand
+                Export Country Port
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Product Brand"
+                placeholder="Enter Country Port"
                 type="text"
-                name="productBrand"
-                id="productBrand"
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div>
-              <label className="text-lg font-semibold" htmlFor="productModel">
-                Product Model
-              </label>
-              <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Product Model"
-                type="text"
-                name="productModel"
-                id="productModel"
+                name="countryPort"
+                id="countryPort"
                 onChange={handleChange}
                 required
               />
@@ -95,4 +79,4 @@ const DataInput = () => {
   );
 };
 
-export default DataInput;
+export default TransportCountry;

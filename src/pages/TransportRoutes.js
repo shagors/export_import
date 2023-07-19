@@ -1,17 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const TransportRoutes = ({ setTransportroutes }) => {
+const TransportRoutes = () => {
   const [formTransportData, setFormTransportData] = useState({
     transportWay: "",
     transportCost: "",
   });
 
   const navigate = useNavigate();
-
-  const [localTransportData, setLocalTransportData] = useState([]);
 
   const handleChange = (event) => {
     setFormTransportData({
@@ -22,21 +20,15 @@ const TransportRoutes = ({ setTransportroutes }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage?.setItem(
-      "formTransportData",
-      JSON.stringify([...localTransportData, formTransportData])
-    );
-    toast.success("File added");
-    console.log(formTransportData);
-    navigate("/exportimport");
+    axios
+      .post("http://localhost:5001/transport", formTransportData)
+      .then((res) => {
+        toast.success("Successfully Uploaded to server");
+        navigate("/exportimport");
+        console.log(res);
+      })
+      .catch((err) => toast.error(err));
   };
-
-  useEffect(() => {
-    const storeData = localStorage?.getItem("formTransportData");
-    if (storeData) {
-      setLocalTransportData(JSON.parse(storeData));
-    }
-  }, []);
 
   return (
     <div>

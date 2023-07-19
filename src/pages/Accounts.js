@@ -38,10 +38,10 @@ const Accounts = ({ brand, model }) => {
       .post("http://localhost:5001/office_accounts", formData)
       .then((res) => {
         toast.success("Successfully File added to server");
-        navigate("/transport");
+        navigate("/exportimport");
         console.log(res);
       })
-      .catch((err) => toast.error(err));
+      .catch((err) => toast.error(err.sqlMessage));
   };
   return (
     <>
