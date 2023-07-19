@@ -80,7 +80,7 @@ const Accounts = ({ brand, model }) => {
                     <select
                       className="select select-info w-full max-w-xs"
                       id="selectOption"
-                      value={formData.productName}
+                      value={formData.productName || ""}
                       name="productName"
                       onChange={handleChange}>
                       <option selected>---- Pick product Name ----</option>
@@ -97,7 +97,7 @@ const Accounts = ({ brand, model }) => {
                     type="date"
                     onChange={handleChange}
                     name="date"
-                    value={formData.date}
+                    value={formData.date || ""}
                     className="border-2 select-info rounded-md text-lg p-[6px]"
                   />
                 </div>
@@ -113,7 +113,7 @@ const Accounts = ({ brand, model }) => {
                     <select
                       className="select select-info w-full max-w-xs"
                       id="selectOption"
-                      value={formData.productBrand}
+                      value={formData.productBrand || ""}
                       name="productBrand"
                       onChange={handleChange}>
                       <option selected>---- Pick product Brand ----</option>
@@ -133,7 +133,7 @@ const Accounts = ({ brand, model }) => {
                     <select
                       className="select select-info w-full max-w-xs"
                       id="selectOption"
-                      value={formData.productModel}
+                      value={formData.productModel || ""}
                       name="productModel"
                       onChange={handleChange}>
                       <option selected>---- Pick product Brand ----</option>
@@ -155,7 +155,7 @@ const Accounts = ({ brand, model }) => {
                       placeholder="Quantity of Product"
                       type="number"
                       name="productQuantity"
-                      value={formData.productQuantity}
+                      value={formData.productQuantity || ""}
                       onChange={handleChange}
                     />
                     <p className="btn join-item rounded-r-full">Pcs</p>
@@ -172,6 +172,8 @@ const Accounts = ({ brand, model }) => {
             </form>
           </div>
         </div>
+
+        <div></div>
       </div>
     </>
   );
