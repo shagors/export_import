@@ -37,8 +37,6 @@ const Purchase = () => {
       .catch((error) => setAccounts(error));
   }, []);
 
-  console.log(accounts);
-
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -48,14 +46,16 @@ const Purchase = () => {
 
   const formSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("", formData)
-      .then((res) => {
-        toast.success("Successfully File added to server");
-        navigate("/exportimport");
-        console.log(res);
-      })
-      .catch((err) => toast.error(err.sqlMessage));
+    console.log(formData);
+    toast.success("Product Send");
+    // axios
+    //   .post("", formData)
+    //   .then((res) => {
+    //     toast.success("Successfully File added to server");
+    //     navigate("/exportimport");
+    //     console.log(res);
+    //   })
+    //   .catch((err) => toast.error(err.sqlMessage));
   };
   return (
     <>
@@ -110,6 +110,7 @@ const Purchase = () => {
                   </div>
                 </div>
               </div>
+              {/* button */}
               <div className="flex justify-end items-center mr-7 py-5">
                 <Link
                   to="/accounts"
@@ -128,7 +129,7 @@ const Purchase = () => {
 
         {/* Table data get from accouts input database */}
         <div>
-          <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg">
+          <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
             Data Get From accounts Page
           </h1>
           <div className="overflow-x-auto">
@@ -136,7 +137,7 @@ const Purchase = () => {
               {/* head */}
               <thead>
                 <tr>
-                  <th>id</th>
+                  <th>ID</th>
                   <th>Product Name</th>
                   <th>Product Brand</th>
                   <th>Product Model</th>
@@ -147,7 +148,7 @@ const Purchase = () => {
               <tbody>
                 {accounts?.map((product) => (
                   <tr className="hover cursor-pointer" key={product.id}>
-                    <th>{product.id}</th>
+                    <td>{product.id}</td>
                     <td>{product.productName}</td>
                     <td>{product.productBrand}</td>
                     <td>{product.productModel}</td>

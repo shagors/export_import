@@ -17,6 +17,7 @@ import TransportRoutes from "../pages/TransportRoutes";
 import DataInput from "../pages/DataInput";
 import TransportCountry from "../pages/TransportCountry";
 import Purchase from "../pages/Purchase";
+import Transportservice from "../pages/Transportservice";
 
 const Routers = () => {
   return (
@@ -35,6 +36,7 @@ const Routers = () => {
         <Route path="/datainput" element={<DataInput />} />
         <Route path="/transportcountry" element={<TransportCountry />} />
         <Route path="/purchase" element={<Purchase />} />
+        <Route path="/transportservice" element={<Transportservice />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
