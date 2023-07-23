@@ -2,16 +2,19 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import "../styles/purchase.css";
 
 const Purchase = () => {
   const [transportPath, setTransportPath] = useState([]);
   const [transportCountry, setTransportCountry] = useState([]);
   const [accounts, setAccounts] = useState([]);
+  const [charges, setCharges] = useState([]);
 
   const [formData, setFormData] = useState([
     {
       transportWay: "",
-      countryName: "",
+      transportCountryName: "",
+      particularExpencessName: {},
     },
   ]);
 
@@ -33,8 +36,14 @@ const Purchase = () => {
     //   getting accounts data from office_accounts server
     axios
       .get("http://localhost:5001/office_accounts")
-      .then((res) => setAccounts(res.data))
+      .then((res) => setAccounts(res?.data))
       .catch((error) => setAccounts(error));
+
+    // geeting charges api call
+    axios
+      .get("http://localhost:5001/addcharges")
+      .then((res) => setCharges(res?.data))
+      .catch((error) => setCharges(error));
   }, []);
 
   const handleChange = (event) => {
@@ -80,7 +89,7 @@ const Purchase = () => {
                       className="select select-info w-full max-w-xs"
                       id="selectOption"
                       value={formData.transportWay}
-                      name="productName"
+                      name="transportWay"
                       onChange={handleChange}>
                       <option selected>---- Pick Transport Way ----</option>
                       {transportPath?.map((product, index) => (
@@ -99,8 +108,8 @@ const Purchase = () => {
                     <select
                       className="select select-info w-full max-w-xs"
                       id="selectOption"
-                      value={formData.countryName}
-                      name="countryName"
+                      value={formData.transportCountryName}
+                      name="transportCountryName"
                       onChange={handleChange}>
                       <option selected>---- Pick Shipment Country ----</option>
                       {transportCountry?.map((product, index) => (
@@ -108,6 +117,26 @@ const Purchase = () => {
                       ))}
                     </select>
                   </div>
+                </div>
+              </div>
+
+              {/* Tax and costing */}
+              <div className="w-70 p-9 add__scrollbar">
+                <div className="form-control">
+                  {charges?.map((charge) => (
+                    <label className="cursor-pointer label" key={charge.id}>
+                      <span className="label-text">
+                        {charge.particularExpencessName}
+                      </span>
+                      <input
+                        type="checkbox"
+                        className="checkbox checkbox-info"
+                        value={formData.particularExpencessName}
+                        name="particularExpencessName"
+                        onChange={handleChange}
+                      />
+                    </label>
+                  ))}
                 </div>
               </div>
               {/* button */}

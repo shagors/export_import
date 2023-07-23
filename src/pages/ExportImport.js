@@ -17,8 +17,11 @@ const ExportImport = () => {
         <button className="btn btn-info w-60 p-1 text-white font-bold text-xl mr-4 mt-4">
           <Link to="/transportcountry">Transport Country</Link>
         </button>
-        <button className="btn btn-info w-60 p-1 text-white font-bold text-xl mt-4">
+        <button className="btn btn-info w-60 p-1 text-white font-bold text-xl mt-4 mr-4">
           <Link to="/transportservice">Transport Service</Link>
+        </button>
+        <button className="btn btn-info w-60 p-1 text-white font-bold text-xl mt-4">
+          <Link to="/addcharges">Add Charges</Link>
         </button>
       </div>
       <div className="lg:flex justify-around items-center gap-6 mt-10 lg:mt-7">
