@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -45,6 +46,16 @@ const AddCharges = () => {
       .then((res) => setCharges(res?.data))
       .catch((error) => setCharges(error));
   }, [charges]);
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:5001/delete/${id}`)
+      .then((res) => {
+        window.location.reload();
+        toast.success("Your data Successfully Deleted!!");
+      })
+      .catch((error) => setCharges(error));
+  };
 
   return (
     <div>
@@ -125,7 +136,9 @@ const AddCharges = () => {
                     <Link to={`/addcharges/${charge.id}`}>
                       <AiOutlineEdit className="w-6 h-6 text-purple-600" />
                     </Link>
-                    <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                    <button onClick={() => handleDelete(charge?.id)}>
+                      <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                    </button>
                   </td>
                 </tr>
               ))}
