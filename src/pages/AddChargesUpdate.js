@@ -1,58 +1,49 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import {
-  AiOutlineEdit,
-  AiOutlineDelete,
-  AiOutlineArrowLeft,
-} from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const AddCharges = () => {
+const AddChargesUpdate = () => {
   const [charges, setCharges] = useState([]);
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    particularExpencessName: "",
-    particularExpencessCost: 0,
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5001/addcharges/${id}`, values)
+      .then((res) => {
+        setCharges(res?.data[0]);
+      })
+      .catch((error) => setCharges(error));
+  }, []);
+  console.log(charges);
+
+  const [values, setValues] = useState({
+    particularExpencessName: charges?.particularExpencessName,
+    particularExpencessCost: charges?.particularExpencessCost,
   });
 
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  };
+  console.log(values);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5001/addcharges", formData)
+      .put(`http://localhost:5001/addcharges/${id}`, values)
       .then((res) => {
         toast.success("Successfully Uploaded to server");
+        navigate("/addcharges");
       })
       .catch((err) => toast.error(err));
-    setFormData({
-      particularExpencessName: "",
-      particularExpencessCost: "",
-    });
   };
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5001/addcharges")
-      .then((res) => setCharges(res?.data))
-      .catch((error) => setCharges(error));
-  }, [charges]);
 
   return (
     <div>
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
-        All Charges Entry Form
+        Charges Data Update Form
       </h1>
       <div className="mt-8">
-        <Link to="/exportimport" className="">
+        <Link to="/addcharges" className="">
           <BsArrowLeft className="w-56 lg:w-[380px] h-[35px] text-purple-500" />
         </Link>
         <div className="w-8 h-[2px] bg-green-700 ml-[95px] lg:ml-[175px] animate-pulse"></div>
@@ -69,8 +60,14 @@ const AddCharges = () => {
                 placeholder="Enter Expencess Type"
                 type="text"
                 name="particularExpencessName"
+                value={values.particularExpencessName}
                 id="particularExpencessName"
-                onChange={handleChange}
+                onChange={(e) =>
+                  setValues({
+                    ...values,
+                    particularExpencessName: e.target.value,
+                  })
+                }
                 required
               />
             </div>
@@ -84,7 +81,12 @@ const AddCharges = () => {
                 type="number"
                 name="particularExpencessCost"
                 id="particularExpencessCost"
-                onChange={handleChange}
+                onChange={(e) =>
+                  setValues({
+                    ...values,
+                    particularExpencessCost: e.target.value,
+                  })
+                }
                 required
               />
             </div>
@@ -92,49 +94,14 @@ const AddCharges = () => {
               <button
                 className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
                 type="submit">
-                Save
+                Update
               </button>
             </div>
           </div>
         </form>
       </div>
-
-      {/* Table data get from accouts input database */}
-      <div>
-        <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
-          All Stored Expencess's Details
-        </h1>
-        <div className="overflow-x-auto add__scrollbar">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Expencess Name</th>
-                <th>Expencess Cost</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {charges?.map((charge) => (
-                <tr className="hover cursor-pointer" key={charge.id}>
-                  <td>{charge.id}</td>
-                  <td>{charge.particularExpencessName}</td>
-                  <td>{charge.particularExpencessCost}</td>
-                  <td className="flex justify-evenly items-center">
-                    <Link to={`/addcharges/${charge.id}`}>
-                      <AiOutlineEdit className="w-6 h-6 text-purple-600" />
-                    </Link>
-                    <AiOutlineDelete className="w-6 h-6 text-red-600" />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   );
 };
 
-export default AddCharges;
+export default AddChargesUpdate;

@@ -67,6 +67,7 @@ const Purchase = () => {
       transportCountryName,
       particularExpencessName: checks,
     };
+    toast.success("Successfully Uploaded!!");
     console.log(data);
     // axios
     //   .post("http://localhost:5001/purchase", data)
