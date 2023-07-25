@@ -69,7 +69,7 @@ const Purchase = () => {
     };
     console.log(data);
     // axios
-    //   .post("http://localhost:5001/purchase", formData)
+    //   .post("http://localhost:5001/purchase", data)
     //   .then((res) => {
     //     toast.success("Successfully Uploaded to server");
     //     // navigate("/exportimport");
