@@ -24,7 +24,6 @@ const AddCharges = () => {
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");
-        console.log(res);
       })
       .catch((err) => toast.error(err));
   };

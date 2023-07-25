@@ -39,12 +39,9 @@ const Accounts = ({ brand, model }) => {
       .then((res) => {
         toast.success("Successfully File added to server");
         navigate("/purchase");
-        console.log(res);
       })
       .catch((err) => toast.error(err.sqlMessage));
   };
-
-  // console.log(serverData);
 
   return (
     <>

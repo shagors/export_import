@@ -9,17 +9,13 @@ const Purchase = () => {
   const [transportCountry, setTransportCountry] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [charges, setCharges] = useState([]);
+  const [checks, setChecks] = useState([]);
 
-  const [formData, setFormData] = useState([
-    {
-      transportWay: "",
-      transportCountryName: "",
-      particularExpencessName: {},
-    },
-  ]);
+  const [transportWay, setTransportWay] = useState("");
+  const [transportCountryName, setTransportCountryName] = useState("");
+  const [particularExpencessName, setParticularExpencessName] = useState([]);
 
-  const navigate = useNavigate();
-
+  // Data fetch from server
   useEffect(() => {
     //   getting transport data from server
     axios
@@ -46,26 +42,42 @@ const Purchase = () => {
       .catch((error) => setCharges(error));
   }, []);
 
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
+  const navigate = useNavigate();
+
+  const handleToCheck = (e, index) => {
+    setChecks([...checks, e.target.value]);
+  };
+
+  const handleTransportWay = (event) => {
+    setTransportWay(event.target.value);
+  };
+
+  const handleTransportCountryName = (event) => {
+    setTransportCountryName(event.target.value);
+  };
+
+  const handleParticularExpencessName = (event) => {
+    setParticularExpencessName(event.target.value);
   };
 
   const formSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    toast.success("Product Send");
+    const data = {
+      transportWay,
+      transportCountryName,
+      particularExpencessName: checks,
+    };
+    console.log(data);
     // axios
-    //   .post("", formData)
+    //   .post("http://localhost:5001/purchase", formData)
     //   .then((res) => {
-    //     toast.success("Successfully File added to server");
-    //     navigate("/exportimport");
+    //     toast.success("Successfully Uploaded to server");
+    //     // navigate("/exportimport");
     //     console.log(res);
     //   })
-    //   .catch((err) => toast.error(err.sqlMessage));
+    //   .catch((err) => toast.error(err));
   };
+
   return (
     <>
       <div>
@@ -88,9 +100,9 @@ const Purchase = () => {
                     <select
                       className="select select-info w-full max-w-xs"
                       id="selectOption"
-                      value={formData.transportWay}
+                      value={transportWay}
                       name="transportWay"
-                      onChange={handleChange}>
+                      onChange={handleTransportWay}>
                       <option selected>---- Pick Transport Way ----</option>
                       {transportPath?.map((product, index) => (
                         <option key={index}>{product.transportWay}</option>
@@ -108,9 +120,9 @@ const Purchase = () => {
                     <select
                       className="select select-info w-full max-w-xs"
                       id="selectOption"
-                      value={formData.transportCountryName}
+                      value={transportCountryName}
                       name="transportCountryName"
-                      onChange={handleChange}>
+                      onChange={handleTransportCountryName}>
                       <option selected>---- Pick Shipment Country ----</option>
                       {transportCountry?.map((product, index) => (
                         <option key={index}>{product.countryName}</option>
@@ -131,9 +143,11 @@ const Purchase = () => {
                       <input
                         type="checkbox"
                         className="checkbox checkbox-info"
-                        value={formData.particularExpencessName}
+                        id={charge.id}
+                        value={charge.particularExpencessName}
                         name="particularExpencessName"
-                        onChange={handleChange}
+                        onChange={handleParticularExpencessName}
+                        onClick={handleToCheck}
                       />
                     </label>
                   ))}
@@ -161,7 +175,7 @@ const Purchase = () => {
           <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
             Data Get From accounts Page
           </h1>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto add__scrollbar">
             <table className="table">
               {/* head */}
               <thead>
