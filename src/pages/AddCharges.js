@@ -3,11 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  AiOutlineEdit,
-  AiOutlineDelete,
-  AiOutlineArrowLeft,
-} from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 
 const AddCharges = () => {
@@ -47,11 +43,11 @@ const AddCharges = () => {
       .catch((error) => setCharges(error));
   }, [charges]);
 
+  // data delete from server and also frontend
   const handleDelete = (id) => {
     axios
       .delete(`http://localhost:5001/delete/${id}`)
       .then((res) => {
-        window.location.reload();
         toast.success("Your data Successfully Deleted!!");
       })
       .catch((error) => setCharges(error));
@@ -133,7 +129,7 @@ const AddCharges = () => {
                   <td>{charge.particularExpencessName}</td>
                   <td>{charge.particularExpencessCost}</td>
                   <td className="flex justify-evenly items-center">
-                    <Link to={`/addcharges/${charge.id}`}>
+                    <Link to={`/editcharges/${charge.id}`}>
                       <AiOutlineEdit className="w-6 h-6 text-purple-600" />
                     </Link>
                     <button onClick={() => handleDelete(charge?.id)}>

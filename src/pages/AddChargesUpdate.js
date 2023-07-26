@@ -17,7 +17,7 @@ const AddChargesUpdate = () => {
       })
       .catch((error) => setCharges(error));
   }, []);
-  console.log(charges);
+  // console.log(charges);
 
   const [values, setValues] = useState({
     particularExpencessName: charges?.particularExpencessName,
@@ -28,13 +28,14 @@ const AddChargesUpdate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .put(`http://localhost:5001/addcharges/${id}`, values)
-      .then((res) => {
-        toast.success("Successfully Uploaded to server");
-        navigate("/addcharges");
-      })
-      .catch((err) => toast.error(err));
+    console.log(values);
+    // axios
+    //   .put(`http://localhost:5001/addcharges/${id}`, values)
+    //   .then((res) => {
+    //     toast.success("Successfully Uploaded to server");
+    //     navigate("/addcharges");
+    //   })
+    //   .catch((err) => toast.error(err));
   };
 
   return (
