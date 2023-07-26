@@ -27,7 +27,7 @@ const AddCharges = () => {
     axios
       .post("http://localhost:5001/addcharges", formData)
       .then((res) => {
-        toast.success("Successfully Uploaded to server");
+        toast.success("Data Successfully Uploaded to server");
       })
       .catch((err) => toast.error(err));
     setFormData({
@@ -48,7 +48,7 @@ const AddCharges = () => {
     axios
       .delete(`http://localhost:5001/delete/${id}`)
       .then((res) => {
-        toast.success("Your data Successfully Deleted!!");
+        toast.success("Data Successfully Deleted!!");
       })
       .catch((error) => setCharges(error));
   };
@@ -129,7 +129,7 @@ const AddCharges = () => {
                   <td>{charge.particularExpencessName}</td>
                   <td>{charge.particularExpencessCost}</td>
                   <td className="flex justify-evenly items-center">
-                    <Link to={`/editcharges/${charge.id}`}>
+                    <Link to={`/addcharges/${charge.id}`}>
                       <AiOutlineEdit className="w-6 h-6 text-purple-600" />
                     </Link>
                     <button onClick={() => handleDelete(charge?.id)}>

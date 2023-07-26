@@ -17,25 +17,23 @@ const AddChargesUpdate = () => {
       })
       .catch((error) => setCharges(error));
   }, []);
-  // console.log(charges);
 
   const [values, setValues] = useState({
-    particularExpencessName: charges?.particularExpencessName,
-    particularExpencessCost: charges?.particularExpencessCost,
+    particularExpencessName: charges.particularExpencessName,
+    particularExpencessCost: charges.particularExpencessCost,
   });
 
   console.log(values);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
-    // axios
-    //   .put(`http://localhost:5001/addcharges/${id}`, values)
-    //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server");
-    //     navigate("/addcharges");
-    //   })
-    //   .catch((err) => toast.error(err));
+    axios
+      .put(`http://localhost:5001/addcharges/${id}`, values)
+      .then((res) => {
+        toast.success("Successfully Data Updated!!");
+        navigate("/addcharges");
+      })
+      .catch((err) => toast.error(err));
   };
 
   return (
@@ -82,6 +80,7 @@ const AddChargesUpdate = () => {
                 type="number"
                 name="particularExpencessCost"
                 id="particularExpencessCost"
+                value={values.particularExpencessCost}
                 onChange={(e) =>
                   setValues({
                     ...values,
