@@ -1,14 +1,13 @@
 /* eslint-disable no-restricted-globals */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 
 const AddCharges = () => {
   const [charges, setCharges] = useState([]);
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     particularExpencessName: "",
@@ -108,7 +107,7 @@ const AddCharges = () => {
 
       {/* Table data get from accouts input database */}
       <div>
-        <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
+        <h1 className="text-center my-6 text-2xl text-info font-bold bg-slate-500 p-[10px] rounded-lg uppercase">
           All Stored Expencess's Details
         </h1>
         <div className="overflow-x-auto add__scrollbar">

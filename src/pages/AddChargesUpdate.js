@@ -5,22 +5,25 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const AddChargesUpdate = () => {
-  const [charges, setCharges] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5001/addcharges/${id}`, values)
+      .get(`http://localhost:5001/addcharges/${id}`)
       .then((res) => {
-        setCharges(res?.data[0]);
+        setValues({
+          ...values,
+          particularExpencessName: res?.data[0].particularExpencessName,
+          particularExpencessCost: res?.data[0].particularExpencessCost,
+        });
       })
-      .catch((error) => setCharges(error));
+      .catch((error) => setValues(error));
   }, []);
 
   const [values, setValues] = useState({
-    particularExpencessName: charges.particularExpencessName,
-    particularExpencessCost: charges.particularExpencessCost,
+    particularExpencessName: "",
+    particularExpencessCost: 0,
   });
 
   console.log(values);
