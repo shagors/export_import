@@ -128,7 +128,7 @@ const AddCharges = () => {
                 <tr className="hover cursor-pointer" key={charge.id}>
                   <td>{charge.id}</td>
                   <td>{charge.particularExpencessName}</td>
-                  <td>{charge.particularExpencessCost}</td>
+                  <td>{charge.particularExpencessCost * 1}</td>
                   <td className="flex justify-evenly items-center">
                     <Link to={`/addcharges/${charge.id}`}>
                       <AiOutlineEdit className="w-6 h-6 text-purple-600" />
