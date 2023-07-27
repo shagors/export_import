@@ -26,8 +26,6 @@ const AddChargesUpdate = () => {
     particularExpencessCost: 0,
   });
 
-  console.log(values);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios

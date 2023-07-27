@@ -21,6 +21,7 @@ const AddCharges = () => {
     });
   };
 
+  // Data save for server
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -29,10 +30,6 @@ const AddCharges = () => {
         toast.success("Data Successfully Uploaded to server");
       })
       .catch((err) => toast.error(err));
-    setFormData({
-      particularExpencessName: "",
-      particularExpencessCost: "",
-    });
   };
 
   useEffect(() => {
@@ -87,7 +84,12 @@ const AddCharges = () => {
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-2 bg-transparent"
                 placeholder="Enter Expencess Cost"
-                type="number"
+                type="text"
+                inputMode="decimal"
+                pattern="[0-9]*[.]?[0-9]*"
+                step="any"
+                // maxLength="9"
+                // validate="true"
                 name="particularExpencessCost"
                 id="particularExpencessCost"
                 onChange={handleChange}
