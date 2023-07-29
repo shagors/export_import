@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   GoogleAuthProvider,
@@ -7,11 +7,17 @@ import {
 } from "firebase/auth";
 import { auth } from "../Firebase/Firebase.init";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const provider = new GoogleAuthProvider();
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  });
 
   const googleAuth = () => {
     signInWithPopup(auth, provider)
@@ -28,18 +34,32 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        toast.success("Successfully login");
-        navigate("/exportimport");
+    axios
+      .post("http://localhost:5001/login", values)
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          toast.success("Login Successfully");
+          navigate("/exportimport");
+          console.log(res);
+        } else {
+          toast.error("User not found");
+        }
       })
-      .catch((error) => {
-        toast.error("something Went wrong");
-      });
+      .catch((err) => toast.error("Something went wrong"));
+
+    // const email = e.target.email.value;
+    // const password = e.target.password.value;
+
+    // signInWithEmailAndPassword(auth, email, password)
+    //   .then((userCredential) => {
+    //     const user = userCredential.user;
+    //     toast.success("Successfully login");
+    //     navigate("/exportimport");
+    //   })
+    //   .catch((error) => {
+    //     toast.error("something Went wrong");
+    //   });
   };
 
   return (
@@ -68,6 +88,9 @@ const Login = () => {
                   type="email"
                   name="email"
                   id="email"
+                  onChange={(e) =>
+                    setValues({ ...values, email: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -80,6 +103,9 @@ const Login = () => {
                   type="password"
                   name="password"
                   id="password"
+                  onChange={(e) =>
+                    setValues({ ...values, password: e.target.value })
+                  }
                 />
               </div>
               <div className="mt-4 flex justify-between items-center">

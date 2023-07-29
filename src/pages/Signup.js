@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../Firebase/Firebase.init";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const provider = new GoogleAuthProvider();
 
@@ -14,9 +15,15 @@ const Signup = () => {
   const [name, setName] = useState({ value: "", error: "" });
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
-  const [confirmPassword, setConfirmPassword] = useState({
-    value: "",
-    error: "",
+  // const [confirmPassword, setConfirmPassword] = useState({
+  //   value: "",
+  //   error: "",
+  // });
+
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    password: "",
   });
 
   const navigate = useNavigate();
@@ -59,45 +66,56 @@ const Signup = () => {
     }
   };
 
-  const handleConfirmPassword = (e) => {
-    if (e === password.value) {
-      setConfirmPassword({ value: e, error: "" });
-    } else {
-      setConfirmPassword({ value: "", error: "Password don't match" });
-    }
-  };
+  // const handleConfirmPassword = (e) => {
+  //   if (e === password.value) {
+  //     setConfirmPassword({ value: e, error: "" });
+  //   } else {
+  //     setConfirmPassword({ value: "", error: "Password don't match" });
+  //   }
+  // };
 
   const handleSignup = (e) => {
     e.preventDefault();
 
-    if (email.value === "") {
-      setEmail({ value: "", error: "Email is required" });
-    }
+    axios
+      .post("http://localhost:5001/register", values)
+      .then((res) => {
+        toast.success("User create Successfully");
+        navigate("/");
+        console.log(res);
+      })
+      .catch((err) => toast.error("Something went wrong"));
 
-    if (password.value === "") {
-      setPassword({ value: "", error: "Password is required" });
-    }
+    // if (email.value === "") {
+    //   setEmail({ value: "", error: "Email is required" });
+    // }
 
-    if (
-      email.value &&
-      password.value &&
-      confirmPassword.value === password.value
-    ) {
-      createUserWithEmailAndPassword(auth, email.value, password.value)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          toast.success("Successfully login");
-          navigate("/");
-        })
-        .catch((error) => {
-          const errorMessage = error.message;
-          if (errorMessage.includes("email-already-in-use")) {
-            toast.error("User Already Exists");
-          } else {
-            toast.error("Something went wrong");
-          }
-        });
-    }
+    // if (password.value === "") {
+    //   setPassword({ value: "", error: "Password is required" });
+    // }
+
+    // if (
+    //   name.value &&
+    //   email.value &&
+    //   password.value
+    //   // confirmPassword.value === password.value
+    // ) {
+    //   // Google Auth System
+    //   // createUserWithEmailAndPassword(auth, email.value, password.value)
+    //   //   .then((userCredential) => {
+    //   //     const user = userCredential.user;
+    //   //     toast.success("Successfully login");
+    //   //     navigate("/");
+    //   //   })
+    //   //   .catch((error) => {
+    //   //     const errorMessage = error.message;
+    //   //     if (errorMessage.includes("email-already-in-use")) {
+    //   //       toast.error("User Already Exists");
+    //   //     } else {
+    //   //       toast.error("Something went wrong");
+    //   //     }
+    //   //   });
+    // }
   };
 
   return (
@@ -127,6 +145,9 @@ const Signup = () => {
                   name="name"
                   id="name"
                   onBlur={(e) => handleName(e.target.value)}
+                  onChange={(e) =>
+                    setValues({ ...values, name: e.target.value })
+                  }
                 />
               </div>
               <div>
@@ -140,6 +161,9 @@ const Signup = () => {
                   name="email"
                   id="email"
                   onBlur={(e) => handleEmail(e.target.value)}
+                  onChange={(e) =>
+                    setValues({ ...values, email: e.target.value })
+                  }
                 />
                 {email?.error && (
                   <p className="mt-2 text-red-500 font-normal">{email.error}</p>
@@ -156,6 +180,9 @@ const Signup = () => {
                   name="password"
                   id="password"
                   onBlur={(e) => handlePassword(e.target.value)}
+                  onChange={(e) =>
+                    setValues({ ...values, password: e.target.value })
+                  }
                 />
                 {password?.error && (
                   <p className="mt-2 text-red-500 font-normal">
@@ -163,7 +190,7 @@ const Signup = () => {
                   </p>
                 )}
               </div>
-              <div>
+              {/* <div>
                 <label
                   className="text-lg font-semibold"
                   htmlFor="confirm-password">
@@ -182,7 +209,7 @@ const Signup = () => {
                     {confirmPassword.error}
                   </p>
                 )}
-              </div>
+              </div> */}
               <div className="mt-8 flex flex-col gap-y-2">
                 <button
                   className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
