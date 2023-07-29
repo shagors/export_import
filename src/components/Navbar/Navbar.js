@@ -5,25 +5,27 @@ import { auth } from "../../Firebase/Firebase.init";
 
 const Navbar = () => {
   const { pathName } = useLocation();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser({});
-      }
-    });
-  }, []);
+  // setUser(localStorage.removeItem("values"));
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       setUser(user);
+  //     } else {
+  //       setUser({});
+  //     }
+  //   });
+  // }, []);
 
   const handleLogout = () => {
-    signOut(auth)
-      .then(() => {})
-      .catch((error) => {
-        console.log(error);
-      });
+    // signOut(auth)
+    //   .then(() => {})
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    localStorage.removeItem("values");
     navigate("/");
   };
 
@@ -90,7 +92,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        {user?.uid ? (
+        {user ? (
           <p style={{ cursor: "pointer" }} onClick={handleLogout}>
             Log Out
           </p>

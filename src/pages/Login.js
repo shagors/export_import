@@ -32,13 +32,15 @@ const Login = () => {
       });
   };
 
+  // axios.defaults.withCredentials = true;
+
   const handleLogin = (e) => {
     e.preventDefault();
-
     axios
       .post("http://localhost:5001/login", values)
       .then((res) => {
         if (res.data.Status === "Success") {
+          localStorage.setItem("values", JSON.stringify(values?.email));
           toast.success("Login Successfully");
           navigate("/exportimport");
           console.log(res);

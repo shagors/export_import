@@ -88,7 +88,7 @@ const Accounts = ({ brand, model }) => {
                   type="date"
                   onChange={handleChange}
                   name="date"
-                  value={formData.date || ""}
+                  value={formData?.date || ""}
                   className="border-2 select-info rounded-md text-lg p-[6px]"
                 />
               </div>
@@ -109,7 +109,7 @@ const Accounts = ({ brand, model }) => {
                     onChange={handleChange}>
                     <option selected>---- Pick product Brand ----</option>
                     {serverData?.map((product, index) => (
-                      <option key={index}>{product.productBrand}</option>
+                      <option key={index}>{product?.productBrand}</option>
                     ))}
                   </select>
                 </div>
