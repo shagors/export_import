@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { BsArrowLeft } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Accounts = ({ brand, model }) => {
@@ -49,6 +50,12 @@ const Accounts = ({ brand, model }) => {
         <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
           Add Accounts Data :
         </h1>
+        <div className="mt-6">
+          <Link to="/exportimport" className="">
+            <BsArrowLeft className="w-40 lg:w-[380px] h-[35px] text-purple-500" />
+          </Link>
+          <div className="w-8 h-[2px] bg-green-700 ml-[65px] lg:ml-[175px] animate-pulse"></div>
+        </div>
         <div className="mt-5 lg:flex justify-center items-center">
           <form
             className="card lg:w-[700px] bg-base-100 shadow-xl mt-5"

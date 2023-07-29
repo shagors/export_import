@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { BsArrowLeft } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const TransportRoutes = () => {
@@ -35,6 +36,12 @@ const TransportRoutes = () => {
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
         Transport-Way Entry Form
       </h1>
+      <div className="mt-8">
+        <Link to="/exportimport" className="">
+          <BsArrowLeft className="w-56 lg:w-[380px] h-[35px] text-purple-500" />
+        </Link>
+        <div className="w-8 h-[2px] bg-green-700 ml-[95px] lg:ml-[175px] animate-pulse"></div>
+      </div>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-8">
