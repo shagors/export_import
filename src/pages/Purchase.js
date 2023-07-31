@@ -16,7 +16,7 @@ const Purchase = () => {
   const [particularExpencessName, setParticularExpencessName] = useState([]);
   const [productId, setProductId] = useState("");
   // toast.success(`Your click ID: ${productId}`);
-  // console.log(productId);
+  console.log(productId);
 
   // Data fetch from server
   useEffect(() => {
@@ -198,7 +198,7 @@ const Purchase = () => {
               <tbody>
                 {accounts?.map((product) => (
                   <tr
-                    className="hover cursor-pointer"
+                    className={`hover cursor-pointer`}
                     key={product.id}
                     onClick={(e) => {
                       setProductId(product.id);
