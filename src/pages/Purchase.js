@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../styles/purchase.css";
+import { BsArrowLeft } from "react-icons/bs";
 
 const Purchase = () => {
   const [transportPath, setTransportPath] = useState([]);
@@ -10,10 +11,12 @@ const Purchase = () => {
   const [accounts, setAccounts] = useState([]);
   const [charges, setCharges] = useState([]);
   const [checks, setChecks] = useState([]);
-
   const [transportWay, setTransportWay] = useState("");
   const [transportCountryName, setTransportCountryName] = useState("");
   const [particularExpencessName, setParticularExpencessName] = useState([]);
+  const [productId, setProductId] = useState("");
+  // toast.success(`Your click ID: ${productId}`);
+  // console.log(productId);
 
   // Data fetch from server
   useEffect(() => {
@@ -66,8 +69,10 @@ const Purchase = () => {
       transportWay,
       transportCountryName,
       particularExpencessName: checks,
+      product: productId,
     };
     toast.success("Successfully Uploaded!!");
+    navigate("/exportimport");
     console.log(data);
     // axios
     //   .post("http://localhost:5001/purchase", data)
@@ -86,6 +91,12 @@ const Purchase = () => {
           <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
             Add Shipment Data :
           </h1>
+          <div className="mt-8">
+            <Link to="/exportimport" className="">
+              <BsArrowLeft className="w-20 lg:w-[380px] h-[35px] text-purple-500" />
+            </Link>
+            <div className="w-8 h-[2px] bg-green-700 ml-[25px] lg:ml-[175px] animate-pulse"></div>
+          </div>
           <div className="mt-5 lg:flex justify-center items-center">
             <form
               className="card lg:w-[700px] bg-base-100 shadow-xl mt-5"
@@ -156,13 +167,8 @@ const Purchase = () => {
               </div>
               {/* button */}
               <div className="flex justify-end items-center mr-7 py-5">
-                <Link
-                  to="/accounts"
-                  className="btn btn-info font-bold px-8 py-1 text-slate-700 mr-3">
-                  Back
-                </Link>
                 <button
-                  className="btn btn-info font-bold px-8 py-1 text-slate-700"
+                  className="btn btn-info font-bold px-10 py-1 text-slate-700"
                   type="submit">
                   Save
                 </button>
@@ -191,13 +197,18 @@ const Purchase = () => {
               </thead>
               <tbody>
                 {accounts?.map((product) => (
-                  <tr className="hover cursor-pointer" key={product.id}>
+                  <tr
+                    className="hover cursor-pointer"
+                    key={product.id}
+                    onClick={(e) => {
+                      setProductId(product.id);
+                    }}>
                     <td>{product.id}</td>
                     <td>{product.productName}</td>
                     <td>{product.productBrand}</td>
                     <td>{product.productModel}</td>
                     <td>{product.productQuantity}</td>
-                    <tr>{product.date}</tr>
+                    <td>{product.date}</td>
                   </tr>
                 ))}
               </tbody>

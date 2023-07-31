@@ -62,9 +62,9 @@ const Accounts = ({ brand, model }) => {
           </Link>
           <div className="w-8 h-[2px] bg-green-700 ml-[65px] lg:ml-[175px] animate-pulse"></div>
         </div>
-        <div className="mt-5 lg:flex justify-center items-center">
+        <div className="mt-3 lg:flex justify-center items-center">
           <form
-            className="card lg:w-[700px] bg-base-100 shadow-xl mt-5"
+            className="card lg:w-[700px] bg-base-100 shadow-xl mt-3"
             onSubmit={formSubmit}>
             <div className="lg:flex justify-between items-center">
               <div className="form-control card-body">
@@ -196,7 +196,7 @@ const Accounts = ({ brand, model }) => {
                   <td>{product.productBrand}</td>
                   <td>{product.productModel}</td>
                   <td>{product.productQuantity}</td>
-                  <tr>{product.date}</tr>
+                  <td>{product.date}</td>
                 </tr>
               ))}
             </tbody>
