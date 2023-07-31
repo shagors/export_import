@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const Accounts = ({ brand, model }) => {
   const [serverData, setServerData] = useState([]);
+  const [accounts, setAccounts] = useState([]);
 
   const [formData, setFormData] = useState([
     {
@@ -24,7 +25,12 @@ const Accounts = ({ brand, model }) => {
       .get("http://localhost:5001/products")
       .then((res) => setServerData(res.data))
       .catch((error) => setServerData(error));
-  }, []);
+
+    axios
+      .get("http://localhost:5001/office_accounts")
+      .then((res) => setAccounts(res?.data))
+      .catch((error) => setAccounts(error));
+  }, [accounts]);
 
   const handleChange = (event) => {
     setFormData({
@@ -38,8 +44,8 @@ const Accounts = ({ brand, model }) => {
     axios
       .post("http://localhost:5001/office_accounts", formData)
       .then((res) => {
-        toast.success("Successfully File added to server");
-        navigate("/purchase");
+        toast.success("Successfully File added to server & check below table");
+        // navigate("/purchase");
       })
       .catch((err) => toast.error(err.sqlMessage));
   };
@@ -161,6 +167,40 @@ const Accounts = ({ brand, model }) => {
               </button>
             </div>
           </form>
+        </div>
+      </div>
+
+      {/* Table data get from accouts input database */}
+      <div>
+        <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
+          Data Table
+        </h1>
+        <div className="overflow-x-auto add__scrollbar">
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Product Brand</th>
+                <th>Product Model</th>
+                <th>Quantity</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {accounts?.map((product) => (
+                <tr className="hover cursor-pointer" key={product.id}>
+                  <td>{product.id}</td>
+                  <td>{product.productName}</td>
+                  <td>{product.productBrand}</td>
+                  <td>{product.productModel}</td>
+                  <td>{product.productQuantity}</td>
+                  <tr>{product.date}</tr>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </>

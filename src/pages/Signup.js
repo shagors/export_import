@@ -80,9 +80,10 @@ const Signup = () => {
     axios
       .post("http://localhost:5001/register", values)
       .then((res) => {
+        localStorage.setItem("values", JSON.stringify(values?.email));
         toast.success("User create Successfully");
-        navigate("/");
-        console.log(res);
+        navigate("/exportimport");
+        // console.log(res);
       })
       .catch((err) => toast.error("Something went wrong"));
 

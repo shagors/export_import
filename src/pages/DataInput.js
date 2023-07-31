@@ -20,10 +20,17 @@ const DataInput = () => {
     });
   };
 
+  // http://localhost:5001/products
+  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/products
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5001/products", formData)
+      .post("http://localhost:5001/products", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");

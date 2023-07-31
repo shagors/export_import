@@ -19,6 +19,9 @@ const TransportRoutes = () => {
     });
   };
 
+  // http://localhost:5001/transport
+  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -30,6 +33,7 @@ const TransportRoutes = () => {
       })
       .catch((err) => toast.error(err));
   };
+  // console.log(formTransportData);
 
   return (
     <div>
