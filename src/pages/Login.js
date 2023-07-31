@@ -43,7 +43,7 @@ const Login = () => {
           localStorage.setItem("values", JSON.stringify(values?.email));
           toast.success("Login Successfully");
           navigate("/exportimport");
-          console.log(res);
+          // console.log(res);
         } else {
           toast.error("User not found");
         }

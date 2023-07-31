@@ -1,23 +1,13 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { auth } from "../../Firebase/Firebase.init";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const { pathName } = useLocation();
   const [user, setUser] = useState();
   const navigate = useNavigate();
 
-  // setUser(localStorage.removeItem("values"));
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       setUser(user);
-  //     } else {
-  //       setUser({});
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    setUser(localStorage.getItem("values"));
+  }, []);
 
   const handleLogout = () => {
     // signOut(auth)
