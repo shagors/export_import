@@ -10,11 +10,11 @@ const Purchase = () => {
   const [transportCountry, setTransportCountry] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [charges, setCharges] = useState([]);
-  const [checks, setChecks] = useState("");
+  const [checks, setChecks] = useState([]);
   const [transportWay, setTransportWay] = useState("");
   const [transportCountryName, setTransportCountryName] = useState("");
-  const [particularExpencessName, setParticularExpencessName] = useState("");
-  const [productId, setProductId] = useState("");
+  const [particularExpencessName, setParticularExpencessName] = useState([]);
+  const [productId, setProductId] = useState({});
 
   const chaecksCost = JSON.stringify(checks);
   const productData = JSON.stringify(productId);
@@ -74,17 +74,17 @@ const Purchase = () => {
       particularExpencessName: chaecksCost,
       product: productData,
     };
-    // toast.success("Successfully Uploaded!!");
-    // navigate("/exportimport");
+    toast.success("Successfully Uploaded!!");
+    navigate("/exportimport");
     console.log(data);
-    axios
-      .post("http://localhost:5001/purchase", data)
-      .then((res) => {
-        toast.success("Successfully Uploaded to server");
-        // navigate("/exportimport");
-        console.log(res);
-      })
-      .catch((err) => toast.error(err));
+    // axios
+    //   .post("http://localhost:5001/purchase", data)
+    //   .then((res) => {
+    //     toast.success("Successfully Uploaded to server");
+    //     // navigate("/exportimport");
+    //     console.log(res);
+    //   })
+    //   .catch((err) => toast.error(err));
   };
 
   return (
