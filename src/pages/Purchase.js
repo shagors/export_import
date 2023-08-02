@@ -10,13 +10,16 @@ const Purchase = () => {
   const [transportCountry, setTransportCountry] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [charges, setCharges] = useState([]);
-  const [checks, setChecks] = useState([]);
+  const [checks, setChecks] = useState("");
   const [transportWay, setTransportWay] = useState("");
   const [transportCountryName, setTransportCountryName] = useState("");
-  const [particularExpencessName, setParticularExpencessName] = useState([]);
+  const [particularExpencessName, setParticularExpencessName] = useState("");
   const [productId, setProductId] = useState("");
-  // toast.success(`Your click ID: ${productId}`);
-  console.log(productId);
+
+  const chaecksCost = JSON.stringify(checks);
+  const productData = JSON.stringify(productId);
+  // toast.success(`Your click ID: ${productId.id}`);
+  // console.log(productId.id);
 
   // Data fetch from server
   useEffect(() => {
@@ -68,20 +71,20 @@ const Purchase = () => {
     const data = {
       transportWay,
       transportCountryName,
-      particularExpencessName: checks,
-      product: productId,
+      particularExpencessName: chaecksCost,
+      product: productData,
     };
-    toast.success("Successfully Uploaded!!");
-    navigate("/exportimport");
+    // toast.success("Successfully Uploaded!!");
+    // navigate("/exportimport");
     console.log(data);
-    // axios
-    //   .post("http://localhost:5001/purchase", data)
-    //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server");
-    //     // navigate("/exportimport");
-    //     console.log(res);
-    //   })
-    //   .catch((err) => toast.error(err));
+    axios
+      .post("http://localhost:5001/purchase", data)
+      .then((res) => {
+        toast.success("Successfully Uploaded to server");
+        // navigate("/exportimport");
+        console.log(res);
+      })
+      .catch((err) => toast.error(err));
   };
 
   return (
@@ -201,7 +204,7 @@ const Purchase = () => {
                     className={`hover cursor-pointer`}
                     key={product.id}
                     onClick={(e) => {
-                      setProductId(product.id);
+                      setProductId(product);
                     }}>
                     <td>{product.id}</td>
                     <td>{product.productName}</td>
