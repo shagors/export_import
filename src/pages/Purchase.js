@@ -14,12 +14,13 @@ const Purchase = () => {
   const [transportWay, setTransportWay] = useState("");
   const [transportCountryName, setTransportCountryName] = useState("");
   const [particularExpencessName, setParticularExpencessName] = useState([]);
-  const [productId, setProductId] = useState({});
+  const [productChecks, setProductChecks] = useState([]);
+  // const [purchases, setPurchases] = useState([]);
 
   const chaecksCost = JSON.stringify(checks);
-  const productData = JSON.stringify(productId);
-  // toast.success(`Your click ID: ${productId.id}`);
-  // console.log(productId.id);
+  const productData = JSON.stringify(productChecks);
+
+  // console.log(productData);
 
   // Data fetch from server
   useEffect(() => {
@@ -46,12 +47,22 @@ const Purchase = () => {
       .get("http://localhost:5001/addcharges")
       .then((res) => setCharges(res?.data))
       .catch((error) => setCharges(error));
+
+    // for test purchase data check from front end
+    // axios
+    //   .get("http://localhost:5001/purchase")
+    //   .then((res) => setPurchases(res?.data))
+    //   .catch((error) => setPurchases(error));
   }, []);
 
   const navigate = useNavigate();
 
   const handleToCheck = (e, index) => {
     setChecks([...checks, e.target.value]);
+  };
+
+  const handleProductCheck = (product) => {
+    setProductChecks([...productChecks, product]);
   };
 
   const handleTransportWay = (event) => {
@@ -66,6 +77,7 @@ const Purchase = () => {
     setParticularExpencessName(event.target.value);
   };
 
+  // save data
   const formSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -74,17 +86,18 @@ const Purchase = () => {
       particularExpencessName: chaecksCost,
       product: productData,
     };
-    toast.success("Successfully Uploaded!!");
-    navigate("/exportimport");
-    console.log(data);
-    // axios
-    //   .post("http://localhost:5001/purchase", data)
-    //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server");
-    //     // navigate("/exportimport");
-    //     console.log(res);
-    //   })
-    //   .catch((err) => toast.error(err));
+    // toast.success("Successfully Uploaded!!");
+    // navigate("/exportimport");
+    // console.log(data);
+
+    axios
+      .post("http://localhost:5001/purchase", data)
+      .then((res) => {
+        toast.success("Successfully Uploaded to server");
+        // navigate("/exportimport");
+        console.log(res);
+      })
+      .catch((err) => toast.error(err));
   };
 
   return (
@@ -190,6 +203,7 @@ const Purchase = () => {
               {/* head */}
               <thead>
                 <tr>
+                  <th>Select</th>
                   <th>ID</th>
                   <th>Product Name</th>
                   <th>Product Brand</th>
@@ -200,12 +214,16 @@ const Purchase = () => {
               </thead>
               <tbody>
                 {accounts?.map((product) => (
-                  <tr
-                    className={`hover cursor-pointer`}
-                    key={product.id}
-                    onClick={(e) => {
-                      setProductId(product);
-                    }}>
+                  <tr className={`hover cursor-pointer`} key={product.id}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        className="checkbox checkbox-info"
+                        name="product"
+                        value={product}
+                        onClick={() => handleProductCheck(product)}
+                      />
+                    </td>
                     <td>{product.id}</td>
                     <td>{product.productName}</td>
                     <td>{product.productBrand}</td>
@@ -218,6 +236,37 @@ const Purchase = () => {
             </table>
           </div>
         </div>
+
+        {/* table for test purchse */}
+        {/* <div>
+          <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
+            Data Get From purchse Order
+          </h1>
+          <div className="overflow-x-auto add__scrollbar">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Transport Way</th>
+                  <th>Transport Country</th>
+                  <th>Expencess</th>
+                  <th>Product Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                {purchases?.map((purchse) => (
+                  <tr className={`hover cursor-pointer`} key={purchse.id}>
+                    <td>{purchse.id}</td>
+                    <td>{purchse.transportWay}</td>
+                    <td>{purchse.transportCountryName}</td>
+                    <td>{purchse.particularExpencessName}</td>
+                    <td>{purchse.product}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div> */}
       </div>
     </>
   );
