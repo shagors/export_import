@@ -12,34 +12,35 @@ const AddChargesUpdate = () => {
   // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges
   useEffect(() => {
     axios
-      .get(
-        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}`
-      )
+      .get(`http://localhost:5001/addcharges/${id}`)
       .then((res) => {
         setValues({
           ...values,
-          particularExpenseName: res?.data.particularExpenseName,
-          particularExpenseCost: res?.data.particularExpenseCost,
+          particularExpencessName: res?.data[0].particularExpencessName,
+          particularExpencessCost: res?.data[0].particularExpencessCost,
+          // particularExpenseName: res?.data.particularExpenseName,
+          // particularExpenseCost: res?.data.particularExpenseCost,
         });
       })
       .catch((error) => setValues(error));
   }, []);
 
   const [values, setValues] = useState({
-    particularExpenseName: "",
-    particularExpenseCost: 0,
+    particularExpencessName: "",
+    particularExpencessCost: 0,
+    // particularExpenseName: "",
+    // particularExpenseCost: 0,
   });
 
   console.log(id);
 
   // http://localhost:5001/addcharges/:id
+  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(
-        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}`,
-        values
-      )
+      .put(`http://localhost:5001/addcharges/${id}`, values)
       .then((res) => {
         toast.success("Successfully Data Updated!!");
         navigate("/addcharges");

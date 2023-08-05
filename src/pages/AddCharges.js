@@ -10,8 +10,10 @@ const AddCharges = () => {
   const [charges, setCharges] = useState([]);
 
   const [formData, setFormData] = useState({
-    particularExpenseName: "",
-    particularExpenseCost: "",
+    particularExpencessName: "",
+    particularExpencessCost: "",
+    // particularExpenseName: "",
+    // particularExpenseCost: "",
   });
 
   const handleChange = (event) => {
@@ -46,9 +48,7 @@ const AddCharges = () => {
 
   useEffect(() => {
     axios
-      .get(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges"
-      )
+      .get("http://localhost:5001/addcharges")
       .then((res) => setCharges(res?.data))
       .catch((error) => setCharges(error));
   }, [charges]);
@@ -62,9 +62,7 @@ const AddCharges = () => {
   const handleDelete = (id) => {
     console.log(id);
     axios
-      .delete(
-        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}`
-      )
+      .delete(`http://localhost:5001/delete/${id}`)
       .then((res) => {
         toast.success("Data Successfully Deleted!!");
         console.log(res);
@@ -153,8 +151,8 @@ const AddCharges = () => {
               {charges?.map((charge) => (
                 <tr className="hover cursor-pointer" key={charge.id}>
                   <td>{charge.id}</td>
-                  <td>{charge.particularExpenseName}</td>
-                  <td>{charge.particularExpenseCost * 1}</td>
+                  <td>{charge.particularExpencessName}</td>
+                  <td>{charge.particularExpencessCost * 1}</td>
                   <td className="flex justify-evenly items-center">
                     <Link to={`/addcharges/${charge.id}`}>
                       <AiOutlineEdit className="w-6 h-6 text-purple-600" />
