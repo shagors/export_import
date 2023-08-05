@@ -19,10 +19,16 @@ const TransportCountry = () => {
     });
   };
 
+  // http://localhost:5001/transport_country
+  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport_country
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5001/transport_country", formData)
+      .post(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport_country",
+        formData
+      )
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");

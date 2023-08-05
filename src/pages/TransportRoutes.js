@@ -25,7 +25,10 @@ const TransportRoutes = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5001/transport", formTransportData)
+      .post(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport",
+        formTransportData
+      )
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");

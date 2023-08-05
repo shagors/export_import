@@ -15,12 +15,10 @@ const Purchase = () => {
   const [transportCountryName, setTransportCountryName] = useState("");
   const [particularExpencessName, setParticularExpencessName] = useState([]);
   const [productChecks, setProductChecks] = useState([]);
-  // const [purchases, setPurchases] = useState([]);
+  const [purchases, setPurchases] = useState([]);
 
-  const chaecksCost = JSON.stringify(checks);
-  const productData = JSON.stringify(productChecks);
-
-  // console.log(productData);
+  // const chaecksCost = JSON.stringify(checks);
+  // const productData = JSON.stringify(productChecks);
 
   // Data fetch from server
   useEffect(() => {
@@ -49,10 +47,10 @@ const Purchase = () => {
       .catch((error) => setCharges(error));
 
     // for test purchase data check from front end
-    // axios
-    //   .get("http://localhost:5001/purchase")
-    //   .then((res) => setPurchases(res?.data))
-    //   .catch((error) => setPurchases(error));
+    axios
+      .get("http://localhost:5001/purchase")
+      .then((res) => setPurchases(res?.data))
+      .catch((error) => setPurchases(error));
   }, []);
 
   const navigate = useNavigate();
@@ -83,26 +81,27 @@ const Purchase = () => {
     const data = {
       transportWay,
       transportCountryName,
-      particularExpencessName: chaecksCost,
-      product: productData,
+      particularExpencessName: checks,
+      product: productChecks,
     };
-    // toast.success("Successfully Uploaded!!");
-    // navigate("/exportimport");
-    // console.log(data);
+    toast.success("Successfully Uploaded!!");
+    navigate("/exportimport");
+    console.log(data);
 
-    axios
-      .post("http://localhost:5001/purchase", data)
-      .then((res) => {
-        toast.success("Successfully Uploaded to server");
-        // navigate("/exportimport");
-        console.log(res);
-      })
-      .catch((err) => toast.error(err));
+    // axios
+    //   .post("http://localhost:5001/purchase", data)
+    //   .then((res) => {
+    //     toast.success("Successfully Uploaded to server");
+    //     // navigate("/exportimport");
+    //     console.log(res);
+    //   })
+    //   .catch((err) => toast.error(err));
   };
 
   return (
     <>
       <div>
+        {/* top form select and checkbox design */}
         <div className="">
           <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
             Add Shipment Data :
@@ -184,7 +183,7 @@ const Purchase = () => {
               {/* button */}
               <div className="flex justify-end items-center mr-7 py-5">
                 <button
-                  className="btn btn-info font-bold px-10 py-1 text-slate-700"
+                  className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800"
                   type="submit">
                   Save
                 </button>

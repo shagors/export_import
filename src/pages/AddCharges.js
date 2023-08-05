@@ -10,8 +10,8 @@ const AddCharges = () => {
   const [charges, setCharges] = useState([]);
 
   const [formData, setFormData] = useState({
-    particularExpencessName: "",
-    particularExpencessCost: 0,
+    particularExpenseName: "",
+    particularExpenseCost: "",
   });
 
   const handleChange = (event) => {
@@ -25,28 +25,54 @@ const AddCharges = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5001/addcharges", formData)
+      .post(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         toast.success("Data Successfully Uploaded to server");
+        console.log(res);
       })
       .catch((err) => toast.error(err));
   };
 
+  // http://localhost:5001/addcharges
+  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges
+
   useEffect(() => {
     axios
-      .get("http://localhost:5001/addcharges")
+      .get(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges"
+      )
       .then((res) => setCharges(res?.data))
       .catch((error) => setCharges(error));
   }, [charges]);
 
+  // console.log(charges);
+
   // data delete from server and also frontend
+
+  // http://localhost:5001/delete/:id
+
   const handleDelete = (id) => {
+    console.log(id);
     axios
-      .delete(`http://localhost:5001/delete/${id}`)
+      .delete(
+        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}`
+      )
       .then((res) => {
         toast.success("Data Successfully Deleted!!");
+        console.log(res);
       })
-      .catch((error) => setCharges(error));
+      .catch((error) => {
+        console.log(error);
+        toast.error("Something wrong can't delete");
+      });
   };
 
   return (
@@ -71,7 +97,7 @@ const AddCharges = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-2 bg-transparent"
                 placeholder="Enter Expencess Type"
                 type="text"
-                name="particularExpencessName"
+                name="particularExpenseName"
                 id="particularExpencessName"
                 onChange={handleChange}
                 required
@@ -90,7 +116,7 @@ const AddCharges = () => {
                 step="any"
                 // maxLength="9"
                 // validate="true"
-                name="particularExpencessCost"
+                name="particularExpenseCost"
                 id="particularExpencessCost"
                 onChange={handleChange}
                 required
@@ -127,8 +153,8 @@ const AddCharges = () => {
               {charges?.map((charge) => (
                 <tr className="hover cursor-pointer" key={charge.id}>
                   <td>{charge.id}</td>
-                  <td>{charge.particularExpencessName}</td>
-                  <td>{charge.particularExpencessCost * 1}</td>
+                  <td>{charge.particularExpenseName}</td>
+                  <td>{charge.particularExpenseCost * 1}</td>
                   <td className="flex justify-evenly items-center">
                     <Link to={`/addcharges/${charge.id}`}>
                       <AiOutlineEdit className="w-6 h-6 text-purple-600" />

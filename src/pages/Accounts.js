@@ -20,6 +20,9 @@ const Accounts = ({ brand, model }) => {
 
   const navigate = useNavigate();
 
+  // http://localhost:5001/products
+  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/products
+
   useEffect(() => {
     axios
       .get("http://localhost:5001/products")
@@ -161,7 +164,7 @@ const Accounts = ({ brand, model }) => {
             </div>
             <div className="flex justify-end items-center mr-7 py-5">
               <button
-                className="btn btn-info font-bold px-8 py-1 text-slate-700"
+                className="btn btn-info font-bold px-8 py-1 text-purple-950 hover:text-purple-800"
                 type="submit">
                 Save
               </button>
