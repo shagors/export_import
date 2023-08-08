@@ -76,6 +76,17 @@ const Purchase = () => {
     setParticularExpencessName(event.target.value);
   };
 
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:5001/office_accounts_clone/${id}`)
+      .then((res) => {
+        toast.success("Data Successfully Deleted!!");
+      })
+      .catch((error) => {
+        toast.error("Something wrong can't delete");
+      });
+  };
+
   // save data
   const formSubmit = (e) => {
     e.preventDefault();
@@ -97,17 +108,6 @@ const Purchase = () => {
     //     console.log(res);
     //   })
     //   .catch((err) => toast.error(err));
-  };
-
-  const handleDelete = (id) => {
-    axios
-      .delete(`http://localhost:5001/office_accounts_clone/${id}`)
-      .then((res) => {
-        toast.success("Data Successfully Deleted!!");
-      })
-      .catch((error) => {
-        toast.error("Something wrong can't delete");
-      });
   };
 
   return (
