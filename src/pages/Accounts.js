@@ -14,7 +14,7 @@ const Accounts = ({ brand, model }) => {
       productName: "",
       date: "",
       productBrand: "",
-      productQuantity: "",
+      productQuantity: 0,
     },
   ]);
 
@@ -48,8 +48,14 @@ const Accounts = ({ brand, model }) => {
       .post("http://localhost:5001/office_accounts", formData)
       .then((res) => {
         toast.success("Successfully File added to server & check below table");
-        // navigate("/purchase");
+        // console.log(res);
+        navigate("/exportimport");
       })
+      .catch((err) => toast.error(err.sqlMessage));
+
+    axios
+      .post("http://localhost:5001/office_accounts_clone", formData)
+      // .then((res) => console.log(res))
       .catch((err) => toast.error(err.sqlMessage));
   };
 

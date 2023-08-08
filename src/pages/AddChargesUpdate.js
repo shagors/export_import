@@ -32,8 +32,6 @@ const AddChargesUpdate = () => {
     // particularExpenseCost: 0,
   });
 
-  console.log(id);
-
   // http://localhost:5001/addcharges/:id
   // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}
 

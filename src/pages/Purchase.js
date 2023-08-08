@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../styles/purchase.css";
 import { BsArrowLeft } from "react-icons/bs";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const Purchase = () => {
   const [transportPath, setTransportPath] = useState([]);
@@ -36,7 +37,7 @@ const Purchase = () => {
 
     //   getting accounts data from office_accounts server
     axios
-      .get("http://localhost:5001/office_accounts")
+      .get("http://localhost:5001/office_accounts_clone")
       .then((res) => setAccounts(res?.data))
       .catch((error) => setAccounts(error));
 
@@ -51,7 +52,7 @@ const Purchase = () => {
       .get("http://localhost:5001/purchase")
       .then((res) => setPurchases(res?.data))
       .catch((error) => setPurchases(error));
-  }, []);
+  }, [accounts]);
 
   const navigate = useNavigate();
 
@@ -96,6 +97,17 @@ const Purchase = () => {
     //     console.log(res);
     //   })
     //   .catch((err) => toast.error(err));
+  };
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:5001/office_accounts_clone/${id}`)
+      .then((res) => {
+        toast.success("Data Successfully Deleted!!");
+      })
+      .catch((error) => {
+        toast.error("Something wrong can't delete");
+      });
   };
 
   return (
@@ -169,7 +181,7 @@ const Purchase = () => {
                       </span>
                       <input
                         type="checkbox"
-                        className="checkbox checkbox-info"
+                        className={`checkbox checkbox-info`}
                         id={charge.id}
                         value={charge.particularExpencessName}
                         name="particularExpencessName"
@@ -209,6 +221,7 @@ const Purchase = () => {
                   <th>Product Model</th>
                   <th>Quantity</th>
                   <th>Date</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -229,6 +242,11 @@ const Purchase = () => {
                     <td>{product.productModel}</td>
                     <td>{product.productQuantity}</td>
                     <td>{product.date}</td>
+                    <td>
+                      <button onClick={() => handleDelete(product?.id)}>
+                        <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

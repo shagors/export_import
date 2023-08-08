@@ -44,7 +44,7 @@ const AddCharges = () => {
   };
 
   // http://localhost:5001/addcharges
-  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges
+  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/id
 
   useEffect(() => {
     axios
