@@ -10,11 +10,7 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    // signOut(auth)
-    //   .then(() => {})
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    window.location.reload();
     localStorage.removeItem("values");
     navigate("/");
   };
