@@ -25,12 +25,16 @@ const Accounts = ({ brand, model }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/products")
+      .get(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/products"
+      )
       .then((res) => setServerData(res.data))
       .catch((error) => setServerData(error));
 
     axios
-      .get("http://localhost:5001/office_accounts")
+      .get(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/office_accounts"
+      )
       .then((res) => setAccounts(res?.data))
       .catch((error) => setAccounts(error));
   }, [accounts]);
@@ -45,7 +49,10 @@ const Accounts = ({ brand, model }) => {
   const formSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5001/office_accounts", formData)
+      .post(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/office_accounts",
+        formData
+      )
       .then((res) => {
         toast.success("Successfully File added to server & check below table");
         // console.log(res);

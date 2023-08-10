@@ -22,29 +22,41 @@ const Purchase = () => {
   // const productData = JSON.stringify(productChecks);
 
   // Data fetch from server
+  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/
   useEffect(() => {
     //   getting transport data from server
     axios
-      .get("http://localhost:5001/transport")
+      .get(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport"
+      )
       .then((res) => setTransportPath(res.data))
       .catch((error) => setTransportPath(error));
 
     //   getting transport country data from server
     axios
-      .get("http://localhost:5001/transport_country")
+      .get(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport_country"
+      )
       .then((res) => setTransportCountry(res.data))
       .catch((error) => setTransportCountry(error));
 
     //   getting accounts data from office_accounts server
     axios
-      .get("http://localhost:5001/office_accounts_clone")
+      .get(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/office_accounts"
+      )
       .then((res) => setAccounts(res?.data))
       .catch((error) => setAccounts(error));
 
     // geeting charges api call
     axios
-      .get("http://localhost:5001/addcharges")
-      .then((res) => setCharges(res?.data))
+      .get(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges"
+      )
+      .then((res) => {
+        setCharges(res?.data);
+        // console.log(res?.data);
+      })
       .catch((error) => setCharges(error));
 
     // for test purchase data check from front end
@@ -52,7 +64,9 @@ const Purchase = () => {
       .get("http://localhost:5001/purchase")
       .then((res) => setPurchases(res?.data))
       .catch((error) => setPurchases(error));
-  }, [accounts]);
+  }, []);
+
+  // console.log(charges);
 
   const navigate = useNavigate();
 
@@ -93,21 +107,24 @@ const Purchase = () => {
     const data = {
       transportWay,
       transportCountryName,
-      particularExpencessName: checks,
+      particularExpenseName: checks,
       product: productChecks,
     };
-    toast.success("Successfully Uploaded!!");
-    navigate("/exportimport");
-    console.log(data);
+    // toast.success("Successfully Uploaded!!");
+    // navigate("/exportimport");
+    // console.log(data);
 
-    // axios
-    //   .post("http://localhost:5001/purchase", data)
-    //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server");
-    //     // navigate("/exportimport");
-    //     console.log(res);
-    //   })
-    //   .catch((err) => toast.error(err));
+    axios
+      .post(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/purchase",
+        data
+      )
+      .then((res) => {
+        toast.success("Successfully Uploaded to server");
+        // navigate("/exportimport");
+        console.log(res);
+      })
+      .catch((err) => toast.error(err));
   };
 
   return (
@@ -170,21 +187,22 @@ const Purchase = () => {
                   </div>
                 </div>
               </div>
-
               {/* Tax and costing */}
+              {/* particularExpencessName */}
+              {/* particularExpenseName: ""*/}
               <div className="w-70 p-9 add__scrollbar">
                 <div className="form-control">
                   {charges?.map((charge) => (
                     <label className="cursor-pointer label" key={charge.id}>
                       <span className="label-text">
-                        {charge.particularExpencessName}
+                        {charge.particularExpenseName}
                       </span>
                       <input
                         type="checkbox"
                         className={`checkbox checkbox-info`}
                         id={charge.id}
-                        value={charge.particularExpencessName}
-                        name="particularExpencessName"
+                        value={charge.particularExpenseName}
+                        name="particularExpenseName"
                         onChange={handleParticularExpencessName}
                         onClick={handleToCheck}
                       />

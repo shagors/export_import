@@ -10,10 +10,10 @@ const AddCharges = () => {
   const [charges, setCharges] = useState([]);
 
   const [formData, setFormData] = useState({
-    particularExpencessName: "",
-    particularExpencessCost: "",
-    // particularExpenseName: "",
-    // particularExpenseCost: "",
+    // particularExpencessName: "",
+    // particularExpencessCost: "",
+    particularExpenseName: "",
+    particularExpenseCost: "",
   });
 
   const handleChange = (event) => {
@@ -23,7 +23,10 @@ const AddCharges = () => {
     });
   };
 
-  // Data save for server
+  // Data save for server------
+
+  //  http://localhost:5001/addcharges
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -38,6 +41,7 @@ const AddCharges = () => {
       )
       .then((res) => {
         toast.success("Data Successfully Uploaded to server");
+        window.location.reload();
         console.log(res);
       })
       .catch((err) => toast.error(err));
@@ -48,7 +52,9 @@ const AddCharges = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/addcharges")
+      .get(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges"
+      )
       .then((res) => setCharges(res?.data))
       .catch((error) => setCharges(error));
   }, [charges]);
@@ -60,9 +66,11 @@ const AddCharges = () => {
   // http://localhost:5001/delete/:id
 
   const handleDelete = (id) => {
-    console.log(id);
+    // console.log(id);
     axios
-      .delete(`http://localhost:5001/delete/${id}`)
+      .delete(
+        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}`
+      )
       .then((res) => {
         toast.success("Data Successfully Deleted!!");
         console.log(res);
@@ -96,7 +104,6 @@ const AddCharges = () => {
                 placeholder="Enter Expencess Type"
                 type="text"
                 name="particularExpenseName"
-                id="particularExpencessName"
                 onChange={handleChange}
                 required
               />
@@ -115,7 +122,6 @@ const AddCharges = () => {
                 // maxLength="9"
                 // validate="true"
                 name="particularExpenseCost"
-                id="particularExpencessCost"
                 onChange={handleChange}
                 required
               />
@@ -151,8 +157,8 @@ const AddCharges = () => {
               {charges?.map((charge) => (
                 <tr className="hover cursor-pointer" key={charge.id}>
                   <td>{charge.id}</td>
-                  <td>{charge.particularExpencessName}</td>
-                  <td>{charge.particularExpencessCost * 1}</td>
+                  <td>{charge.particularExpenseName}</td>
+                  <td>{charge.particularExpenseCost * 1}</td>
                   <td className="flex justify-evenly items-center">
                     <Link to={`/addcharges/${charge.id}`}>
                       <AiOutlineEdit className="w-6 h-6 text-purple-600" />

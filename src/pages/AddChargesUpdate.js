@@ -12,20 +12,23 @@ const AddChargesUpdate = () => {
   // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges
   useEffect(() => {
     axios
-      .get(`http://localhost:5001/addcharges/${id}`)
+      .get(
+        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}`
+      )
       .then((res) => {
         setValues({
           ...values,
-          particularExpencessName: res?.data[0].particularExpencessName,
-          particularExpencessCost: res?.data[0].particularExpencessCost,
-          // particularExpenseName: res?.data.particularExpenseName,
-          // particularExpenseCost: res?.data.particularExpenseCost,
+          // particularExpencessName: res?.data[0].particularExpencessName,
+          // particularExpencessCost: res?.data[0].particularExpencessCost,
+          particularExpenseName: res?.data.particularExpenseName,
+          particularExpenseCost: res?.data.particularExpenseCost,
         });
       })
       .catch((error) => setValues(error));
   }, []);
 
   const [values, setValues] = useState({
+    id,
     particularExpencessName: "",
     particularExpencessCost: 0,
     // particularExpenseName: "",
@@ -38,7 +41,10 @@ const AddChargesUpdate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5001/addcharges/${id}`, values)
+      .put(
+        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges`,
+        values
+      )
       .then((res) => {
         toast.success("Successfully Data Updated!!");
         navigate("/addcharges");
@@ -62,6 +68,26 @@ const AddChargesUpdate = () => {
           <div className="mt-6">
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
+                Id
+              </label>
+              <input
+                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-2 bg-transparent"
+                placeholder="Enter Expencess Type"
+                type="number"
+                name="id"
+                value={values.id}
+                disabled
+                onChange={(e) =>
+                  setValues({
+                    ...values,
+                    particularExpenseName: e.target.value,
+                  })
+                }
+                required
+              />
+            </div>
+            <div>
+              <label className="text-lg font-semibold" htmlFor="productName">
                 What Type of Expencess
               </label>
               <input
@@ -69,12 +95,12 @@ const AddChargesUpdate = () => {
                 placeholder="Enter Expencess Type"
                 type="text"
                 name="particularExpencessName"
-                value={values.particularExpencessName}
+                value={values.particularExpenseName}
                 id="particularExpencessName"
                 onChange={(e) =>
                   setValues({
                     ...values,
-                    particularExpencessName: e.target.value,
+                    particularExpenseName: e.target.value,
                   })
                 }
                 required
@@ -87,14 +113,14 @@ const AddChargesUpdate = () => {
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-2 bg-transparent"
                 placeholder="Enter Expencess Cost"
-                type="number"
+                type="text"
                 name="particularExpencessCost"
                 id="particularExpencessCost"
-                value={values.particularExpencessCost}
+                value={values.particularExpenseCost}
                 onChange={(e) =>
                   setValues({
                     ...values,
-                    particularExpencessCost: e.target.value,
+                    particularExpenseCost: e.target.value,
                   })
                 }
                 required
