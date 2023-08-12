@@ -17,6 +17,9 @@ const Purchase = () => {
   const [particularExpencessName, setParticularExpencessName] = useState([]);
   const [productChecks, setProductChecks] = useState([]);
   const [purchases, setPurchases] = useState([]);
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   // const chaecksCost = JSON.stringify(checks);
   // const productData = JSON.stringify(productChecks);
@@ -30,7 +33,8 @@ const Purchase = () => {
         "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport"
       )
       .then((res) => setTransportPath(res.data))
-      .catch((error) => setTransportPath(error));
+      .catch((error) => setError(error));
+    // console.log(transportPath[1].id);
 
     //   getting transport country data from server
     axios
@@ -38,7 +42,7 @@ const Purchase = () => {
         "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport_country"
       )
       .then((res) => setTransportCountry(res.data))
-      .catch((error) => setTransportCountry(error));
+      .catch((error) => setError(error));
 
     //   getting accounts data from office_accounts server
     axios
@@ -46,7 +50,7 @@ const Purchase = () => {
         "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/office_accounts"
       )
       .then((res) => setAccounts(res?.data))
-      .catch((error) => setAccounts(error));
+      .catch((error) => setError(error));
 
     // geeting charges api call
     axios
@@ -57,25 +61,25 @@ const Purchase = () => {
         setCharges(res?.data);
         // console.log(res?.data);
       })
-      .catch((error) => setCharges(error));
+      .catch((error) => setError(error));
 
     // for test purchase data check from front end
     axios
       .get("http://localhost:5001/purchase")
       .then((res) => setPurchases(res?.data))
-      .catch((error) => setPurchases(error));
+      .catch((error) => setError(error));
   }, []);
 
-  // console.log(charges);
-
-  const navigate = useNavigate();
+  if (error) {
+    return toast.error("Error coming from server please try again later");
+  }
 
   const handleToCheck = (e, index) => {
     setChecks([...checks, e.target.value]);
   };
 
   const handleProductCheck = (product) => {
-    setProductChecks([...productChecks, product]);
+    setProductChecks([...productChecks, product.id]);
   };
 
   const handleTransportWay = (event) => {
@@ -83,7 +87,9 @@ const Purchase = () => {
   };
 
   const handleTransportCountryName = (event) => {
+    const selectedCountryName = event.target.value;
     setTransportCountryName(event.target.value);
+    // console.log(transportCountryName);
   };
 
   const handleParticularExpencessName = (event) => {
@@ -110,21 +116,21 @@ const Purchase = () => {
       particularExpenseName: checks,
       product: productChecks,
     };
-    // toast.success("Successfully Uploaded!!");
-    // navigate("/exportimport");
-    // console.log(data);
+    toast.success("Successfully Uploaded!!");
+    navigate("/exportimport");
+    console.log(data);
 
-    axios
-      .post(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/purchase",
-        data
-      )
-      .then((res) => {
-        toast.success("Successfully Uploaded to server");
-        // navigate("/exportimport");
-        console.log(res);
-      })
-      .catch((err) => toast.error(err));
+    // axios
+    //   .post(
+    //     "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/purchase",
+    //     data
+    //   )
+    //   .then((res) => {
+    //     toast.success("Successfully Uploaded to server");
+    //     // navigate("/exportimport");
+    //     console.log(res);
+    //   })
+    //   .catch((err) => toast.error("This error coming from server please try again later!!"));
   };
 
   return (
@@ -161,7 +167,9 @@ const Purchase = () => {
                       onChange={handleTransportWay}>
                       <option selected>---- Pick Transport Way ----</option>
                       {transportPath?.map((product, index) => (
-                        <option key={index}>{product.transportWay}</option>
+                        <option value={product.id} key={index}>
+                          {product.transportWay}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -181,7 +189,9 @@ const Purchase = () => {
                       onChange={handleTransportCountryName}>
                       <option selected>---- Pick Shipment Country ----</option>
                       {transportCountry?.map((product, index) => (
-                        <option key={index}>{product.countryName}</option>
+                        <option value={product.id} key={index}>
+                          {product.countryName}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -201,7 +211,7 @@ const Purchase = () => {
                         type="checkbox"
                         className={`checkbox checkbox-info`}
                         id={charge.id}
-                        value={charge.particularExpenseName}
+                        value={charge.id}
                         name="particularExpenseName"
                         onChange={handleParticularExpencessName}
                         onClick={handleToCheck}
@@ -250,7 +260,7 @@ const Purchase = () => {
                         type="checkbox"
                         className="checkbox checkbox-info"
                         name="product"
-                        value={product}
+                        value={product.id}
                         onClick={() => handleProductCheck(product)}
                       />
                     </td>

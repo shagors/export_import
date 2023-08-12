@@ -58,12 +58,16 @@ const Accounts = ({ brand, model }) => {
         // console.log(res);
         navigate("/exportimport");
       })
-      .catch((err) => toast.error(err.sqlMessage));
+      .catch((err) =>
+        toast.error("Error coming from server please try again later")
+      );
 
     axios
       .post("http://localhost:5001/office_accounts_clone", formData)
       // .then((res) => console.log(res))
-      .catch((err) => toast.error(err.sqlMessage));
+      .catch((err) =>
+        toast.error("Error coming from server please try again later")
+      );
   };
 
   return (

@@ -44,7 +44,9 @@ const AddCharges = () => {
         window.location.reload();
         console.log(res);
       })
-      .catch((err) => toast.error(err));
+      .catch((err) =>
+        toast.error("Error coming from server please try again later")
+      );
   };
 
   // http://localhost:5001/addcharges
@@ -56,7 +58,9 @@ const AddCharges = () => {
         "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges"
       )
       .then((res) => setCharges(res?.data))
-      .catch((error) => setCharges(error));
+      .catch((error) =>
+        setCharges("Error coming from server please try again later")
+      );
   }, [charges]);
 
   // console.log(charges);
@@ -73,11 +77,11 @@ const AddCharges = () => {
       )
       .then((res) => {
         toast.success("Data Successfully Deleted!!");
-        console.log(res);
+        // console.log(res);
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Something wrong can't delete");
+        toast.error("Something wrong in server you can't delete");
       });
   };
 
