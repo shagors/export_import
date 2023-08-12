@@ -4,31 +4,39 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const Signup = () => {
-  const [name, setName] = useState({ value: "", error: "" });
-  const [email, setEmail] = useState({ value: "", error: "" });
+  // const [name, setName] = useState({ value: "", error: "" });
+  // const [email, setEmail] = useState({ value: "", error: "" });
+  // const [password, setPassword] = useState({ value: "", error: "" });
+  const [userName, setUserName] = useState({ value: "", error: "" });
+  const [userEmail, setUserEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
-  // const [confirmPassword, setConfirmPassword] = useState({
-  //   value: "",
-  //   error: "",
-  // });
 
   const [values, setValues] = useState({
-    name: "",
-    email: "",
+    // name: "",
+    // email: "",
+    // password: "",
+    userName: "",
+    userEmail: "",
     password: "",
   });
 
   const navigate = useNavigate();
 
   const handleName = (e) => {
-    setName({ value: e, error: "" });
+    // setName({ value: e, error: "" });
+    setUserName({ value: e, error: "" });
   };
 
   const handleEmail = (e) => {
     if (/^\S+@\S+\.\S+$/.test(e)) {
-      setEmail({ value: e, error: "" });
+      // setEmail({ value: e, error: "" });
+      setUserEmail({ value: e, error: "" });
     } else {
-      setEmail({
+      // setEmail({
+      //   value: "",
+      //   error: "Invalid Email. please give right email address",
+      // });
+      setUserEmail({
         value: "",
         error: "Invalid Email. please give right email address",
       });
@@ -36,10 +44,10 @@ const Signup = () => {
   };
 
   const handlePassword = (e) => {
-    if (e.length < 7) {
+    if (e.length > 6) {
       setPassword({
         value: "",
-        error: "Password too short. minimum 8 characters",
+        error: "Password too short. minimum 6 characters",
       });
     } else {
       setPassword({ value: e, error: "" });
@@ -57,13 +65,18 @@ const Signup = () => {
   const handleSignup = (e) => {
     e.preventDefault();
 
+    // http://localhost:5001/register
+    // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users
     axios
-      .post("http://localhost:5001/register", values)
+      .post(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users",
+        values
+      )
       .then((res) => {
         localStorage.setItem("values", JSON.stringify(values?.email));
         toast.success("User create Successfully");
         navigate("/");
-        // console.log(res);
+        console.log(res);
       })
       .catch((err) => toast.error("Something went wrong"));
 
@@ -123,11 +136,11 @@ const Signup = () => {
                   className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
                   placeholder="Enter your name"
                   type="name"
-                  name="name"
-                  id="name"
+                  // name="name"
+                  name="userName"
                   onBlur={(e) => handleName(e.target.value)}
                   onChange={(e) =>
-                    setValues({ ...values, name: e.target.value })
+                    setValues({ ...values, userName: e.target.value })
                   }
                 />
               </div>
@@ -139,15 +152,19 @@ const Signup = () => {
                   className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
                   placeholder="Enter your email"
                   type="email"
-                  name="email"
-                  id="email"
+                  // name="email"
+                  name="useEmail"
                   onBlur={(e) => handleEmail(e.target.value)}
                   onChange={(e) =>
-                    setValues({ ...values, email: e.target.value })
+                    setValues({ ...values, userEmail: e.target.value })
                   }
                 />
-                {email?.error && (
-                  <p className="mt-2 text-red-500 font-normal">{email.error}</p>
+                {/* {email?.error && (
+                  <p className="mt-2 text-red-500 font-normal">{email.error}</p> */}
+                {userEmail?.error && (
+                  <p className="mt-2 text-red-500 font-normal">
+                    {userEmail.error}
+                  </p>
                 )}
               </div>
               <div>
