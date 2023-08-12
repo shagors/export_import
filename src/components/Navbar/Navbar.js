@@ -59,7 +59,7 @@ const Navbar = () => {
           <li>
             <NavLink
               className="hover:font-bold hover:text-white"
-              to="/accounts">
+              to="/exportimport">
               Accounts
             </NavLink>
           </li>

@@ -16,13 +16,12 @@ const Purchase = () => {
   const [transportCountryName, setTransportCountryName] = useState("");
   const [particularExpencessName, setParticularExpencessName] = useState([]);
   const [productChecks, setProductChecks] = useState([]);
-  const [purchases, setPurchases] = useState([]);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
-  // const chaecksCost = JSON.stringify(checks);
-  // const productData = JSON.stringify(productChecks);
+  const chaecksCost = JSON.stringify(checks);
+  const productData = JSON.stringify(productChecks);
 
   // Data fetch from server
   // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/
@@ -61,12 +60,6 @@ const Purchase = () => {
         setCharges(res?.data);
         // console.log(res?.data);
       })
-      .catch((error) => setError(error));
-
-    // for test purchase data check from front end
-    axios
-      .get("http://localhost:5001/purchase")
-      .then((res) => setPurchases(res?.data))
       .catch((error) => setError(error));
   }, []);
 
@@ -113,24 +106,27 @@ const Purchase = () => {
     const data = {
       transportWay,
       transportCountryName,
-      particularExpenseName: checks,
-      product: productChecks,
+      particularExpenseName: chaecksCost,
+      product: productData,
     };
     toast.success("Successfully Uploaded!!");
     navigate("/exportimport");
     console.log(data);
 
+    // http://localhost:5001/purchase
+    // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/purchase
+
     // axios
-    //   .post(
-    //     "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/purchase",
-    //     data
-    //   )
+    //   .post("http://localhost:5001/purchase", data)
     //   .then((res) => {
     //     toast.success("Successfully Uploaded to server");
+    //     // window.location.reload();
     //     // navigate("/exportimport");
     //     console.log(res);
     //   })
-    //   .catch((err) => toast.error("This error coming from server please try again later!!"));
+    //   .catch((err) =>
+    //     toast.error("This error coming from server please try again later!!")
+    //   );
   };
 
   return (
@@ -281,37 +277,6 @@ const Purchase = () => {
             </table>
           </div>
         </div>
-
-        {/* table for test purchse */}
-        {/* <div>
-          <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
-            Data Get From purchse Order
-          </h1>
-          <div className="overflow-x-auto add__scrollbar">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Transport Way</th>
-                  <th>Transport Country</th>
-                  <th>Expencess</th>
-                  <th>Product Details</th>
-                </tr>
-              </thead>
-              <tbody>
-                {purchases?.map((purchse) => (
-                  <tr className={`hover cursor-pointer`} key={purchse.id}>
-                    <td>{purchse.id}</td>
-                    <td>{purchse.transportWay}</td>
-                    <td>{purchse.transportCountryName}</td>
-                    <td>{purchse.particularExpencessName}</td>
-                    <td>{purchse.product}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div> */}
       </div>
     </>
   );
