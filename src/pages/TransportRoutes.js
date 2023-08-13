@@ -48,8 +48,8 @@ const TransportRoutes = () => {
       <div className="mt-8">
         <Link to="/exportimport" className="">
           <BsArrowLeft className="w-56 lg:w-[380px] h-[35px] text-purple-500" />
+          <div className="w-8 h-[2px] bg-green-700 ml-[95px] lg:ml-[175px] animate-pulse"></div>
         </Link>
-        <div className="w-8 h-[2px] bg-green-700 ml-[95px] lg:ml-[175px] animate-pulse"></div>
       </div>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">

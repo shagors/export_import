@@ -17,6 +17,9 @@ const Accounts = ({ brand, model }) => {
       productQuantity: 0,
     },
   ]);
+  // if (formData.productName === "" || formData.date === "") {
+  //   toast.error("Your data is empty Please provide Data");
+  // }
 
   const navigate = useNavigate();
 
@@ -61,13 +64,6 @@ const Accounts = ({ brand, model }) => {
       .catch((err) =>
         toast.error("Error coming from server please try again later")
       );
-
-    axios
-      .post("http://localhost:5001/office_accounts_clone", formData)
-      // .then((res) => console.log(res))
-      .catch((err) =>
-        toast.error("Error coming from server please try again later")
-      );
   };
 
   return (
@@ -79,8 +75,8 @@ const Accounts = ({ brand, model }) => {
         <div className="mt-6">
           <Link to="/exportimport" className="">
             <BsArrowLeft className="w-40 lg:w-[380px] h-[35px] text-purple-500" />
+            <div className="w-8 h-[2px] bg-green-700 ml-[65px] lg:ml-[175px] animate-pulse"></div>
           </Link>
-          <div className="w-8 h-[2px] bg-green-700 ml-[65px] lg:ml-[175px] animate-pulse"></div>
         </div>
         <div className="mt-3 lg:flex justify-center items-center">
           <form
@@ -97,7 +93,7 @@ const Accounts = ({ brand, model }) => {
                   <select
                     className="select select-info w-full max-w-xs"
                     id="selectOption"
-                    value={formData.productName || ""}
+                    value={formData.productName}
                     name="productName"
                     onChange={handleChange}>
                     <option selected>---- Pick product Name ----</option>
@@ -114,7 +110,7 @@ const Accounts = ({ brand, model }) => {
                   type="date"
                   onChange={handleChange}
                   name="date"
-                  value={formData?.date || ""}
+                  value={formData?.date}
                   className="border-2 select-info rounded-md text-lg p-[6px]"
                 />
               </div>
