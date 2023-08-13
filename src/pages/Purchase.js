@@ -104,29 +104,33 @@ const Purchase = () => {
   const formSubmit = (e) => {
     e.preventDefault();
     const data = {
-      transportWay,
-      transportCountryName,
-      particularExpenseName: chaecksCost,
-      product: productData,
+      transportWayId: transportWay,
+      transportCountryId: transportCountryName,
+      addChargesId: chaecksCost,
+      officeAccountId: productData,
+      // particularExpenseName: chaecksCost,
+      // product: productData,
     };
-    toast.success("Successfully Uploaded!!");
-    navigate("/exportimport");
-    console.log(data);
+    // toast.success("Successfully Uploaded!!");
+    // navigate("/exportimport");
+    // console.log(data);
 
     // http://localhost:5001/purchase
-    // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/purchase
+    // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/purchase_account
 
-    // axios
-    //   .post("http://localhost:5001/purchase", data)
-    //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server");
-    //     // window.location.reload();
-    //     // navigate("/exportimport");
-    //     console.log(res);
-    //   })
-    //   .catch((err) =>
-    //     toast.error("This error coming from server please try again later!!")
-    //   );
+    axios
+      .post(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/purchase_account",
+        data
+      )
+      .then((res) => {
+        toast.success("Successfully Uploaded to server");
+        navigate("/exportimport");
+        // console.log(res);
+      })
+      .catch((err) =>
+        toast.error("This error coming from server please try again later!!")
+      );
   };
 
   return (

@@ -42,7 +42,7 @@ const AddCharges = () => {
       .then((res) => {
         toast.success("Data Successfully Uploaded to server");
         window.location.reload();
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) =>
         toast.error("Error coming from server please try again later")
