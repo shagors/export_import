@@ -165,7 +165,7 @@ const Purchase = () => {
                       value={transportWay}
                       name="transportWay"
                       onChange={handleTransportWay}>
-                      <option selected>---- Pick Transport Way ----</option>
+                      <option value="">---- Pick Transport Way ----</option>
                       {transportPath?.map((product, index) => (
                         <option value={product.id} key={index}>
                           {product.transportWay}
@@ -187,7 +187,7 @@ const Purchase = () => {
                       value={transportCountryName}
                       name="transportCountryName"
                       onChange={handleTransportCountryName}>
-                      <option selected>---- Pick Shipment Country ----</option>
+                      <option value="">---- Pick Shipment Country ----</option>
                       {transportCountry?.map((product, index) => (
                         <option value={product.id} key={index}>
                           {product.countryName}

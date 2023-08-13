@@ -96,7 +96,7 @@ const Accounts = ({ brand, model }) => {
                     value={formData.productName}
                     name="productName"
                     onChange={handleChange}>
-                    <option selected>---- Pick product Name ----</option>
+                    <option value="">---- Pick product Name ----</option>
                     {serverData?.map((product, index) => (
                       <option key={index}>{product.productName}</option>
                     ))}
@@ -129,7 +129,7 @@ const Accounts = ({ brand, model }) => {
                     value={formData.productBrand || ""}
                     name="productBrand"
                     onChange={handleChange}>
-                    <option selected>---- Pick product Brand ----</option>
+                    <option value="">---- Pick product Brand ----</option>
                     {serverData?.map((product, index) => (
                       <option key={index}>{product?.productBrand}</option>
                     ))}
@@ -149,7 +149,7 @@ const Accounts = ({ brand, model }) => {
                     value={formData.productModel || ""}
                     name="productModel"
                     onChange={handleChange}>
-                    <option selected>---- Pick product Brand ----</option>
+                    <option value="">---- Pick product Brand ----</option>
                     {serverData?.map((product, index) => (
                       <option key={index}>{product.productModel}</option>
                     ))}
