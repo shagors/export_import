@@ -72,7 +72,7 @@ const Transportservice = () => {
   return (
     <>
       <div className="overflow-x-auto">
-        <div className="text-center my-4">
+        <div className="text-center my-4 calendarWrap">
           <input
             value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
               range[0].endDate,
@@ -85,7 +85,7 @@ const Transportservice = () => {
           <div ref={refOne}>
             {open && (
               <DateRangePicker
-                className="flex justify-center"
+                className="flex justify-center calendarElement"
                 onChange={handleSelect}
                 // onChange={(item) => setRange([item.selection])}
                 editableDateInputs={true}

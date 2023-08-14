@@ -38,7 +38,7 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gradient-to-tr from-violet-500 to-pink-500 rounded-box w-52 font-bold ">
             <li>
-              <NavLink to="/accounts">Accounts</NavLink>
+              <NavLink to="/exportimport">Accounts</NavLink>
             </li>
             <li>
               <NavLink to="/warehouse">Warehouse</NavLink>
