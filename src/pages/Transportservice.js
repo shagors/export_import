@@ -1,16 +1,23 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DateRangePicker } from "react-date-range";
 import { toast } from "react-toastify";
-import DateRange from "./DateRange";
-import DateRangePickerComp from "./DateRangePickerComp";
+import { addDays, format } from "date-fns";
 
 const Transportservice = () => {
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [range, setRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ]);
   const [open, setOpen] = useState(false);
+  const refOne = useRef(null);
 
   useEffect(() => {
     // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/office_accounts
@@ -26,7 +33,22 @@ const Transportservice = () => {
       .catch((error) =>
         toast.error("Something wrong Please try again later!!")
       );
+
+    document.addEventListener("keydown", hideOnEscape, true);
+    document.addEventListener("click", hideOnClickOutside, true);
   }, []);
+
+  const hideOnEscape = (e) => {
+    if (e.key === "Escape") {
+      setOpen(false);
+    }
+  };
+
+  const hideOnClickOutside = (e) => {
+    if (refOne.current && !refOne.current.contains(e.target)) {
+      setOpen(false);
+    }
+  };
 
   const handleSelect = (date) => {
     const filtered = allProducts.filter((product) => {
@@ -49,17 +71,33 @@ const Transportservice = () => {
 
   return (
     <>
-      <DateRange />
-      <DateRangePickerComp />
       <div className="overflow-x-auto">
-        <DateRangePicker
-          className="flex justify-center"
-          onChange={handleSelect}
-          editableDateInputs={true}
-          ranges={[selectionRange]}
-          staticRanges={[]}
-          inputRanges={[]}
-        />
+        <div className="text-center my-4">
+          <input
+            value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
+              range[0].endDate,
+              "MM/dd/yyyy"
+            )}`}
+            readOnly
+            className="inputBox border-2 border-indigo-600 p-2 w-[225px] rounded"
+            onClick={() => setOpen((open) => !open)}
+          />
+          <div ref={refOne}>
+            {open && (
+              <DateRangePicker
+                className="flex justify-center"
+                onChange={handleSelect}
+                // onChange={(item) => setRange([item.selection])}
+                editableDateInputs={true}
+                ranges={[selectionRange]}
+                months={2}
+                direction="horizontal"
+                staticRanges={[]}
+                inputRanges={[]}
+              />
+            )}
+          </div>
+        </div>
         <table className="table">
           <thead>
             <tr>
