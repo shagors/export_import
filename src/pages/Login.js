@@ -7,11 +7,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
-    email: "",
-    password: "",
-    // userName: "",
-    // userEmail: "",
+    // email: "",
     // password: "",
+    userEmail: "",
+    password: "",
   });
 
   const handleLogin = (e) => {
@@ -19,17 +18,26 @@ const Login = () => {
     // http://localhost:5001/login
     // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users
     axios
-      .post("http://localhost:5001/login", values)
+      .post(
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users/signin",
+        values
+      )
       .then((res) => {
-        if (res.data.Status === "Success") {
-          localStorage.setItem("values", JSON.stringify(values?.email));
-          toast.success("Login Successfully");
-          navigate("/exportimport");
-          window.location.reload();
-          console.log(res);
-        } else {
-          toast.error("User not found");
-        }
+        toast.success("Login Successfully");
+        localStorage.setItem("values", JSON.stringify(values?.userEmail));
+        navigate("/exportimport");
+        window.location.reload();
+        console.log(res);
+
+        // if (res.data.Status === "true") {
+        //   localStorage.setItem("values", JSON.stringify(values?.userEmail));
+        //   toast.success("Login Successfully");
+        //   navigate("/exportimport");
+        //   window.location.reload();
+        //   console.log(res);
+        // } else {
+        //   toast.error("User not found");
+        // }
       })
       .catch((err) => toast.error("Something went wrong"));
   };
@@ -72,10 +80,10 @@ const Login = () => {
                   className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                   placeholder="Enter your email"
                   type="email"
-                  name="email"
-                  // name="useEmail"
+                  // name="email"
+                  name="useEmail"
                   onChange={(e) =>
-                    setValues({ ...values, email: e.target.value })
+                    setValues({ ...values, userEmail: e.target.value })
                   }
                 />
               </div>

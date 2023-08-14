@@ -69,47 +69,16 @@ const Signup = () => {
     // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users
     axios
       .post(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users",
+        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users/signup",
         values
       )
       .then((res) => {
-        localStorage.setItem("values", JSON.stringify(values?.email));
+        localStorage.setItem("values", JSON.stringify(values?.userEmail));
         toast.success("User create Successfully");
         navigate("/");
         console.log(res);
       })
       .catch((err) => toast.error("Something went wrong"));
-
-    // if (email.value === "") {
-    //   setEmail({ value: "", error: "Email is required" });
-    // }
-
-    // if (password.value === "") {
-    //   setPassword({ value: "", error: "Password is required" });
-    // }
-
-    // if (
-    //   name.value &&
-    //   email.value &&
-    //   password.value
-    //   // confirmPassword.value === password.value
-    // ) {
-    //   // Google Auth System
-    //   // createUserWithEmailAndPassword(auth, email.value, password.value)
-    //   //   .then((userCredential) => {
-    //   //     const user = userCredential.user;
-    //   //     toast.success("Successfully login");
-    //   //     navigate("/");
-    //   //   })
-    //   //   .catch((error) => {
-    //   //     const errorMessage = error.message;
-    //   //     if (errorMessage.includes("email-already-in-use")) {
-    //   //       toast.error("User Already Exists");
-    //   //     } else {
-    //   //       toast.error("Something went wrong");
-    //   //     }
-    //   //   });
-    // }
   };
 
   return (

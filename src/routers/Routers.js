@@ -27,7 +27,7 @@ const Routers = () => {
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
-      {/* <Route element={<PrivateRoute />}>
+      <Route element={<PrivateRoute />}>
         <Route path="/exportimport" element={<ExportImport />} />
         <Route path="/export" element={<Export />} />
         <Route path="/import" element={<Import />} />
@@ -41,20 +41,7 @@ const Routers = () => {
         <Route path="/transportservice" element={<Transportservice />} />
         <Route path="/addcharges" element={<AddCharges />} />
         <Route path="/addcharges/:id" element={<AddChargesUpdate />} />
-      </Route> */}
-      <Route path="/exportimport" element={<ExportImport />} />
-      <Route path="/export" element={<Export />} />
-      <Route path="/import" element={<Import />} />
-      <Route path="/accounts" element={<Accounts />} />
-      <Route path="/warehouse" element={<Warehouse />} />
-      <Route path="/transport" element={<Transport />} />
-      <Route path="/transportroutes" element={<TransportRoutes />} />
-      <Route path="/datainput" element={<DataInput />} />
-      <Route path="/transportcountry" element={<TransportCountry />} />
-      <Route path="/purchase" element={<Purchase />} />
-      <Route path="/transportservice" element={<Transportservice />} />
-      <Route path="/addcharges" element={<AddCharges />} />
-      <Route path="/addcharges/:id" element={<AddChargesUpdate />} />
+      </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin" element={<Admin />} />
