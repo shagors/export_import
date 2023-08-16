@@ -6,9 +6,11 @@ import Footer from "../Footer/Footer";
 const Layout = () => {
   return (
     <>
-      <div className="container mx-auto">
+      <div>
         <Navbar />
-        <Routers />
+        <main className="container mx-auto">
+          <Routers />
+        </main>
         {/* <Footer /> */}
       </div>
     </>
