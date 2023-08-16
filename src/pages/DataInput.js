@@ -46,7 +46,7 @@ const DataInput = () => {
   };
 
   return (
-    <div>
+    <div className="mb-6">
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
         Data Entry Form
       </h1>

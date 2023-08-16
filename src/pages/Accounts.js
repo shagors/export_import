@@ -68,7 +68,7 @@ const Accounts = ({ brand, model }) => {
 
   return (
     <>
-      <div className="">
+      <div>
         <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
           Add Accounts Data :
         </h1>
@@ -187,7 +187,7 @@ const Accounts = ({ brand, model }) => {
       </div>
 
       {/* Table data get from accouts input database */}
-      <div>
+      <div className="mb-6">
         <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
           Data Table
         </h1>

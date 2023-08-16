@@ -137,7 +137,7 @@ const Purchase = () => {
 
   return (
     <>
-      <div>
+      <div className="mb-6">
         {/* top form select and checkbox design */}
         <div className="">
           <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">

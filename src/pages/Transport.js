@@ -38,7 +38,7 @@ const Transport = () => {
 
   // console.log(localData);
   return (
-    <div>
+    <div className="mb-6">
       <div className="flex justify-center items-center">
         <div>
           <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
