@@ -9,10 +9,10 @@ const Footer = () => {
       <footer className="footer py-10 bg-slate-200 mt-auto px-8">
         <div>
           <span className="footer-title">Services</span>
-          <a className="link link-hover">Branding</a>
-          <a className="link link-hover">Design</a>
+          <a className="link link-hover">Customer Care</a>
+          <a className="link link-hover">Translator</a>
           <a className="link link-hover">Marketing</a>
-          <a className="link link-hover">Advertisement</a>
+          <a className="link link-hover">Data Analysis</a>
         </div>
         <div>
           <span className="footer-title">Company</span>
@@ -23,10 +23,10 @@ const Footer = () => {
         </div>
         <div>
           <span className="footer-title">Company</span>
-          <a className="link link-hover">About us</a>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Jobs</a>
-          <a className="link link-hover">Press kit</a>
+          <a className="link link-hover">Career</a>
+          <a className="link link-hover">Portal</a>
+          <a className="link link-hover">News</a>
+          <a className="link link-hover">Products</a>
         </div>
         <div>
           <span className="footer-title">Social</span>
