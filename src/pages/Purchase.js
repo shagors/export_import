@@ -91,7 +91,9 @@ const Purchase = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5001/office_accounts_clone/${id}`)
+      .delete(
+        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/office_accounts/${id}`
+      )
       .then((res) => {
         toast.success("Data Successfully Deleted!!");
       })
