@@ -9,12 +9,10 @@ const AddChargesUpdate = () => {
   const navigate = useNavigate();
 
   // http://localhost:5001/addcharges/:id
-  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges
+  // http://43.154.22.219:3091/api/dev/
   useEffect(() => {
     axios
-      .get(
-        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}`
-      )
+      .get(`http://43.154.22.219:3091/api/dev/addcharges/${id}`)
       .then((res) => {
         setValues({
           ...values,
@@ -36,15 +34,12 @@ const AddChargesUpdate = () => {
   });
 
   // http://localhost:5001/addcharges/:id
-  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}
+  // http://43.154.22.219:3091/api/dev/addcharges
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(
-        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges`,
-        values
-      )
+      .put(`http://43.154.22.219:3091/api/dev/addcharges`, values)
       .then((res) => {
         toast.success("Successfully Data Updated!!");
         navigate("/addcharges");

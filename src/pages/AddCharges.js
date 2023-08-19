@@ -30,15 +30,11 @@ const AddCharges = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post("http://43.154.22.219:3091/api/dev/addcharges", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         toast.success("Data Successfully Uploaded to server");
         window.location.reload();
@@ -50,13 +46,11 @@ const AddCharges = () => {
   };
 
   // http://localhost:5001/addcharges
-  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/id
+  // http://43.154.22.219:3091/api/dev/addcharges/id
 
   useEffect(() => {
     axios
-      .get(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges"
-      )
+      .get("http://43.154.22.219:3091/api/dev/addcharges")
       .then((res) => setCharges(res?.data))
       .catch((error) =>
         setCharges("Error coming from server please try again later")
@@ -68,13 +62,12 @@ const AddCharges = () => {
   // data delete from server and also frontend
 
   // http://localhost:5001/delete/:id
+  // http://43.154.22.219:3091/api/dev/addcharges/:id
 
   const handleDelete = (id) => {
     // console.log(id);
     axios
-      .delete(
-        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges/${id}`
-      )
+      .delete(`http://43.154.22.219:3091/api/dev/addcharges/${id}`)
       .then((res) => {
         toast.success("Data Successfully Deleted!!");
         // console.log(res);

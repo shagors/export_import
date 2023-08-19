@@ -66,12 +66,9 @@ const Signup = () => {
     e.preventDefault();
 
     // http://localhost:5001/register
-    // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users
+    // http://43.154.22.219:3091/api/dev/users/signup
     axios
-      .post(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users/signup",
-        values
-      )
+      .post("http://43.154.22.219:3091/api/dev/users/signup", values)
       .then((res) => {
         localStorage.setItem("values", JSON.stringify(values?.userEmail));
         toast.success("User create Successfully");

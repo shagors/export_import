@@ -20,15 +20,12 @@ const TransportRoutes = () => {
   };
 
   // http://localhost:5001/transport
-  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport
+  // http://43.154.22.219:3091/api/dev
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport",
-        formTransportData
-      )
+      .post("http://43.154.22.219:3091/api/dev/transport", formTransportData)
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");

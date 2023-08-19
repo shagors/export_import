@@ -24,38 +24,30 @@ const Purchase = () => {
   const productData = JSON.stringify(productChecks);
 
   // Data fetch from server
-  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/
+  // http://43.154.22.219:3091/api/dev/
   useEffect(() => {
     //   getting transport data from server
     axios
-      .get(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport"
-      )
+      .get("http://43.154.22.219:3091/api/dev/transport")
       .then((res) => setTransportPath(res.data))
       .catch((error) => setError(error));
     // console.log(transportPath[1].id);
 
     //   getting transport country data from server
     axios
-      .get(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/transport_country"
-      )
+      .get("http://43.154.22.219:3091/api/dev/transport_country")
       .then((res) => setTransportCountry(res.data))
       .catch((error) => setError(error));
 
     //   getting accounts data from office_accounts server
     axios
-      .get(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/office_accounts"
-      )
+      .get("http://43.154.22.219:3091/api/dev/office_accounts")
       .then((res) => setAccounts(res?.data))
       .catch((error) => setError(error));
 
     // geeting charges api call
     axios
-      .get(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/addcharges"
-      )
+      .get("http://43.154.22.219:3091/api/dev/addcharges")
       .then((res) => {
         setCharges(res?.data);
         // console.log(res?.data);
@@ -91,9 +83,7 @@ const Purchase = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(
-        `http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/office_accounts/${id}`
-      )
+      .delete(`http://43.154.22.219:3091/api/dev/office_accounts/${id}`)
       .then((res) => {
         toast.success("Data Successfully Deleted!!");
       })
@@ -118,17 +108,14 @@ const Purchase = () => {
     // console.log(data);
 
     // http://localhost:5001/purchase
-    // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/purchase_account
+    // http://43.154.22.219:3091/api/dev/purchase_account
 
     axios
-      .post(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/purchase_account",
-        data
-      )
+      .post("http://43.154.22.219:3091/api/dev/purchase_account", data)
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");
-        // console.log(res);
+        console.log(res);
       })
       .catch((err) =>
         toast.error("This error coming from server please try again later!!")

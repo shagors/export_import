@@ -16,12 +16,9 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     // http://localhost:5001/login
-    // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users
+    // http://43.154.22.219:3091/api/dev//users/signin
     axios
-      .post(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/users/signin",
-        values
-      )
+      .post("http://43.154.22.219:3091/api/dev/users/signin", values)
       .then((res) => {
         toast.success("Login Successfully");
         localStorage.setItem("values", JSON.stringify(values?.userEmail));

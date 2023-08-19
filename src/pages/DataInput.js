@@ -21,20 +21,16 @@ const DataInput = () => {
   };
 
   // http://localhost:5001/products
-  // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/products
+  // http://43.154.22.219:3091/api/dev
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/products",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post("http://43.154.22.219:3091/api/dev/products", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");
