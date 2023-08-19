@@ -9,7 +9,7 @@ const Navbar = () => {
     setUser(localStorage.getItem("values"));
   }, []);
 
-  console.log(user);
+  // console.log(user);
 
   const handleLogout = () => {
     window.location.reload();

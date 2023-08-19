@@ -115,7 +115,7 @@ const Purchase = () => {
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) =>
         toast.error("This error coming from server please try again later!!")
