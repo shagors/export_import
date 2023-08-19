@@ -20,21 +20,21 @@ const Login = () => {
     axios
       .post("http://43.154.22.219:3091/api/dev/users/signin", values)
       .then((res) => {
-        toast.success("Login Successfully");
-        localStorage.setItem("values", JSON.stringify(values?.userEmail));
-        navigate("/exportimport");
-        window.location.reload();
-        console.log(res);
+        // toast.success("Login Successfully");
+        // localStorage.setItem("values", JSON.stringify(values?.userEmail));
+        // navigate("/exportimport");
+        // window.location.reload();
+        // console.log(typeof res.data);
 
-        // if (res.data.Status === "true") {
-        //   localStorage.setItem("values", JSON.stringify(values?.userEmail));
-        //   toast.success("Login Successfully");
-        //   navigate("/exportimport");
-        //   window.location.reload();
-        //   console.log(res);
-        // } else {
-        //   toast.error("User not found");
-        // }
+        if (res.data === true) {
+          localStorage.setItem("values", JSON.stringify(values?.userEmail));
+          toast.success("Login Successfully");
+          navigate("/exportimport");
+          window.location.reload();
+          console.log(res);
+        } else {
+          toast.error("User not found");
+        }
       })
       .catch((err) => toast.error("Something went wrong"));
   };

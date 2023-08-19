@@ -70,7 +70,7 @@ const Signup = () => {
     axios
       .post("http://43.154.22.219:3091/api/dev/users/signup", values)
       .then((res) => {
-        localStorage.setItem("values", JSON.stringify(values?.userEmail));
+        // localStorage.setItem("values", JSON.stringify(values?.userEmail));
         toast.success("User create Successfully");
         navigate("/");
         console.log(res);

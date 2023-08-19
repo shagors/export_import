@@ -9,6 +9,8 @@ const Navbar = () => {
     setUser(localStorage.getItem("values"));
   }, []);
 
+  console.log(user);
+
   const handleLogout = () => {
     window.location.reload();
     localStorage.removeItem("values");
@@ -78,6 +80,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
+        <p></p>
         {user ? (
           <p style={{ cursor: "pointer" }} onClick={handleLogout}>
             Log Out
