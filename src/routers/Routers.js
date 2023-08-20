@@ -20,6 +20,7 @@ import Purchase from "../pages/Purchase";
 import Transportservice from "../pages/Transportservice";
 import AddCharges from "../pages/AddCharges";
 import AddChargesUpdate from "../pages/AddChargesUpdate";
+import ProductBoxes from "../pages/ProductBoxes";
 
 const Routers = () => {
   return (
@@ -41,6 +42,7 @@ const Routers = () => {
         <Route path="/transportservice" element={<Transportservice />} />
         <Route path="/addcharges" element={<AddCharges />} />
         <Route path="/addcharges/:id" element={<AddChargesUpdate />} />
+        <Route path="/productinboxes" element={<ProductBoxes />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />

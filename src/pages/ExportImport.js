@@ -41,6 +41,11 @@ const ExportImport = () => {
           className="btn btn-info w-60 p-1 text-white font-bold text-xl mt-4">
           Purchase
         </Link>
+        <Link
+          to="/productinboxes"
+          className="btn btn-info w-60 p-1 text-white font-bold text-xl mt-4">
+          Product In Boxes
+        </Link>
       </div>
       {/* <div className="lg:flex justify-around items-center gap-6 mt-10 lg:mt-7">
         <div className="w-220 h-40 bg-gradient-to-tr from-violet-500 to-pink-500 rounded flex justify-center items-center">
