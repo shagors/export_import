@@ -17,7 +17,9 @@ const ProductBoxes = () => {
     axios
       .get("http://43.154.22.219:3091/api/dev/office_accounts")
       .then((res) => setAccounts(res?.data))
-      .catch((error) => toast.error("Something went wrong for getting data"));
+      .catch((error) =>
+        toast.error("Something went wrong for getting data from server")
+      );
   }, []);
 
   const handleCheckboxClick = (productId) => {
@@ -37,6 +39,7 @@ const ProductBoxes = () => {
       boxQuantiy,
       pallet,
     };
+    toast.success("Data successfully uploaded");
     console.log(data);
   };
 
@@ -173,7 +176,7 @@ const ProductBoxes = () => {
               </div>
               <div>
                 <label className="text-lg font-semibold" htmlFor="date">
-                  Date
+                  Date of Order
                 </label>
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
@@ -190,6 +193,7 @@ const ProductBoxes = () => {
                 />
               </div>
 
+              {/* Editable input field */}
               <div>
                 <label
                   className="text-lg font-semibold"

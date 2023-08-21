@@ -63,9 +63,9 @@ const Purchase = () => {
     }
   };
 
-  if (error) {
-    return toast.error("Error coming from server please try again later");
-  }
+  // if (error) {
+  //   return toast.error("Error coming from server please try again later");
+  // }
 
   const handleToCheck = (e, index) => {
     setChecks([...checks, e.target.value]);
