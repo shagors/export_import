@@ -40,10 +40,7 @@ const Purchase = () => {
       .catch((error) => setError(error));
 
     //   getting accounts data from office_accounts server
-    axios
-      .get("http://43.154.22.219:3091/api/dev/office_accounts")
-      .then((res) => setAccounts(res?.data))
-      .catch((error) => setError(error));
+    fetchAccounts();
 
     // geeting charges api call
     axios
@@ -54,6 +51,17 @@ const Purchase = () => {
       })
       .catch((error) => setError(error));
   }, []);
+
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
+        "http://43.154.22.219:3091/api/dev/office_accounts"
+      );
+      setAccounts(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
 
   if (error) {
     return toast.error("Error coming from server please try again later");
@@ -86,6 +94,7 @@ const Purchase = () => {
       .delete(`http://43.154.22.219:3091/api/dev/office_accounts/${id}`)
       .then((res) => {
         toast.success("Data Successfully Deleted!!");
+        fetchAccounts();
       })
       .catch((error) => {
         toast.error("Something wrong can't delete");

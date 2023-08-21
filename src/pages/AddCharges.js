@@ -54,9 +54,9 @@ const AddCharges = () => {
       const response = await axios.get(
         "http://43.154.22.219:3091/api/dev/addcharges"
       );
-      setCharges(response.data);
+      setCharges(response?.data);
     } catch (error) {
-      console.error("Error fetching accounts:", error);
+      toast.error("Error getting data from server!");
     }
   };
 

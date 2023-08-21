@@ -10,6 +10,7 @@ const ProductBoxes = () => {
   const [selectedProductData, setSelectedProductData] = useState({});
   const [productPerBox, setProductPerBox] = useState(0);
   const [boxQuantiy, setBoxQuantiy] = useState(0);
+  const [pallet, setPallet] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const ProductBoxes = () => {
       ...selectedProductData,
       productPerBox,
       boxQuantiy,
+      pallet,
     };
     console.log(data);
   };
@@ -214,6 +216,19 @@ const ProductBoxes = () => {
                   name="boxQuantiy"
                   required
                   onChange={(e) => setBoxQuantiy(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="text-lg font-semibold" htmlFor="boxQuantiy">
+                  Number of Pallet
+                </label>
+                <input
+                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                  placeholder="Enter Pallent Quantity"
+                  type="number"
+                  name="pallet"
+                  required
+                  onChange={(e) => setPallet(e.target.value)}
                 />
               </div>
             </div>
