@@ -36,7 +36,7 @@ const Accounts = ({ brand, model }) => {
       .get("http://43.154.22.219:3091/api/dev/office_accounts")
       .then((res) => setAccounts(res?.data))
       .catch((error) => setAccounts(error));
-  }, [accounts]);
+  }, []);
 
   const handleChange = (event) => {
     setFormData({

@@ -23,8 +23,7 @@ const AddCharges = () => {
     });
   };
 
-  // Data save for server------
-
+  // Data save for server
   //  http://localhost:5001/addcharges
 
   const handleSubmit = (e) => {
@@ -37,7 +36,7 @@ const AddCharges = () => {
       })
       .then((res) => {
         toast.success("Data Successfully Uploaded to server");
-        window.location.reload();
+        fetchAccounts();
         // console.log(res);
       })
       .catch((err) =>
@@ -45,37 +44,33 @@ const AddCharges = () => {
       );
   };
 
-  // http://localhost:5001/addcharges
-  // http://43.154.22.219:3091/api/dev/addcharges/id
-
   useEffect(() => {
-    axios
-      .get("http://43.154.22.219:3091/api/dev/addcharges")
-      .then((res) => setCharges(res?.data))
-      .catch((error) =>
-        setCharges("Error coming from server please try again later")
-      );
-  }, [charges]);
+    fetchAccounts();
+  }, []);
 
-  // console.log(charges);
+  // data fetch from server
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
+        "http://43.154.22.219:3091/api/dev/addcharges"
+      );
+      setCharges(response.data);
+    } catch (error) {
+      console.error("Error fetching accounts:", error);
+    }
+  };
 
   // data delete from server and also frontend
-
   // http://localhost:5001/delete/:id
   // http://43.154.22.219:3091/api/dev/addcharges/:id
 
-  const handleDelete = (id) => {
-    // console.log(id);
-    axios
-      .delete(`http://43.154.22.219:3091/api/dev/addcharges/${id}`)
-      .then((res) => {
-        toast.success("Data Successfully Deleted!!");
-        // console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Something wrong in server you can't delete");
-      });
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://43.154.22.219:3091/api/dev/addcharges/${id}`);
+      fetchAccounts();
+    } catch (error) {
+      toast.error("You can't delete now. Please try again later!");
+    }
   };
 
   return (

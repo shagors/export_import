@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ProductBoxes = () => {
-  const [serverData, setServerData] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState("");
   const [selectedProductData, setSelectedProductData] = useState({});
@@ -43,7 +42,7 @@ const ProductBoxes = () => {
     <div>
       {/* Table data get from accouts input database */}
       <div className="mb-6 mt-3">
-        <div className=" bg-slate-500 p-2 rounded-lg uppercase flex items-center justify-around mb-4">
+        <div className="bg-slate-500 p-2 rounded-lg uppercase flex items-center justify-around mb-4">
           <Link to="/exportimport" className="text-white flex">
             <BsArrowLeft className="w-20 lg:w-[380px] h-[35px] text-white" />
           </Link>
@@ -51,7 +50,6 @@ const ProductBoxes = () => {
             Order Products Table
           </h1>
         </div>
-
         <div className="overflow-x-auto add__scrollbar">
           <table className="table">
             {/* head */}
@@ -201,6 +199,7 @@ const ProductBoxes = () => {
                   placeholder="Per Box Product Quantity"
                   type="number"
                   name="productPerBox"
+                  required
                   onChange={(e) => setProductPerBox(e.target.value)}
                 />
               </div>
@@ -213,6 +212,7 @@ const ProductBoxes = () => {
                   placeholder="Enter Box Quantity"
                   type="number"
                   name="boxQuantiy"
+                  required
                   onChange={(e) => setBoxQuantiy(e.target.value)}
                 />
               </div>
