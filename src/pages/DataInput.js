@@ -26,11 +26,15 @@ const DataInput = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://43.154.22.219:3091/api/dev/products", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      .post(
+        "https://43.154.22.219:3091/web-api-tht-1/api/dev/products",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");

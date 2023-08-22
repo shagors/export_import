@@ -15,7 +15,7 @@ const ProductBoxes = () => {
 
   useEffect(() => {
     axios
-      .get("http://43.154.22.219:3091/api/dev/office_accounts")
+      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/office_accounts")
       .then((res) => setAccounts(res?.data))
       .catch((error) =>
         toast.error("Something went wrong for getting data from server")

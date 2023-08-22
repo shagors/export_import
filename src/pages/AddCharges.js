@@ -29,11 +29,15 @@ const AddCharges = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://43.154.22.219:3091/api/dev/addcharges", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      .post(
+        "https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         toast.success("Data Successfully Uploaded to server");
         fetchAccounts();
@@ -52,7 +56,7 @@ const AddCharges = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "http://43.154.22.219:3091/api/dev/addcharges"
+        "https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges"
       );
       setCharges(response?.data);
     } catch (error) {
@@ -62,11 +66,13 @@ const AddCharges = () => {
 
   // data delete from server and also frontend
   // http://localhost:5001/delete/:id
-  // http://43.154.22.219:3091/api/dev/addcharges/:id
+  // https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges/:id
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://43.154.22.219:3091/api/dev/addcharges/${id}`);
+      await axios.delete(
+        `https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges/${id}`
+      );
       fetchAccounts();
     } catch (error) {
       toast.error("You can't delete now. Please try again later!");

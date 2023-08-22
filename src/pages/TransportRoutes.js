@@ -25,7 +25,10 @@ const TransportRoutes = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://43.154.22.219:3091/api/dev/transport", formTransportData)
+      .post(
+        "https://43.154.22.219:3091/web-api-tht-1/api/dev/transport",
+        formTransportData
+      )
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");

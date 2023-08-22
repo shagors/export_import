@@ -24,18 +24,18 @@ const Purchase = () => {
   const productData = JSON.stringify(productChecks);
 
   // Data fetch from server
-  // http://43.154.22.219:3091/api/dev/
+  // https://43.154.22.219:3091/web-api-tht-1/api/dev/
   useEffect(() => {
     //   getting transport data from server
     axios
-      .get("http://43.154.22.219:3091/api/dev/transport")
+      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/transport")
       .then((res) => setTransportPath(res.data))
       .catch((error) => setError(error));
     // console.log(transportPath[1].id);
 
     //   getting transport country data from server
     axios
-      .get("http://43.154.22.219:3091/api/dev/transport_country")
+      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/transport_country")
       .then((res) => setTransportCountry(res.data))
       .catch((error) => setError(error));
 
@@ -44,7 +44,7 @@ const Purchase = () => {
 
     // geeting charges api call
     axios
-      .get("http://43.154.22.219:3091/api/dev/addcharges")
+      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges")
       .then((res) => {
         setCharges(res?.data);
         // console.log(res?.data);
@@ -55,7 +55,7 @@ const Purchase = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "http://43.154.22.219:3091/api/dev/office_accounts"
+        "https://43.154.22.219:3091/web-api-tht-1/api/dev/office_accounts"
       );
       setAccounts(response?.data);
     } catch (error) {
@@ -91,7 +91,9 @@ const Purchase = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://43.154.22.219:3091/api/dev/office_accounts/${id}`)
+      .delete(
+        `https://43.154.22.219:3091/web-api-tht-1/api/dev/office_accounts/${id}`
+      )
       .then((res) => {
         toast.success("Data Successfully Deleted!!");
         fetchAccounts();
@@ -117,10 +119,13 @@ const Purchase = () => {
     // console.log(data);
 
     // http://localhost:5001/purchase
-    // http://43.154.22.219:3091/api/dev/purchase_account
+    // https://43.154.22.219:3091/web-api-tht-1/api/dev/purchase_account
 
     axios
-      .post("http://43.154.22.219:3091/api/dev/purchase_account", data)
+      .post(
+        "https://43.154.22.219:3091/web-api-tht-1/api/dev/purchase_account",
+        data
+      )
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");

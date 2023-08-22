@@ -24,16 +24,16 @@ const Accounts = ({ brand, model }) => {
   const navigate = useNavigate();
 
   // http://localhost:5001/products
-  // http://43.154.22.219:3091/api/dev/products
+  // https://43.154.22.219:3091/web-api-tht-1/api/dev/products
 
   useEffect(() => {
     axios
-      .get("http://43.154.22.219:3091/api/dev/products")
+      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/products")
       .then((res) => setServerData(res.data))
       .catch((error) => setServerData(error));
 
     axios
-      .get("http://43.154.22.219:3091/api/dev/office_accounts")
+      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/office_accounts")
       .then((res) => setAccounts(res?.data))
       .catch((error) => setAccounts(error));
   }, []);
@@ -48,7 +48,10 @@ const Accounts = ({ brand, model }) => {
   const formSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://43.154.22.219:3091/api/dev/office_accounts", formData)
+      .post(
+        "https://43.154.22.219:3091/web-api-tht-1/api/dev/office_accounts",
+        formData
+      )
       .then((res) => {
         toast.success("Successfully File added to server & check below table");
         // console.log(res);

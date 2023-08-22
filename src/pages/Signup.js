@@ -66,9 +66,12 @@ const Signup = () => {
     e.preventDefault();
 
     // http://localhost:5001/register
-    // http://43.154.22.219:3091/api/dev/users/signup
+    // https://43.154.22.219:3091/web-api-tht-1/api/dev/users/signup
     axios
-      .post("http://43.154.22.219:3091/api/dev/users/signup", values)
+      .post(
+        "https://43.154.22.219:3091/web-api-tht-1/api/dev/users/signup",
+        values
+      )
       .then((res) => {
         // localStorage.setItem("values", JSON.stringify(values?.userEmail));
         toast.success("User create Successfully");
