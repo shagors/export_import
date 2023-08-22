@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -10,10 +10,9 @@ const Navbar = () => {
   }, []);
 
   // console.log(user);
-
   const handleLogout = () => {
-    window.location.reload();
     localStorage.removeItem("values");
+    setUser("");
     navigate("/");
   };
 

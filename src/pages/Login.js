@@ -16,25 +16,23 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     // http://localhost:5001/login
-    // https://43.154.22.219:3091/web-api-tht-1/api/dev//users/signin
+    // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev//users/signin
     axios
       .post(
-        "https://43.154.22.219:3091/web-api-tht-1/api/dev/users/signin",
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/users/signin",
         values
       )
       .then((res) => {
         // toast.success("Login Successfully");
         // localStorage.setItem("values", JSON.stringify(values?.userEmail));
         // navigate("/exportimport");
-        // window.location.reload();
-        // console.log(typeof res.data);
+        // console.log(res.data);
 
         if (res.data === true) {
           localStorage.setItem("values", JSON.stringify(values?.userEmail));
           toast.success("Login Successfully");
           navigate("/exportimport");
-          window.location.reload();
-          console.log(res);
+          // console.log(res);
         } else {
           toast.error("User not found");
         }

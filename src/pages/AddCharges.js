@@ -30,7 +30,7 @@ const AddCharges = () => {
     e.preventDefault();
     axios
       .post(
-        "https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges",
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges",
         formData,
         {
           headers: {
@@ -56,7 +56,7 @@ const AddCharges = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges"
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges"
       );
       setCharges(response?.data);
     } catch (error) {
@@ -66,12 +66,12 @@ const AddCharges = () => {
 
   // data delete from server and also frontend
   // http://localhost:5001/delete/:id
-  // https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges/:id
+  // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges/:id
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges/${id}`
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges/${id}`
       );
       fetchAccounts();
     } catch (error) {

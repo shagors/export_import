@@ -66,17 +66,17 @@ const Signup = () => {
     e.preventDefault();
 
     // http://localhost:5001/register
-    // https://43.154.22.219:3091/web-api-tht-1/api/dev/users/signup
+    // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/users/signup
     axios
       .post(
-        "https://43.154.22.219:3091/web-api-tht-1/api/dev/users/signup",
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/users/signup",
         values
       )
       .then((res) => {
-        // localStorage.setItem("values", JSON.stringify(values?.userEmail));
+        localStorage.setItem("values", JSON.stringify(values?.userEmail));
         toast.success("User create Successfully");
-        navigate("/");
-        console.log(res);
+        navigate("/exportimport");
+        // console.log(res);
       })
       .catch((err) => toast.error("Something went wrong"));
   };

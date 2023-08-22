@@ -6,16 +6,18 @@ import { toast } from "react-toastify";
 
 const ProductBoxes = () => {
   const [accounts, setAccounts] = useState([]);
-  const [selectedProductId, setSelectedProductId] = useState("");
-  const [selectedProductData, setSelectedProductData] = useState({});
-  const [productPerBox, setProductPerBox] = useState(0);
-  const [boxQuantiy, setBoxQuantiy] = useState(0);
-  const [pallet, setPallet] = useState(0);
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
+  const [selectedProductsData, setSelectedProductsData] = useState([]);
+  const [productPerBox, setProductPerBox] = useState([]);
+  const [boxQuantiy, setBoxQuantiy] = useState([]);
+  const [pallet, setPallet] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/office_accounts")
+      .get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+      )
       .then((res) => setAccounts(res?.data))
       .catch((error) =>
         toast.error("Something went wrong for getting data from server")
@@ -23,18 +25,30 @@ const ProductBoxes = () => {
   }, []);
 
   const handleCheckboxClick = (productId) => {
-    const selectedProduct = accounts.find(
-      (product) => product.id === productId
-    );
-    setSelectedProductId(productId);
-    setSelectedProductData(selectedProduct);
+    if (selectedProductIds.includes(productId)) {
+      setSelectedProductIds(
+        selectedProductIds.filter((id) => id !== productId)
+      );
+      setSelectedProductsData(
+        selectedProductsData.filter((product) => product.id !== productId)
+      );
+    } else {
+      const selectedProduct = accounts.find(
+        (product) => product.id === productId
+      );
+      setSelectedProductIds([...selectedProductIds, productId]);
+      setSelectedProductsData([...selectedProductsData, selectedProduct]);
+    }
   };
   //   console.log(productPerBox, boxQuantiy);
 
   const formSubmit = (e) => {
     e.preventDefault();
+    // const getProductPerBox = [...productPerBox, productPerBox];
+    // const getBoxQuantity = [...boxQuantiy, boxQuantiy];
+    // const getPallet = [...pallet, pallet];
     const data = {
-      ...selectedProductData,
+      ...selectedProductsData,
       productPerBox,
       boxQuantiy,
       pallet,
@@ -78,7 +92,7 @@ const ProductBoxes = () => {
                       className="checkbox checkbox-info"
                       name="product"
                       value={product.id}
-                      checked={selectedProductId === product.id}
+                      checked={selectedProductIds.includes(product.id)}
                       onClick={() => handleCheckboxClick(product.id)}
                     />
                   </td>
@@ -99,141 +113,136 @@ const ProductBoxes = () => {
       <div className="mt-5 lg:flex justify-center items-center mb-4">
         <form className="card  shadow-xl mt-5" onSubmit={formSubmit}>
           <div className="lg:flex justify-between items-center">
-            <div className="form-control card-body grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 justify-center mt-7 mx-[35px] md:mx-0">
-              <div>
-                <label className="text-lg font-semibold" htmlFor="productName">
-                  Product Name
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Enter Product Name"
-                  type="text"
-                  value={selectedProductData.productName || ""}
-                  readOnly
-                  onChange={(e) =>
-                    setSelectedProductData({
-                      ...selectedProductData,
-                      productName: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label className="text-lg font-semibold" htmlFor="productBrand">
-                  Product Brnad
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Enter Product Brnad"
-                  type="text"
-                  readOnly
-                  value={selectedProductData.productBrand || ""}
-                  onChange={(e) =>
-                    setSelectedProductData({
-                      ...selectedProductData,
-                      productBrand: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label className="text-lg font-semibold" htmlFor="productModel">
-                  Product Model
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Enter Product Model"
-                  type="text"
-                  readOnly
-                  value={selectedProductData.productModel || ""}
-                  onChange={(e) =>
-                    setSelectedProductData({
-                      ...selectedProductData,
-                      productModel: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label
-                  className="text-lg font-semibold"
-                  htmlFor="productQuantity">
-                  Product Quantity
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Enter Product Quantity"
-                  type="number"
-                  readOnly
-                  value={selectedProductData.productQuantity || ""}
-                  onChange={(e) =>
-                    setSelectedProductData({
-                      ...selectedProductData,
-                      productQuantity: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label className="text-lg font-semibold" htmlFor="date">
-                  Date of Order
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Date"
-                  type="date"
-                  readOnly
-                  value={selectedProductData.date || ""}
-                  onChange={(e) =>
-                    setSelectedProductData({
-                      ...selectedProductData,
-                      date: e.target.value,
-                    })
-                  }
-                />
-              </div>
+            <div className="form-control card-body">
+              <div className="w-full">
+                <h2 className="text-center text-2xl font-semibold mb-5">
+                  Selected Products
+                </h2>
+                {selectedProductsData.map((product) => (
+                  <div
+                    key={product.id}
+                    className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                    {/* product Name */}
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productName">
+                        Product Name
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Product Name"
+                        type="text"
+                        value={product.productName || ""}
+                        readOnly
+                        onChange={(e) => {
+                          const updatedProductsData = selectedProductsData.map(
+                            (p) =>
+                              p.id === product.id
+                                ? { ...p, productName: e.target.value }
+                                : p
+                          );
+                          setSelectedProductsData(updatedProductsData);
+                        }}
+                      />
+                    </div>
+                    {/* product Brand */}
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productModel">
+                        Product Model
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Product Name"
+                        type="text"
+                        value={product.productModel || ""}
+                        readOnly
+                        onChange={(e) => {
+                          const updatedProductsData = selectedProductsData.map(
+                            (p) =>
+                              p.id === product.id
+                                ? { ...p, productModel: e.target.value }
+                                : p
+                          );
+                          setSelectedProductsData(updatedProductsData);
+                        }}
+                      />
+                    </div>
+                    {/* product Quantity */}
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productQuantity">
+                        Product Quantity
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Product Name"
+                        type="text"
+                        value={product.productQuantity || ""}
+                        readOnly
+                        onChange={(e) => {
+                          const updatedProductsData = selectedProductsData.map(
+                            (p) =>
+                              p.id === product.id
+                                ? { ...p, productQuantity: e.target.value }
+                                : p
+                          );
+                          setSelectedProductsData(updatedProductsData);
+                        }}
+                      />
+                    </div>
 
-              {/* Editable input field */}
-              <div>
-                <label
-                  className="text-lg font-semibold"
-                  htmlFor="productPerBox">
-                  Product Per Box
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Per Box Product Quantity"
-                  type="number"
-                  name="productPerBox"
-                  required
-                  onChange={(e) => setProductPerBox(e.target.value)}
-                />
-              </div>
-              <div>
-                <label className="text-lg font-semibold" htmlFor="boxQuantiy">
-                  How Many Boxes
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Enter Box Quantity"
-                  type="number"
-                  name="boxQuantiy"
-                  required
-                  onChange={(e) => setBoxQuantiy(e.target.value)}
-                />
-              </div>
-              <div>
-                <label className="text-lg font-semibold" htmlFor="boxQuantiy">
-                  Number of Pallet
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Enter Pallent Quantity"
-                  type="number"
-                  name="pallet"
-                  required
-                  onChange={(e) => setPallet(e.target.value)}
-                />
+                    {/* Editable field */}
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productPerBox">
+                        Product Per Box
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Per Box Product Quantity"
+                        type="number"
+                        name="productPerBox"
+                        required
+                        onChange={(e) => setProductPerBox(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="boxQuantiy">
+                        How Many Boxes
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Box Quantity"
+                        type="number"
+                        name="boxQuantiy"
+                        required
+                        onChange={(e) => setBoxQuantiy(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="boxQuantiy">
+                        Number of Pallet
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Pallent Quantity"
+                        type="number"
+                        name="pallet"
+                        required
+                        onChange={(e) => setPallet(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

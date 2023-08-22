@@ -9,10 +9,12 @@ const AddChargesUpdate = () => {
   const navigate = useNavigate();
 
   // http://localhost:5001/addcharges/:id
-  // https://43.154.22.219:3091/web-api-tht-1/api/dev/
+  // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/
   useEffect(() => {
     axios
-      .get(`https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges/${id}`)
+      .get(
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges/${id}`
+      )
       .then((res) => {
         setValues({
           ...values,
@@ -34,13 +36,13 @@ const AddChargesUpdate = () => {
   });
 
   // http://localhost:5001/addcharges/:id
-  // https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges
+  // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .put(
-        `https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges`,
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges`,
         values
       )
       .then((res) => {

@@ -24,18 +24,22 @@ const Purchase = () => {
   const productData = JSON.stringify(productChecks);
 
   // Data fetch from server
-  // https://43.154.22.219:3091/web-api-tht-1/api/dev/
+  // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/
   useEffect(() => {
     //   getting transport data from server
     axios
-      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/transport")
+      .get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport"
+      )
       .then((res) => setTransportPath(res.data))
       .catch((error) => setError(error));
     // console.log(transportPath[1].id);
 
     //   getting transport country data from server
     axios
-      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/transport_country")
+      .get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country"
+      )
       .then((res) => setTransportCountry(res.data))
       .catch((error) => setError(error));
 
@@ -44,7 +48,9 @@ const Purchase = () => {
 
     // geeting charges api call
     axios
-      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/addcharges")
+      .get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges"
+      )
       .then((res) => {
         setCharges(res?.data);
         // console.log(res?.data);
@@ -55,7 +61,7 @@ const Purchase = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "https://43.154.22.219:3091/web-api-tht-1/api/dev/office_accounts"
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       );
       setAccounts(response?.data);
     } catch (error) {
@@ -92,7 +98,7 @@ const Purchase = () => {
   const handleDelete = (id) => {
     axios
       .delete(
-        `https://43.154.22.219:3091/web-api-tht-1/api/dev/office_accounts/${id}`
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
       )
       .then((res) => {
         toast.success("Data Successfully Deleted!!");
@@ -119,11 +125,11 @@ const Purchase = () => {
     // console.log(data);
 
     // http://localhost:5001/purchase
-    // https://43.154.22.219:3091/web-api-tht-1/api/dev/purchase_account
+    // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account
 
     axios
       .post(
-        "https://43.154.22.219:3091/web-api-tht-1/api/dev/purchase_account",
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account",
         data
       )
       .then((res) => {

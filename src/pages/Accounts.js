@@ -24,16 +24,18 @@ const Accounts = ({ brand, model }) => {
   const navigate = useNavigate();
 
   // http://localhost:5001/products
-  // https://43.154.22.219:3091/web-api-tht-1/api/dev/products
+  // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products
 
   useEffect(() => {
     axios
-      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/products")
+      .get("https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products")
       .then((res) => setServerData(res.data))
       .catch((error) => setServerData(error));
 
     axios
-      .get("https://43.154.22.219:3091/web-api-tht-1/api/dev/office_accounts")
+      .get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+      )
       .then((res) => setAccounts(res?.data))
       .catch((error) => setAccounts(error));
   }, []);
@@ -49,7 +51,7 @@ const Accounts = ({ brand, model }) => {
     e.preventDefault();
     axios
       .post(
-        "https://43.154.22.219:3091/web-api-tht-1/api/dev/office_accounts",
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts",
         formData
       )
       .then((res) => {
