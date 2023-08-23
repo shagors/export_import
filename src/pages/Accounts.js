@@ -17,9 +17,6 @@ const Accounts = ({ brand, model }) => {
       productQuantity: 0,
     },
   ]);
-  // if (formData.productName === "" || formData.date === "") {
-  //   toast.error("Your data is empty Please provide Data");
-  // }
 
   const navigate = useNavigate();
 

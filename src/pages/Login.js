@@ -25,6 +25,7 @@ const Login = () => {
           localStorage.setItem("values", JSON.stringify(values?.userEmail));
           toast.success("Login Successfully");
           navigate("/exportimport");
+          // window.location.reload();
           // console.log(res);
         } else {
           toast.error("Email & password don't match!!");
@@ -49,20 +50,6 @@ const Login = () => {
           </p>
           <form onSubmit={handleLogin}>
             <div className="mt-8">
-              {/* <div>
-                <label className="text-lg font-semibold" htmlFor="userName">
-                  Name
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                  placeholder="Enter your user name"
-                  type="text"
-                  name="userName"
-                  onChange={(e) =>
-                    setValues({ ...values, userName: e.target.value })
-                  }
-                />
-              </div> */}
               <div>
                 <label className="text-lg font-semibold" htmlFor="userEmail">
                   Email
@@ -71,8 +58,8 @@ const Login = () => {
                   className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                   placeholder="Enter your email"
                   type="email"
-                  // name="email"
                   name="useEmail"
+                  required
                   onChange={(e) =>
                     setValues({ ...values, userEmail: e.target.value })
                   }
@@ -87,18 +74,11 @@ const Login = () => {
                   placeholder="Enter your password"
                   type="password"
                   name="password"
-                  id="password"
                   onChange={(e) =>
                     setValues({ ...values, password: e.target.value })
                   }
                 />
               </div>
-              {/* <div className="mt-4 flex justify-between items-center">
-                <div></div>
-                <button className="font-medium text-base text-violet-400">
-                  <Link to="/forgotpassword">Forgot Password</Link>
-                </button>
-              </div> */}
               <div className="mt-5 flex flex-col gap-y-4">
                 <button
                   className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"

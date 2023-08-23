@@ -12,17 +12,62 @@ const ProductBoxes = () => {
   const [boxQuantiy, setBoxQuantiy] = useState([]);
   const [pallet, setPallet] = useState([]);
   const navigate = useNavigate();
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [relatedBrands, setRelatedBrands] = useState([]);
+
+  const [divs, setDivs] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
+    fetchAccounts();
+    // if (selectedProduct) {
+    //   axios
+    //     .get(
+    //       `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/[0]/${selectedProduct}`
+    //     )
+    //     .then((response) => {
+    //       setRelatedBrands(response.data.brands);
+    //     })
+    //     .catch((error) => {
+    //       toast.error("Error fetching data from server");
+    //     });
+    // }
+  }, [selectedProduct]);
+
+  console.log(selectedProduct);
+
+  // const handleProductChange = (event) => {
+  //   const newProduct = event.target.value;
+  //   setSelectedProduct(newProduct);
+  // };
+
+  // const handleSelectedProductFilter = (productName) => {
+  //   if (selectedProductIds.includes(productName)) {
+  //     setSelectedProductIds(
+  //       selectedProductIds.filter((id) => id !== productName)
+  //     );
+  //     setSelectedProductsData(
+  //       selectedProductsData.filter((product) => product.id !== productName)
+  //     );
+  //   } else {
+  //     const selectedProduct = accounts.find(
+  //       (product) => product.id === productName
+  //     );
+  //     setSelectedProductIds([...selectedProductIds, productName]);
+  //     setSelectedProductsData([...selectedProductsData, selectedProduct]);
+  //   }
+  // };
+
+  // data fetch from server
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
-      )
-      .then((res) => setAccounts(res?.data))
-      .catch((error) =>
-        toast.error("Something went wrong for getting data from server")
       );
-  }, []);
+      setAccounts(response?.data);
+    } catch (error) {
+      toast.error("Error getting data from server!");
+    }
+  };
 
   const handleCheckboxClick = (productId) => {
     if (selectedProductIds.includes(productId)) {
@@ -40,21 +85,21 @@ const ProductBoxes = () => {
       setSelectedProductsData([...selectedProductsData, selectedProduct]);
     }
   };
-  //   console.log(productPerBox, boxQuantiy);
 
   const formSubmit = (e) => {
     e.preventDefault();
-    // const getProductPerBox = [...productPerBox, productPerBox];
-    // const getBoxQuantity = [...boxQuantiy, boxQuantiy];
-    // const getPallet = [...pallet, pallet];
     const data = {
-      ...selectedProductsData,
+      selectedProductsData,
       productPerBox,
       boxQuantiy,
       pallet,
     };
     toast.success("Data successfully uploaded");
     console.log(data);
+  };
+
+  const toggleDivVisibility = () => {
+    setDivs(!divs);
   };
 
   return (
@@ -182,7 +227,6 @@ const ProductBoxes = () => {
                         placeholder="Enter Product Name"
                         type="text"
                         value={product.productQuantity || ""}
-                        readOnly
                         onChange={(e) => {
                           const updatedProductsData = selectedProductsData.map(
                             (p) =>
@@ -235,7 +279,7 @@ const ProductBoxes = () => {
                       <input
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                         placeholder="Enter Pallent Quantity"
-                        type="number"
+                        type="text"
                         name="pallet"
                         required
                         onChange={(e) => setPallet(e.target.value)}
@@ -243,11 +287,120 @@ const ProductBoxes = () => {
                     </div>
                   </div>
                 ))}
+                {!divs ? (
+                  ""
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                    {/* product Name */}
+                    {/* <div className="">
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productModel">
+                        Product Name
+                      </label>
+                      <div className="input-group  flex lg:flex-none justify-center items-center">
+                        <select
+                          className="select select-info w-full max-w-xs"
+                          id="selectOption"
+                          value={selectedProduct}
+                          onChange={handleProductChange}
+                          name="productName">
+                          <option value="">---- Pick product Name ----</option>
+                          {accounts?.map((product, index) => (
+                            <option
+                              key={index}
+                              value={product.productName.toLowerCase().trim()}>
+                              {product.productName}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div> */}
+                    {/* product Brand */}
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productModel">
+                        Product Model
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Product Name"
+                        type="text"
+                      />
+                    </div>
+                    {/* product Quantity */}
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productQuantity">
+                        Product Quantity
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Product Name"
+                        type="text"
+                      />
+                    </div>
+
+                    {/* Editable field */}
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productPerBox">
+                        Product Per Box
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Per Box Product Quantity"
+                        type="number"
+                        name="productPerBox"
+                        required
+                        onChange={(e) => setProductPerBox(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="boxQuantiy">
+                        How Many Boxes
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Box Quantity"
+                        type="number"
+                        name="boxQuantiy"
+                        required
+                        onChange={(e) => setBoxQuantiy(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="boxQuantiy">
+                        Number of Pallet
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Pallent Quantity"
+                        type="text"
+                        name="pallet"
+                        required
+                        onChange={(e) => setPallet(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
           {/* button */}
-          <div className="flex justify-end items-center mr-7 py-5">
+          <div className="flex justify-end items-center mr-7 py-5 ">
+            <p
+              className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6"
+              onClick={toggleDivVisibility}>
+              Multiple Products Order
+            </p>
             <button
               className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800"
               type="submit">

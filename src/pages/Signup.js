@@ -40,6 +40,7 @@ const Signup = () => {
           localStorage.setItem("values", JSON.stringify(userEmail));
           toast.success("User create Successfully");
           navigate("/exportimport");
+          // window.location.reload();
           // console.log(res);
         })
         .catch((err) => toast.error("Something went wrong"));

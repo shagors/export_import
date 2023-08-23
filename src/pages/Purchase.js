@@ -69,10 +69,6 @@ const Purchase = () => {
     }
   };
 
-  // if (error) {
-  //   return toast.error("Error coming from server please try again later");
-  // }
-
   const handleToCheck = (e, index) => {
     setChecks([...checks, e.target.value]);
   };
@@ -117,12 +113,7 @@ const Purchase = () => {
       transportCountryId: transportCountryName,
       addChargesId: chaecksCost,
       officeAccountId: productData,
-      // particularExpenseName: chaecksCost,
-      // product: productData,
     };
-    // toast.success("Successfully Uploaded!!");
-    // navigate("/exportimport");
-    // console.log(data);
 
     // http://localhost:5001/purchase
     // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account

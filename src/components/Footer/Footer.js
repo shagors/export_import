@@ -6,7 +6,7 @@ import { FaFacebookSquare } from "react-icons/fa";
 const Footer = () => {
   return (
     <>
-      <footer className="footer py-10 bg-slate-200 mt-auto px-8">
+      <footer className="footer py-10 bg-slate-200 mt-auto px-5 md:mx-0 lg:flex items-center justify-evenly">
         <div>
           <span className="footer-title">Services</span>
           <a className="link link-hover">Customer Care</a>
@@ -48,7 +48,7 @@ const Footer = () => {
             </a>
           </div>
           <p className=" mt-5 font-semibold text-lg">
-            &copy; 2023. All rights and reserved by THT-space electrical company
+            &copy; 2023. All rights reserved by THT-space electrical company
             Ltd.
             <div className="flex gap-2">
               <BsFillTelephoneFill />
