@@ -7,8 +7,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
-    // email: "",
-    // password: "",
     userEmail: "",
     password: "",
   });
@@ -23,21 +21,16 @@ const Login = () => {
         values
       )
       .then((res) => {
-        // toast.success("Login Successfully");
-        // localStorage.setItem("values", JSON.stringify(values?.userEmail));
-        // navigate("/exportimport");
-        // console.log(res.data);
-
         if (res.data === true) {
           localStorage.setItem("values", JSON.stringify(values?.userEmail));
           toast.success("Login Successfully");
           navigate("/exportimport");
           // console.log(res);
         } else {
-          toast.error("User not found");
+          toast.error("Email & password don't match!!");
         }
       })
-      .catch((err) => toast.error("Something went wrong"));
+      .catch((err) => toast.error("Something went wrong Please try again!"));
   };
 
   return (

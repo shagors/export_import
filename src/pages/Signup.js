@@ -4,81 +4,48 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const Signup = () => {
-  // const [name, setName] = useState({ value: "", error: "" });
-  // const [email, setEmail] = useState({ value: "", error: "" });
-  // const [password, setPassword] = useState({ value: "", error: "" });
-  const [userName, setUserName] = useState({ value: "", error: "" });
-  const [userEmail, setUserEmail] = useState({ value: "", error: "" });
-  const [password, setPassword] = useState({ value: "", error: "" });
-
-  const [values, setValues] = useState({
-    // name: "",
-    // email: "",
-    // password: "",
-    userName: "",
-    userEmail: "",
-    password: "",
-  });
-
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const handleName = (e) => {
-    // setName({ value: e, error: "" });
-    setUserName({ value: e, error: "" });
-  };
-
-  const handleEmail = (e) => {
-    if (/^\S+@\S+\.\S+$/.test(e)) {
-      // setEmail({ value: e, error: "" });
-      setUserEmail({ value: e, error: "" });
-    } else {
-      // setEmail({
-      //   value: "",
-      //   error: "Invalid Email. please give right email address",
-      // });
-      setUserEmail({
-        value: "",
-        error: "Invalid Email. please give right email address",
-      });
-    }
-  };
-
-  const handlePassword = (e) => {
-    if (e.length > 6) {
-      setPassword({
-        value: "",
-        error: "Password too short. minimum 6 characters",
-      });
-    } else {
-      setPassword({ value: e, error: "" });
-    }
-  };
-
-  // const handleConfirmPassword = (e) => {
-  //   if (e === password.value) {
-  //     setConfirmPassword({ value: e, error: "" });
-  //   } else {
-  //     setConfirmPassword({ value: "", error: "Password don't match" });
-  //   }
-  // };
-
-  const handleSignup = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    const validationErrors = {};
 
-    // http://localhost:5001/register
-    // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/users/signup
-    axios
-      .post(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/users/signup",
-        values
-      )
-      .then((res) => {
-        localStorage.setItem("values", JSON.stringify(values?.userEmail));
-        toast.success("User create Successfully");
-        navigate("/exportimport");
-        // console.log(res);
-      })
-      .catch((err) => toast.error("Something went wrong"));
+    if (!userName.trim()) {
+      validationErrors.userName = "Name is required";
+    }
+
+    if (!userEmail.trim()) {
+      validationErrors.userEmail = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(userEmail)) {
+      validationErrors.userEmail = "Invalid email format";
+    }
+
+    if (!password) {
+      validationErrors.password = "Password is required";
+    } else if (password.length < 6) {
+      validationErrors.password = "Password must be at least 6 characters";
+    }
+
+    if (Object.keys(validationErrors).length === 0) {
+      axios
+        .post(
+          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/users/signup",
+          { userName, userEmail, password }
+        )
+        .then((res) => {
+          localStorage.setItem("values", JSON.stringify(userEmail));
+          toast.success("User create Successfully");
+          navigate("/exportimport");
+          // console.log(res);
+        })
+        .catch((err) => toast.error("Something went wrong"));
+    } else {
+      setErrors(validationErrors);
+    }
   };
 
   return (
@@ -95,7 +62,7 @@ const Signup = () => {
           <p className="font-medium text-base text-gray-500 mt-4 text-center">
             Please Enter Your Details
           </p>
-          <form onSubmit={handleSignup}>
+          <form onSubmit={handleSubmit}>
             <div className="mt-5">
               <div>
                 <label className="text-lg font-semibold" htmlFor="name">
@@ -104,14 +71,16 @@ const Signup = () => {
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
                   placeholder="Enter your name"
-                  type="name"
-                  // name="name"
+                  type="text"
                   name="userName"
-                  onBlur={(e) => handleName(e.target.value)}
-                  onChange={(e) =>
-                    setValues({ ...values, userName: e.target.value })
-                  }
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
                 />
+                {errors.userName && (
+                  <p className="text-red-600 font-semibold my-1">
+                    {errors.userName}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="text-lg font-semibold" htmlFor="email">
@@ -120,19 +89,14 @@ const Signup = () => {
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
                   placeholder="Enter your email"
-                  type="email"
-                  // name="email"
+                  type="text"
                   name="useEmail"
-                  onBlur={(e) => handleEmail(e.target.value)}
-                  onChange={(e) =>
-                    setValues({ ...values, userEmail: e.target.value })
-                  }
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
                 />
-                {/* {email?.error && (
-                  <p className="mt-2 text-red-500 font-normal">{email.error}</p> */}
-                {userEmail?.error && (
-                  <p className="mt-2 text-red-500 font-normal">
-                    {userEmail.error}
+                {errors.userEmail && (
+                  <p className="text-red-600 font-semibold my-1">
+                    {errors.userEmail}
                   </p>
                 )}
               </div>
@@ -145,38 +109,15 @@ const Signup = () => {
                   placeholder="Enter your password"
                   type="password"
                   name="password"
-                  id="password"
-                  onBlur={(e) => handlePassword(e.target.value)}
-                  onChange={(e) =>
-                    setValues({ ...values, password: e.target.value })
-                  }
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                {password?.error && (
-                  <p className="mt-2 text-red-500 font-normal">
-                    {password.error}
+                {errors.password && (
+                  <p className="text-red-600 font-semibold my-1">
+                    {errors.password}
                   </p>
                 )}
               </div>
-              {/* <div>
-                <label
-                  className="text-lg font-semibold"
-                  htmlFor="confirm-password">
-                  Confirm Password
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
-                  placeholder="Retype your password"
-                  type="password"
-                  name="confirmPassword"
-                  id="confirm-password"
-                  onBlur={(e) => handleConfirmPassword(e.target.value)}
-                />
-                {confirmPassword?.error && (
-                  <p className="mt-2 text-red-500 font-normal">
-                    {confirmPassword.error}
-                  </p>
-                )}
-              </div> */}
               <div className="mt-8 flex flex-col gap-y-2">
                 <button
                   className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
