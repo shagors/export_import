@@ -56,6 +56,10 @@ const ProductBoxes = () => {
     }
   };
 
+  const toggleDivVisibility = () => {
+    setDivs(!divs);
+  };
+
   const formSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -65,34 +69,17 @@ const ProductBoxes = () => {
     console.log(data);
   };
 
-  const toggleDivVisibility = () => {
-    setDivs(!divs);
-  };
-
-  const handleSelectedProductFilter = (productName) => {
-    if (selectedProduct.includes(productName)) {
-      setSelectedProduct(
-        selectedProduct.filter(
-          (productName) => productName !== selectedProduct.productName
-        )
-      );
-      // setSelectedBrand(
-      //   selectedBrand.filter((product) => productModel !== product.productModel)
-      // );
-    }
-  };
-
-  console.log(selectedProduct);
+  // console.log(selectedProduct);
 
   return (
     <div>
       {/* Table data get from accouts input database */}
       <div className="mb-6 mt-3">
-        <div className="bg-slate-500 p-2 rounded-lg uppercase flex items-center justify-around mb-4">
+        <div className="bg-slate-500 p-2 rounded-lg uppercase flex items-center justify-between mb-4">
           <Link to="/exportimport" className="text-white flex">
             <BsArrowLeft className="w-20 lg:w-[380px] h-[35px] text-white" />
           </Link>
-          <h1 className="text-center text-3xl text-info font-bold">
+          <h1 className="text-center text-3xl text-info font-bold mr-10">
             Order Products Table
           </h1>
         </div>
@@ -145,7 +132,7 @@ const ProductBoxes = () => {
                 <h2 className="text-center text-2xl font-semibold mb-5">
                   Selected Products
                 </h2>
-                {selectedProductsData.map((product) => (
+                {selectedProductsData?.map((product) => (
                   <div
                     key={product.id}
                     className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -309,60 +296,25 @@ const ProductBoxes = () => {
                         htmlFor="productModel">
                         Product Name
                       </label>
-                      <div className="input-group  flex lg:flex-none justify-center items-center">
-                        <select
-                          className="select select-info w-full max-w-xs"
-                          id="selectOption"
-                          value={selectedProduct}
-                          onChange={handleProductChange}
-                          name="productName">
-                          setRelatedBrands(handleSelectedProductFilter)
-                          <option value="">---- Product Name ----</option>
-                          {accounts?.map((product, index) => (
-                            <option
-                              key={index}
-                              value={product.productName.toLowerCase()}>
-                              {product.productName}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Product Model"
+                        type="text"
+                      />
                     </div>
 
                     {/* product Brand */}
                     <div>
                       <label
                         className="text-lg font-semibold"
-                        htmlFor="productModel">
+                        htmlFor="productQuantity">
                         Product Model
                       </label>
-                      <div className="input-group  flex lg:flex-none justify-center items-center">
-                        <select
-                          className="select select-info w-full max-w-xs"
-                          id="selectOption"
-                          // value={selectedProduct}
-                          // onChange={handleProductChange}
-                          name="productModel">
-                          <option value="">---- Pick Model ----</option>
-                          {accounts.map((product, index) => (
-                            <option key={index} value={product.productModel}>
-                              {product.productModel}
-                              <input
-                                type="checkbox"
-                                className="checkbox checkbox-info"
-                                name="product"
-                                value={product.productModel}
-                                checked={selectedProduct.includes(
-                                  product.productModel
-                                )}
-                                onClick={() =>
-                                  handleCheckboxClick(product.productModel)
-                                }
-                              />
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Product Model"
+                        type="text"
+                      />
                     </div>
 
                     {/* product Quantity */}

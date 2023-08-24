@@ -48,8 +48,8 @@ const Footer = () => {
             </a>
           </div>
           <p className=" mt-5 font-semibold text-lg">
-            &copy; 2023. All rights reserved by THT-space electrical company
-            Ltd.
+            &copy; 2023. All rights reserved by <br /> THT-space electrical
+            company Ltd.
             <div className="flex gap-2">
               <BsFillTelephoneFill />
               09638-322304
