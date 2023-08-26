@@ -16,13 +16,21 @@ const ProductBoxes = () => {
 
   // for multiple product add
   const [selectedProductName, setSelectedProductName] = useState("");
-  const [selectedProductModel, setSelectedProductModel] = useState("");
+  const [selectedProductModels, setSelectedProductModels] = useState([]);
+  const [selectedProductQuantity, setSelectedProductQuantity] = useState(0);
+  const [selectedProductPerBox, setSelectedProductPerBox] = useState(0);
+  const [selectedProductPallet, setSelectedProductPallet] = useState(0);
+  const [totalBox, setTotalBox] = useState(0);
 
   const [divs, setDivs] = useState(false);
 
   useEffect(() => {
     fetchAccounts();
-  }, []);
+    const quantity = parseFloat(selectedProductQuantity);
+    const productPerBox = parseFloat(selectedProductPerBox);
+    const totalBox = Math.ceil(quantity / productPerBox);
+    setTotalBox(totalBox);
+  }, [selectedProductQuantity, selectedProductPerBox]);
 
   // data fetch from server
   const fetchAccounts = async () => {
@@ -67,16 +75,38 @@ const ProductBoxes = () => {
     const data = {
       ...selectedProductsData,
     };
+
+    const newData = {
+      productName: selectedProductName,
+      productModels: selectedProductModels,
+      quantity: selectedProductQuantity,
+      productPerBox: selectedProductPerBox,
+      totalBox: totalBox,
+      totalPallet: selectedProductPallet,
+    };
     toast.success("Data successfully uploaded");
-    console.log(data);
+    console.log(newData);
   };
 
+  // product name and product model map and filter for select options
   const products = accounts?.map((product) => product.productName) || [];
   const filteredProductModels = accounts
     .filter((account) => account.productName === selectedProductName)
     .map((account) => account.productModel);
 
-  console.log(selectedProductModel);
+  // multiple checkbox select options add
+  const handleProductModelCheckboxChange = (e) => {
+    const value = e.target.value;
+    if (selectedProductModels.includes(value)) {
+      setSelectedProductModels(
+        selectedProductModels.filter((model) => model !== value)
+      );
+    } else {
+      setSelectedProductModels([...selectedProductModels, value]);
+    }
+  };
+
+  // console.log(selectedProductModels);
 
   return (
     <div>
@@ -328,21 +358,21 @@ const ProductBoxes = () => {
                       </div>
 
                       {/* product Brand */}
-                      <div>
+                      {/* <div>
                         <label
                           className="text-lg font-semibold"
                           htmlFor="productQuantity">
                           Product Model
                         </label>
-                        {filteredProductModels && (
+                        {filteredProductModels.length > 0 && (
                           <select
                             className="select select-info w-full max-w-xs"
-                            value={selectedProductModel}
+                            value={selectedProductModels}
                             name="productName"
                             onChange={(e) =>
-                              setSelectedProductModel(e.target.value)
+                              setSelectedProductModels(e.target.value)
                             }>
-                            <option value="">Pick product Model</option>
+                            <option value="">Choose product Model</option>
                             {filteredProductModels.map(
                               (productModel, index) => (
                                 <option key={index}>{productModel}</option>
@@ -350,6 +380,26 @@ const ProductBoxes = () => {
                             )}
                           </select>
                         )}
+                      </div> */}
+
+                      <div>
+                        <label className="text-lg font-semibold">
+                          Select Models:
+                        </label>
+                        {filteredProductModels.map((productModel, index) => (
+                          <div key={index} className="flex items-center">
+                            <input
+                              className="checkbox checkbox-info mr-2 my-1"
+                              type="checkbox"
+                              value={productModel}
+                              checked={selectedProductModels.includes(
+                                productModel
+                              )}
+                              onChange={handleProductModelCheckboxChange}
+                            />
+                            <span>{productModel}</span>
+                          </div>
+                        ))}
                       </div>
 
                       {/* product Quantity */}
@@ -362,7 +412,10 @@ const ProductBoxes = () => {
                         <input
                           className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                           placeholder="Enter Product Name"
-                          type="text"
+                          type="number"
+                          onChange={(e) =>
+                            setSelectedProductQuantity(e.target.value)
+                          }
                         />
                       </div>
 
@@ -379,7 +432,9 @@ const ProductBoxes = () => {
                           type="number"
                           name="productPerBox"
                           required
-                          onChange={(e) => setProductPerBox(e.target.value)}
+                          onChange={(e) =>
+                            setSelectedProductPerBox(e.target.value)
+                          }
                         />
                       </div>
                       <div>
@@ -390,11 +445,10 @@ const ProductBoxes = () => {
                         </label>
                         <input
                           className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                          placeholder="Enter Box Quantity"
                           type="number"
                           name="boxQuantiy"
-                          required
-                          onChange={(e) => setBoxQuantiy(e.target.value)}
+                          readOnly
+                          value={totalBox}
                         />
                       </div>
                       <div>
@@ -409,7 +463,9 @@ const ProductBoxes = () => {
                           type="text"
                           name="pallet"
                           required
-                          onChange={(e) => setPallet(e.target.value)}
+                          onChange={(e) =>
+                            setSelectedProductPallet(e.target.value)
+                          }
                         />
                       </div>
                     </div>
