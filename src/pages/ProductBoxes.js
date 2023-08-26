@@ -13,8 +13,10 @@ const ProductBoxes = () => {
   const [boxQuantiy, setBoxQuantiy] = useState([]);
   const [pallet, setPallet] = useState([]);
   const navigate = useNavigate();
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const [relatedBrands, setRelatedBrands] = useState([]);
+
+  // for multiple product add
+  const [selectedProductName, setSelectedProductName] = useState("");
+  const [selectedProductModel, setSelectedProductModel] = useState("");
 
   const [divs, setDivs] = useState(false);
 
@@ -69,7 +71,12 @@ const ProductBoxes = () => {
     console.log(data);
   };
 
-  // console.log(selectedProduct);
+  const products = accounts?.map((product) => product.productName) || [];
+  const filteredProductModels = accounts
+    .filter((account) => account.productName === selectedProductName)
+    .map((account) => account.productModel);
+
+  console.log(selectedProductModel);
 
   return (
     <div>
@@ -129,7 +136,7 @@ const ProductBoxes = () => {
           <div className="lg:flex justify-between items-center">
             <div className="form-control card-body">
               <div className="w-full">
-                <h2 className="text-center text-2xl font-semibold mb-5">
+                <h2 className="text-center text-3xl font-semibold mb-5">
                   Selected Products
                 </h2>
                 {selectedProductsData?.map((product) => (
@@ -285,97 +292,126 @@ const ProductBoxes = () => {
                 ))}
 
                 {/* Multiple Products Add */}
+
                 {!divs ? (
                   ""
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                    {/* product Name */}
-                    <div className="">
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="productModel">
-                        Product Name
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Product Model"
-                        type="text"
-                      />
-                    </div>
+                  <div>
+                    <p className="text-center font-semibold text-xl my-4 text-purple-500">
+                      Multiple Products Selection
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                      {/* product Name */}
+                      <div className="">
+                        <label className="text-center mb-3">
+                          <span className="lebel-text text-lg font-semibold">
+                            Product Name
+                          </span>
+                        </label>
+                        <div className="input-group  flex lg:flex-none justify-center items-center">
+                          <select
+                            className="select select-info w-full max-w-xs"
+                            value={selectedProductName}
+                            name="productName"
+                            onChange={(e) =>
+                              setSelectedProductName(e.target.value)
+                            }>
+                            <option value="">Pick product Name</option>
+                            {products &&
+                              products.map((product, index) => (
+                                <option value={product} key={index}>
+                                  {product}
+                                </option>
+                              ))}
+                          </select>
+                        </div>
+                      </div>
 
-                    {/* product Brand */}
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="productQuantity">
-                        Product Model
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Product Model"
-                        type="text"
-                      />
-                    </div>
+                      {/* product Brand */}
+                      <div>
+                        <label
+                          className="text-lg font-semibold"
+                          htmlFor="productQuantity">
+                          Product Model
+                        </label>
+                        {filteredProductModels && (
+                          <select
+                            className="select select-info w-full max-w-xs"
+                            value={selectedProductModel}
+                            name="productName"
+                            onChange={(e) =>
+                              setSelectedProductModel(e.target.value)
+                            }>
+                            <option value="">Pick product Model</option>
+                            {filteredProductModels.map(
+                              (productModel, index) => (
+                                <option key={index}>{productModel}</option>
+                              )
+                            )}
+                          </select>
+                        )}
+                      </div>
 
-                    {/* product Quantity */}
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="productQuantity">
-                        Product Quantity
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Product Name"
-                        type="text"
-                      />
-                    </div>
+                      {/* product Quantity */}
+                      <div>
+                        <label
+                          className="text-lg font-semibold"
+                          htmlFor="productQuantity">
+                          Product Quantity
+                        </label>
+                        <input
+                          className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                          placeholder="Enter Product Name"
+                          type="text"
+                        />
+                      </div>
 
-                    {/* Editable field */}
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="productPerBox">
-                        Product Per Box
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Per Box Product Quantity"
-                        type="number"
-                        name="productPerBox"
-                        required
-                        onChange={(e) => setProductPerBox(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="boxQuantiy">
-                        How Many Boxes
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Box Quantity"
-                        type="number"
-                        name="boxQuantiy"
-                        required
-                        onChange={(e) => setBoxQuantiy(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="boxQuantiy">
-                        Number of Pallet
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Pallent Quantity"
-                        type="text"
-                        name="pallet"
-                        required
-                        onChange={(e) => setPallet(e.target.value)}
-                      />
+                      {/* Editable field */}
+                      <div>
+                        <label
+                          className="text-lg font-semibold"
+                          htmlFor="productPerBox">
+                          Product Per Box
+                        </label>
+                        <input
+                          className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                          placeholder="Per Box Product Quantity"
+                          type="number"
+                          name="productPerBox"
+                          required
+                          onChange={(e) => setProductPerBox(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          className="text-lg font-semibold"
+                          htmlFor="boxQuantiy">
+                          How Many Boxes
+                        </label>
+                        <input
+                          className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                          placeholder="Enter Box Quantity"
+                          type="number"
+                          name="boxQuantiy"
+                          required
+                          onChange={(e) => setBoxQuantiy(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          className="text-lg font-semibold"
+                          htmlFor="boxQuantiy">
+                          Number of Pallet
+                        </label>
+                        <input
+                          className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                          placeholder="Enter Pallent Quantity"
+                          type="text"
+                          name="pallet"
+                          required
+                          onChange={(e) => setPallet(e.target.value)}
+                        />
+                      </div>
                     </div>
                   </div>
                 )}
