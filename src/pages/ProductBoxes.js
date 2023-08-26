@@ -9,9 +9,6 @@ const ProductBoxes = () => {
   const [selectedProductIds, setSelectedProductIds] = useState([]);
   const [selectedProductsData, setSelectedProductsData] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState("");
-  const [productPerBox, setProductPerBox] = useState([]);
-  const [boxQuantiy, setBoxQuantiy] = useState([]);
-  const [pallet, setPallet] = useState([]);
   const navigate = useNavigate();
 
   // for multiple product add
@@ -21,16 +18,31 @@ const ProductBoxes = () => {
   const [selectedProductPerBox, setSelectedProductPerBox] = useState(0);
   const [selectedProductPallet, setSelectedProductPallet] = useState(0);
   const [totalBox, setTotalBox] = useState(0);
+  const [inputValues, setInputValues] = useState({});
 
   const [divs, setDivs] = useState(false);
 
   useEffect(() => {
     fetchAccounts();
+    // total box count
     const quantity = parseFloat(selectedProductQuantity);
     const productPerBox = parseFloat(selectedProductPerBox);
     const totalBox = Math.ceil(quantity / productPerBox);
     setTotalBox(totalBox);
-  }, [selectedProductQuantity, selectedProductPerBox]);
+    // all products input field count
+    let total = 0;
+    for (const model in selectedProductModels) {
+      if (selectedProductModels[model]) {
+        total += parseInt(inputValues[model]) || 0;
+      }
+    }
+    setSelectedProductQuantity(total);
+  }, [
+    selectedProductQuantity,
+    selectedProductPerBox,
+    selectedProductModels,
+    inputValues,
+  ]);
 
   // data fetch from server
   const fetchAccounts = async () => {
@@ -72,10 +84,6 @@ const ProductBoxes = () => {
 
   const formSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      ...selectedProductsData,
-    };
-
     const newData = {
       productName: selectedProductName,
       productModels: selectedProductModels,
@@ -84,26 +92,50 @@ const ProductBoxes = () => {
       totalBox: totalBox,
       totalPallet: selectedProductPallet,
     };
+
+    const data = {
+      ...selectedProductsData,
+      newData,
+    };
+
     toast.success("Data successfully uploaded");
-    console.log(newData);
+    console.log(data);
   };
 
   // product name and product model map and filter for select options
   const products = accounts?.map((product) => product.productName) || [];
+
   const filteredProductModels = accounts
     .filter((account) => account.productName === selectedProductName)
     .map((account) => account.productModel);
 
   // multiple checkbox select options add
+  // const handleProductModelCheckboxChange = (e) => {
+  //   const value = e.target.value;
+  //   if (selectedProductModels.includes(value)) {
+  //     setSelectedProductModels(
+  //       selectedProductModels.filter((model) => model !== value)
+  //     );
+  //   } else {
+  //     setSelectedProductModels([...selectedProductModels, value]);
+  //   }
+  // };
+
   const handleProductModelCheckboxChange = (e) => {
     const value = e.target.value;
-    if (selectedProductModels.includes(value)) {
-      setSelectedProductModels(
-        selectedProductModels.filter((model) => model !== value)
-      );
-    } else {
-      setSelectedProductModels([...selectedProductModels, value]);
-    }
+    setSelectedProductModels((prevSelectedModels) => ({
+      ...prevSelectedModels,
+      [value]: !prevSelectedModels[value],
+    }));
+  };
+
+  const handleInputValueChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setInputValues((prevInputValues) => ({
+      ...prevInputValues,
+      [name]: value,
+    }));
   };
 
   // console.log(selectedProductModels);
@@ -392,12 +424,22 @@ const ProductBoxes = () => {
                               className="checkbox checkbox-info mr-2 my-1"
                               type="checkbox"
                               value={productModel}
-                              checked={selectedProductModels.includes(
-                                productModel
-                              )}
+                              checked={
+                                selectedProductModels[productModel] || false
+                              }
                               onChange={handleProductModelCheckboxChange}
                             />
                             <span>{productModel}</span>
+                            {selectedProductModels[productModel] && (
+                              <input
+                                type="text"
+                                name={productModel}
+                                value={inputValues[productModel] || ""}
+                                onChange={handleInputValueChange}
+                                placeholder={`Enter ${productModel} Quantity`}
+                                className="ml-2"
+                              />
+                            )}
                           </div>
                         ))}
                       </div>
@@ -413,9 +455,8 @@ const ProductBoxes = () => {
                           className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                           placeholder="Enter Product Name"
                           type="number"
-                          onChange={(e) =>
-                            setSelectedProductQuantity(e.target.value)
-                          }
+                          readOnly
+                          value={selectedProductQuantity}
                         />
                       </div>
 
