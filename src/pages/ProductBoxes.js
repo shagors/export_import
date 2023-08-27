@@ -362,7 +362,7 @@ const ProductBoxes = () => {
                     <p className="text-center font-semibold text-xl my-4 text-purple-500">
                       Multiple Products Selection
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                       {/* product Name */}
                       <div className="">
                         <label className="text-center mb-3">
@@ -437,7 +437,7 @@ const ProductBoxes = () => {
                                 value={inputValues[productModel] || ""}
                                 onChange={handleInputValueChange}
                                 placeholder={`Enter ${productModel} Quantity`}
-                                className="ml-2"
+                                className="mx-5 my-1 p-[6px] border border-b-blue-500 focus:outline-none"
                               />
                             )}
                           </div>
@@ -516,7 +516,7 @@ const ProductBoxes = () => {
             </div>
           </div>
           {/* button */}
-          <div className="flex justify-end items-center mr-7 py-5 ">
+          <div className="flex justify-end items-center mx-7 py-5 ">
             <p
               className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6"
               onClick={toggleDivVisibility}>
