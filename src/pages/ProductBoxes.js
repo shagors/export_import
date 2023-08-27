@@ -414,34 +414,36 @@ const ProductBoxes = () => {
                         )}
                       </div> */}
 
-                      <div>
+                      <div className="">
                         <label className="text-lg font-semibold">
                           Select Models:
                         </label>
-                        {filteredProductModels.map((productModel, index) => (
-                          <div key={index} className="flex items-center">
-                            <input
-                              className="checkbox checkbox-info mr-2 my-1"
-                              type="checkbox"
-                              value={productModel}
-                              checked={
-                                selectedProductModels[productModel] || false
-                              }
-                              onChange={handleProductModelCheckboxChange}
-                            />
-                            <span>{productModel}</span>
-                            {selectedProductModels[productModel] && (
+                        <div className="scrollable-container">
+                          {filteredProductModels.map((productModel, index) => (
+                            <div key={index} className="flex items-center">
                               <input
-                                type="text"
-                                name={productModel}
-                                value={inputValues[productModel] || ""}
-                                onChange={handleInputValueChange}
-                                placeholder={`Enter ${productModel} Quantity`}
-                                className="mx-5 my-1 p-[6px] border border-b-blue-500 focus:outline-none"
+                                className="checkbox checkbox-info mr-2 my-1"
+                                type="checkbox"
+                                value={productModel}
+                                checked={
+                                  selectedProductModels[productModel] || false
+                                }
+                                onChange={handleProductModelCheckboxChange}
                               />
-                            )}
-                          </div>
-                        ))}
+                              <span>{productModel}</span>
+                              {selectedProductModels[productModel] && (
+                                <input
+                                  type="text"
+                                  name={productModel}
+                                  value={inputValues[productModel] || ""}
+                                  onChange={handleInputValueChange}
+                                  placeholder={`Enter ${productModel} Quantity`}
+                                  className="mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
+                                />
+                              )}
+                            </div>
+                          ))}
+                        </div>
                       </div>
 
                       {/* product Quantity */}
