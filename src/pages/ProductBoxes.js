@@ -82,26 +82,6 @@ const ProductBoxes = () => {
     setDivs(!divs);
   };
 
-  const formSubmit = (e) => {
-    e.preventDefault();
-    const newData = {
-      productName: selectedProductName,
-      productModels: selectedProductModels,
-      quantity: selectedProductQuantity,
-      productPerBox: selectedProductPerBox,
-      totalBox: totalBox,
-      totalPallet: selectedProductPallet,
-    };
-
-    const data = {
-      ...selectedProductsData,
-      newData,
-    };
-
-    toast.success("Data successfully uploaded");
-    console.log(data);
-  };
-
   // product name and product model map and filter for select options
   const products = accounts?.map((product) => product.productName) || [];
 
@@ -136,6 +116,24 @@ const ProductBoxes = () => {
       ...prevInputValues,
       [name]: value,
     }));
+  };
+
+  // data send to server
+  const formSubmit = (e) => {
+    e.preventDefault();
+    const newData = {
+      productName: selectedProductName,
+      productModels: selectedProductModels,
+      quantity: selectedProductQuantity,
+      productPerBox: selectedProductPerBox,
+      totalBox: totalBox,
+      totalPallet: selectedProductPallet,
+    };
+
+    const data = [...selectedProductsData, newData];
+
+    toast.success("Data successfully uploaded");
+    console.log(data);
   };
 
   // console.log(selectedProductModels);
@@ -365,20 +363,20 @@ const ProductBoxes = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                       {/* product Name */}
                       <div className="">
-                        <label className="text-center mb-3">
-                          <span className="lebel-text text-lg font-semibold">
-                            Product Name
-                          </span>
+                        <label className="text-lg font-semibold mb-3">
+                          Product Name
                         </label>
-                        <div className="input-group  flex lg:flex-none justify-center items-center">
+                        <div className="input-group">
                           <select
-                            className="select select-info w-full max-w-xs"
+                            className="select select-secondary w-full max-w-xs focus:outline-none"
                             value={selectedProductName}
                             name="productName"
                             onChange={(e) =>
                               setSelectedProductName(e.target.value)
                             }>
-                            <option value="">Pick product Name</option>
+                            <option value="" className="mt-2">
+                              Pick product Name
+                            </option>
                             {products &&
                               products.map((product, index) => (
                                 <option value={product} key={index}>
@@ -422,7 +420,7 @@ const ProductBoxes = () => {
                           {filteredProductModels.map((productModel, index) => (
                             <div key={index} className="flex items-center">
                               <input
-                                className="checkbox checkbox-info mr-2 my-1"
+                                className="mr-[6px] my-[3px] checkbox checkbox-xs checkbox-info"
                                 type="checkbox"
                                 value={productModel}
                                 checked={
