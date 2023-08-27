@@ -30,3 +30,13 @@
   border-radius: 4px;
   scroll-behavior: smooth;
 }
+
+.custom-select {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  overflow-y: auto;
+  max-height: 150px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}

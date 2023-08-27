@@ -8,7 +8,6 @@ const ProductBoxes = () => {
   const [accounts, setAccounts] = useState([]);
   const [selectedProductIds, setSelectedProductIds] = useState([]);
   const [selectedProductsData, setSelectedProductsData] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState("");
   const navigate = useNavigate();
 
   // for multiple product add
@@ -25,8 +24,8 @@ const ProductBoxes = () => {
   useEffect(() => {
     fetchAccounts();
     // total box count
-    const quantity = parseFloat(selectedProductQuantity);
-    const productPerBox = parseFloat(selectedProductPerBox);
+    const quantity = parseInt(selectedProductQuantity);
+    const productPerBox = parseInt(selectedProductPerBox);
     const totalBox = Math.ceil(quantity / productPerBox);
     setTotalBox(totalBox);
     // all products input field count
@@ -54,11 +53,6 @@ const ProductBoxes = () => {
     } catch (error) {
       toast.error("Error getting data from server!");
     }
-  };
-
-  const handleProductChange = (event) => {
-    const newProduct = event.target.value;
-    setSelectedProduct(newProduct);
   };
 
   const handleCheckboxClick = (productId) => {
@@ -136,7 +130,7 @@ const ProductBoxes = () => {
     console.log(data);
   };
 
-  // console.log(selectedProductModels);
+  console.log(inputValues);
 
   return (
     <div>
