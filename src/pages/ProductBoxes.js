@@ -130,7 +130,7 @@ const ProductBoxes = () => {
     console.log(data);
   };
 
-  console.log(inputValues);
+  // console.log(inputValues);
 
   return (
     <div>
@@ -427,6 +427,7 @@ const ProductBoxes = () => {
                                 <input
                                   type="text"
                                   name={productModel}
+                                  required
                                   value={inputValues[productModel] || ""}
                                   onChange={handleInputValueChange}
                                   placeholder={`Enter ${productModel} Quantity`}
@@ -504,6 +505,9 @@ const ProductBoxes = () => {
                         />
                       </div>
                     </div>
+                    {/* <p className="btn btn-accent mt-4 px-8 py-1 font-semibold">
+                      Add New products
+                    </p> */}
                   </div>
                 )}
               </div>

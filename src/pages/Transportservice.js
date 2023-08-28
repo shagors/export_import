@@ -20,11 +20,11 @@ const Transportservice = () => {
   const refOne = useRef(null);
 
   useEffect(() => {
-    // http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/office_accounts
+    // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts
     // https://64d88afe5f9bf5b879ce54e8.mockapi.io/products
     axios
       .get(
-        "http://web-api-tht-env.eba-kcaa52ff.us-east-1.elasticbeanstalk.com/api/dev/office_accounts"
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       )
       .then((res) => {
         setAllProducts(res?.data);
@@ -71,7 +71,7 @@ const Transportservice = () => {
 
   return (
     <>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto h-[700px]">
         <div className="text-center my-4 calendarWrap">
           <input
             value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
@@ -103,6 +103,7 @@ const Transportservice = () => {
             <tr>
               <th>ID</th>
               <th>Product Name</th>
+              <th>Model</th>
               <th>Date</th>
             </tr>
           </thead>
@@ -113,6 +114,7 @@ const Transportservice = () => {
                 <tr key={product.id}>
                   <th>{product.id}</th>
                   <td>{product.productName}</td>
+                  <td>{product.productModel}</td>
                   <td>{date.toLocaleDateString()}</td>
                 </tr>
               );
