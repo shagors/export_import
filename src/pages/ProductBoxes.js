@@ -433,17 +433,61 @@ const ProductBoxes = () => {
                             {selectedProductModels[productModel] && (
                               <input
                                 type="text"
+                                name="perBoxProduct"
+                                required
+                                // value={""}
+                                // onChange={handleInputValueChange}
+                                placeholder="per Box"
+                                className="w-[75px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
+                              />
+                            )}
+
+                            {selectedProductModels[productModel] && (
+                              <input
+                                type="text"
                                 name={productModel}
                                 required
                                 value={inputValues[productModel] || ""}
                                 onChange={handleInputValueChange}
-                                placeholder={`Enter ${productModel} Quantity`}
-                                className="mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
+                                placeholder={`Enter Quantity`}
+                                className="w-[120px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
                             )}
                           </div>
                         ))}
                       </div>
+                    </div>
+
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productPerBox">
+                        Product Per Box
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Per Box Product Quantity"
+                        type="number"
+                        name="productPerBox"
+                        required
+                        onChange={(e) =>
+                          setSelectedProductPerBox(e.target.value)
+                        }
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="boxQuantiy">
+                        How Many Boxes
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        type="number"
+                        name="boxQuantiy"
+                        // value=""
+                      />
                     </div>
 
                     {/* product Quantity */}
@@ -463,37 +507,7 @@ const ProductBoxes = () => {
                     </div>
 
                     {/* Editable field */}
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="productPerBox">
-                        Product Per Box
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Per Box Product Quantity"
-                        type="number"
-                        name="productPerBox"
-                        required
-                        onChange={(e) =>
-                          setSelectedProductPerBox(e.target.value)
-                        }
-                      />
-                    </div>
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="boxQuantiy">
-                        How Many Boxes
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        type="number"
-                        name="boxQuantiy"
-                        // readOnly
-                        // value={totalBox}
-                      />
-                    </div>
+
                     <div>
                       <label
                         className="text-lg font-semibold"
