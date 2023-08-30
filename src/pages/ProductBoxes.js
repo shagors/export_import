@@ -390,28 +390,26 @@ const ProductBoxes = () => {
 
                     {/* product Model */}
                     {/* <div>
-                        <label
-                          className="text-lg font-semibold"
-                          htmlFor="productQuantity">
-                          Product Model
-                        </label>
-                        {filteredProductModels.length > 0 && (
-                          <select
-                            className="select select-info w-full max-w-xs"
-                            value={selectedProductModels}
-                            name="productName"
-                            onChange={(e) =>
-                              setSelectedProductModels(e.target.value)
-                            }>
-                            <option value="">Choose product Model</option>
-                            {filteredProductModels.map(
-                              (productModel, index) => (
-                                <option key={index}>{productModel}</option>
-                              )
-                            )}
-                          </select>
-                        )}
-                      </div> */}
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productQuantity">
+                        Product Model
+                      </label>
+                      {filteredProductModels.length > 0 && (
+                        <select
+                          className="select select-info w-full max-w-xs"
+                          value={selectedProductModels}
+                          name="productName"
+                          onChange={(e) =>
+                            setSelectedProductModels(e.target.value)
+                          }>
+                          <option value="">Choose product Model</option>
+                          {filteredProductModels.map((productModel, index) => (
+                            <option key={index}>{productModel}</option>
+                          ))}
+                        </select>
+                      )}
+                    </div> */}
 
                     <div className="">
                       <label className="text-lg font-semibold">
@@ -458,6 +456,7 @@ const ProductBoxes = () => {
                       </div>
                     </div>
 
+                    {/* product per box */}
                     <div>
                       <label
                         className="text-lg font-semibold"
@@ -476,6 +475,7 @@ const ProductBoxes = () => {
                       />
                     </div>
 
+                    {/* Total Box */}
                     <div>
                       <label
                         className="text-lg font-semibold"
@@ -506,7 +506,7 @@ const ProductBoxes = () => {
                       />
                     </div>
 
-                    {/* Editable field */}
+                    {/* Pallet */}
 
                     <div>
                       <label

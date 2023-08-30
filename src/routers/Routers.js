@@ -26,8 +26,8 @@ import Home from "../pages/Home/Home";
 const Routers = () => {
   return (
     <Routes>
-      <Route path="/home" element={<Home />} />
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route element={<PrivateRoute />}>

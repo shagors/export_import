@@ -39,7 +39,7 @@ const Signup = () => {
         .then((res) => {
           localStorage.setItem("values", JSON.stringify(userEmail));
           toast.success("User create Successfully");
-          navigate("/exportimport");
+          navigate("/");
           // window.location.reload();
           // console.log(res);
         })
@@ -132,7 +132,7 @@ const Signup = () => {
                   Already have an account?
                 </p>
                 <button className="text-violet-500 text-base font-medium ml-2">
-                  <Link to="/">Log In</Link>
+                  <Link to="/login">Log In</Link>
                 </button>
               </div>
             </div>

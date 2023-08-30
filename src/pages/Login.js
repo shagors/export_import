@@ -24,7 +24,7 @@ const Login = () => {
         if (res.data === true) {
           localStorage.setItem("values", JSON.stringify(values?.userEmail));
           toast.success("Login Successfully");
-          navigate("/exportimport");
+          navigate("/");
           // window.location.reload();
           // console.log(res);
         } else {
