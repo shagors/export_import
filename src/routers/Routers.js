@@ -21,10 +21,12 @@ import Transportservice from "../pages/Transportservice";
 import AddCharges from "../pages/AddCharges";
 import AddChargesUpdate from "../pages/AddChargesUpdate";
 import ProductBoxes from "../pages/ProductBoxes";
+import Home from "../pages/Home/Home";
 
 const Routers = () => {
   return (
     <Routes>
+      <Route path="/home" element={<Home />} />
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />

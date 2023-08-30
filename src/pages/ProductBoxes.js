@@ -113,20 +113,32 @@ const ProductBoxes = () => {
   };
 
   // data send to server
+  // http://localhost:5001/productbox
   const formSubmit = (e) => {
     e.preventDefault();
     const newData = {
       productName: selectedProductName,
-      productModels: selectedProductModels,
+      productModel: selectedProductModels,
       quantity: selectedProductQuantity,
       productPerBox: selectedProductPerBox,
       totalBox: totalBox,
       totalPallet: selectedProductPallet,
     };
 
-    const data = [...selectedProductsData, newData];
+    const data = [...selectedProductsData];
 
-    toast.success("Data successfully uploaded");
+    axios
+      .post("http://localhost:5001/productbox", data)
+      .then((res) => {
+        toast.success("Successfully Uploaded to server");
+        navigate("/exportimport");
+        console.log(res);
+      })
+      .catch((err) =>
+        toast.error("Error coming from server please try again later")
+      );
+
+    // toast.success("Data successfully uploaded");
     console.log(data);
   };
 
@@ -193,11 +205,13 @@ const ProductBoxes = () => {
                 <h2 className="text-center text-3xl font-semibold mb-5">
                   Selected Products
                 </h2>
-                {selectedProductsData?.map((product) => (
+
+                {/* if single products need */}
+                {/* {selectedProductsData?.map((product) => (
                   <div
                     key={product.id}
                     className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                    {/* product Name */}
+                    
                     <div>
                       <label
                         className="text-lg font-semibold"
@@ -221,7 +235,7 @@ const ProductBoxes = () => {
                         }}
                       />
                     </div>
-                    {/* product Brand */}
+                    
                     <div>
                       <label
                         className="text-lg font-semibold"
@@ -245,7 +259,7 @@ const ProductBoxes = () => {
                         }}
                       />
                     </div>
-                    {/* product Quantity */}
+                    
                     <div>
                       <label
                         className="text-lg font-semibold"
@@ -256,6 +270,7 @@ const ProductBoxes = () => {
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                         placeholder="Enter Product Name"
                         type="text"
+                        name="quantity"
                         value={product.productQuantity || ""}
                         onChange={(e) => {
                           const updatedProductsData = selectedProductsData.map(
@@ -269,7 +284,6 @@ const ProductBoxes = () => {
                       />
                     </div>
 
-                    {/* Editable field */}
                     <div>
                       <label
                         className="text-lg font-semibold"
@@ -304,7 +318,7 @@ const ProductBoxes = () => {
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                         placeholder="Enter Box Quantity"
                         type="number"
-                        name="boxQuantiy"
+                        name="totalBox"
                         required
                         // onChange={(e) => setBoxQuantiy(e.target.value)}
                         onChange={(e) => {
@@ -328,7 +342,7 @@ const ProductBoxes = () => {
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                         placeholder="Enter Pallent Quantity"
                         type="text"
-                        name="pallet"
+                        name="totalPallet"
                         required
                         // onChange={(e) => setPallet(e.target.value)}
                         onChange={(e) => {
@@ -343,46 +357,39 @@ const ProductBoxes = () => {
                       />
                     </div>
                   </div>
-                ))}
+                ))} */}
 
-                {/* Multiple Products Add */}
-
-                {!divs ? (
-                  ""
-                ) : (
-                  <div>
-                    <p className="text-center font-semibold text-xl my-4 text-purple-500">
-                      Multiple Products Selection
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                      {/* product Name */}
-                      <div className="">
-                        <label className="text-lg font-semibold mb-3">
-                          Product Name
-                        </label>
-                        <div className="input-group">
-                          <select
-                            className="select select-secondary w-full max-w-xs focus:outline-none"
-                            value={selectedProductName}
-                            name="productName"
-                            onChange={(e) =>
-                              setSelectedProductName(e.target.value)
-                            }>
-                            <option value="" className="mt-2">
-                              Pick product Name
-                            </option>
-                            {products &&
-                              products.map((product, index) => (
-                                <option value={product} key={index}>
-                                  {product}
-                                </option>
-                              ))}
-                          </select>
-                        </div>
+                {/* Products Add */}
+                <div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {/* product Name */}
+                    <div className="">
+                      <label className="text-lg font-semibold mb-3">
+                        Product Name
+                      </label>
+                      <div className="input-group">
+                        <select
+                          className="select select-secondary w-full max-w-xs focus:outline-none"
+                          value={selectedProductName}
+                          name="productName"
+                          onChange={(e) =>
+                            setSelectedProductName(e.target.value)
+                          }>
+                          <option value="" className="mt-2">
+                            Pick product Name
+                          </option>
+                          {products &&
+                            products.map((product, index) => (
+                              <option value={product} key={index}>
+                                {product}
+                              </option>
+                            ))}
+                        </select>
                       </div>
+                    </div>
 
-                      {/* product Brand */}
-                      {/* <div>
+                    {/* product Model */}
+                    {/* <div>
                         <label
                           className="text-lg font-semibold"
                           htmlFor="productQuantity">
@@ -406,110 +413,108 @@ const ProductBoxes = () => {
                         )}
                       </div> */}
 
-                      <div className="">
-                        <label className="text-lg font-semibold">
-                          Select Models:
-                        </label>
-                        <div className="scrollable-container">
-                          {filteredProductModels.map((productModel, index) => (
-                            <div key={index} className="flex items-center">
+                    <div className="">
+                      <label className="text-lg font-semibold">
+                        Select Models:
+                      </label>
+                      <div className="scrollable-container">
+                        {filteredProductModels.map((productModel, index) => (
+                          <div key={index} className="flex items-center">
+                            <input
+                              className="mr-[6px] my-[3px] checkbox checkbox-xs checkbox-info"
+                              type="checkbox"
+                              value={productModel}
+                              checked={
+                                selectedProductModels[productModel] || false
+                              }
+                              onChange={handleProductModelCheckboxChange}
+                            />
+                            <span>{productModel}</span>
+                            {selectedProductModels[productModel] && (
                               <input
-                                className="mr-[6px] my-[3px] checkbox checkbox-xs checkbox-info"
-                                type="checkbox"
-                                value={productModel}
-                                checked={
-                                  selectedProductModels[productModel] || false
-                                }
-                                onChange={handleProductModelCheckboxChange}
+                                type="text"
+                                name={productModel}
+                                required
+                                value={inputValues[productModel] || ""}
+                                onChange={handleInputValueChange}
+                                placeholder={`Enter ${productModel} Quantity`}
+                                className="mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
-                              <span>{productModel}</span>
-                              {selectedProductModels[productModel] && (
-                                <input
-                                  type="text"
-                                  name={productModel}
-                                  required
-                                  value={inputValues[productModel] || ""}
-                                  onChange={handleInputValueChange}
-                                  placeholder={`Enter ${productModel} Quantity`}
-                                  className="mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
-                                />
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* product Quantity */}
-                      <div>
-                        <label
-                          className="text-lg font-semibold"
-                          htmlFor="productQuantity">
-                          Product Quantity
-                        </label>
-                        <input
-                          className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                          placeholder="Enter Product Name"
-                          type="number"
-                          readOnly
-                          value={selectedProductQuantity}
-                        />
-                      </div>
-
-                      {/* Editable field */}
-                      <div>
-                        <label
-                          className="text-lg font-semibold"
-                          htmlFor="productPerBox">
-                          Product Per Box
-                        </label>
-                        <input
-                          className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                          placeholder="Per Box Product Quantity"
-                          type="number"
-                          name="productPerBox"
-                          required
-                          onChange={(e) =>
-                            setSelectedProductPerBox(e.target.value)
-                          }
-                        />
-                      </div>
-                      <div>
-                        <label
-                          className="text-lg font-semibold"
-                          htmlFor="boxQuantiy">
-                          How Many Boxes
-                        </label>
-                        <input
-                          className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                          type="number"
-                          name="boxQuantiy"
-                          readOnly
-                          value={totalBox}
-                        />
-                      </div>
-                      <div>
-                        <label
-                          className="text-lg font-semibold"
-                          htmlFor="boxQuantiy">
-                          Number of Pallet
-                        </label>
-                        <input
-                          className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                          placeholder="Enter Pallent Quantity"
-                          type="text"
-                          name="pallet"
-                          required
-                          onChange={(e) =>
-                            setSelectedProductPallet(e.target.value)
-                          }
-                        />
+                            )}
+                          </div>
+                        ))}
                       </div>
                     </div>
-                    {/* <p className="btn btn-accent mt-4 px-8 py-1 font-semibold">
-                      Add New products
-                    </p> */}
+
+                    {/* product Quantity */}
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productQuantity">
+                        Product Quantity
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Product Name"
+                        type="number"
+                        readOnly
+                        value={selectedProductQuantity}
+                      />
+                    </div>
+
+                    {/* Editable field */}
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="productPerBox">
+                        Product Per Box
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Per Box Product Quantity"
+                        type="number"
+                        name="productPerBox"
+                        required
+                        onChange={(e) =>
+                          setSelectedProductPerBox(e.target.value)
+                        }
+                      />
+                    </div>
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="boxQuantiy">
+                        How Many Boxes
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        type="number"
+                        name="boxQuantiy"
+                        // readOnly
+                        // value={totalBox}
+                      />
+                    </div>
+                    <div>
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="boxQuantiy">
+                        Number of Pallet
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Pallent Quantity"
+                        type="text"
+                        name="pallet"
+                        required
+                        onChange={(e) =>
+                          setSelectedProductPallet(e.target.value)
+                        }
+                      />
+                    </div>
                   </div>
-                )}
+                </div>
+
+                {/* Multiple Products Add */}
               </div>
             </div>
           </div>
@@ -518,7 +523,7 @@ const ProductBoxes = () => {
             <p
               className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6"
               onClick={toggleDivVisibility}>
-              Multiple Products Order
+              Add Products Order
             </p>
             <button
               className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800"

@@ -53,7 +53,7 @@ const Accounts = ({ brand, model }) => {
       )
       .then((res) => {
         toast.success("Successfully File added to server & check below table");
-        // console.log(res);
+        console.log(res);
         navigate("/exportimport");
       })
       .catch((err) =>
