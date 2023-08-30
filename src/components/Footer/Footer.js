@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <>
       <footer className="footer py-10 bg-slate-200 mt-auto px-5 md:mx-0 lg:flex items-center justify-evenly">
-        <div>
+        <div className="">
           <span className="footer-title">Services</span>
           <a className="link link-hover">Customer Care</a>
           <a className="link link-hover">Translator</a>

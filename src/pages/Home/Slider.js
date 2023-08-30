@@ -38,9 +38,9 @@ const Slider = () => {
   };
 
   return (
-    <div className="max-w-full h-[750px] w-full pt-1 relative group">
+    <div className="max-w-full h-[500px] lg:h-[720px] w-full pt-1 relative group">
       <div
-        className="w-full h-full rounded-2xl bg-center bg-cover duration-500"
+        className="w-full h-full rounded-xl bg-center bg-cover duration-500"
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}></div>
       <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer ">
         <BsChevronCompactLeft size={30} className="" onClick={prevSlide} />

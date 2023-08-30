@@ -127,19 +127,19 @@ const ProductBoxes = () => {
 
     const data = [...selectedProductsData];
 
-    axios
-      .post("http://localhost:5001/productbox", data)
-      .then((res) => {
-        toast.success("Successfully Uploaded to server");
-        navigate("/exportimport");
-        console.log(res);
-      })
-      .catch((err) =>
-        toast.error("Error coming from server please try again later")
-      );
+    // axios
+    //   .post("http://localhost:5001/productbox", data)
+    //   .then((res) => {
+    //     toast.success("Successfully Uploaded to server");
+    //     navigate("/exportimport");
+    //     console.log(res);
+    //   })
+    //   .catch((err) =>
+    //     toast.error("Error coming from server please try again later")
+    //   );
 
-    // toast.success("Data successfully uploaded");
-    console.log(data);
+    toast.success("Data successfully uploaded");
+    console.log(newData);
   };
 
   // console.log(inputValues);
@@ -537,7 +537,7 @@ const ProductBoxes = () => {
             <p
               className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6"
               onClick={toggleDivVisibility}>
-              Add Products Order
+              Add More Products
             </p>
             <button
               className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800"

@@ -6,7 +6,7 @@ const PrivateRoute = () => {
   // const [user,setUser] = useState()
   const user = JSON.parse(localStorage.getItem("values"));
   if (!user) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return <Outlet />;

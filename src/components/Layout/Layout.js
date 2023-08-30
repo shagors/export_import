@@ -11,7 +11,7 @@ const Layout = () => {
         <main className="container mx-auto">
           <Routers />
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );
