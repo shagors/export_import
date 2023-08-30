@@ -4,19 +4,22 @@ import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 const Slider = () => {
   const slides = [
     {
-      url: "https://images.unsplash.com/photo-1531297484001-80022131f5a1",
+      url: "https://images.unsplash.com/photo-1611117775350-ac3950990985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
     },
     {
-      url: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
+      url: "https://images.unsplash.com/photo-1582879304171-8041c73bedbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     },
     {
-      url: "https://images.unsplash.com/photo-1661961112951-f2bfd1f253ce",
+      url: "https://images.unsplash.com/photo-1624451322519-ba906641a097?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     },
     {
-      url: "https://images.unsplash.com/photo-1512756290469-ec264b7fbf87",
+      url: "https://images.unsplash.com/photo-1496247749665-49cf5b1022e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80",
     },
     {
-      url: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853",
+      url: "https://plus.unsplash.com/premium_photo-1682145489846-081721a9b272?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    },
+    {
+      url: "https://images.unsplash.com/photo-1513828742140-ccaa28f3eda0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     },
   ];
 
