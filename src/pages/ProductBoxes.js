@@ -18,24 +18,26 @@ const ProductBoxes = () => {
   const [selectedProductPallet, setSelectedProductPallet] = useState(0);
   const [totalBox, setTotalBox] = useState(0);
   const [inputValues, setInputValues] = useState({});
+  const [resultsValues, setResultsValues] = useState({});
+  const [totalSum, setTotalSum] = useState(0);
 
   const [divs, setDivs] = useState(false);
 
   useEffect(() => {
     fetchAccounts();
     // total box count
-    const quantity = parseInt(selectedProductQuantity);
-    const productPerBox = parseInt(selectedProductPerBox);
-    const totalBox = Math.ceil(quantity / productPerBox);
-    setTotalBox(totalBox);
-    // all products input field count
-    let total = 0;
-    for (const model in selectedProductModels) {
-      if (selectedProductModels[model]) {
-        total += parseInt(inputValues[model]) || 0;
-      }
-    }
-    setSelectedProductQuantity(total);
+    // const quantity = parseInt(selectedProductQuantity);
+    // const productPerBox = parseInt(selectedProductPerBox);
+    // const totalBox = Math.ceil(quantity / productPerBox);
+    // setTotalBox(totalBox);
+    // // all products input field count
+    // let total = 0;
+    // for (const model in selectedProductModels) {
+    //   if (selectedProductModels[model]) {
+    //     total += parseInt(inputValues[model]) || 0;
+    //   }
+    // }
+    // setSelectedProductQuantity(total);
   }, [
     selectedProductQuantity,
     selectedProductPerBox,
@@ -72,28 +74,12 @@ const ProductBoxes = () => {
     }
   };
 
-  const toggleDivVisibility = () => {
-    setDivs(!divs);
-  };
-
   // product name and product model map and filter for select options
   const products = accounts?.map((product) => product.productName) || [];
 
   const filteredProductModels = accounts
     .filter((account) => account.productName === selectedProductName)
     .map((account) => account.productModel);
-
-  // multiple checkbox select options add
-  // const handleProductModelCheckboxChange = (e) => {
-  //   const value = e.target.value;
-  //   if (selectedProductModels.includes(value)) {
-  //     setSelectedProductModels(
-  //       selectedProductModels.filter((model) => model !== value)
-  //     );
-  //   } else {
-  //     setSelectedProductModels([...selectedProductModels, value]);
-  //   }
-  // };
 
   const handleProductModelCheckboxChange = (e) => {
     const value = e.target.value;
@@ -105,12 +91,56 @@ const ProductBoxes = () => {
 
   const handleInputValueChange = (e) => {
     const name = e.target.name;
-    const value = e.target.value;
+    const value = parseFloat(e.target.value);
+
     setInputValues((prevInputValues) => ({
       ...prevInputValues,
       [name]: value,
     }));
+
+    const productModel = name;
+    const perBoxValue = parseFloat(inputValues["perBoxProduct"]) || 0;
+    const result = value * perBoxValue;
+
+    setResultsValues((prevResultsValues) => ({
+      ...prevResultsValues,
+      [productModel]: result,
+    }));
+
+    // Calculate the new total sum
+    const newTotalSum = Object.values(resultsValues).reduce(
+      (sum, currentValue) => sum + (isNaN(currentValue) ? 0 : currentValue),
+      0
+    );
+
+    setTotalSum(newTotalSum);
   };
+
+  // const handleProductModelCheckboxChange = (e) => {
+  //   const name = e.target.value;
+  //   const checked = e.target.checked;
+
+  //   if (checked) {
+  //     setInputValues((prevInputValues) => ({
+  //       ...prevInputValues,
+  //       [`perBox_${name}`]: "",
+  //     }));
+
+  //     setMultiplicationResults((prevResults) => ({
+  //       ...prevResults,
+  //       [name]: 0,
+  //     }));
+  //   }
+
+  //   // Handle selectedProductModels logic here
+
+  //   // Calculate the sum of multiplication results
+  //   const sum = Object.values(multiplicationResults).reduce(
+  //     (acc, result) => acc + result,
+  //     0
+  //   );
+  //   setSumResults(sum);
+  // };
 
   // data send to server
   // http://localhost:5001/productbox
@@ -142,7 +172,7 @@ const ProductBoxes = () => {
     console.log(newData);
   };
 
-  // console.log(inputValues);
+  console.log(totalSum);
 
   return (
     <div>
@@ -432,9 +462,10 @@ const ProductBoxes = () => {
                               <input
                                 type="text"
                                 name="perBoxProduct"
+                                // name={`perBox_${productModel}`}
                                 required
                                 // value={""}
-                                // onChange={handleInputValueChange}
+                                onBlur={handleInputValueChange}
                                 placeholder="per Box"
                                 className="w-[75px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
@@ -502,7 +533,7 @@ const ProductBoxes = () => {
                         placeholder="Enter Product Name"
                         type="number"
                         readOnly
-                        value={selectedProductQuantity}
+                        value={totalSum}
                       />
                     </div>
 
@@ -534,9 +565,7 @@ const ProductBoxes = () => {
           </div>
           {/* button */}
           <div className="flex justify-end items-center mx-7 py-5 ">
-            <p
-              className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6"
-              onClick={toggleDivVisibility}>
+            <p className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6">
               Add More Products
             </p>
             <button
