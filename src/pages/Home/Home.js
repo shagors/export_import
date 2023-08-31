@@ -5,11 +5,10 @@ import Support from "./Support";
 
 const Home = () => {
   return (
-    <div className="w-full h-screen">
+    <div className="w-full">
       <Slider />
       <Services />
       <Support />
-      <div className="mb-10"></div>
     </div>
   );
 };

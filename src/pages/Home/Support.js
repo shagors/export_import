@@ -1,62 +1,41 @@
 import React from "react";
-import {
-  HiOutlinePhone,
-  HiArrowSmRight,
-  HiChip,
-  HiSupport,
-} from "react-icons/hi";
-import support from "../../assets/support.jpg";
+
+import test from "../../assets/support.jpg";
 
 const Support = () => {
   return (
-    <div className="w-full h-screen mt-24 mb-11">
-      <div className="w-full h-[600px] bg-gray-900/90 absolute">
-        <img
-          src={support}
-          alt="Support Team"
-          className="w-full h-full object-cover mix-blend-overlay"
-        />
-      </div>
-      <div className="max-w-[1240px]">
-        <div className="">
-          <h2>Support</h2>
-          <p>
-            We are always support our customer with big support team and we
-            always wait for our customer's Call
-          </p>
-        </div>
-        <div>
-          <div>
-            <div>
-              <HiOutlinePhone />
-              <h3>Support</h3>
-              <p>
-                After-sales support involves assisting customers post-purchase.
-                It includes services like technical help, repairs, and
-                addressing concerns. Effective support boosts customer
-                satisfaction, trust, and loyalty, strengthening brand reputation
-                and fostering lasting relationships.
-              </p>
-            </div>
-
-            <div>
-              <div>
-                <HiSupport />
-                <h3>Sales</h3>
-                <p>
-                  After-sales support involves assisting customers
-                  post-purchase. It includes services like technical help,
-                  repairs, and addressing concerns. Effective support boosts
-                  customer satisfaction, trust, and loyalty, strengthening brand
-                  reputation and fostering lasting relationships.
-                </p>
-              </div>
-              <div>
-                <p>
-                  Contact Us <HiArrowSmRight />
-                </p>
-              </div>
-            </div>
+    <div className="w-full mt-14 mb-11">
+      <div className="text-center">
+        <h1 className="text-4xl font-semibold text-purple-600">
+          Our Productivity
+        </h1>
+        <div className="flex max-w-xl lg:max-w-7xl mx-auto gap-8 mt-12 group">
+          <div className="bg-white/5 shadow-xl group-hover:blur-sm hover:!blur-none hover:translate-[1.2] p-8 rounded-xl hover:bg-lime-200">
+            <img src={test} alt="Test" className="h-72 mx-auto rounded-lg" />
+            <h1 className="uppercase text-xl font-bold mt-2">Product Name</h1>
+            <h1 className="uppercase text-md font-bold mt-2">Product Model</h1>
+            <p className="text-sm leading-7 my-3 font-light opacity-80">
+              Some Details about this products.Some Details about this
+              products.Some Details about this products
+            </p>
+          </div>
+          <div className="bg-white/5 shadow-xl group-hover:blur-sm hover:!blur-none hover:translate-[1.2] p-8 rounded-xl hover:bg-lime-200">
+            <img src={test} alt="Test" className="h-72 mx-auto rounded-lg" />
+            <h1 className="uppercase text-xl font-bold mt-2">Product Name</h1>
+            <h1 className="uppercase text-md font-bold mt-2">Product Model</h1>
+            <p className="text-sm leading-7 my-3 font-light opacity-80">
+              Some Details about this products.Some Details about this
+              products.Some Details about this products
+            </p>
+          </div>
+          <div className="bg-white/5 shadow-xl group-hover:blur-sm hover:!blur-none hover:translate-[1.2] p-8 rounded-xl hover:bg-lime-200">
+            <img src={test} alt="Test" className="h-72 mx-auto rounded-lg" />
+            <h1 className="uppercase text-xl font-bold mt-2">Product Name</h1>
+            <h1 className="uppercase text-md font-bold mt-2">Product Model</h1>
+            <p className="text-sm leading-7 my-3 font-light opacity-80">
+              Some Details about this products.Some Details about this
+              products.Some Details about this products
+            </p>
           </div>
         </div>
       </div>
