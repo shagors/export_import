@@ -20,11 +20,21 @@ const ProductBoxes = () => {
   const [inputValues, setInputValues] = useState({});
   const [resultsValues, setResultsValues] = useState({});
   const [totalSum, setTotalSum] = useState(0);
-
-  const [divs, setDivs] = useState(false);
+  const [sessionData, setSessionData] = useState([]);
+  const [mappedData, setMappedData] = useState([]);
 
   useEffect(() => {
     fetchAccounts();
+
+    const fetchDataFromLocalStorage = () => {
+      const storedData = JSON.parse(localStorage.getItem("storedData")) || [];
+      setSessionData(storedData);
+    };
+    fetchDataFromLocalStorage();
+
+    const localData = sessionData.map((item) => item.data);
+    setMappedData(localData);
+
     // total box count
     // const quantity = parseInt(selectedProductQuantity);
     // const productPerBox = parseInt(selectedProductPerBox);
@@ -116,6 +126,26 @@ const ProductBoxes = () => {
     setTotalSum(newTotalSum);
   };
 
+  // save the products for instant save
+
+  const handleInstantStore = (e) => {
+    e.preventDefault();
+    const data = [
+      {
+        productName: selectedProductName,
+        productModel: selectedProductModels,
+        quantity: totalSum,
+        productPerBox: selectedProductPerBox,
+        totalBox: totalBox,
+        totalPallet: selectedProductPallet,
+      },
+    ];
+    const existingData = JSON.parse(localStorage.getItem("storedData")) || [];
+    existingData.push(data);
+    localStorage.setItem("storedData", JSON.stringify(existingData));
+    console.log(existingData);
+  };
+
   // const handleProductModelCheckboxChange = (e) => {
   //   const name = e.target.value;
   //   const checked = e.target.checked;
@@ -149,7 +179,7 @@ const ProductBoxes = () => {
     const newData = {
       productName: selectedProductName,
       productModel: selectedProductModels,
-      quantity: selectedProductQuantity,
+      quantity: totalSum,
       productPerBox: selectedProductPerBox,
       totalBox: totalBox,
       totalPallet: selectedProductPallet,
@@ -172,7 +202,7 @@ const ProductBoxes = () => {
     console.log(newData);
   };
 
-  console.log(totalSum);
+  console.log(mappedData);
 
   return (
     <div>
@@ -228,7 +258,10 @@ const ProductBoxes = () => {
 
       {/* form design for products boxes */}
       <div className="mt-5 lg:flex justify-center items-center mb-4">
-        <form className="card  shadow-xl mt-5" onSubmit={formSubmit}>
+        <form
+          className="card shadow-xl mt-5 p-3"
+          onSubmit={formSubmit}
+          id="target-div">
           <div className="lg:flex justify-between items-center">
             <div className="form-control card-body">
               <div className="w-full">
@@ -390,10 +423,10 @@ const ProductBoxes = () => {
                 ))} */}
 
                 {/* Products Add */}
-                <div>
+                <div id="orginal-div">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {/* product Name */}
-                    <div className="">
+                    <div className="mt-2 md:mt-0">
                       <label className="text-lg font-semibold mb-3">
                         Product Name
                       </label>
@@ -466,6 +499,9 @@ const ProductBoxes = () => {
                                 required
                                 // value={""}
                                 onBlur={handleInputValueChange}
+                                // onClick={(e) =>
+                                //   setSelectedProductModels(e.target.value)
+                                // }
                                 placeholder="per Box"
                                 className="w-[75px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
@@ -517,7 +553,8 @@ const ProductBoxes = () => {
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                         type="number"
                         name="boxQuantiy"
-                        // value=""
+                        required
+                        onChange={(e) => setTotalBox(e.target.value)}
                       />
                     </div>
 
@@ -534,12 +571,14 @@ const ProductBoxes = () => {
                         type="number"
                         readOnly
                         value={totalSum}
+                        name="quantity"
+                        // onClick={handleInputValueChange}
                       />
                     </div>
 
                     {/* Pallet */}
 
-                    <div>
+                    <div className="mb-3">
                       <label
                         className="text-lg font-semibold"
                         htmlFor="boxQuantiy">
@@ -565,8 +604,10 @@ const ProductBoxes = () => {
           </div>
           {/* button */}
           <div className="flex justify-end items-center mx-7 py-5 ">
-            <p className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6">
-              Add More Products
+            <p
+              className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6"
+              onClick={handleInstantStore}>
+              Add Products
             </p>
             <button
               className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800"
@@ -575,6 +616,40 @@ const ProductBoxes = () => {
             </button>
           </div>
         </form>
+      </div>
+
+      {/* instant save Data */}
+      <div className="my-7">
+        <h1 className="text-center font-bold text-2xl text-info shadow-lg rounded p-2">
+          Add Products All
+        </h1>
+        <div className="overflow-x-auto add__scrollbar">
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Product Model</th>
+                <th>Quantity</th>
+                <th>Product Per Box</th>
+                <th>Total Box</th>
+                <th>Pallet</th>
+              </tr>
+            </thead>
+            <tbody>
+              {mappedData?.map((item, index) => (
+                <tr className="hover cursor-pointer" key={index}>
+                  <td>{item.productName}</td>
+                  <td>{JSON.stringify(item.productModel)}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.productPerBox}</td>
+                  <td>{item.totalBox}</td>
+                  <td>{item.totalPallet}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
