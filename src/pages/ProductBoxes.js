@@ -15,25 +15,15 @@ const ProductBoxes = () => {
   const [selectedProductModels, setSelectedProductModels] = useState([]);
   const [selectedProductQuantity, setSelectedProductQuantity] = useState(0);
   const [selectedProductPerBox, setSelectedProductPerBox] = useState(0);
-  const [selectedProductPallet, setSelectedProductPallet] = useState(0);
+  const [selectedProductPallet, setSelectedProductPallet] = useState("");
   const [totalBox, setTotalBox] = useState(0);
-  const [inputValues, setInputValues] = useState({});
+  const [inputValues, setInputValues] = useState([]);
   const [resultsValues, setResultsValues] = useState({});
   const [totalSum, setTotalSum] = useState(0);
   const [sessionData, setSessionData] = useState([]);
-  const [mappedData, setMappedData] = useState([]);
 
   useEffect(() => {
     fetchAccounts();
-
-    const fetchDataFromLocalStorage = () => {
-      const storedData = JSON.parse(localStorage.getItem("storedData")) || [];
-      setSessionData(storedData);
-    };
-    fetchDataFromLocalStorage();
-
-    const localData = sessionData.map((item) => item.data);
-    setMappedData(localData);
 
     // total box count
     // const quantity = parseInt(selectedProductQuantity);
@@ -67,22 +57,22 @@ const ProductBoxes = () => {
     }
   };
 
-  const handleCheckboxClick = (productId) => {
-    if (selectedProductIds.includes(productId)) {
-      setSelectedProductIds(
-        selectedProductIds.filter((id) => id !== productId)
-      );
-      setSelectedProductsData(
-        selectedProductsData.filter((product) => product.id !== productId)
-      );
-    } else {
-      const selectedProduct = accounts.find(
-        (product) => product.id === productId
-      );
-      setSelectedProductIds([...selectedProductIds, productId]);
-      setSelectedProductsData([...selectedProductsData, selectedProduct]);
-    }
-  };
+  // const handleCheckboxClick = (productId) => {
+  //   if (selectedProductIds.includes(productId)) {
+  //     setSelectedProductIds(
+  //       selectedProductIds.filter((id) => id !== productId)
+  //     );
+  //     setSelectedProductsData(
+  //       selectedProductsData.filter((product) => product.id !== productId)
+  //     );
+  //   } else {
+  //     const selectedProduct = accounts.find(
+  //       (product) => product.id === productId
+  //     );
+  //     setSelectedProductIds([...selectedProductIds, productId]);
+  //     setSelectedProductsData([...selectedProductsData, selectedProduct]);
+  //   }
+  // };
 
   // product name and product model map and filter for select options
   const products = accounts?.map((product) => product.productName) || [];
@@ -99,25 +89,31 @@ const ProductBoxes = () => {
     }));
   };
 
+  const selectedProductModelNames = Object.keys(selectedProductModels).filter(
+    (modelName) => selectedProductModels[modelName]
+  );
+
+  // console.log(selectedProductModelNames);
+
   const handleInputValueChange = (e) => {
     const name = e.target.name;
     const value = parseFloat(e.target.value);
 
-    setInputValues((prevInputValues) => ({
-      ...prevInputValues,
-      [name]: value,
-    }));
+    setInputValues((prevInputValues) => [
+      {
+        ...prevInputValues,
+        [name]: value,
+      },
+    ]);
 
     const productModel = name;
     const perBoxValue = parseFloat(inputValues["perBoxProduct"]) || 0;
-    const result = value * perBoxValue;
+    const result = value;
 
     setResultsValues((prevResultsValues) => ({
       ...prevResultsValues,
       [productModel]: result,
     }));
-
-    // Calculate the new total sum
     const newTotalSum = Object.values(resultsValues).reduce(
       (sum, currentValue) => sum + (isNaN(currentValue) ? 0 : currentValue),
       0
@@ -126,6 +122,10 @@ const ProductBoxes = () => {
     setTotalSum(newTotalSum);
   };
 
+  const modelWithQuantity = [selectedProductModelNames, inputValues];
+
+  // console.log(inputValues);
+
   // save the products for instant save
 
   const handleInstantStore = (e) => {
@@ -133,17 +133,20 @@ const ProductBoxes = () => {
     const data = [
       {
         productName: selectedProductName,
-        productModel: selectedProductModels,
+        productModel: selectedProductModelNames,
         quantity: totalSum,
         productPerBox: selectedProductPerBox,
         totalBox: totalBox,
         totalPallet: selectedProductPallet,
       },
     ];
-    const existingData = JSON.parse(localStorage.getItem("storedData")) || [];
-    existingData.push(data);
-    localStorage.setItem("storedData", JSON.stringify(existingData));
-    console.log(existingData);
+    setSessionData(data);
+    setSelectedProductName("");
+    setSelectedProductModels("");
+    setTotalSum(0);
+    setSelectedProductPerBox("");
+    setTotalBox(0);
+    setSelectedProductPallet("");
   };
 
   // const handleProductModelCheckboxChange = (e) => {
@@ -202,7 +205,7 @@ const ProductBoxes = () => {
     console.log(newData);
   };
 
-  console.log(mappedData);
+  console.log(sessionData);
 
   return (
     <div>
@@ -221,7 +224,7 @@ const ProductBoxes = () => {
             {/* head */}
             <thead>
               <tr>
-                <th></th>
+                {/* <th></th> */}
                 <th>ID</th>
                 <th>Product Name</th>
                 <th>Product Brand</th>
@@ -233,7 +236,7 @@ const ProductBoxes = () => {
             <tbody>
               {accounts?.map((product) => (
                 <tr className="hover cursor-pointer" key={product.id}>
-                  <td>
+                  {/* <td>
                     <input
                       type="checkbox"
                       className="checkbox checkbox-info"
@@ -242,7 +245,7 @@ const ProductBoxes = () => {
                       checked={selectedProductIds.includes(product.id)}
                       onClick={() => handleCheckboxClick(product.id)}
                     />
-                  </td>
+                  </td> */}
                   <td>{product.id}</td>
                   <td>{product.productName}</td>
                   <td>{product.productBrand}</td>
@@ -258,10 +261,7 @@ const ProductBoxes = () => {
 
       {/* form design for products boxes */}
       <div className="mt-5 lg:flex justify-center items-center mb-4">
-        <form
-          className="card shadow-xl mt-5 p-3"
-          onSubmit={formSubmit}
-          id="target-div">
+        <form className="card shadow-xl mt-5 p-3" onSubmit={formSubmit}>
           <div className="lg:flex justify-between items-center">
             <div className="form-control card-body">
               <div className="w-full">
@@ -423,7 +423,7 @@ const ProductBoxes = () => {
                 ))} */}
 
                 {/* Products Add */}
-                <div id="orginal-div">
+                <div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {/* product Name */}
                     <div className="mt-2 md:mt-0">
@@ -493,15 +493,10 @@ const ProductBoxes = () => {
                             <span>{productModel}</span>
                             {selectedProductModels[productModel] && (
                               <input
-                                type="text"
+                                type="number"
                                 name="perBoxProduct"
-                                // name={`perBox_${productModel}`}
                                 required
-                                // value={""}
-                                onBlur={handleInputValueChange}
-                                // onClick={(e) =>
-                                //   setSelectedProductModels(e.target.value)
-                                // }
+                                onChange={handleInputValueChange}
                                 placeholder="per Box"
                                 className="w-[75px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
@@ -509,12 +504,12 @@ const ProductBoxes = () => {
 
                             {selectedProductModels[productModel] && (
                               <input
-                                type="text"
-                                name={productModel}
+                                type="number"
+                                name="quantityProduct"
                                 required
-                                value={inputValues[productModel] || ""}
+                                // value={inputValues[productModel] || ""}
                                 onChange={handleInputValueChange}
-                                placeholder={`Enter Quantity`}
+                                placeholder={"Enter Quantity"}
                                 className="w-[120px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
                             )}
@@ -625,7 +620,6 @@ const ProductBoxes = () => {
         </h1>
         <div className="overflow-x-auto add__scrollbar">
           <table className="table">
-            {/* head */}
             <thead>
               <tr>
                 <th>Product Name</th>
@@ -637,10 +631,10 @@ const ProductBoxes = () => {
               </tr>
             </thead>
             <tbody>
-              {mappedData?.map((item, index) => (
+              {sessionData?.map((item, index) => (
                 <tr className="hover cursor-pointer" key={index}>
                   <td>{item.productName}</td>
-                  <td>{JSON.stringify(item.productModel)}</td>
+                  <td>{item.productModel.map((model) => model)}</td>
                   <td>{item.quantity}</td>
                   <td>{item.productPerBox}</td>
                   <td>{item.totalBox}</td>
