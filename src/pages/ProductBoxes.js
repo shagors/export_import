@@ -24,8 +24,6 @@ const ProductBoxes = () => {
     fetchAccounts();
   }, []);
 
-  // console.log(totalBox);
-
   // data fetch from server
   const fetchAccounts = async () => {
     try {
@@ -74,8 +72,6 @@ const ProductBoxes = () => {
     (modelName) => selectedProductModels[modelName]
   );
 
-  // console.log(selectedProductModelNames);
-
   const handleInputValueChange = (e) => {
     const name = e.target.name;
     const value = parseFloat(e.target.value);
@@ -88,6 +84,7 @@ const ProductBoxes = () => {
     if (name === "perBoxProduct") {
       const oldQuantity = perBoxProducts[name] || 0;
       const newQuantity = value;
+      // console.log(newQuantity);
       const boxSum = newQuantity + oldQuantity;
       setPerBoxProducts((prevResultsValues) => ({
         ...prevResultsValues,
@@ -98,7 +95,7 @@ const ProductBoxes = () => {
     if (name === "quantityProduct") {
       const oldQuantity = resultsValues[name] || 0;
       const newQuantity = value;
-      const productsum = newQuantity + oldQuantity;
+      const productsum = value + oldQuantity;
       setResultsValues((prevResultsValues) => ({
         ...prevResultsValues,
         [name]: productsum,
@@ -107,7 +104,9 @@ const ProductBoxes = () => {
     }
     const perBox = perBoxProducts.perBoxProduct;
     const productQuan = resultsValues.quantityProduct;
-    const totalBoxes = Math.ceil(productQuan / perBox);
+    console.log(productQuan);
+    const totalBoxes = parseInt(Math.ceil(productQuan / perBox));
+    console.log(totalBoxes);
     setTotalBox(totalBoxes);
   };
 
@@ -124,7 +123,7 @@ const ProductBoxes = () => {
       splitProductsBox: singleBoxProducts,
       splitQuantitySingleProduct: singleProductQuantity,
       productPerBox: perBoxProducts.perBoxProduct,
-      totalBox: totalBox,
+      totalBox: parseInt(totalBox),
       totalPallet: selectedProductPallet,
     };
     setSessionData((prevData) => [...prevData, newData]);
@@ -166,17 +165,10 @@ const ProductBoxes = () => {
   // http://localhost:5001/productbox
   const formSubmit = (e) => {
     e.preventDefault();
-    const newData = {
-      productName: selectedProductName,
-      productModel: selectedProductModels,
-      quantity: resultsValues.quantityProduct,
-      productPerBox: perBoxProducts.perBoxProduct,
-      totalBox: totalBox,
-      totalPallet: selectedProductPallet,
-    };
+    const newData = sessionData;
 
     // axios
-    //   .post("http://localhost:5001/productbox", data)
+    //   .post("http://localhost:5001/palletbox", newData[0])
     //   .then((res) => {
     //     toast.success("Successfully Uploaded to server");
     //     navigate("/exportimport");
@@ -187,6 +179,7 @@ const ProductBoxes = () => {
     //   );
 
     toast.success("Data successfully uploaded");
+    setSessionData([]);
     console.log(newData);
   };
 
@@ -493,6 +486,7 @@ const ProductBoxes = () => {
                                 name="quantityProduct"
                                 required
                                 onChange={handleInputValueChange}
+                                // onMouseLeave={handleInputValueChange}
                                 placeholder={"Enter Quantity"}
                                 className="w-[120px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
@@ -608,11 +602,11 @@ const ProductBoxes = () => {
               <tr>
                 <th>Product Name</th>
                 <th>Product Model</th>
-                <th>Quantity</th>
                 <th>Split Product</th>
                 <th>Split Quantity</th>
                 <th>Product Per Box</th>
                 <th>Total Box</th>
+                <th>Quantity</th>
                 <th>Pallet</th>
               </tr>
             </thead>
@@ -630,11 +624,11 @@ const ProductBoxes = () => {
                   <tr className="hover cursor-pointer" key={index}>
                     <td>{item.productName}</td>
                     <td>{modelSplit}</td>
-                    <td>{item.quantity}</td>
                     <td>{getSplitProducts}</td>
                     <td>{getSplitQuantity}</td>
                     <td>{item.productPerBox}</td>
                     <td>{item.totalBox}</td>
+                    <td>{item.quantity}</td>
                     <td>{item.totalPallet}</td>
                   </tr>
                 );
