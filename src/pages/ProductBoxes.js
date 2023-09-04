@@ -14,6 +14,8 @@ const ProductBoxes = () => {
   const [selectedProductPallet, setSelectedProductPallet] = useState("");
   const [inputValues, setInputValues] = useState([]);
   const [perBoxProducts, setPerBoxProducts] = useState(0);
+  const [singleBoxProducts, setSingleBoxProducts] = useState([]);
+  const [singleProductQuantity, setSingleProductQuantity] = useState([]);
   const [resultsValues, setResultsValues] = useState(0);
   const [totalBox, setTotalBox] = useState(0);
   const [sessionData, setSessionData] = useState([]);
@@ -77,43 +79,39 @@ const ProductBoxes = () => {
   const handleInputValueChange = (e) => {
     const name = e.target.name;
     const value = parseFloat(e.target.value);
-
     setInputValues((prevInputValues) => [
       {
         ...prevInputValues,
         [name]: value,
       },
     ]);
-
     if (name === "perBoxProduct") {
       const oldQuantity = perBoxProducts[name] || 0;
       const newQuantity = value;
-      const sum = newQuantity + oldQuantity;
-
+      const boxSum = newQuantity + oldQuantity;
       setPerBoxProducts((prevResultsValues) => ({
         ...prevResultsValues,
-        [name]: sum,
+        [name]: boxSum,
       }));
-
-      const perBox = perBoxProducts.perBoxProduct;
-      const productQuan = resultsValues.quantityProduct;
-      const totalBoxes = Math.ceil(productQuan / perBox);
-      setTotalBox(totalBoxes);
+      setSingleBoxProducts([oldQuantity, newQuantity]);
     }
-
     if (name === "quantityProduct") {
       const oldQuantity = resultsValues[name] || 0;
       const newQuantity = value;
-      const sum = newQuantity + oldQuantity;
-
+      const productsum = newQuantity + oldQuantity;
       setResultsValues((prevResultsValues) => ({
         ...prevResultsValues,
-        [name]: sum,
+        [name]: productsum,
       }));
+      setSingleProductQuantity([oldQuantity, newQuantity]);
     }
+    const perBox = perBoxProducts.perBoxProduct;
+    const productQuan = resultsValues.quantityProduct;
+    const totalBoxes = Math.ceil(productQuan / perBox);
+    setTotalBox(totalBoxes);
   };
 
-  // console.log(totalBox);
+  // console.log(singleProductQuantity);
 
   // save the products for instant save
 
@@ -123,6 +121,8 @@ const ProductBoxes = () => {
       productName: selectedProductName,
       productModel: selectedProductModelNames,
       quantity: resultsValues.quantityProduct,
+      splitProductsBox: singleBoxProducts,
+      splitQuantitySingleProduct: singleProductQuantity,
       productPerBox: perBoxProducts.perBoxProduct,
       totalBox: totalBox,
       totalPallet: selectedProductPallet,
@@ -130,9 +130,9 @@ const ProductBoxes = () => {
     setSessionData((prevData) => [...prevData, newData]);
     setSelectedProductName([]);
     setSelectedProductModels("");
-    setResultsValues(0);
-    setPerBoxProducts(0);
+    setPerBoxProducts({ perBoxProduct: 0 });
     setTotalBox(0);
+    setResultsValues(0);
     setSelectedProductPallet("");
   };
 
@@ -609,6 +609,8 @@ const ProductBoxes = () => {
                 <th>Product Name</th>
                 <th>Product Model</th>
                 <th>Quantity</th>
+                <th>Split Product</th>
+                <th>Split Quantity</th>
                 <th>Product Per Box</th>
                 <th>Total Box</th>
                 <th>Pallet</th>
@@ -618,11 +620,19 @@ const ProductBoxes = () => {
               {sessionData?.map((item, index) => {
                 const model = item.productModel?.map((model) => model) || "";
                 const modelSplit = model.join(",");
+                const findProductsForSplit =
+                  item.splitProductsBox?.map((box) => box) || "";
+                const getSplitProducts = findProductsForSplit.join(",");
+                const findProductQuantitySplit =
+                  item.splitQuantitySingleProduct?.map((quan) => quan) || "";
+                const getSplitQuantity = findProductQuantitySplit.join(",");
                 return (
                   <tr className="hover cursor-pointer" key={index}>
                     <td>{item.productName}</td>
                     <td>{modelSplit}</td>
                     <td>{item.quantity}</td>
+                    <td>{getSplitProducts}</td>
+                    <td>{getSplitQuantity}</td>
                     <td>{item.productPerBox}</td>
                     <td>{item.totalBox}</td>
                     <td>{item.totalPallet}</td>
