@@ -18,8 +18,8 @@ const ProductBoxes = () => {
   const [selectedProductPallet, setSelectedProductPallet] = useState("");
   const [totalBox, setTotalBox] = useState(0);
   const [inputValues, setInputValues] = useState([]);
-  const [resultsValues, setResultsValues] = useState({});
-  const [totalSum, setTotalSum] = useState(0);
+  const [resultsValues, setResultsValues] = useState(0);
+  const [perBoxProducts, setPerBoxProducts] = useState(0);
   const [sessionData, setSessionData] = useState([]);
 
   useEffect(() => {
@@ -106,44 +106,48 @@ const ProductBoxes = () => {
       },
     ]);
 
-    const productModel = name;
-    const perBoxValue = parseFloat(inputValues["perBoxProduct"]) || 0;
-    const result = value;
+    if (name === "perBoxProduct") {
+      const oldQuantity = perBoxProducts[name] || 0;
+      const newQuantity = value;
+      const sum = newQuantity + oldQuantity;
 
-    setResultsValues((prevResultsValues) => ({
-      ...prevResultsValues,
-      [productModel]: result,
-    }));
-    const newTotalSum = Object.values(resultsValues).reduce(
-      (sum, currentValue) => sum + (isNaN(currentValue) ? 0 : currentValue),
-      0
-    );
+      setPerBoxProducts((prevResultsValues) => ({
+        ...prevResultsValues,
+        [name]: sum,
+      }));
+    }
 
-    setTotalSum(newTotalSum);
+    if (name === "quantityProduct") {
+      const oldQuantity = resultsValues[name] || 0;
+      const newQuantity = value;
+      const sum = newQuantity + oldQuantity;
+
+      setResultsValues((prevResultsValues) => ({
+        ...prevResultsValues,
+        [name]: sum,
+      }));
+    }
   };
 
-  const modelWithQuantity = [selectedProductModelNames, inputValues];
-
-  // console.log(inputValues);
+  console.log(perBoxProducts);
 
   // save the products for instant save
 
   const handleInstantStore = (e) => {
     e.preventDefault();
-    const data = [
-      {
-        productName: selectedProductName,
-        productModel: selectedProductModelNames,
-        quantity: totalSum,
-        productPerBox: selectedProductPerBox,
-        totalBox: totalBox,
-        totalPallet: selectedProductPallet,
-      },
-    ];
-    setSessionData(data);
-    setSelectedProductName("");
+    const newData = {
+      productName: selectedProductName,
+      productModel: selectedProductModelNames,
+      quantity: resultsValues.quantityProduct,
+      productPerBox: perBoxProducts.perBoxProduct,
+      totalBox: totalBox,
+      totalPallet: selectedProductPallet,
+    };
+    setSessionData((prevData) => [...prevData, newData]);
+    // setSessionData(newData);
+    setSelectedProductName([]);
     setSelectedProductModels("");
-    setTotalSum(0);
+    setResultsValues(0);
     setSelectedProductPerBox("");
     setTotalBox(0);
     setSelectedProductPallet("");
@@ -182,7 +186,7 @@ const ProductBoxes = () => {
     const newData = {
       productName: selectedProductName,
       productModel: selectedProductModels,
-      quantity: totalSum,
+      quantity: resultsValues.quantityProduct,
       productPerBox: selectedProductPerBox,
       totalBox: totalBox,
       totalPallet: selectedProductPallet,
@@ -205,7 +209,7 @@ const ProductBoxes = () => {
     console.log(newData);
   };
 
-  console.log(sessionData);
+  // console.log(sessionData);
 
   return (
     <div>
@@ -507,7 +511,6 @@ const ProductBoxes = () => {
                                 type="number"
                                 name="quantityProduct"
                                 required
-                                // value={inputValues[productModel] || ""}
                                 onChange={handleInputValueChange}
                                 placeholder={"Enter Quantity"}
                                 className="w-[120px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
@@ -530,6 +533,7 @@ const ProductBoxes = () => {
                         placeholder="Per Box Product Quantity"
                         type="number"
                         name="productPerBox"
+                        value={perBoxProducts.perBoxProduct}
                         required
                         onChange={(e) =>
                           setSelectedProductPerBox(e.target.value)
@@ -565,7 +569,7 @@ const ProductBoxes = () => {
                         placeholder="Enter Product Name"
                         type="number"
                         readOnly
-                        value={totalSum}
+                        value={resultsValues.quantityProduct}
                         name="quantity"
                         // onClick={handleInputValueChange}
                       />
@@ -631,16 +635,20 @@ const ProductBoxes = () => {
               </tr>
             </thead>
             <tbody>
-              {sessionData?.map((item, index) => (
-                <tr className="hover cursor-pointer" key={index}>
-                  <td>{item.productName}</td>
-                  <td>{item.productModel.map((model) => model)}</td>
-                  <td>{item.quantity}</td>
-                  <td>{item.productPerBox}</td>
-                  <td>{item.totalBox}</td>
-                  <td>{item.totalPallet}</td>
-                </tr>
-              ))}
+              {sessionData?.map((item, index) => {
+                const model = item.productModel?.map((model) => model) || "";
+                const modelSplit = model.join(",");
+                return (
+                  <tr className="hover cursor-pointer" key={index}>
+                    <td>{item.productName}</td>
+                    <td>{modelSplit}</td>
+                    <td>{item.quantity}</td>
+                    <td>{item.productPerBox}</td>
+                    <td>{item.totalBox}</td>
+                    <td>{item.totalPallet}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
