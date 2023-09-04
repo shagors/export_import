@@ -6,44 +6,23 @@ import { toast } from "react-toastify";
 
 const ProductBoxes = () => {
   const [accounts, setAccounts] = useState([]);
-  const [selectedProductIds, setSelectedProductIds] = useState([]);
-  const [selectedProductsData, setSelectedProductsData] = useState([]);
   const navigate = useNavigate();
 
   // for multiple product add
   const [selectedProductName, setSelectedProductName] = useState("");
   const [selectedProductModels, setSelectedProductModels] = useState([]);
-  const [selectedProductQuantity, setSelectedProductQuantity] = useState(0);
-  const [selectedProductPerBox, setSelectedProductPerBox] = useState(0);
   const [selectedProductPallet, setSelectedProductPallet] = useState("");
-  const [totalBox, setTotalBox] = useState(0);
   const [inputValues, setInputValues] = useState([]);
-  const [resultsValues, setResultsValues] = useState(0);
   const [perBoxProducts, setPerBoxProducts] = useState(0);
+  const [resultsValues, setResultsValues] = useState(0);
+  const [totalBox, setTotalBox] = useState(0);
   const [sessionData, setSessionData] = useState([]);
 
   useEffect(() => {
     fetchAccounts();
+  }, []);
 
-    // total box count
-    // const quantity = parseInt(selectedProductQuantity);
-    // const productPerBox = parseInt(selectedProductPerBox);
-    // const totalBox = Math.ceil(quantity / productPerBox);
-    // setTotalBox(totalBox);
-    // // all products input field count
-    // let total = 0;
-    // for (const model in selectedProductModels) {
-    //   if (selectedProductModels[model]) {
-    //     total += parseInt(inputValues[model]) || 0;
-    //   }
-    // }
-    // setSelectedProductQuantity(total);
-  }, [
-    selectedProductQuantity,
-    selectedProductPerBox,
-    selectedProductModels,
-    inputValues,
-  ]);
+  // console.log(totalBox);
 
   // data fetch from server
   const fetchAccounts = async () => {
@@ -115,6 +94,11 @@ const ProductBoxes = () => {
         ...prevResultsValues,
         [name]: sum,
       }));
+
+      const perBox = perBoxProducts.perBoxProduct;
+      const productQuan = resultsValues.quantityProduct;
+      const totalBoxes = Math.ceil(productQuan / perBox);
+      setTotalBox(totalBoxes);
     }
 
     if (name === "quantityProduct") {
@@ -129,7 +113,7 @@ const ProductBoxes = () => {
     }
   };
 
-  console.log(perBoxProducts);
+  // console.log(totalBox);
 
   // save the products for instant save
 
@@ -144,11 +128,10 @@ const ProductBoxes = () => {
       totalPallet: selectedProductPallet,
     };
     setSessionData((prevData) => [...prevData, newData]);
-    // setSessionData(newData);
     setSelectedProductName([]);
     setSelectedProductModels("");
     setResultsValues(0);
-    setSelectedProductPerBox("");
+    setPerBoxProducts(0);
     setTotalBox(0);
     setSelectedProductPallet("");
   };
@@ -187,12 +170,10 @@ const ProductBoxes = () => {
       productName: selectedProductName,
       productModel: selectedProductModels,
       quantity: resultsValues.quantityProduct,
-      productPerBox: selectedProductPerBox,
+      productPerBox: perBoxProducts.perBoxProduct,
       totalBox: totalBox,
       totalPallet: selectedProductPallet,
     };
-
-    const data = [...selectedProductsData];
 
     // axios
     //   .post("http://localhost:5001/productbox", data)
@@ -535,9 +516,9 @@ const ProductBoxes = () => {
                         name="productPerBox"
                         value={perBoxProducts.perBoxProduct}
                         required
-                        onChange={(e) =>
-                          setSelectedProductPerBox(e.target.value)
-                        }
+                        // onChange={(e) =>
+                        //   setSelectedProductPerBox(e.target.value)
+                        // }
                       />
                     </div>
 
@@ -552,7 +533,7 @@ const ProductBoxes = () => {
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                         type="number"
                         name="boxQuantiy"
-                        required
+                        value={totalBox}
                         onChange={(e) => setTotalBox(e.target.value)}
                       />
                     </div>
@@ -568,7 +549,6 @@ const ProductBoxes = () => {
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                         placeholder="Enter Product Name"
                         type="number"
-                        readOnly
                         value={resultsValues.quantityProduct}
                         name="quantity"
                         // onClick={handleInputValueChange}
