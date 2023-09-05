@@ -72,9 +72,12 @@ const ProductBoxes = () => {
     (modelName) => selectedProductModels[modelName]
   );
 
+  // console.log(selectedProductModelNames);
+
   const handleInputValueChange = (e) => {
     const name = e.target.name;
     const value = parseFloat(e.target.value);
+
     setInputValues((prevInputValues) => [
       {
         ...prevInputValues,
@@ -96,21 +99,21 @@ const ProductBoxes = () => {
       const oldQuantity = resultsValues[name] || 0;
       const newQuantity = value;
       const productsum = value + oldQuantity;
+
       setResultsValues((prevResultsValues) => ({
         ...prevResultsValues,
         [name]: productsum,
       }));
       setSingleProductQuantity([oldQuantity, newQuantity]);
     }
-    const perBox = perBoxProducts.perBoxProduct;
-    const productQuan = resultsValues.quantityProduct;
-    console.log(productQuan);
-    const totalBoxes = parseInt(Math.ceil(productQuan / perBox));
-    console.log(totalBoxes);
-    setTotalBox(totalBoxes);
   };
 
-  // console.log(singleProductQuantity);
+  const handleGetData = () => {
+    const totalBoxes = parseInt(
+      Math.ceil(resultsValues.quantityProduct / perBoxProducts.perBoxProduct)
+    );
+    setTotalBox(totalBoxes);
+  };
 
   // save the products for instant save
 
@@ -475,6 +478,9 @@ const ProductBoxes = () => {
                                 name="perBoxProduct"
                                 required
                                 onChange={handleInputValueChange}
+                                // onChange={(e) =>
+                                //   setPerBox((prev) => [...prev, e.target.value])
+                                // }
                                 placeholder="per Box"
                                 className="w-[75px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
@@ -486,7 +492,10 @@ const ProductBoxes = () => {
                                 name="quantityProduct"
                                 required
                                 onChange={handleInputValueChange}
-                                // onMouseLeave={handleInputValueChange}
+                                // onChange={handleEnterQUan}
+                                // onChange={(e) =>
+                                //   setEnterQuan((prev) => [e.target.value])
+                                // }
                                 placeholder={"Enter Quantity"}
                                 className="w-[120px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
@@ -510,6 +519,7 @@ const ProductBoxes = () => {
                         name="productPerBox"
                         value={perBoxProducts.perBoxProduct}
                         required
+                        onClick={handleGetData}
                         // onChange={(e) =>
                         //   setSelectedProductPerBox(e.target.value)
                         // }
