@@ -69,23 +69,9 @@ const Transportservice = () => {
     key: "selection",
   };
 
-  const [inputValues, setInputValues] = useState([]);
-  const [currentInput, setCurrentInput] = useState("");
-
-  const handleInputChange = (e) => {
-    setCurrentInput(e.target.value);
-  };
-
-  const handleAddInput = () => {
-    if (currentInput.trim() !== "") {
-      setInputValues((prevInputValues) => [...prevInputValues, currentInput]);
-      setCurrentInput("");
-    }
-  };
-
   return (
     <>
-      {/* <div className="overflow-x-auto h-[700px]">
+      <div className="overflow-x-auto h-[700px]">
         <div className="text-center my-4 calendarWrap">
           <input
             value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
@@ -135,25 +121,6 @@ const Transportservice = () => {
             })}
           </tbody>
         </table>
-      </div> */}
-
-      <div>
-        <div>
-          <input
-            type="text"
-            value={currentInput}
-            onChange={handleInputChange}
-            placeholder="Enter a value"
-          />
-          <button onClick={handleAddInput}>Add</button>
-        </div>
-        <div>
-          {inputValues.map((value, index) => (
-            <div key={index}>
-              <span>{value}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </>
   );

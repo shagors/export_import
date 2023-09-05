@@ -20,8 +20,6 @@ const ProductBoxes = () => {
   const [totalBox, setTotalBox] = useState(0);
   const [sessionData, setSessionData] = useState([]);
 
-  const [test, setTest] = useState([]);
-
   useEffect(() => {
     fetchAccounts();
   }, []);
@@ -119,6 +117,7 @@ const ProductBoxes = () => {
     }
   };
 
+  // separe the new value from the array then map that array and store the details from there
   const singBoxPro = singleBoxProducts.map((newQ) => newQ.newQuantity);
   const singProQuan = singleProductQuantity.map((newQ) => newQ.newQuantity);
 
@@ -203,7 +202,7 @@ const ProductBoxes = () => {
     console.log(newData);
   };
 
-  console.log(sessionData);
+  // console.log(sessionData);
 
   return (
     <div>
@@ -492,6 +491,7 @@ const ProductBoxes = () => {
                             {selectedProductModels[productModel] && (
                               <input
                                 type="number"
+                                min="0"
                                 name="perBoxProduct"
                                 onChange={handleInputValueChange}
                                 // onChange={(e) =>
@@ -505,6 +505,7 @@ const ProductBoxes = () => {
                             {selectedProductModels[productModel] && (
                               <input
                                 type="number"
+                                min="0"
                                 name="quantityProduct"
                                 onChange={handleInputValueChange}
                                 // onChange={handleEnterQUan}
@@ -534,6 +535,7 @@ const ProductBoxes = () => {
                         name="productPerBox"
                         value={perBoxProducts.perBoxProduct}
                         required
+                        readOnly
                         onClick={handleGetData}
                         // onChange={(e) =>
                         //   setSelectedProductPerBox(e.target.value)
@@ -551,6 +553,8 @@ const ProductBoxes = () => {
                       <input
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                         type="number"
+                        min="0"
+                        readOnly
                         name="boxQuantiy"
                         value={totalBox}
                         onChange={(e) => setTotalBox(e.target.value)}
@@ -568,6 +572,8 @@ const ProductBoxes = () => {
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                         placeholder="Enter Product Name"
                         type="number"
+                        min="0"
+                        readOnly
                         value={resultsValues.quantityProduct}
                         name="quantity"
                         // onClick={handleInputValueChange}
