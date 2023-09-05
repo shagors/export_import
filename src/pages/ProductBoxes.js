@@ -20,6 +20,8 @@ const ProductBoxes = () => {
   const [totalBox, setTotalBox] = useState(0);
   const [sessionData, setSessionData] = useState([]);
 
+  const [test, setTest] = useState([]);
+
   useEffect(() => {
     fetchAccounts();
   }, []);
@@ -84,16 +86,21 @@ const ProductBoxes = () => {
         [name]: value,
       },
     ]);
+
     if (name === "perBoxProduct") {
       const oldQuantity = perBoxProducts[name] || 0;
       const newQuantity = value;
-      // console.log(newQuantity);
       const boxSum = newQuantity + oldQuantity;
-      setPerBoxProducts((prevResultsValues) => ({
-        ...prevResultsValues,
+      setPerBoxProducts((prevPerBoxProducts) => ({
+        ...prevPerBoxProducts,
         [name]: boxSum,
       }));
-      setSingleBoxProducts([oldQuantity, newQuantity]);
+
+      // setSingleBoxProducts([oldQuantity, newQuantity]);
+      setSingleBoxProducts((prevSingleBoxProducts) => [
+        ...prevSingleBoxProducts,
+        { oldQuantity, newQuantity },
+      ]);
     }
     if (name === "quantityProduct") {
       const oldQuantity = resultsValues[name] || 0;
@@ -104,10 +111,18 @@ const ProductBoxes = () => {
         ...prevResultsValues,
         [name]: productsum,
       }));
-      setSingleProductQuantity([oldQuantity, newQuantity]);
+      // setSingleProductQuantity([oldQuantity, newQuantity]);
+      setSingleProductQuantity((prevSingleProductQuantity) => [
+        ...prevSingleProductQuantity,
+        { oldQuantity, newQuantity },
+      ]);
     }
   };
 
+  const singBoxPro = singleBoxProducts.map((newQ) => newQ.newQuantity);
+  const singProQuan = singleProductQuantity.map((newQ) => newQ.newQuantity);
+
+  // calculate the total box
   const handleGetData = () => {
     const totalBoxes = parseInt(
       Math.ceil(resultsValues.quantityProduct / perBoxProducts.perBoxProduct)
@@ -123,8 +138,8 @@ const ProductBoxes = () => {
       productName: selectedProductName,
       productModel: selectedProductModelNames,
       quantity: resultsValues.quantityProduct,
-      splitProductsBox: singleBoxProducts,
-      splitQuantitySingleProduct: singleProductQuantity,
+      splitProductsBox: singBoxPro,
+      splitQuantitySingleProduct: singProQuan,
       productPerBox: perBoxProducts.perBoxProduct,
       totalBox: parseInt(totalBox),
       totalPallet: selectedProductPallet,
@@ -133,9 +148,11 @@ const ProductBoxes = () => {
     setSelectedProductName([]);
     setSelectedProductModels("");
     setPerBoxProducts({ perBoxProduct: 0 });
+    setSingleBoxProducts([]);
+    setSingleProductQuantity([]);
     setTotalBox(0);
-    setResultsValues(0);
-    setSelectedProductPallet("");
+    setResultsValues({ quantityProduct: 0 });
+    setSelectedProductPallet();
   };
 
   // const handleProductModelCheckboxChange = (e) => {
@@ -186,7 +203,7 @@ const ProductBoxes = () => {
     console.log(newData);
   };
 
-  // console.log(sessionData);
+  console.log(sessionData);
 
   return (
     <div>
@@ -476,7 +493,6 @@ const ProductBoxes = () => {
                               <input
                                 type="number"
                                 name="perBoxProduct"
-                                required
                                 onChange={handleInputValueChange}
                                 // onChange={(e) =>
                                 //   setPerBox((prev) => [...prev, e.target.value])
@@ -490,7 +506,6 @@ const ProductBoxes = () => {
                               <input
                                 type="number"
                                 name="quantityProduct"
-                                required
                                 onChange={handleInputValueChange}
                                 // onChange={handleEnterQUan}
                                 // onChange={(e) =>
