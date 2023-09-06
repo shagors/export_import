@@ -241,16 +241,13 @@ const ProductBoxes = () => {
     console.log(newData);
   };
 
-  // console.log(sessionData.length);
+  // console.log(sessionData);
 
   return (
     <div>
       {/* Table data get from accouts input database */}
       <div className="mb-6 mt-3">
-        <div className="bg-slate-500 p-2 rounded-lg uppercase flex items-center justify-between mb-4">
-          <Link to="/exportimport" className="text-white flex">
-            <BsArrowLeft className="w-20 lg:w-[380px] h-[35px] text-white" />
-          </Link>
+        <div className="bg-slate-500 p-2 rounded-lg uppercase flex items-center justify-center mb-4">
           <h1 className="text-center text-3xl text-info font-bold mr-10">
             Order Products Table
           </h1>
@@ -629,7 +626,7 @@ const ProductBoxes = () => {
                     </div>
 
                     {/* Pallet */}
-                    <div className="mb-3">
+                    <div className="">
                       <label
                         className="text-lg font-semibold"
                         htmlFor="boxQuantiy">
@@ -657,24 +654,31 @@ const ProductBoxes = () => {
             </div>
           </div>
           {/* button */}
-          <div className="flex justify-end items-center mx-7 py-5 ">
+          <div className="flex flex-col md:flex-row justify-end items-center mx-7 py-5 ">
+            <Link
+              to="/exportimport"
+              className="btn btn-info font-bold px-6 py-1 text-purple-950 hover:text-purple-800 mr-6">
+              Back
+            </Link>
             <p
-              className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6"
+              className="btn btn-info font-bold px-6 py-1 text-purple-950 hover:text-purple-800 mr-6 mt-3 md:my-0"
               onClick={handleCalculateData}>
               Calculate
             </p>
             <button
-              className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6"
+              className="btn btn-info font-bold px-6 py-1 text-purple-950 hover:text-purple-800 mr-6 mt-3 md:my-0"
               type="submit">
               Add Products
             </button>
-            <button
-              className={`btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 ${
-                sessionData.length > 0 ? "disabled" : ""
-              }`}
-              onClick={formSubmit}>
-              Save
-            </button>
+            {sessionData.length > 0 ? (
+              <button
+                className={`btn btn-info font-bold px-6 py-1 text-purple-950 hover:text-purple-800 mt-3 md:my-0`}
+                onClick={formSubmit}>
+                Save
+              </button>
+            ) : (
+              ""
+            )}
           </div>
         </form>
       </div>
