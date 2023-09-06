@@ -19,10 +19,11 @@ const ProductBoxes = () => {
   const [resultsValues, setResultsValues] = useState(0);
   const [totalBox, setTotalBox] = useState(0);
   const [sessionData, setSessionData] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     fetchAccounts();
-  }, []);
+  }, [sessionData]);
 
   // data fetch from server
   const fetchAccounts = async () => {
@@ -115,24 +116,60 @@ const ProductBoxes = () => {
         { oldQuantity, newQuantity },
       ]);
     }
+    setErrorMessage("");
   };
 
   // separe the new value from the array then map that array and store the details from there
   const singBoxPro = singleBoxProducts.map((newQ) => newQ.newQuantity);
   const singProQuan = singleProductQuantity.map((newQ) => newQ.newQuantity);
 
+  const [perBox, setPerBox] = useState("");
+  const [quan, setQuan] = useState("");
+
+  const handlePerBox = (e) => {
+    const val = e.target.value;
+    // setPerBox((prev) => [...prev, val]);
+    setPerBox(val);
+  };
+  const handleQuan = (e) => {
+    const val = e.target.value;
+    // setQuan((prev) => [...prev, val]);
+    setQuan(val);
+  };
+  // console.log(perBox, quan);
+
   // calculate the total box
-  const handleGetData = () => {
+  const handleCalculateData = () => {
     const totalBoxes = parseInt(
       Math.ceil(resultsValues.quantityProduct / perBoxProducts.perBoxProduct)
     );
     setTotalBox(totalBoxes);
+
+    // const productPerBoxTotal = [...perBox];
+    // console.log(productPerBoxTotal);
+    // const totalBoxes = Math.ceil(quan / perBox);
+    // setTotalBox(totalBoxes);
+  };
+
+  const handlePalletInputChange = (e) => {
+    setSelectedProductPallet(e.target.value);
+    setErrorMessage(""); // Clear error message on input change
+  };
+
+  const handleNameInputChange = (e) => {
+    setSelectedProductName(e.target.value);
+    setErrorMessage(""); // Clear error message on input change
   };
 
   // save the products for instant save
-
   const handleInstantStore = (e) => {
     e.preventDefault();
+
+    // error handle
+    if (selectedProductPallet === "" || selectedProductName === "") {
+      setErrorMessage("Please fill out all fields properly.");
+      return;
+    }
     const newData = {
       productName: selectedProductName,
       productModel: selectedProductModelNames,
@@ -140,10 +177,12 @@ const ProductBoxes = () => {
       splitProductsBox: singBoxPro,
       splitQuantitySingleProduct: singProQuan,
       productPerBox: perBoxProducts.perBoxProduct,
-      totalBox: parseInt(totalBox),
+      totalBox: totalBox,
       totalPallet: selectedProductPallet,
     };
     setSessionData((prevData) => [...prevData, newData]);
+    setErrorMessage("");
+
     setSelectedProductName([]);
     setSelectedProductModels("");
     setPerBoxProducts({ perBoxProduct: 0 });
@@ -151,7 +190,7 @@ const ProductBoxes = () => {
     setSingleProductQuantity([]);
     setTotalBox(0);
     setResultsValues({ quantityProduct: 0 });
-    setSelectedProductPallet();
+    setSelectedProductPallet("");
   };
 
   // const handleProductModelCheckboxChange = (e) => {
@@ -202,7 +241,7 @@ const ProductBoxes = () => {
     console.log(newData);
   };
 
-  // console.log(sessionData);
+  // console.log(sessionData.length);
 
   return (
     <div>
@@ -258,7 +297,7 @@ const ProductBoxes = () => {
 
       {/* form design for products boxes */}
       <div className="mt-5 lg:flex justify-center items-center mb-4">
-        <form className="card shadow-xl mt-5 p-3" onSubmit={formSubmit}>
+        <form className="card shadow-xl mt-5 p-3" onSubmit={handleInstantStore}>
           <div className="lg:flex justify-between items-center">
             <div className="form-control card-body">
               <div className="w-full">
@@ -432,9 +471,11 @@ const ProductBoxes = () => {
                           className="select select-secondary w-full max-w-xs focus:outline-none"
                           value={selectedProductName}
                           name="productName"
-                          onChange={(e) =>
-                            setSelectedProductName(e.target.value)
-                          }>
+                          onChange={handleNameInputChange}
+                          // onChange={(e) =>
+                          //   setSelectedProductName(e.target.value)
+                          // }
+                        >
                           <option value="" className="mt-2">
                             Pick product Name
                           </option>
@@ -446,6 +487,9 @@ const ProductBoxes = () => {
                             ))}
                         </select>
                       </div>
+                      {errorMessage && (
+                        <p className="text-red-500">{errorMessage}</p>
+                      )}
                     </div>
 
                     {/* product Model */}
@@ -493,6 +537,8 @@ const ProductBoxes = () => {
                                 type="number"
                                 min="0"
                                 name="perBoxProduct"
+                                required
+                                // onChange={handlePerBox}
                                 onChange={handleInputValueChange}
                                 // onChange={(e) =>
                                 //   setPerBox((prev) => [...prev, e.target.value])
@@ -507,8 +553,9 @@ const ProductBoxes = () => {
                                 type="number"
                                 min="0"
                                 name="quantityProduct"
+                                required
+                                // onChange={handleQuan}
                                 onChange={handleInputValueChange}
-                                // onChange={handleEnterQUan}
                                 // onChange={(e) =>
                                 //   setEnterQuan((prev) => [e.target.value])
                                 // }
@@ -536,7 +583,6 @@ const ProductBoxes = () => {
                         value={perBoxProducts.perBoxProduct}
                         required
                         readOnly
-                        onClick={handleGetData}
                         // onChange={(e) =>
                         //   setSelectedProductPerBox(e.target.value)
                         // }
@@ -555,6 +601,7 @@ const ProductBoxes = () => {
                         type="number"
                         min="0"
                         readOnly
+                        required
                         name="boxQuantiy"
                         value={totalBox}
                         onChange={(e) => setTotalBox(e.target.value)}
@@ -573,6 +620,7 @@ const ProductBoxes = () => {
                         placeholder="Enter Product Name"
                         type="number"
                         min="0"
+                        required
                         readOnly
                         value={resultsValues.quantityProduct}
                         name="quantity"
@@ -581,7 +629,6 @@ const ProductBoxes = () => {
                     </div>
 
                     {/* Pallet */}
-
                     <div className="mb-3">
                       <label
                         className="text-lg font-semibold"
@@ -593,11 +640,14 @@ const ProductBoxes = () => {
                         placeholder="Enter Pallent Quantity"
                         type="text"
                         name="pallet"
-                        required
-                        onChange={(e) =>
-                          setSelectedProductPallet(e.target.value)
-                        }
+                        onChange={handlePalletInputChange}
+                        // onChange={(e) =>
+                        //   setSelectedProductPallet(e.target.value)
+                        // }
                       />
+                      {errorMessage && (
+                        <p className="text-red-500">{errorMessage}</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -610,12 +660,19 @@ const ProductBoxes = () => {
           <div className="flex justify-end items-center mx-7 py-5 ">
             <p
               className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6"
-              onClick={handleInstantStore}>
-              Add Products
+              onClick={handleCalculateData}>
+              Calculate
             </p>
             <button
-              className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800"
+              className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mr-6"
               type="submit">
+              Add Products
+            </button>
+            <button
+              className={`btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 ${
+                sessionData.length > 0 ? "disabled" : ""
+              }`}
+              onClick={formSubmit}>
               Save
             </button>
           </div>
