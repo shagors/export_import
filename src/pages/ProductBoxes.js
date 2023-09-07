@@ -1,12 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BsArrowLeft } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ProductBoxes = () => {
   const [accounts, setAccounts] = useState([]);
-  const navigate = useNavigate();
+  const [productDetails, setProductDetails] = useState([]);
 
   // for multiple product add
   const [selectedProductName, setSelectedProductName] = useState("");
@@ -24,9 +23,10 @@ const ProductBoxes = () => {
 
   useEffect(() => {
     fetchAccounts();
+    fetchProductsDetails();
   }, [sessionData]);
 
-  // data fetch from server
+  // accounts data fetch from server
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
@@ -38,6 +38,22 @@ const ProductBoxes = () => {
     }
   };
 
+  // product Details fetch from server
+  const fetchProductsDetails = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
+      );
+      setProductDetails(response?.data);
+    } catch (error) {
+      toast.error("Error getting data from server!");
+    }
+  };
+
+  // product name and product model map and filter for select options
+  const products = accounts?.map((product) => product.productName) || [];
+
+  // if the prodcut select single then need use this function
   // const handleCheckboxClick = (productId) => {
   //   if (selectedProductIds.includes(productId)) {
   //     setSelectedProductIds(
@@ -55,9 +71,7 @@ const ProductBoxes = () => {
   //   }
   // };
 
-  // product name and product model map and filter for select options
-  const products = accounts?.map((product) => product.productName) || [];
-
+  // prodcut name select and filter out the product model
   const filteredProductModels = accounts
     .filter((account) => account.productName === selectedProductName)
     .map((account) => account.productModel);
@@ -74,7 +88,7 @@ const ProductBoxes = () => {
     (modelName) => selectedProductModels[modelName]
   );
 
-  // console.log(selectedProductModelNames);
+  console.log(productDetails);
 
   const handleInputValueChange = (e) => {
     const name = e.target.name;
@@ -124,32 +138,12 @@ const ProductBoxes = () => {
   const singBoxPro = singleBoxProducts.map((newQ) => newQ.newQuantity);
   const singProQuan = singleProductQuantity.map((newQ) => newQ.newQuantity);
 
-  const [perBox, setPerBox] = useState("");
-  const [quan, setQuan] = useState("");
-
-  const handlePerBox = (e) => {
-    const val = e.target.value;
-    // setPerBox((prev) => [...prev, val]);
-    setPerBox(val);
-  };
-  const handleQuan = (e) => {
-    const val = e.target.value;
-    // setQuan((prev) => [...prev, val]);
-    setQuan(val);
-  };
-  // console.log(perBox, quan);
-
   // calculate the total box
   const handleCalculateData = () => {
     const totalBoxes = parseInt(
       Math.ceil(resultsValues.quantityProduct / perBoxProducts.perBoxProduct)
     );
     setTotalBox(totalBoxes);
-
-    // const productPerBoxTotal = [...perBox];
-    // console.log(productPerBoxTotal);
-    // const totalBoxes = Math.ceil(quan / perBox);
-    // setTotalBox(totalBoxes);
   };
 
   const handlePalletInputChange = (e) => {
@@ -164,7 +158,7 @@ const ProductBoxes = () => {
 
   const handleNameInputChange = (e) => {
     setSelectedProductName(e.target.value);
-    setErrorMessage(""); // Clear error message on input change
+    setErrorMessage("");
   };
 
   // save the products for instant save
@@ -545,12 +539,8 @@ const ProductBoxes = () => {
                                 min="0"
                                 name="perBoxProduct"
                                 required
-                                // onChange={handlePerBox}
                                 onBlur={handleInputValueChange}
                                 // onChange={handleInputValueChange}
-                                // onChange={(e) =>
-                                //   setPerBox((prev) => [...prev, e.target.value])
-                                // }
                                 placeholder="per Box"
                                 className="w-[75px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
@@ -562,12 +552,8 @@ const ProductBoxes = () => {
                                 min="0"
                                 name="quantityProduct"
                                 required
-                                // onChange={handleQuan}
                                 onBlur={handleInputValueChange}
                                 // onChange={handleInputValueChange}
-                                // onChange={(e) =>
-                                //   setEnterQuan((prev) => [e.target.value])
-                                // }
                                 placeholder={"Enter Quantity"}
                                 className="w-[120px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
