@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ProductBoxes = () => {
   const [accounts, setAccounts] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
+  const navigate = useNavigate();
 
   // for multiple product add
   const [selectedProductName, setSelectedProductName] = useState("");
@@ -244,6 +245,7 @@ const ProductBoxes = () => {
 
     toast.success("Data successfully uploaded");
     setSessionData([]);
+    navigate("/exportimport");
     console.log(newData);
   };
 

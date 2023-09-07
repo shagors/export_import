@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
-import slider01 from "../../assets/slider/slider01.jpg";
-import slider02 from "../../assets/slider/slider02.jpg";
-import slider03 from "../../assets/slider/slider03.jpg";
-import slider04 from "../../assets/slider/slider04.jpg";
-import slider05 from "../../assets/slider/slider05.jpg";
-import slider06 from "../../assets/slider/slider06.jpg";
+// import slider01 from "../../assets/slider/slider01.jpg";
+// import slider02 from "../../assets/slider/slider02.jpg";
+// import slider03 from "../../assets/slider/slider03.jpg";
+// import slider04 from "../../assets/slider/slider04.jpg";
+// import slider05 from "../../assets/slider/slider05.jpg";
+// import slider06 from "../../assets/slider/slider06.jpg";
 
 const Slider = () => {
   const slides = [
@@ -22,7 +22,7 @@ const Slider = () => {
       url: "https://images.unsplash.com/photo-1496247749665-49cf5b1022e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80",
     },
     {
-      url: "https://plus.unsplash.com/premium_photo-1682145489846-081721a9b272?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      url: "https://images.unsplash.com/photo-1621954938124-02e637ba3584?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     },
     {
       url: "https://images.unsplash.com/photo-1513828742140-ccaa28f3eda0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",

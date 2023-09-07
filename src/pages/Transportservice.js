@@ -71,7 +71,7 @@ const Transportservice = () => {
 
   return (
     <>
-      <div className="overflow-x-auto h-[700px]">
+      <div className="overflow-x-auto h-[700px] mb-5">
         <div className="text-center my-4 calendarWrap">
           <input
             value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
