@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const Finance = () => {
+  const [beDate, setBEDate] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      beDate: beDate,
+    };
+    console.log(data);
+  };
   return (
     <div>
       <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
         Finance
       </h1>
-      <div className="mt-6">
-        <Link to="/exportimport" className="">
-          <BsArrowLeft className="w-40 lg:w-[380px] h-[35px] text-purple-500" />
-          <div className="w-8 h-[2px] bg-green-700 ml-[65px] lg:ml-[175px] animate-pulse"></div>
-        </Link>
-      </div>
       <div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 my-6 mx-4">
             {/*B/E Date  */}
             <div>
@@ -27,7 +29,7 @@ const Finance = () => {
                 placeholder="Enter Product Name"
                 type="date"
                 name="beDate"
-                //   onChange={handleChange}
+                onChange={(e) => setBEDate(e.target.value)}
                 required
               />
             </div>
@@ -230,8 +232,13 @@ const Finance = () => {
             </div>
           </div>
           <div className="flex justify-center items-center mt-3 mb-5">
+            <Link
+              to="/exportimport"
+              className="btn btn-info font-bold px-8 md:px-[90px] py-[10px] text-purple-950 hover:text-purple-800 mr-4">
+              Back
+            </Link>
             <button
-              className="btn btn-info font-bold px-8 md:px-[90px] py-[10px] text-purple-950 hover:text-purple-800"
+              className="btn btn-info font-bold px-8 md:px-[90px] py-[10px] text-purple-950 hover:text-purple-800 ml-4"
               type="submit">
               Save
             </button>

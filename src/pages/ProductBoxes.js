@@ -20,6 +20,7 @@ const ProductBoxes = () => {
   const [totalBox, setTotalBox] = useState(0);
   const [sessionData, setSessionData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [truckNumber, setTruckNumber] = useState("");
 
   useEffect(() => {
     fetchAccounts();
@@ -153,7 +154,12 @@ const ProductBoxes = () => {
 
   const handlePalletInputChange = (e) => {
     setSelectedProductPallet(e.target.value);
-    setErrorMessage(""); // Clear error message on input change
+    setErrorMessage("");
+  };
+
+  const handleTruckNumberInputChange = (e) => {
+    setTruckNumber(e.target.value);
+    setErrorMessage("");
   };
 
   const handleNameInputChange = (e) => {
@@ -166,7 +172,11 @@ const ProductBoxes = () => {
     e.preventDefault();
 
     // error handle
-    if (selectedProductPallet === "" || selectedProductName === "") {
+    if (
+      selectedProductPallet === "" ||
+      selectedProductName === "" ||
+      truckNumber === ""
+    ) {
       setErrorMessage("Please fill out all fields properly.");
       return;
     }
@@ -179,6 +189,7 @@ const ProductBoxes = () => {
       productPerBox: perBoxProducts.perBoxProduct,
       totalBox: totalBox,
       totalPallet: selectedProductPallet,
+      truckNumber: truckNumber,
     };
     setSessionData((prevData) => [...prevData, newData]);
     setErrorMessage("");
@@ -191,6 +202,7 @@ const ProductBoxes = () => {
     setTotalBox(0);
     setResultsValues({ quantityProduct: 0 });
     setSelectedProductPallet("");
+    setTruckNumber("");
   };
 
   // const handleProductModelCheckboxChange = (e) => {
@@ -246,7 +258,7 @@ const ProductBoxes = () => {
   return (
     <div>
       {/* Table data get from accouts input database */}
-      <div className="mb-6 mt-3">
+      {/* <div className="mb-6 mt-3">
         <div className="bg-slate-500 p-2 rounded-lg uppercase flex items-center justify-center mb-4">
           <h1 className="text-center text-3xl text-info font-bold mr-10">
             Order Products Table
@@ -254,10 +266,9 @@ const ProductBoxes = () => {
         </div>
         <div className="overflow-x-auto add__scrollbar">
           <table className="table">
-            {/* head */}
             <thead>
               <tr>
-                {/* <th></th> */}
+                <th></th>
                 <th>ID</th>
                 <th>Product Name</th>
                 <th>Product Brand</th>
@@ -269,7 +280,7 @@ const ProductBoxes = () => {
             <tbody>
               {accounts?.map((product) => (
                 <tr className="hover cursor-pointer" key={product.id}>
-                  {/* <td>
+                  <td>
                     <input
                       type="checkbox"
                       className="checkbox checkbox-info"
@@ -278,7 +289,7 @@ const ProductBoxes = () => {
                       checked={selectedProductIds.includes(product.id)}
                       onClick={() => handleCheckboxClick(product.id)}
                     />
-                  </td> */}
+                  </td>
                   <td>{product.id}</td>
                   <td>{product.productName}</td>
                   <td>{product.productBrand}</td>
@@ -290,18 +301,17 @@ const ProductBoxes = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
 
       {/* form design for products boxes */}
       <div className="mt-5 lg:flex justify-center items-center mb-4">
         <form className="card shadow-xl mt-5 p-3" onSubmit={handleInstantStore}>
+          <h2 className="text-4xl font-bold text-violet-500 text-center mt-3">
+            Selected Products
+          </h2>
           <div className="lg:flex justify-between items-center">
             <div className="form-control card-body">
               <div className="w-full">
-                <h2 className="text-center text-3xl font-semibold mb-5">
-                  Selected Products
-                </h2>
-
                 {/* if single products need */}
                 {/* {selectedProductsData?.map((product) => (
                   <div
@@ -648,10 +658,26 @@ const ProductBoxes = () => {
                         <p className="text-red-500">{errorMessage}</p>
                       )}
                     </div>
+                    {/* Truck Number */}
+                    <div className="">
+                      <label
+                        className="text-lg font-semibold"
+                        htmlFor="boxQuantiy">
+                        Truck Number
+                      </label>
+                      <input
+                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                        placeholder="Enter Pallent Quantity"
+                        type="text"
+                        name="truckNumber"
+                        onChange={handleTruckNumberInputChange}
+                      />
+                      {errorMessage && (
+                        <p className="text-red-500">{errorMessage}</p>
+                      )}
+                    </div>
                   </div>
                 </div>
-
-                {/* Multiple Products Add */}
               </div>
             </div>
           </div>
@@ -702,6 +728,7 @@ const ProductBoxes = () => {
                 <th>Total Box</th>
                 <th>Quantity</th>
                 <th>Pallet</th>
+                <th>Truck NO.</th>
               </tr>
             </thead>
             <tbody>
@@ -724,6 +751,7 @@ const ProductBoxes = () => {
                     <td>{item.totalBox}</td>
                     <td>{item.quantity}</td>
                     <td>{item.totalPallet}</td>
+                    <td>{item.truckNumber}</td>
                   </tr>
                 );
               })}

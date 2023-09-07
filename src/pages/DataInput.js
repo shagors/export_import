@@ -11,6 +11,7 @@ const DataInput = () => {
     productName: "",
     productBrand: "",
     productModel: "",
+    productWeight: "",
   });
 
   const handleChange = (event) => {
@@ -25,6 +26,7 @@ const DataInput = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // console.log(formData);
     axios
       .post(
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products",
@@ -38,7 +40,6 @@ const DataInput = () => {
       .then((res) => {
         toast.success("Successfully Uploaded to server");
         navigate("/exportimport");
-        // console.log(res);
       })
       .catch((err) =>
         toast.error("Error coming from server please try again later")
@@ -73,7 +74,7 @@ const DataInput = () => {
                 required
               />
             </div>
-            <div>
+            <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productBrand">
                 Product Brand
               </label>
@@ -87,7 +88,7 @@ const DataInput = () => {
                 required
               />
             </div>
-            <div>
+            <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productModel">
                 Product Model
               </label>
@@ -97,6 +98,20 @@ const DataInput = () => {
                 type="text"
                 name="productModel"
                 id="productModel"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mt-3">
+              <label className="text-lg font-semibold" htmlFor="productModel">
+                Product Weight/KG
+              </label>
+              <input
+                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                placeholder="Enter Product Weight/KG"
+                type="text"
+                name="productWeight"
+                id="productWeight"
                 onChange={handleChange}
                 required
               />
