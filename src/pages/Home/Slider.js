@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
+import slider01 from "../../assets/slider/slider01.jpg";
+import slider02 from "../../assets/slider/slider02.jpg";
+import slider03 from "../../assets/slider/slider03.jpg";
+import slider04 from "../../assets/slider/slider04.jpg";
+import slider05 from "../../assets/slider/slider05.jpg";
+import slider06 from "../../assets/slider/slider06.jpg";
 
 const Slider = () => {
   const slides = [

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import { toast } from "react-toastify";
 
 const Finance = () => {
   const [selectedBEDate, setSelectedBEDate] = useState(null);
@@ -64,6 +65,7 @@ const Finance = () => {
       totalPalletQuantity: parseInt(totalPalletQuantity),
       palletRemarks: palletRemarks,
     };
+    toast.success("Data successfully Saved!!");
     console.log(data);
   };
   return (
@@ -224,6 +226,7 @@ const Finance = () => {
                 onChange={handleRemarkDateChange}
                 dateFormat="MM/dd/yyyy"
                 placeholderText="MM/DD/YYYY"
+                required
                 className="border rounded-xl w-60 py-[18px] px-3 mt-1 text-gray-700 leading-tight"
               />
             </div>
