@@ -88,7 +88,7 @@ const ProductBoxes = () => {
     (modelName) => selectedProductModels[modelName]
   );
 
-  console.log(productDetails);
+  // console.log(productDetails);
 
   const handleInputValueChange = (e) => {
     const name = e.target.name;

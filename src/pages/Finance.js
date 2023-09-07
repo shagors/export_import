@@ -1,13 +1,68 @@
 import React, { useState } from "react";
-import { BsArrowLeft } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import DatePicker from "react-datepicker";
 
 const Finance = () => {
-  const [beDate, setBEDate] = useState("");
+  const [selectedBEDate, setSelectedBEDate] = useState(null);
+  const [exim, setExim] = useState("");
+  const [invoiceNo, setInvoiceNo] = useState("");
+  const [totalUSD, setTotalUSD] = useState(0);
+  const [beNumber, setBENumber] = useState("");
+  const [ipNumber, setIPNumber] = useState("");
+  const [selectedRemarkDate, setSelectedRemarkDate] = useState(null);
+  const [totalNetWeight, setTotalNetWeight] = useState(0);
+  const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
+  const [palletRemarks, setPalletRemarks] = useState("Pallet");
+
+  const handleBEDateChange = (date) => {
+    setSelectedBEDate(date);
+  };
+
+  const handleEXIMChange = (e) => {
+    setExim(e.target.value);
+  };
+
+  const handleInvoiceNoChange = (e) => {
+    setInvoiceNo(e.target.value);
+  };
+
+  const handleTotalUSDChange = (e) => {
+    setTotalUSD(e.target.value);
+  };
+
+  const handleBENumberChange = (e) => {
+    setBENumber(e.target.value);
+  };
+
+  const handleIPNumberChange = (e) => {
+    setIPNumber(e.target.value);
+  };
+
+  const handleRemarkDateChange = (date) => {
+    setSelectedRemarkDate(date);
+  };
+
+  const handletotalNetWeightChange = (e) => {
+    setTotalNetWeight(e.target.value);
+  };
+
+  const handleTotalPalletQuantityChange = (e) => {
+    setTotalPalletQuantity(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
-      beDate: beDate,
+      beDate: selectedBEDate,
+      exim: exim,
+      invoiceNo: invoiceNo,
+      totalUSD: parseFloat(totalUSD),
+      beNumber: beNumber,
+      ipNumber: ipNumber,
+      remarkDate: selectedRemarkDate,
+      totalNetWeight: parseFloat(totalNetWeight),
+      totalPalletQuantity: parseInt(totalPalletQuantity),
+      palletRemarks: palletRemarks,
     };
     console.log(data);
   };
@@ -24,12 +79,12 @@ const Finance = () => {
               <label className="text-lg font-semibold" htmlFor="productName">
                 B/E Date
               </label>
-              <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Product Name"
-                type="date"
-                name="beDate"
-                onChange={(e) => setBEDate(e.target.value)}
+              <DatePicker
+                selected={selectedBEDate}
+                onChange={handleBEDateChange}
+                dateFormat="MM/dd/yyyy"
+                placeholderText="MM/DD/YYYY"
+                className="border rounded-xl w-60 py-[18px] px-3 mt-1 text-gray-700 leading-tight"
                 required
               />
             </div>
@@ -42,9 +97,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Export/Import"
                 type="text"
-                name="exim"
-                //   onChange={handleChange}
                 required
+                name="exim"
+                onChange={handleEXIMChange}
               />
             </div>
             {/*  Invoice No */}
@@ -56,9 +111,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Enter Invoice Number"
                 type="text"
-                name="invoiceNo"
-                //   onChange={handleChange}
                 required
+                name="invoiceNo"
+                onChange={handleInvoiceNoChange}
               />
             </div>
             {/*  Total USD */}
@@ -70,9 +125,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Enter Total USD Payment"
                 type="text"
-                name="totalUSD"
-                //   onChange={handleChange}
                 required
+                name="totalUSD"
+                onChange={handleTotalUSDChange}
               />
             </div>
             {/*  B/E Number */}
@@ -84,9 +139,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Enter B/E Number"
                 type="text"
-                name="beNumber"
-                //   onChange={handleChange}
                 required
+                name="beNumber"
+                onChange={handleBENumberChange}
               />
             </div>
             {/*  IP Number */}
@@ -98,9 +153,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Enter IP Number"
                 type="text"
-                name="ipNumber"
-                //   onChange={handleChange}
                 required
+                name="ipNumber"
+                onChange={handleIPNumberChange}
               />
             </div>
             {/*  Particulars */}
@@ -112,9 +167,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Enter Particulars"
                 type="text"
+                required
                 name="particulars"
                 //   onChange={handleChange}
-                required
               />
             </div>
             {/*  Particular Amount */}
@@ -126,9 +181,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Enter Particular Amount"
                 type="text"
+                required
                 name="particularAmount"
                 //   onChange={handleChange}
-                required
               />
             </div>
             {/*  Particular total Amount */}
@@ -140,9 +195,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Particular total Amount"
                 type="text"
+                required
                 name="particularTotalAmount"
                 //   onChange={handleChange}
-                required
               />
             </div>
             {/*  Remarks */}
@@ -154,9 +209,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Enter Remarks"
                 type="text"
+                required
                 name="particularRemarks"
                 //   onChange={handleChange}
-                required
               />
             </div>
             {/*  Remarks Date */}
@@ -164,13 +219,12 @@ const Finance = () => {
               <label className="text-lg font-semibold" htmlFor="productName">
                 Remarks Date
               </label>
-              <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Remarks Date"
-                type="date"
-                name="remarksDate"
-                //   onChange={handleChange}
-                required
+              <DatePicker
+                selected={selectedRemarkDate}
+                onChange={handleRemarkDateChange}
+                dateFormat="MM/dd/yyyy"
+                placeholderText="MM/DD/YYYY"
+                className="border rounded-xl w-60 py-[18px] px-3 mt-1 text-gray-700 leading-tight"
               />
             </div>
             {/*  Product Name */}
@@ -182,9 +236,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Enter Product Name"
                 type="text"
-                name="productName"
-                //   onChange={handleChange}
                 required
+                name="productsName"
+                //   onChange={handleChange}
               />
             </div>
             {/*  Total Net Weight */}
@@ -196,9 +250,9 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Total Net Weight"
                 type="text"
-                name="totalNetWeight"
-                //   onChange={handleChange}
                 required
+                name="totalNetWeight"
+                onChange={handletotalNetWeightChange}
               />
             </div>
             {/*  Pallet Quantity */}
@@ -210,10 +264,10 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Total Pallet Quantity"
                 type="number"
+                required
                 min={0}
                 name="totalPalletQuantity"
-                //   onChange={handleChange}
-                required
+                onChange={handleTotalPalletQuantityChange}
               />
             </div>
             {/*  Remarks for Pallet */}
@@ -225,9 +279,10 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Pallet Remarks"
                 type="text"
-                name="palletRemarks"
-                //   onChange={handleChange}
                 required
+                name="palletRemarks"
+                value="Pallet"
+                onChange={(e) => setPalletRemarks(e.target.value)}
               />
             </div>
           </div>
