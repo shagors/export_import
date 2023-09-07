@@ -22,6 +22,7 @@ import AddCharges from "../pages/AddCharges";
 import AddChargesUpdate from "../pages/AddChargesUpdate";
 import ProductBoxes from "../pages/ProductBoxes";
 import Home from "../pages/Home/Home";
+import Finance from "../pages/Finance";
 
 const Routers = () => {
   return (
@@ -45,6 +46,7 @@ const Routers = () => {
         <Route path="/addcharges" element={<AddCharges />} />
         <Route path="/addcharges/:id" element={<AddChargesUpdate />} />
         <Route path="/productinboxes" element={<ProductBoxes />} />
+        <Route path="/finance" element={<Finance />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />

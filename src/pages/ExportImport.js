@@ -37,14 +37,19 @@ const ExportImport = () => {
           Accounts
         </Link>
         <Link
+          to="/productinboxes"
+          className="btn btn-info w-60 p-1 text-white font-bold text-xl mt-4">
+          Product In Boxes
+        </Link>
+        <Link
           to="/purchase"
           className="btn btn-info w-60 p-1 text-white font-bold text-xl mt-4">
           Purchase
         </Link>
         <Link
-          to="/productinboxes"
+          to="/finance"
           className="btn btn-info w-60 p-1 text-white font-bold text-xl mt-4">
-          Product In Boxes
+          Finance
         </Link>
       </div>
       {/* <div className="lg:flex justify-around items-center gap-6 mt-10 lg:mt-7">

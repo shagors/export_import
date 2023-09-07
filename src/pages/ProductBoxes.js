@@ -536,7 +536,8 @@ const ProductBoxes = () => {
                                 name="perBoxProduct"
                                 required
                                 // onChange={handlePerBox}
-                                onChange={handleInputValueChange}
+                                onBlur={handleInputValueChange}
+                                // onChange={handleInputValueChange}
                                 // onChange={(e) =>
                                 //   setPerBox((prev) => [...prev, e.target.value])
                                 // }
@@ -552,7 +553,8 @@ const ProductBoxes = () => {
                                 name="quantityProduct"
                                 required
                                 // onChange={handleQuan}
-                                onChange={handleInputValueChange}
+                                onBlur={handleInputValueChange}
+                                // onChange={handleInputValueChange}
                                 // onChange={(e) =>
                                 //   setEnterQuan((prev) => [e.target.value])
                                 // }
@@ -654,7 +656,7 @@ const ProductBoxes = () => {
             </div>
           </div>
           {/* button */}
-          <div className="flex flex-col md:flex-row justify-end items-center mx-7 py-5 ">
+          <div className="flex flex-col md:flex-row justify-end items-center mx-7 py-5">
             <Link
               to="/exportimport"
               className="btn btn-info font-bold px-6 py-1 text-purple-950 hover:text-purple-800 mr-6">
