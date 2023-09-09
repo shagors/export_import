@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "../styles/purchase.css";
 import { BsArrowLeft } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
+import DatePicker from "react-datepicker";
 
 const Purchase = () => {
   const [transportPath, setTransportPath] = useState([]);
@@ -15,8 +16,11 @@ const Purchase = () => {
   const [transportWay, setTransportWay] = useState("");
   const [transportCountryName, setTransportCountryName] = useState("");
   const [particularExpencessName, setParticularExpencessName] = useState([]);
+  const [particularExpencessCost, setParticularExpencessCost] = useState([]);
   const [productChecks, setProductChecks] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,38 +28,15 @@ const Purchase = () => {
   const productData = JSON.stringify(productChecks);
 
   // Data fetch from server
-  // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/
   useEffect(() => {
     //   getting transport data from server
-    axios
-      .get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport"
-      )
-      .then((res) => setTransportPath(res.data))
-      .catch((error) => setError(error));
-    // console.log(transportPath[1].id);
-
+    fetchTransportRoute();
     //   getting transport country data from server
-    axios
-      .get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country"
-      )
-      .then((res) => setTransportCountry(res.data))
-      .catch((error) => setError(error));
-
+    fetchTransportCountry();
     //   getting accounts data from office_accounts server
     fetchAccounts();
-
     // geeting charges api call
-    axios
-      .get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges"
-      )
-      .then((res) => {
-        setCharges(res?.data);
-        // console.log(res?.data);
-      })
-      .catch((error) => setError(error));
+    fetchCharges();
   }, []);
 
   const fetchAccounts = async () => {
@@ -68,14 +49,50 @@ const Purchase = () => {
       toast.error("Error from server to get data!!");
     }
   };
-
-  const handleToCheck = (e, index) => {
-    setChecks([...checks, e.target.value]);
+  const fetchCharges = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges"
+      );
+      setCharges(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
+  const fetchTransportCountry = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country"
+      );
+      setTransportCountry(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
+  const fetchTransportRoute = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport"
+      );
+      setTransportPath(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
   };
 
   const handleProductCheck = (product) => {
     setProductChecks([...productChecks, product.id]);
   };
+
+  const handleToCheck = (e, index) => {
+    setChecks([...checks, e.target.value]);
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
+  // console.log(checks);
 
   const handleTransportWay = (event) => {
     setTransportWay(event.target.value);
@@ -90,6 +107,21 @@ const Purchase = () => {
   const handleParticularExpencessName = (event) => {
     setParticularExpencessName(event.target.value);
   };
+  const handleParticularExpencessCost = (event) => {
+    setParticularExpencessCost(event.target.value);
+  };
+
+  const [cost, setCost] = useState({
+    particularExpencessCost: charges.map(
+      (charge) => charge.particularExpencessCost
+    ),
+  });
+  const handleInputCostChange = (e) => {
+    const value = parseFloat(e.target.value);
+    setCost(...cost, { particularExpencessCost: value });
+  };
+
+  console.log(cost);
 
   const handleDelete = (id) => {
     axios
@@ -115,22 +147,24 @@ const Purchase = () => {
       officeAccountId: productData,
     };
 
+    console.log(data);
+
     // http://localhost:5001/purchase
     // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account
 
-    axios
-      .post(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account",
-        data
-      )
-      .then((res) => {
-        toast.success("Successfully Uploaded to server");
-        navigate("/exportimport");
-        // console.log(res);
-      })
-      .catch((err) =>
-        toast.error("This error coming from server please try again later!!")
-      );
+    // axios
+    //   .post(
+    //     "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account",
+    //     data
+    //   )
+    //   .then((res) => {
+    //     toast.success("Successfully Uploaded to server");
+    //     navigate("/exportimport");
+    //     // console.log(res);
+    //   })
+    //   .catch((err) =>
+    //     toast.error("This error coming from server please try again later!!")
+    //   );
   };
 
   return (
@@ -148,10 +182,8 @@ const Purchase = () => {
             <div className="w-8 h-[2px] bg-green-700 ml-[25px] lg:ml-[175px] animate-pulse"></div>
           </div>
           <div className="mt-5 lg:flex justify-center items-center">
-            <form
-              className="card lg:w-[700px] bg-base-100 shadow-xl mt-5"
-              onSubmit={formSubmit}>
-              <div className="lg:flex justify-between items-center">
+            <form className="bg-base-100 shadow-xl mt-5" onSubmit={formSubmit}>
+              <div className="md:flex justify-between items-center">
                 <div className="form-control  card-body">
                   <label className="text-center mb-3">
                     <span className="lebel-text text-lg font-semibold">
@@ -203,25 +235,81 @@ const Purchase = () => {
               <div className="w-70 p-9 add__scrollbar">
                 <div className="form-control">
                   {charges?.map((charge) => (
-                    <label className="cursor-pointer label" key={charge.id}>
-                      <span className="label-text">
-                        {charge.particularExpenseName}
-                      </span>
-                      <input
-                        type="checkbox"
-                        className={`checkbox checkbox-info`}
-                        id={charge.id}
-                        value={charge.id}
-                        name="particularExpenseName"
-                        onChange={handleParticularExpencessName}
-                        onClick={handleToCheck}
-                      />
-                    </label>
+                    <div key={charge.id} className="flex justify-between gap-3">
+                      <div className="cursor-pointer flex items-center">
+                        <input
+                          type="checkbox"
+                          className="checkbox checkbox-info my-[3px] mr-3"
+                          id={charge.id}
+                          value={charge.id}
+                          name="particularExpenseName"
+                          onChange={handleParticularExpencessName}
+                          // checked={isChecked}
+                          // onChange={handleCheckboxChange}
+                          onClick={handleToCheck}
+                        />
+                        <label className="label-text">
+                          {charge.particularExpenseName}
+                        </label>
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          className="border mr-2 required:border-red-600"
+                          value={charge.particularExpenseCost}
+                          onChange={handleInputCostChange}
+                        />
+                        <input type="text" className="border mr-2" />
+                        <input type="date" className="border" />
+                      </div>
+                    </div>
                   ))}
                 </div>
+                {/* <div className="form-control">
+                  <div>
+                    {charges?.map((charge) => (
+                      <div key={charge.id}>
+                        <input
+                          type="checkbox"
+                          id={charge.id}
+                          name={charge.particularExpenseName}
+                          className="my-[10px]"
+                        />
+                        <label
+                          for={charge.particularExpenseName}
+                          className="mx-2">
+                          {charge.particularExpenseName}
+                        </label>
+                        <input
+                          type="text"
+                          name="charge.particularExpenseCost"
+                          value={charge.particularExpenseCost}
+                          className="border-b-[3px] border-b-black px-3 py-[3px] w-[90px] mr-3"
+                        />
+                        <input
+                          type="text"
+                          name="chargeRemark"
+                          value=""
+                          className="border-b-[3px] border-b-black px-3 py-[3px] w-[300px] mr-3"
+                        />
+                        <DatePicker
+                          selected={selectedDate}
+                          onChange={handleSelectedDateChange}
+                          dateFormat="MM/dd/yyyy"
+                          placeholderText="MM/DD/YYYY"
+                          required
+                          className="border rounded-xl w-36 py-[18px] px-3 mt-1 text-gray-700 leading-tight"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div> */}
               </div>
               {/* button */}
               <div className="flex justify-end items-center mr-7 py-5">
+                <p className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mx-7">
+                  Calculate
+                </p>
                 <button
                   className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800"
                   type="submit">
