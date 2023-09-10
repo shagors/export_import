@@ -229,8 +229,6 @@ const Purchase = () => {
                 </div>
               </div>
               {/* Tax and costing */}
-              {/* particularExpencessName */}
-              {/* particularExpenseName: ""*/}
               <div className="w-70 p-9 add__scrollbar">
                 <div className="form-control">
                   {charges?.map((charge) => (
@@ -255,22 +253,19 @@ const Purchase = () => {
                           className="border mr-2 required:border-red-600"
                           value={charge.particularExpenseCost}
                         />
-                        {/* <input type="text" className="border mr-2" />
-                        <input type="date" className="border" /> */}
+                        <input type="text" className="border mr-2" />
+                        <input type="date" className="border" />
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <p className="my-4 text-center font-semibold text-md">
-                Total Cost:{" "}
+              {/* <p className="my-4 text-center font-semibold text-md">
+                Total Cost:
                 <span className="text-zinc-800 text-2xl">{totalCost}</span>
-              </p>
+              </p> */}
               {/* button */}
               <div className="flex justify-end items-center mr-7 py-5">
-                <p className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mx-7">
-                  Calculate
-                </p>
                 <button
                   className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800"
                   type="submit">
