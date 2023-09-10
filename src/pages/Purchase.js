@@ -16,11 +16,9 @@ const Purchase = () => {
   const [transportWay, setTransportWay] = useState("");
   const [transportCountryName, setTransportCountryName] = useState("");
   const [particularExpencessName, setParticularExpencessName] = useState([]);
-  const [particularExpencessCost, setParticularExpencessCost] = useState([]);
   const [productChecks, setProductChecks] = useState([]);
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [isChecked, setIsChecked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -88,11 +86,26 @@ const Purchase = () => {
     setChecks([...checks, e.target.value]);
   };
 
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
+  // fiter with id that id checks or not
+  const filteredData = charges.filter((item) =>
+    checks.includes(item.id.toString())
+  );
 
-  // console.log(checks);
+  // store that ids cost value in this function
+  const particularExpenseCosts = filteredData.map(
+    (item) => item.particularExpenseCost
+  );
+
+  // map those value which is selected
+  const costsAsNumbers = particularExpenseCosts.map((cost) => parseFloat(cost));
+
+  // calculate this value and get output
+  const totalCost = costsAsNumbers.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+
+  // console.log(totalCost);
 
   const handleTransportWay = (event) => {
     setTransportWay(event.target.value);
@@ -107,21 +120,6 @@ const Purchase = () => {
   const handleParticularExpencessName = (event) => {
     setParticularExpencessName(event.target.value);
   };
-  const handleParticularExpencessCost = (event) => {
-    setParticularExpencessCost(event.target.value);
-  };
-
-  const [cost, setCost] = useState({
-    particularExpencessCost: charges.map(
-      (charge) => charge.particularExpencessCost
-    ),
-  });
-  const handleInputCostChange = (e) => {
-    const value = parseFloat(e.target.value);
-    setCost(...cost, { particularExpencessCost: value });
-  };
-
-  console.log(cost);
 
   const handleDelete = (id) => {
     axios
@@ -145,6 +143,7 @@ const Purchase = () => {
       transportCountryId: transportCountryName,
       addChargesId: chaecksCost,
       officeAccountId: productData,
+      totalCost,
     };
 
     console.log(data);
@@ -244,8 +243,6 @@ const Purchase = () => {
                           value={charge.id}
                           name="particularExpenseName"
                           onChange={handleParticularExpencessName}
-                          // checked={isChecked}
-                          // onChange={handleCheckboxChange}
                           onClick={handleToCheck}
                         />
                         <label className="label-text">
@@ -257,54 +254,18 @@ const Purchase = () => {
                           type="text"
                           className="border mr-2 required:border-red-600"
                           value={charge.particularExpenseCost}
-                          onChange={handleInputCostChange}
                         />
-                        <input type="text" className="border mr-2" />
-                        <input type="date" className="border" />
+                        {/* <input type="text" className="border mr-2" />
+                        <input type="date" className="border" /> */}
                       </div>
                     </div>
                   ))}
                 </div>
-                {/* <div className="form-control">
-                  <div>
-                    {charges?.map((charge) => (
-                      <div key={charge.id}>
-                        <input
-                          type="checkbox"
-                          id={charge.id}
-                          name={charge.particularExpenseName}
-                          className="my-[10px]"
-                        />
-                        <label
-                          for={charge.particularExpenseName}
-                          className="mx-2">
-                          {charge.particularExpenseName}
-                        </label>
-                        <input
-                          type="text"
-                          name="charge.particularExpenseCost"
-                          value={charge.particularExpenseCost}
-                          className="border-b-[3px] border-b-black px-3 py-[3px] w-[90px] mr-3"
-                        />
-                        <input
-                          type="text"
-                          name="chargeRemark"
-                          value=""
-                          className="border-b-[3px] border-b-black px-3 py-[3px] w-[300px] mr-3"
-                        />
-                        <DatePicker
-                          selected={selectedDate}
-                          onChange={handleSelectedDateChange}
-                          dateFormat="MM/dd/yyyy"
-                          placeholderText="MM/DD/YYYY"
-                          required
-                          className="border rounded-xl w-36 py-[18px] px-3 mt-1 text-gray-700 leading-tight"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
               </div>
+              <p className="my-4 text-center font-semibold text-md">
+                Total Cost:{" "}
+                <span className="text-zinc-800 text-2xl">{totalCost}</span>
+              </p>
               {/* button */}
               <div className="flex justify-end items-center mr-7 py-5">
                 <p className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800 mx-7">
