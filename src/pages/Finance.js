@@ -65,7 +65,7 @@ const Finance = () => {
       totalPalletQuantity: parseInt(totalPalletQuantity),
       palletRemarks: palletRemarks,
     };
-    toast.success("Data successfully Saved!!");
+    toast.success("Data successfully Saved!!", { position: "top-center" });
     console.log(data);
   };
   return (

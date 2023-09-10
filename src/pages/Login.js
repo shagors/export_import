@@ -23,12 +23,14 @@ const Login = () => {
       .then((res) => {
         if (res.data === true) {
           localStorage.setItem("values", JSON.stringify(values?.userEmail));
-          toast.success("Login Successfully");
+          toast.success("Login Successfully", { position: "top-center" });
           navigate("/");
           // window.location.reload();
           // console.log(res);
         } else {
-          toast.error("Email & password don't match!!");
+          toast.error("Email & password don't match!!", {
+            position: "top-center",
+          });
         }
       })
       .catch((err) => toast.error("Something went wrong Please try again!"));

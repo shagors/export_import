@@ -31,8 +31,6 @@ const AddChargesUpdate = () => {
     id,
     particularExpencessName: "",
     particularExpencessCost: 0,
-    // particularExpenseName: "",
-    // particularExpenseCost: 0,
   });
 
   // http://localhost:5001/addcharges/:id
@@ -46,10 +44,16 @@ const AddChargesUpdate = () => {
         values
       )
       .then((res) => {
-        toast.success("Successfully Data Updated!!");
+        toast.success("Successfully Data Updated!!", {
+          position: "top-center",
+        });
         navigate("/addcharges");
       })
-      .catch((err) => toast.error(err));
+      .catch((err) =>
+        toast.error("Something went wrong try again later", {
+          position: "top-center",
+        })
+      );
   };
 
   return (

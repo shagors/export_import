@@ -38,12 +38,14 @@ const Signup = () => {
         )
         .then((res) => {
           localStorage.setItem("values", JSON.stringify(userEmail));
-          toast.success("User create Successfully");
+          toast.success("User create Successfully", { position: "top-center" });
           navigate("/");
           // window.location.reload();
           // console.log(res);
         })
-        .catch((err) => toast.error("Something went wrong"));
+        .catch((err) =>
+          toast.error("Something went wrong", { position: "top-center" })
+        );
     } else {
       setErrors(validationErrors);
     }

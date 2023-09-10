@@ -52,12 +52,16 @@ const Accounts = ({ brand, model }) => {
         formData
       )
       .then((res) => {
-        toast.success("Successfully File added to server & check below table");
-        console.log(res);
+        toast.success("Successfully File added to server & check below table", {
+          position: "top-center",
+        });
+        // console.log(res);
         navigate("/exportimport");
       })
       .catch((err) =>
-        toast.error("Error coming from server please try again later")
+        toast.error("Error coming from server please try again later", {
+          position: "top-center",
+        })
       );
   };
 

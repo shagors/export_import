@@ -38,11 +38,15 @@ const DataInput = () => {
         }
       )
       .then((res) => {
-        toast.success("Successfully Uploaded to server");
+        toast.success("Successfully Uploaded to server", {
+          position: "top-center",
+        });
         navigate("/exportimport");
       })
       .catch((err) =>
-        toast.error("Error coming from server please try again later")
+        toast.error("Error coming from server please try again later", {
+          position: "top-center",
+        })
       );
   };
 

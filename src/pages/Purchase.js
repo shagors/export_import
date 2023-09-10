@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import "../styles/purchase.css";
 import { BsArrowLeft } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
-import DatePicker from "react-datepicker";
 
 const Purchase = () => {
   const [transportPath, setTransportPath] = useState([]);
@@ -17,8 +16,9 @@ const Purchase = () => {
   const [transportCountryName, setTransportCountryName] = useState("");
   const [particularExpencessName, setParticularExpencessName] = useState([]);
   const [productChecks, setProductChecks] = useState([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
+  const [input, setInput] = useState([]);
 
   const navigate = useNavigate();
 
@@ -112,9 +112,7 @@ const Purchase = () => {
   };
 
   const handleTransportCountryName = (event) => {
-    const selectedCountryName = event.target.value;
     setTransportCountryName(event.target.value);
-    // console.log(transportCountryName);
   };
 
   const handleParticularExpencessName = (event) => {
@@ -127,11 +125,13 @@ const Purchase = () => {
         `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
       )
       .then((res) => {
-        toast.success("Data Successfully Deleted!!");
+        toast.success("Data Successfully Deleted!!", {
+          position: "top-center",
+        });
         fetchAccounts();
       })
       .catch((error) => {
-        toast.error("Something wrong can't delete");
+        toast.error("Something wrong can't delete", { position: "top-center" });
       });
   };
 
@@ -146,6 +146,7 @@ const Purchase = () => {
       totalCost,
     };
 
+    toast.success("Data Successfully uploaded!", { position: "top-center" });
     console.log(data);
 
     // http://localhost:5001/purchase
@@ -157,12 +158,12 @@ const Purchase = () => {
     //     data
     //   )
     //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server");
+    //     toast.success("Successfully Uploaded to server", { position: "top-center" });
     //     navigate("/exportimport");
     //     // console.log(res);
     //   })
     //   .catch((err) =>
-    //     toast.error("This error coming from server please try again later!!")
+    //     toast.error("This error coming from server please try again later!!", { position: "top-center" })
     //   );
   };
 
@@ -260,9 +261,9 @@ const Purchase = () => {
                   ))}
                 </div>
               </div>
-              {/* <p className="my-4 text-center font-semibold text-md">
+              {/* <p className="mt-5 text-center font-semibold text-md">
                 Total Cost:
-                <span className="text-zinc-800 text-2xl">{totalCost}</span>
+                <span className="text-emerald-600 text-2xl"> {totalCost}</span>
               </p> */}
               {/* button */}
               <div className="flex justify-end items-center mr-7 py-5">

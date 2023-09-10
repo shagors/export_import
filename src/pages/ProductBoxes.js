@@ -235,7 +235,7 @@ const ProductBoxes = () => {
     // axios
     //   .post("http://localhost:5001/palletbox", newData[0])
     //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server");
+    //     toast.success("Successfully Uploaded to server", { position: "top-center" });
     //     navigate("/exportimport");
     //     console.log(res);
     //   })
@@ -243,7 +243,7 @@ const ProductBoxes = () => {
     //     toast.error("Error coming from server please try again later")
     //   );
 
-    toast.success("Data successfully uploaded");
+    toast.success("Data successfully uploaded", { position: "top-center" });
     setSessionData([]);
     navigate("/exportimport");
     console.log(newData);

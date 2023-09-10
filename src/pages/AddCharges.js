@@ -39,12 +39,16 @@ const AddCharges = () => {
         }
       )
       .then((res) => {
-        toast.success("Data Successfully Uploaded to server");
+        toast.success("Data Successfully Uploaded to server", {
+          position: "top-center",
+        });
         fetchAccounts();
         // console.log(res);
       })
       .catch((err) =>
-        toast.error("Error coming from server please try again later")
+        toast.error("Error coming from server please try again later", {
+          position: "top-center",
+        })
       );
   };
 
