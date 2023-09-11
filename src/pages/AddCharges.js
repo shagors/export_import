@@ -1,13 +1,13 @@
 /* eslint-disable no-restricted-globals */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
-import { BsArrowLeft } from "react-icons/bs";
 
 const AddCharges = () => {
   const [charges, setCharges] = useState([]);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     // particularExpencessName: "",
@@ -43,6 +43,7 @@ const AddCharges = () => {
           position: "top-center",
         });
         fetchAccounts();
+        navigate("/exportimport");
         // console.log(res);
       })
       .catch((err) =>
@@ -88,12 +89,6 @@ const AddCharges = () => {
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
         All Charges Entry Form
       </h1>
-      <div className="mt-8">
-        <Link to="/exportimport" className="">
-          <BsArrowLeft className="w-56 lg:w-[380px] h-[35px] text-purple-500" />
-          <div className="w-8 h-[2px] bg-green-700 ml-[95px] lg:ml-[175px] animate-pulse"></div>
-        </Link>
-      </div>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-6">

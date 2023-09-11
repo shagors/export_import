@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../styles/purchase.css";
-import { BsArrowLeft } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
 
 const Purchase = () => {
@@ -17,8 +16,6 @@ const Purchase = () => {
   const [particularExpencessName, setParticularExpencessName] = useState([]);
   const [productChecks, setProductChecks] = useState([]);
   const [error, setError] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [input, setInput] = useState([]);
 
   const navigate = useNavigate();
 
@@ -83,7 +80,7 @@ const Purchase = () => {
   };
 
   // select the particulars
-  const handleToCheck = (e, index) => {
+  const handleToCheck = (e) => {
     setChecks([...checks, e.target.value]);
   };
 
@@ -114,9 +111,47 @@ const Purchase = () => {
     setTransportCountryName(event.target.value);
   };
 
-  const handleParticularExpencessName = (event) => {
-    setParticularExpencessName(event.target.value);
+  // const handleParticularExpencessName = (event) => {
+  //   setParticularExpencessName(event.target.value);
+  // };
+
+  const [expenses, setExpenses] = useState([]);
+  const [inputFieldsVisibility, setInputFieldsVisibility] = useState({});
+
+  // check the data by ID
+  const handleCheckboxChange = (chargeId) => {
+    setInputFieldsVisibility((prevState) => ({
+      ...prevState,
+      [chargeId]: !prevState[chargeId],
+    }));
   };
+
+  //
+  const handleRemarkChange = (id, value) => {
+    const data = { id, value };
+    console.log(id, value);
+    setExpenses((prevExpenses) =>
+      prevExpenses.map((expense) =>
+        expense.id === id ? { ...expense, remark: [value] } : expense
+      )
+    );
+  };
+
+  const handleDateChange = (id, value) => {
+    console.log(id, value);
+    setExpenses((prevExpenses) =>
+      prevExpenses.map((expense) =>
+        expense.id === id ? { ...expense, date: value } : expense
+      )
+    );
+  };
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+    const data = {};
+  };
+
+  console.log(expenses);
 
   const handleDelete = (id) => {
     axios
@@ -234,22 +269,73 @@ const Purchase = () => {
                           id={charge.id}
                           value={charge.id}
                           name="particularExpenseName"
-                          onChange={handleParticularExpencessName}
+                          // onChange={handleParticularExpencessName}
+                          onChange={() => handleCheckboxChange(charge.id)}
                           onClick={handleToCheck}
                         />
                         <label className="label-text">
                           {charge.particularExpenseName}
                         </label>
                       </div>
-                      <div>
+                      {/* <div>
                         <input
                           type="text"
                           className="border mr-2 required:border-red-600"
                           value={charge.particularExpenseCost}
                         />
-                        <input type="text" className="border mr-2" />
-                        <input type="date" className="border" />
-                      </div>
+                        <input
+                          type="text"
+                          className="border mr-2"
+                          name={`${charge.particularExpenseName.replace(
+                            /\s/g,
+                            ""
+                          )}Remark`}
+                        />
+                        <input
+                          type="date"
+                          className="border"
+                          name={`${charge.particularExpenseName.replace(
+                            /\s/g,
+                            ""
+                          )}Date`}
+                        />
+                      </div> */}
+                      {inputFieldsVisibility[charge.id] && (
+                        <div>
+                          <input
+                            type="text"
+                            className="border mr-2 required:border-red-600 w-[115px] text-center"
+                            value={charge.particularExpenseCost}
+                          />
+                          <input
+                            type="text"
+                            className="border mr-2"
+                            name={`${charge.particularExpenseName.replace(
+                              /\s/g,
+                              ""
+                            )}Remark`}
+                            onChange={(e) =>
+                              handleRemarkChange(charge.id, e.target.value)
+                            }
+                          />
+                          <input
+                            type="date"
+                            className="border"
+                            name={`${charge.particularExpenseName.replace(
+                              /\s/g,
+                              ""
+                            )}Date`}
+                            onChange={(e) =>
+                              handleDateChange(charge.id, e.target.value)
+                            }
+                          />
+                          <button
+                            className="bg-teal-300 font-bold ml-2 px-[10px] py-[3px] rounded-md"
+                            onClick={handleAdd}>
+                            Add
+                          </button>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
