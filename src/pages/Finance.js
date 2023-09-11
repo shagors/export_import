@@ -289,14 +289,12 @@ const Finance = () => {
               />
             </div>
           </div>
-          <div className="flex justify-center items-center mt-3 mb-5">
-            <Link
-              to="/exportimport"
-              className="btn btn-info font-bold px-8 md:px-[90px] py-[10px] text-purple-950 hover:text-purple-800 mr-4">
+          <div className="mt-3 mr-7 flex justify-end gap-y-4">
+            <Link to="/exportimport" className="btn btn-info px-10 mx-5">
               Back
             </Link>
             <button
-              className="btn btn-info font-bold px-8 md:px-[90px] py-[10px] text-purple-950 hover:text-purple-800 ml-4"
+              className="btn btn-info px-10 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-lg bg-violet-500 text-white font-bold hover:text-black mb-6"
               type="submit">
               Save
             </button>

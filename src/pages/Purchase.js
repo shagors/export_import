@@ -82,6 +82,7 @@ const Purchase = () => {
     setProductChecks([...productChecks, product.id]);
   };
 
+  // select the particulars
   const handleToCheck = (e, index) => {
     setChecks([...checks, e.target.value]);
   };
@@ -104,8 +105,6 @@ const Purchase = () => {
     (accumulator, currentValue) => accumulator + currentValue,
     0
   );
-
-  // console.log(totalCost);
 
   const handleTransportWay = (event) => {
     setTransportWay(event.target.value);
@@ -175,12 +174,6 @@ const Purchase = () => {
           <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
             Add Shipment Data :
           </h1>
-          <div className="mt-8">
-            <Link to="/exportimport" className="">
-              <BsArrowLeft className="w-20 lg:w-[380px] h-[35px] text-purple-500" />
-            </Link>
-            <div className="w-8 h-[2px] bg-green-700 ml-[25px] lg:ml-[175px] animate-pulse"></div>
-          </div>
           <div className="mt-5 lg:flex justify-center items-center">
             <form className="bg-base-100 shadow-xl mt-5" onSubmit={formSubmit}>
               <div className="md:flex justify-between items-center">
@@ -261,14 +254,17 @@ const Purchase = () => {
                   ))}
                 </div>
               </div>
-              {/* <p className="mt-5 text-center font-semibold text-md">
+              <p className="mt-5 text-center font-semibold text-md">
                 Total Cost:
                 <span className="text-emerald-600 text-2xl"> {totalCost}</span>
-              </p> */}
+              </p>
               {/* button */}
-              <div className="flex justify-end items-center mr-7 py-5">
+              <div className="mt-3 mr-7 flex justify-end gap-y-4">
+                <Link to="/exportimport" className="btn btn-info px-10 mx-5">
+                  Back
+                </Link>
                 <button
-                  className="btn btn-info font-bold px-10 py-1 text-purple-950 hover:text-purple-800"
+                  className="btn btn-info px-10 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-lg bg-violet-500 text-white font-bold hover:text-black mb-6"
                   type="submit">
                   Save
                 </button>

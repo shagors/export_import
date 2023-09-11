@@ -49,12 +49,6 @@ const TransportRoutes = () => {
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
         Transport-Way Entry Form
       </h1>
-      <div className="mt-8">
-        <Link to="/exportimport" className="">
-          <BsArrowLeft className="w-56 lg:w-[380px] h-[35px] text-purple-500" />
-          <div className="w-8 h-[2px] bg-green-700 ml-[95px] lg:ml-[175px] animate-pulse"></div>
-        </Link>
-      </div>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-8">
@@ -86,9 +80,12 @@ const TransportRoutes = () => {
                 required
               />
             </div>
-            <div className="mt-5 flex flex-col gap-y-4">
+            <div className="mt-5 flex justify-end gap-y-4">
+              <Link to="/exportimport" className="btn btn-info px-10 mx-5">
+                Back
+              </Link>
               <button
-                className="active:scale-[.9] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
+                className="btn btn-info px-10 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-lg bg-violet-500 text-white font-bold hover:text-black"
                 type="submit">
                 Save
               </button>

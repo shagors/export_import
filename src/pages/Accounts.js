@@ -71,18 +71,12 @@ const Accounts = ({ brand, model }) => {
         <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
           Add Accounts Data :
         </h1>
-        <div className="mt-6">
-          <Link to="/exportimport" className="">
-            <BsArrowLeft className="w-40 lg:w-[380px] h-[35px] text-purple-500" />
-            <div className="w-8 h-[2px] bg-green-700 ml-[65px] lg:ml-[175px] animate-pulse"></div>
-          </Link>
-        </div>
         <div className="mt-3 lg:flex justify-center items-center">
           <form
-            className="card lg:w-[700px] bg-base-100 shadow-xl mt-3"
+            className="lg:w-[800px] bg-base-100 shadow-xl mt-3"
             onSubmit={formSubmit}>
-            <div className="lg:flex justify-between items-center">
-              <div className="form-control card-body">
+            <div className="lg:flex justify-around items-center my-3">
+              <div className="form-control mb-2 lg:mb-0">
                 <label className="text-center mb-3">
                   <span className="lebel-text text-lg font-semibold">
                     Product Name
@@ -103,8 +97,10 @@ const Accounts = ({ brand, model }) => {
                 </div>
               </div>
               {/* date field */}
-              <div className="lg:pr-2 text-center flex justify-center items-center">
-                <p className="pr-2">Date : </p>
+              <div className="form-control lg:pr-2 text-center flex flex-col justify-center items-center">
+                <label className="text-center mb-2">
+                  <span className="lebel-text text-lg font-semibold">Date</span>
+                </label>
                 <input
                   type="date"
                   onChange={handleChange}
@@ -114,8 +110,8 @@ const Accounts = ({ brand, model }) => {
                 />
               </div>
             </div>
-            <div className="flex flex-col  justify-between items-center px-8 mt-4 lg:mt-0 w-full">
-              <div className="join mb-4">
+            <div className="flex flex-col  justify-between items-center px-8 mt-3 lg:mt-0 w-full">
+              <div className="join mb-3">
                 <div className="form-control">
                   <label className="text-center mb-3">
                     <span className="lebel-text text-lg font-semibold">
@@ -135,7 +131,7 @@ const Accounts = ({ brand, model }) => {
                   </select>
                 </div>
               </div>
-              <div className="join mb-4">
+              <div className="join mb-3">
                 <div className="form-control">
                   <label className="text-center mb-3">
                     <span className="lebel-text text-lg font-semibold">
@@ -155,10 +151,10 @@ const Accounts = ({ brand, model }) => {
                   </select>
                 </div>
               </div>
-              <div className="join mb-4">
+              <div className="join mb-3">
                 <div>
                   <label className="label">
-                    <span className="lebel-text text-lg font-semibold">
+                    <span className="lebel-text text-lg font-semibold text-center">
                       Product Quantity
                     </span>
                   </label>
@@ -174,9 +170,14 @@ const Accounts = ({ brand, model }) => {
                 </div>
               </div>
             </div>
-            <div className="flex justify-end items-center mr-7 py-5">
+            <div className="mt-4 mr-7 flex justify-end">
+              <Link
+                to="/exportimport"
+                className="btn btn-info px-10 mx-5  mb-4">
+                Back
+              </Link>
               <button
-                className="btn btn-info font-bold px-8 py-1 text-purple-950 hover:text-purple-800"
+                className="btn btn-info px-10 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-lg bg-violet-500 text-white font-bold hover:text-black mb-4"
                 type="submit">
                 Save
               </button>
