@@ -15,7 +15,6 @@ const Purchase = () => {
   const [transportCountryName, setTransportCountryName] = useState("");
   const [particularExpencessName, setParticularExpencessName] = useState([]);
   const [productChecks, setProductChecks] = useState([]);
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -115,7 +114,11 @@ const Purchase = () => {
   //   setParticularExpencessName(event.target.value);
   // };
 
-  const [expenses, setExpenses] = useState([]);
+  const [expenses, setExpenses] = useState({
+    id: "",
+    remarks: "",
+    date: "",
+  });
   const [inputFieldsVisibility, setInputFieldsVisibility] = useState({});
 
   // check the data by ID
@@ -129,29 +132,35 @@ const Purchase = () => {
   //
   const handleRemarkChange = (id, value) => {
     const data = { id, value };
-    console.log(id, value);
+    console.log(data);
     setExpenses((prevExpenses) =>
-      prevExpenses.map((expense) =>
-        expense.id === id ? { ...expense, remark: [value] } : expense
-      )
+      prevExpenses.map((expense) => ({
+        ...expense,
+        remark: expense.id === id ? [value] : expense.remark,
+      }))
     );
   };
 
   const handleDateChange = (id, value) => {
     console.log(id, value);
     setExpenses((prevExpenses) =>
-      prevExpenses.map((expense) =>
-        expense.id === id ? { ...expense, date: value } : expense
-      )
+      prevExpenses.map((expense) => ({
+        ...expense,
+        date: expense.id === id ? value : expense.date,
+      }))
     );
   };
 
+  console.log(expenses);
+
   const handleAdd = (e) => {
     e.preventDefault();
-    const data = {};
+    const data = {
+      id: expenses.id,
+      remark: [...expenses, expenses],
+    };
+    console.log(data);
   };
-
-  console.log(expenses);
 
   const handleDelete = (id) => {
     axios
@@ -305,6 +314,10 @@ const Purchase = () => {
                           <input
                             type="text"
                             className="border mr-2 required:border-red-600 w-[115px] text-center"
+                            name={`${charge.particularExpenseName.replace(
+                              /\s/g,
+                              ""
+                            )}Paid`}
                             value={charge.particularExpenseCost}
                           />
                           <input

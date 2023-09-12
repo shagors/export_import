@@ -160,76 +160,7 @@ const Finance = () => {
                 onChange={handleIPNumberChange}
               />
             </div>
-            {/*  Particulars */}
-            <div>
-              <label className="text-lg font-semibold" htmlFor="productName">
-                Particulars
-              </label>
-              <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Particulars"
-                type="text"
-                required
-                name="particulars"
-                //   onChange={handleChange}
-              />
-            </div>
-            {/*  Particular Amount */}
-            <div>
-              <label className="text-lg font-semibold" htmlFor="productName">
-                Prticular Amount
-              </label>
-              <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Particular Amount"
-                type="text"
-                required
-                name="particularAmount"
-                //   onChange={handleChange}
-              />
-            </div>
-            {/*  Particular total Amount */}
-            <div>
-              <label className="text-lg font-semibold" htmlFor="productName">
-                Prticular Total Amount
-              </label>
-              <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Particular total Amount"
-                type="text"
-                required
-                name="particularTotalAmount"
-                //   onChange={handleChange}
-              />
-            </div>
-            {/*  Remarks */}
-            <div>
-              <label className="text-lg font-semibold" htmlFor="productName">
-                Remarks
-              </label>
-              <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Remarks"
-                type="text"
-                required
-                name="particularRemarks"
-                //   onChange={handleChange}
-              />
-            </div>
-            {/*  Remarks Date */}
-            <div>
-              <label className="text-lg font-semibold" htmlFor="productName">
-                Remarks Date
-              </label>
-              <DatePicker
-                selected={selectedRemarkDate}
-                onChange={handleRemarkDateChange}
-                dateFormat="MM/dd/yyyy"
-                placeholderText="MM/DD/YYYY"
-                required
-                className="border rounded-xl w-60 py-[18px] px-3 mt-1 text-gray-700 leading-tight"
-              />
-            </div>
+
             {/*  Product Name */}
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
@@ -237,7 +168,7 @@ const Finance = () => {
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Product Name"
+                placeholder="Product Name come API"
                 type="text"
                 required
                 name="productsName"
@@ -251,7 +182,7 @@ const Finance = () => {
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Total Net Weight"
+                placeholder="Total Weight come API"
                 type="text"
                 required
                 name="totalNetWeight"
@@ -289,6 +220,52 @@ const Finance = () => {
               />
             </div>
           </div>
+          {/* particulars */}
+          {/* <div>
+            <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-2 rounded-lg uppercase">
+              Paticulars
+            </h1>
+            <div className="overflow-x-auto add__scrollbar">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Particulars</th>
+                    <th>Remarks</th>
+                    <th>Remarks Date</th>
+                    <th>Amount</th>
+                    <th>Total Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {accounts?.map((product) => (
+                      <tr className={`hover cursor-pointer`} key={product.id}>
+                        <td>
+                          <input
+                            type="checkbox"
+                            className="checkbox checkbox-info"
+                            name="product"
+                            value={product.id}
+                            onClick={() => handleProductCheck(product)}
+                          />
+                        </td>
+                        <td>{product.id}</td>
+                        <td>{product.productName}</td>
+                        <td>{product.productBrand}</td>
+                        <td>{product.productModel}</td>
+                        <td>{product.productQuantity}</td>
+                        <td>{product.date}</td>
+                        <td>
+                          <button onClick={() => handleDelete(product?.id)}>
+                            <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+              </table>
+            </div>
+          </div> */}
           <div className="mt-3 mr-7 flex justify-end gap-y-4">
             <Link to="/exportimport" className="btn btn-info px-10 mx-5">
               Back

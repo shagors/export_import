@@ -58,7 +58,7 @@ const DataInput = () => {
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-8">
-            <div>
+            <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productName">
                 Product Name
               </label>
