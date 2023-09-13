@@ -114,12 +114,10 @@ const Purchase = () => {
   //   setParticularExpencessName(event.target.value);
   // };
 
-  const [expenses, setExpenses] = useState({
-    id: "",
-    remarks: "",
-    date: "",
-  });
   const [inputFieldsVisibility, setInputFieldsVisibility] = useState({});
+  const [expenses, setExpenses] = useState([]);
+  const [remarks, setRemarks] = useState([{ id: "", value: "" }]);
+  const [dates, setDates] = useState([{ id: "", value: "" }]);
 
   // check the data by ID
   const handleCheckboxChange = (chargeId) => {
@@ -132,7 +130,7 @@ const Purchase = () => {
   //
   const handleRemarkChange = (id, value) => {
     const data = { id, value };
-    console.log(data);
+    setRemarks([{ id, value }]);
     setExpenses((prevExpenses) =>
       prevExpenses.map((expense) => ({
         ...expense,
@@ -142,7 +140,8 @@ const Purchase = () => {
   };
 
   const handleDateChange = (id, value) => {
-    console.log(id, value);
+    const data = { id, value };
+    setDates({ id, value });
     setExpenses((prevExpenses) =>
       prevExpenses.map((expense) => ({
         ...expense,
@@ -151,7 +150,7 @@ const Purchase = () => {
     );
   };
 
-  console.log(expenses);
+  // console.log(expenses);
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -186,7 +185,9 @@ const Purchase = () => {
       transportCountryId: transportCountryName,
       addChargesId: chaecksCost,
       officeAccountId: productData,
-      totalCost,
+      remarks: remarks,
+      dates: dates,
+      total: totalCost,
     };
 
     toast.success("Data Successfully uploaded!", { position: "top-center" });
@@ -201,14 +202,20 @@ const Purchase = () => {
     //     data
     //   )
     //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server", { position: "top-center" });
+    //     toast.success("Successfully Uploaded to server", {
+    //       position: "top-center",
+    //     });
     //     navigate("/exportimport");
     //     // console.log(res);
     //   })
     //   .catch((err) =>
-    //     toast.error("This error coming from server please try again later!!", { position: "top-center" })
+    //     toast.error("This error coming from server please try again later!!", {
+    //       position: "top-center",
+    //     })
     //   );
   };
+
+  // console.log(transportPath);
 
   return (
     <>
@@ -219,7 +226,9 @@ const Purchase = () => {
             Add Shipment Data :
           </h1>
           <div className="mt-5 lg:flex justify-center items-center">
-            <form className="bg-base-100 shadow-xl mt-5" onSubmit={formSubmit}>
+            <form
+              className="bg-base-100 rounded-lg shadow-xl mt-5"
+              onSubmit={formSubmit}>
               <div className="md:flex justify-between items-center">
                 <div className="form-control  card-body">
                   <label className="text-center mb-3">
@@ -266,7 +275,7 @@ const Purchase = () => {
                   </div>
                 </div>
               </div>
-              {/* Tax and costing */}
+              {/* Particular costing */}
               <div className="w-70 p-9 add__scrollbar">
                 <div className="form-control">
                   {charges?.map((charge) => (
