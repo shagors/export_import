@@ -119,11 +119,7 @@ const Purchase = () => {
       transportCountryName: transportCountryName, // id pass
       officeAccount: productData, //id pass
       particular_expense_name: savedExpenses,
-      totalCost,
-      // addChargesId: chaecksCost,
-      // remarks: remarks,
-      // dates: dates,
-      // total: totalCost,
+      totalCost: parseFloat(totalCost),
     };
 
     toast.success("Data Successfully uploaded!", { position: "top-center" });
