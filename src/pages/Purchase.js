@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../styles/purchase.css";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -15,6 +15,7 @@ const Purchase = () => {
   const [transportCountryName, setTransportCountryName] = useState("");
   const [productChecks, setProductChecks] = useState([]);
   const [savedExpenses, setSavedExpenses] = useState([]);
+  const [totalCost, setTotalCost] = useState(0);
 
   const navigate = useNavigate();
 
@@ -103,7 +104,11 @@ const Purchase = () => {
   };
 
   const handleExpenseSave = (selectedExpenseData) => {
-    setSavedExpenses(selectedExpenseData); // Receive data from child and update state in parent
+    setSavedExpenses(selectedExpenseData);
+  };
+
+  const handleTotalCostChange = (newTotalCost) => {
+    setTotalCost(newTotalCost);
   };
 
   // save data
@@ -113,7 +118,8 @@ const Purchase = () => {
       transportWay: transportWay, // id pass
       transportCountryName: transportCountryName, // id pass
       officeAccount: productData, //id pass
-      particular_expense_name: {},
+      particular_expense_name: savedExpenses,
+      totalCost,
       // addChargesId: chaecksCost,
       // remarks: remarks,
       // dates: dates,
@@ -149,8 +155,6 @@ const Purchase = () => {
     //     })
     //   );
   };
-
-  console.log(savedExpenses);
 
   return (
     <>
@@ -215,16 +219,8 @@ const Purchase = () => {
               <ExpensesForm
                 expenses={charges}
                 onExpenseSave={handleExpenseSave}
+                onTotalCostChange={handleTotalCostChange}
               />
-
-              {/* button */}
-              {/* <div className="mt-3 mr-7 flex justify-end gap-y-4">
-                <button
-                  className="btn btn-info px-10 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-lg bg-violet-500 text-white font-bold hover:text-black mb-6"
-                  type="submit">
-                  Save
-                </button>
-              </div> */}
             </form>
           </div>
         </div>

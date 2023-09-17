@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const ExpensesForm = ({ expenses, onExpenseSave }) => {
+const ExpensesForm = ({ expenses, onExpenseSave, onTotalCostChange }) => {
   const [selectedExpenses, setSelectedExpenses] = useState([]);
   const [remarks, setRemarks] = useState({});
   const [dates, setDates] = useState({});
@@ -39,7 +39,7 @@ const ExpensesForm = ({ expenses, onExpenseSave }) => {
       };
     });
     onExpenseSave(selectedExpenseData);
-    console.log(selectedExpenseData);
+    // console.log(selectedExpenseData);
   };
 
   const handleReset = () => {
@@ -54,6 +54,7 @@ const ExpensesForm = ({ expenses, onExpenseSave }) => {
       return total + parseFloat(expense.particularExpenseCost);
     }, 0)
     .toFixed(2);
+  onTotalCostChange(totalCost);
 
   return (
     <div className="p-4">
@@ -93,19 +94,20 @@ const ExpensesForm = ({ expenses, onExpenseSave }) => {
           </div>
         ))}
       </div>
+      {/* button */}
       <div className="my-6 flex justify-end">
         <Link
           to="/exportimport"
-          className="bg-sky-800 text-white px-4 py-2 mx-2">
+          className="rounded-md bg-sky-800 text-white px-4 py-2 mx-2">
           Back
         </Link>
         <button
-          className="bg-blue-500 text-white px-4 py-2 mr-2"
+          className="rounded-md bg-blue-500 text-white px-4 py-2 mr-2"
           onClick={handleSave}>
           Save
         </button>
         <button
-          className="bg-red-500 text-white px-4 py-2"
+          className="rounded-md bg-red-500 text-white px-4 py-2"
           onClick={handleReset}>
           Cancel
         </button>
