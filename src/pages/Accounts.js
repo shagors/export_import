@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BsArrowLeft } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -26,7 +25,7 @@ const Accounts = ({ brand, model }) => {
   useEffect(() => {
     axios
       .get("https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products")
-      .then((res) => setServerData(res.data))
+      .then((res) => setServerData(res?.data))
       .catch((error) => setServerData(error));
 
     axios

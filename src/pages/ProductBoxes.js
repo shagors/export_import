@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useReactToPrint } from "react-to-print";
 
 const ProductBoxes = () => {
   const [accounts, setAccounts] = useState([]);
@@ -21,6 +22,7 @@ const ProductBoxes = () => {
   const [sessionData, setSessionData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [truckNumber, setTruckNumber] = useState("");
+  const componentPDF = useRef();
 
   useEffect(() => {
     fetchAccounts();
@@ -248,6 +250,10 @@ const ProductBoxes = () => {
     navigate("/exportimport");
     console.log(newData);
   };
+
+  const handlePrint = useReactToPrint({
+    content: () => componentPDF.current,
+  });
 
   // console.log(sessionData);
 
@@ -704,7 +710,11 @@ const ProductBoxes = () => {
         <h1 className="text-center font-bold text-2xl text-info shadow-lg rounded p-2">
           Add Products All
         </h1>
-        <div className="overflow-x-auto add__scrollbar">
+
+        <div
+          className="overflow-x-auto add__scrollbar"
+          ref={componentPDF}
+          style={{ width: "100%" }}>
           <table className="table">
             <thead>
               <tr>
@@ -746,6 +756,11 @@ const ProductBoxes = () => {
             </tbody>
           </table>
         </div>
+        <button
+          className="btn-info font-bold px-7 py-2 mt-4 rounded-lg text-purple-950 hover:text-amber-500"
+          onClick={handlePrint}>
+          Print
+        </button>
       </div>
     </div>
   );

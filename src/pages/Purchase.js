@@ -4,21 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../styles/purchase.css";
 import { AiOutlineDelete } from "react-icons/ai";
+import ExpensesForm from "./PurchaseCalculation";
 
 const Purchase = () => {
   const [transportPath, setTransportPath] = useState([]);
   const [transportCountry, setTransportCountry] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [charges, setCharges] = useState([]);
-  const [checks, setChecks] = useState([]);
   const [transportWay, setTransportWay] = useState("");
   const [transportCountryName, setTransportCountryName] = useState("");
-  const [particularExpencessName, setParticularExpencessName] = useState([]);
   const [productChecks, setProductChecks] = useState([]);
+  const [savedExpenses, setSavedExpenses] = useState([]);
 
   const navigate = useNavigate();
 
-  const chaecksCost = JSON.stringify(checks);
   const productData = JSON.stringify(productChecks);
 
   // Data fetch from server
@@ -74,33 +73,10 @@ const Purchase = () => {
     }
   };
 
+  // below table products select checkbox
   const handleProductCheck = (product) => {
     setProductChecks([...productChecks, product.id]);
   };
-
-  // select the particulars
-  const handleToCheck = (e) => {
-    setChecks([...checks, e.target.value]);
-  };
-
-  // fiter with id that id checks or not
-  const filteredData = charges.filter((item) =>
-    checks.includes(item.id.toString())
-  );
-
-  // store that ids cost value in this function
-  const particularExpenseCosts = filteredData.map(
-    (item) => item.particularExpenseCost
-  );
-
-  // map those value which is selected
-  const costsAsNumbers = particularExpenseCosts.map((cost) => parseFloat(cost));
-
-  // calculate this value and get output
-  const totalCost = costsAsNumbers.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    0
-  );
 
   const handleTransportWay = (event) => {
     setTransportWay(event.target.value);
@@ -108,57 +84,6 @@ const Purchase = () => {
 
   const handleTransportCountryName = (event) => {
     setTransportCountryName(event.target.value);
-  };
-
-  // const handleParticularExpencessName = (event) => {
-  //   setParticularExpencessName(event.target.value);
-  // };
-
-  const [inputFieldsVisibility, setInputFieldsVisibility] = useState({});
-  const [expenses, setExpenses] = useState([]);
-  const [remarks, setRemarks] = useState([{ id: "", value: "" }]);
-  const [dates, setDates] = useState([{ id: "", value: "" }]);
-
-  // check the data by ID
-  const handleCheckboxChange = (chargeId) => {
-    setInputFieldsVisibility((prevState) => ({
-      ...prevState,
-      [chargeId]: !prevState[chargeId],
-    }));
-  };
-
-  //
-  const handleRemarkChange = (id, value) => {
-    const data = { id, value };
-    setRemarks([{ id, value }]);
-    setExpenses((prevExpenses) =>
-      prevExpenses.map((expense) => ({
-        ...expense,
-        remark: expense.id === id ? [value] : expense.remark,
-      }))
-    );
-  };
-
-  const handleDateChange = (id, value) => {
-    const data = { id, value };
-    setDates({ id, value });
-    setExpenses((prevExpenses) =>
-      prevExpenses.map((expense) => ({
-        ...expense,
-        date: expense.id === id ? value : expense.date,
-      }))
-    );
-  };
-
-  // console.log(expenses);
-
-  const handleAdd = (e) => {
-    e.preventDefault();
-    const data = {
-      id: expenses.id,
-      remark: [...expenses, expenses],
-    };
-    console.log(data);
   };
 
   const handleDelete = (id) => {
@@ -177,17 +102,22 @@ const Purchase = () => {
       });
   };
 
+  const handleExpenseSave = (selectedExpenseData) => {
+    setSavedExpenses(selectedExpenseData); // Receive data from child and update state in parent
+  };
+
   // save data
   const formSubmit = (e) => {
     e.preventDefault();
     const data = {
-      transportWayId: transportWay,
-      transportCountryId: transportCountryName,
-      addChargesId: chaecksCost,
-      officeAccountId: productData,
-      remarks: remarks,
-      dates: dates,
-      total: totalCost,
+      transportWay: transportWay, // id pass
+      transportCountryName: transportCountryName, // id pass
+      officeAccount: productData, //id pass
+      particular_expense_name: {},
+      // addChargesId: chaecksCost,
+      // remarks: remarks,
+      // dates: dates,
+      // total: totalCost,
     };
 
     toast.success("Data Successfully uploaded!", { position: "top-center" });
@@ -198,8 +128,13 @@ const Purchase = () => {
 
     // axios
     //   .post(
-    //     "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account",
-    //     data
+    //     "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase",
+    //     data,
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
     //   )
     //   .then((res) => {
     //     toast.success("Successfully Uploaded to server", {
@@ -215,7 +150,7 @@ const Purchase = () => {
     //   );
   };
 
-  // console.log(transportPath);
+  console.log(savedExpenses);
 
   return (
     <>
@@ -275,108 +210,21 @@ const Purchase = () => {
                   </div>
                 </div>
               </div>
-              {/* Particular costing */}
-              <div className="w-70 p-9 add__scrollbar">
-                <div className="form-control">
-                  {charges?.map((charge) => (
-                    <div key={charge.id} className="flex justify-between gap-3">
-                      <div className="cursor-pointer flex items-center">
-                        <input
-                          type="checkbox"
-                          className="checkbox checkbox-info my-[3px] mr-3"
-                          id={charge.id}
-                          value={charge.id}
-                          name="particularExpenseName"
-                          // onChange={handleParticularExpencessName}
-                          onChange={() => handleCheckboxChange(charge.id)}
-                          onClick={handleToCheck}
-                        />
-                        <label className="label-text">
-                          {charge.particularExpenseName}
-                        </label>
-                      </div>
-                      {/* <div>
-                        <input
-                          type="text"
-                          className="border mr-2 required:border-red-600"
-                          value={charge.particularExpenseCost}
-                        />
-                        <input
-                          type="text"
-                          className="border mr-2"
-                          name={`${charge.particularExpenseName.replace(
-                            /\s/g,
-                            ""
-                          )}Remark`}
-                        />
-                        <input
-                          type="date"
-                          className="border"
-                          name={`${charge.particularExpenseName.replace(
-                            /\s/g,
-                            ""
-                          )}Date`}
-                        />
-                      </div> */}
-                      {inputFieldsVisibility[charge.id] && (
-                        <div>
-                          <input
-                            type="text"
-                            className="border mr-2 required:border-red-600 w-[115px] text-center"
-                            name={`${charge.particularExpenseName.replace(
-                              /\s/g,
-                              ""
-                            )}Paid`}
-                            value={charge.particularExpenseCost}
-                          />
-                          <input
-                            type="text"
-                            className="border mr-2"
-                            name={`${charge.particularExpenseName.replace(
-                              /\s/g,
-                              ""
-                            )}Remark`}
-                            onChange={(e) =>
-                              handleRemarkChange(charge.id, e.target.value)
-                            }
-                          />
-                          <input
-                            type="date"
-                            className="border"
-                            name={`${charge.particularExpenseName.replace(
-                              /\s/g,
-                              ""
-                            )}Date`}
-                            onChange={(e) =>
-                              handleDateChange(charge.id, e.target.value)
-                            }
-                          />
-                          <button
-                            className="bg-teal-300 font-bold ml-2 px-[10px] py-[3px] rounded-md"
-                            onClick={handleAdd}>
-                            Add
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <p className="mt-5 text-center font-semibold text-md">
-                Total Cost:
-                <span className="text-emerald-600 text-2xl"> {totalCost}</span>
-              </p>
+
+              {/* checking element for calculation */}
+              <ExpensesForm
+                expenses={charges}
+                onExpenseSave={handleExpenseSave}
+              />
+
               {/* button */}
-              <div className="mt-3 mr-7 flex justify-end gap-y-4">
-                <Link to="/exportimport" className="btn btn-info px-10 mx-5">
-                  Back
-                </Link>
+              {/* <div className="mt-3 mr-7 flex justify-end gap-y-4">
                 <button
                   className="btn btn-info px-10 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-lg bg-violet-500 text-white font-bold hover:text-black mb-6"
                   type="submit">
                   Save
                 </button>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>
