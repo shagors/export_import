@@ -93,7 +93,7 @@ const Purchase = () => {
         `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
       )
       .then((res) => {
-        toast.success("Data Successfully Deleted!!", {
+        toast.warn("Data Successfully Deleted!!", {
           position: "top-center",
         });
         fetchAccounts();
@@ -128,28 +128,28 @@ const Purchase = () => {
     // http://localhost:5001/purchase
     // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account
 
-    // axios
-    //   .post(
-    //     "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase",
-    //     data,
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server", {
-    //       position: "top-center",
-    //     });
-    //     navigate("/exportimport");
-    //     // console.log(res);
-    //   })
-    //   .catch((err) =>
-    //     toast.error("This error coming from server please try again later!!", {
-    //       position: "top-center",
-    //     })
-    //   );
+    axios
+      .post(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Successfully Uploaded to server", {
+          position: "top-center",
+        });
+        navigate("/exportimport");
+        // console.log(res);
+      })
+      .catch((err) =>
+        toast.error("This error coming from server please try again later!!", {
+          position: "top-center",
+        })
+      );
   };
 
   return (

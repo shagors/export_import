@@ -91,8 +91,6 @@ const ProductBoxes = () => {
     (modelName) => selectedProductModels[modelName]
   );
 
-  // console.log(productDetails);
-
   const handleInputValueChange = (e) => {
     const name = e.target.name;
     const value = parseFloat(e.target.value);
@@ -257,56 +255,8 @@ const ProductBoxes = () => {
     onAfterPrint: () => alert("Data send to printer for print"),
   });
 
-  // console.log(sessionData);
-
   return (
     <div>
-      {/* Table data get from accouts input database */}
-      {/* <div className="mb-6 mt-3">
-        <div className="bg-slate-500 p-2 rounded-lg uppercase flex items-center justify-center mb-4">
-          <h1 className="text-center text-3xl text-info font-bold mr-10">
-            Order Products Table
-          </h1>
-        </div>
-        <div className="overflow-x-auto add__scrollbar">
-          <table className="table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>ID</th>
-                <th>Product Name</th>
-                <th>Product Brand</th>
-                <th>Product Model</th>
-                <th>Quantity</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {accounts?.map((product) => (
-                <tr className="hover cursor-pointer" key={product.id}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      className="checkbox checkbox-info"
-                      name="product"
-                      value={product.id}
-                      checked={selectedProductIds.includes(product.id)}
-                      onClick={() => handleCheckboxClick(product.id)}
-                    />
-                  </td>
-                  <td>{product.id}</td>
-                  <td>{product.productName}</td>
-                  <td>{product.productBrand}</td>
-                  <td>{product.productModel}</td>
-                  <td>{product.productQuantity}</td>
-                  <td>{product.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div> */}
-
       {/* form design for products boxes */}
       <div className="mt-5 lg:flex justify-center items-center mb-4">
         <form className="card shadow-xl mt-5 p-3" onSubmit={handleInstantStore}>

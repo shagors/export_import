@@ -65,22 +65,26 @@ const AddCharges = () => {
       );
       setCharges(response?.data);
     } catch (error) {
-      toast.error("Error getting data from server!");
+      toast.error("Error getting data from server!", {
+        position: "top-center",
+      });
     }
   };
 
   // data delete from server and also frontend
   // http://localhost:5001/delete/:id
-  // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges/:id
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(
         `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges/${id}`
       );
+      toast.warn("Data successfully Deleted!!", { position: "top-center" });
       fetchAccounts();
     } catch (error) {
-      toast.error("You can't delete now. Please try again later!");
+      toast.error("You can't delete now. Please try again later!", {
+        position: "top-center",
+      });
     }
   };
 
