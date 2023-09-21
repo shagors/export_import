@@ -17,7 +17,7 @@ const Purchase = () => {
   const [savedExpenses, setSavedExpenses] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
   const [invoiceNo, setInvoiceNo] = useState("");
-  const [beNo, setBeNo] = useState("");
+  const [total, setTotal] = useState("");
   const [ipNo, setIpNo] = useState("");
 
   const navigate = useNavigate();
@@ -124,7 +124,7 @@ const Purchase = () => {
       particular_expense_name: savedExpenses,
       totalCost: parseFloat(totalCost),
       invoiceNo: invoiceNo,
-      beNo: beNo,
+      total: total,
       ipNo: ipNo,
     };
 
@@ -231,22 +231,6 @@ const Purchase = () => {
                 </div>
                 <div className="form-control card-body">
                   <div>
-                    <label className="text-lg font-semibold" htmlFor="beNo">
-                      B/E No.
-                    </label>
-                    <input
-                      className="w-full border-2 border-info rounded-xl p-4 mt-3 bg-transparent"
-                      placeholder="B/E No."
-                      type="text"
-                      name="beNo"
-                      value={beNo}
-                      required
-                      onChange={(e) => setBeNo(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="form-control card-body">
-                  <div>
                     <label className="text-lg font-semibold" htmlFor="ipNo">
                       IP No.
                     </label>
@@ -258,6 +242,22 @@ const Purchase = () => {
                       value={ipNo}
                       required
                       onChange={(e) => setIpNo(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="form-control card-body">
+                  <div>
+                    <label className="text-lg font-semibold" htmlFor="total">
+                      Total (USD)
+                    </label>
+                    <input
+                      className="w-full border-2 border-info rounded-xl p-4 mt-3 bg-transparent"
+                      placeholder="Total in USD"
+                      type="text"
+                      name="total"
+                      value={total}
+                      required
+                      onChange={(e) => setTotal(e.target.value)}
                     />
                   </div>
                 </div>
