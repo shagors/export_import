@@ -16,6 +16,9 @@ const Purchase = () => {
   const [productChecks, setProductChecks] = useState([]);
   const [savedExpenses, setSavedExpenses] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
+  const [invoiceNo, setInvoiceNo] = useState("");
+  const [beNo, setBeNo] = useState("");
+  const [ipNo, setIpNo] = useState("");
 
   const navigate = useNavigate();
 
@@ -120,6 +123,9 @@ const Purchase = () => {
       officeAccount: productData, //id pass
       particular_expense_name: savedExpenses,
       totalCost: parseFloat(totalCost),
+      invoiceNo: invoiceNo,
+      beNo: beNo,
+      ipNo: ipNo,
     };
 
     toast.success("Data Successfully uploaded!", { position: "top-center" });
@@ -128,28 +134,28 @@ const Purchase = () => {
     // http://localhost:5001/purchase
     // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account
 
-    axios
-      .post(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        toast.success("Successfully Uploaded to server", {
-          position: "top-center",
-        });
-        navigate("/exportimport");
-        // console.log(res);
-      })
-      .catch((err) =>
-        toast.error("This error coming from server please try again later!!", {
-          position: "top-center",
-        })
-      );
+    // axios
+    //   .post(
+    //     "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase",
+    //     data,
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     toast.success("Successfully Uploaded to server", {
+    //       position: "top-center",
+    //     });
+    //     navigate("/exportimport");
+    //     // console.log(res);
+    //   })
+    //   .catch((err) =>
+    //     toast.error("This error coming from server please try again later!!", {
+    //       position: "top-center",
+    //     })
+    //   );
   };
 
   return (
@@ -164,12 +170,10 @@ const Purchase = () => {
             <form
               className="bg-base-100 rounded-lg shadow-xl mt-5"
               onSubmit={formSubmit}>
-              <div className="md:flex justify-between items-center">
+              <div className="grid grid-cols-1 md:grid-cols-3">
                 <div className="form-control  card-body">
-                  <label className="text-center mb-3">
-                    <span className="lebel-text text-lg font-semibold">
-                      Product Shipment Way
-                    </span>
+                  <label className="mb-[10px] lebel-text text-lg font-semibold">
+                    Shipment Way
                   </label>
                   <div className="input-group  flex lg:flex-none justify-center items-center">
                     <select
@@ -188,12 +192,10 @@ const Purchase = () => {
                   </div>
                 </div>
                 <div className="form-control card-body">
-                  <label className="text-center mb-3">
-                    <span className="lebel-text text-lg font-semibold">
-                      Product Shipment Country
-                    </span>
+                  <label className="mb-[10px] lebel-text text-lg font-semibold">
+                    Shipment Country
                   </label>
-                  <div className="input-group  flex lg:flex-none justify-center items-center">
+                  <div className="input-group flex lg:flex-none justify-center items-center">
                     <select
                       className="select select-info w-full max-w-xs"
                       id="selectOption"
@@ -207,6 +209,56 @@ const Purchase = () => {
                         </option>
                       ))}
                     </select>
+                  </div>
+                </div>
+                <div className="form-control card-body">
+                  <div>
+                    <label
+                      className="lebel-text text-lg font-semibold"
+                      htmlFor="invoiceno">
+                      Invoice No.
+                    </label>
+                    <input
+                      className="w-full border-2 border-info rounded-xl p-3 mt-3 bg-transparent"
+                      placeholder="Invoice No"
+                      type="text"
+                      name="invoiceno"
+                      value={invoiceNo}
+                      required
+                      onChange={(e) => setInvoiceNo(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="form-control card-body">
+                  <div>
+                    <label className="text-lg font-semibold" htmlFor="beNo">
+                      B/E No.
+                    </label>
+                    <input
+                      className="w-full border-2 border-info rounded-xl p-4 mt-3 bg-transparent"
+                      placeholder="B/E No."
+                      type="text"
+                      name="beNo"
+                      value={beNo}
+                      required
+                      onChange={(e) => setBeNo(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="form-control card-body">
+                  <div>
+                    <label className="text-lg font-semibold" htmlFor="ipNo">
+                      IP No.
+                    </label>
+                    <input
+                      className="w-full border-2 border-info rounded-xl p-4 mt-3 bg-transparent"
+                      placeholder="IP No."
+                      type="text"
+                      name="ipNo"
+                      value={ipNo}
+                      required
+                      onChange={(e) => setIpNo(e.target.value)}
+                    />
                   </div>
                 </div>
               </div>
