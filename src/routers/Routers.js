@@ -1,28 +1,28 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
-import ForgotPassword from "../pages/ForgotPassword";
+import Login from "../pages/user/Login";
+import Signup from "../pages/user/Signup";
+import ForgotPassword from "../pages/user/ForgotPassword";
 import ExportImport from "../pages/ExportImport";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import AdminRoute from "../components/PrivateRoute/AdminRoute";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import Accounts from "../pages/Accounts";
-import Warehouse from "../pages/Warehouse";
-import Admin from "../pages/Admin";
-import Transport from "../pages/Transport";
+import Accounts from "../pages/orders/Accounts";
+import Warehouse from "../pages/warehouse/Warehouse";
+import Admin from "../pages/admin/Admin";
+import Transport from "../pages/dataInput/Transport";
 import Export from "../pages/Dashboard/Export";
 import Import from "../pages/Dashboard/Import";
-import TransportRoutes from "../pages/TransportRoutes";
-import DataInput from "../pages/DataInput";
-import TransportCountry from "../pages/TransportCountry";
-import Purchase from "../pages/Purchase";
+import TransportRoutes from "../pages/dataInput/TransportRoutes";
+import DataInput from "../pages/dataInput/DataInput";
+import TransportCountry from "../pages/dataInput/TransportCountry";
+import Purchase from "../pages/purchase/Purchase";
 import Transportservice from "../pages/Transportservice";
-import AddCharges from "../pages/AddCharges";
-import AddChargesUpdate from "../pages/AddChargesUpdate";
-import ProductBoxes from "../pages/ProductBoxes";
+import AddCharges from "../pages/dataInput/AddCharges";
+import AddChargesUpdate from "../pages/dataInput/AddChargesUpdate";
+import ProductBoxes from "../pages/finance/ProductBoxes";
 import Home from "../pages/Home/Home";
-import Finance from "../pages/Finance";
+import Finance from "../pages/finance/Finance";
 
 const Routers = () => {
   return (

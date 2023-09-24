@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "../styles/purchase.css";
+import "../../styles/purchase.css";
 import { AiOutlineDelete } from "react-icons/ai";
 import ExpensesForm from "./PurchaseCalculation";
 

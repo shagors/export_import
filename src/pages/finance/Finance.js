@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
+import { AiOutlineDelete } from "react-icons/ai";
+import axios from "axios";
 
 const Finance = () => {
+  const [accounts, setAccounts] = useState([]);
   const [selectedBEDate, setSelectedBEDate] = useState(null);
   const [exim, setExim] = useState("");
   const [invoiceNo, setInvoiceNo] = useState("");
@@ -14,6 +17,23 @@ const Finance = () => {
   const [totalNetWeight, setTotalNetWeight] = useState(0);
   const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
   const [palletRemarks, setPalletRemarks] = useState("Pallet");
+
+  // Data fetch from server
+  useEffect(() => {
+    //   getting accounts data from office_accounts server
+    fetchAccounts();
+  }, []);
+
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+      );
+      setAccounts(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
 
   const handleBEDateChange = (date) => {
     setSelectedBEDate(date);
@@ -220,52 +240,6 @@ const Finance = () => {
               />
             </div>
           </div>
-          {/* particulars */}
-          {/* <div>
-            <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-2 rounded-lg uppercase">
-              Paticulars
-            </h1>
-            <div className="overflow-x-auto add__scrollbar">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Particulars</th>
-                    <th>Remarks</th>
-                    <th>Remarks Date</th>
-                    <th>Amount</th>
-                    <th>Total Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    {accounts?.map((product) => (
-                      <tr className={`hover cursor-pointer`} key={product.id}>
-                        <td>
-                          <input
-                            type="checkbox"
-                            className="checkbox checkbox-info"
-                            name="product"
-                            value={product.id}
-                            onClick={() => handleProductCheck(product)}
-                          />
-                        </td>
-                        <td>{product.id}</td>
-                        <td>{product.productName}</td>
-                        <td>{product.productBrand}</td>
-                        <td>{product.productModel}</td>
-                        <td>{product.productQuantity}</td>
-                        <td>{product.date}</td>
-                        <td>
-                          <button onClick={() => handleDelete(product?.id)}>
-                            <AiOutlineDelete className="w-6 h-6 text-red-600" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-              </table>
-            </div>
-          </div> */}
           <div className="mt-3 mr-7 flex justify-end gap-y-4">
             <Link to="/exportimport" className="btn btn-info px-10 mx-5">
               Back
@@ -277,6 +251,56 @@ const Finance = () => {
             </button>
           </div>
         </form>
+
+        {/* Table data get from accouts input database */}
+        <div>
+          <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
+            Data Get From accounts Page
+          </h1>
+          <div className="overflow-x-auto add__scrollbar">
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  {/* <th>Select</th> */}
+                  <th>ID</th>
+                  <th>Product Name</th>
+                  <th>Product Brand</th>
+                  <th>Product Model</th>
+                  <th>Quantity</th>
+                  <th>Date</th>
+                  {/* <th>Action</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                {accounts?.map((product) => (
+                  <tr className={`hover cursor-pointer`} key={product.id}>
+                    {/* <td>
+                      <input
+                        type="checkbox"
+                        className="checkbox checkbox-info"
+                        name="product"
+                        value={product.id}
+                        onClick={() => handleProductCheck(product)}
+                      />
+                    </td> */}
+                    <td>{product.id}</td>
+                    <td>{product.productName}</td>
+                    <td>{product.productBrand}</td>
+                    <td>{product.productModel}</td>
+                    <td>{product.productQuantity}</td>
+                    <td>{product.date}</td>
+                    {/* <td>
+                      <button onClick={() => handleDelete(product?.id)}>
+                        <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                      </button>
+                    </td> */}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );
