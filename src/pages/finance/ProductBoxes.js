@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useReactToPrint } from "react-to-print";
 
@@ -20,6 +20,7 @@ const ProductBoxes = () => {
   const [resultsValues, setResultsValues] = useState(0);
   const [totalBox, setTotalBox] = useState(0);
   const [sessionData, setSessionData] = useState([]);
+  const [sessionDataClone, setSessionDataClone] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [truckNumber, setTruckNumber] = useState("");
   const componentPDF = useRef();
@@ -157,49 +158,6 @@ const ProductBoxes = () => {
     setErrorMessage("");
   };
 
-  const handleNameInputChange = (e) => {
-    setSelectedProductName(e.target.value);
-    setErrorMessage("");
-  };
-
-  // save the products for instant save
-  const handleInstantStore = (e) => {
-    e.preventDefault();
-
-    // error handle
-    if (
-      selectedProductPallet === "" ||
-      selectedProductName === "" ||
-      truckNumber === ""
-    ) {
-      setErrorMessage("Please fill out all fields properly.");
-      return;
-    }
-    const newData = {
-      productName: selectedProductName,
-      productModel: selectedProductModelNames,
-      quantity: resultsValues.quantityProduct,
-      splitProductsBox: singBoxPro,
-      splitQuantitySingleProduct: singProQuan,
-      productPerBox: perBoxProducts.perBoxProduct,
-      totalBox: totalBox,
-      totalPallet: selectedProductPallet,
-      truckNumber: truckNumber,
-    };
-    setSessionData((prevData) => [...prevData, newData]);
-    setErrorMessage("");
-
-    setSelectedProductName([]);
-    setSelectedProductModels("");
-    setPerBoxProducts({ perBoxProduct: 0 });
-    setSingleBoxProducts([]);
-    setSingleProductQuantity([]);
-    setTotalBox(0);
-    setResultsValues({ quantityProduct: 0 });
-    setSelectedProductPallet("");
-    setTruckNumber("");
-  };
-
   // const handleProductModelCheckboxChange = (e) => {
   //   const name = e.target.value;
   //   const checked = e.target.checked;
@@ -226,27 +184,96 @@ const ProductBoxes = () => {
   //   setSumResults(sum);
   // };
 
-  // data send to server
-  // http://localhost:5001/productbox
-  const formSubmit = (e) => {
-    e.preventDefault();
-    const newData = sessionData;
+  const handleNameInputChange = (e) => {
+    setSelectedProductName(e.target.value);
+    setErrorMessage("");
+  };
 
-    // axios
-    //   .post("http://localhost:5001/palletbox", newData[0])
-    //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server", { position: "top-center" });
-    //     navigate("/exportimport");
-    //     console.log(res);
-    //   })
-    //   .catch((err) =>
-    //     toast.error("Error coming from server please try again later")
-    //   );
+  // save the products for instant save
+  const handleInstantStore = (e) => {
+    e.preventDefault();
+    // error handle
+    if (
+      selectedProductPallet === "" ||
+      selectedProductName === "" ||
+      truckNumber === ""
+    ) {
+      setErrorMessage("Please fill out all fields properly.");
+      return;
+    }
+    const newData = {
+      productName: selectedProductName,
+      productModel: selectedProductModelNames,
+      quantity: resultsValues.quantityProduct,
+      splitProductsBox: singBoxPro,
+      splitQuantitySingleProduct: singProQuan,
+      productPerBox: perBoxProducts.perBoxProduct,
+      totalBox: totalBox,
+      totalPallet: selectedProductPallet,
+      truckNumber: truckNumber,
+    };
+
+    setSessionData((prevData) => [...prevData, newData]);
+    setSessionDataClone((prevData) => [...prevData, newData]);
+    setErrorMessage("");
+
+    setSelectedProductName([]);
+    setSelectedProductModels("");
+    setPerBoxProducts({ perBoxProduct: 0 });
+    setSingleBoxProducts([]);
+    setSingleProductQuantity([]);
+    setTotalBox(0);
+    setResultsValues({ quantityProduct: 0 });
+    setSelectedProductPallet("");
+    setTruckNumber("");
+  };
+
+  // data send to server
+  const formSubmit = async (e) => {
+    e.preventDefault();
+    sessionDataClone.forEach((element, index) => {
+      const jsonProductModelString = JSON.stringify(
+        element.productModel.map((str) => `"${str}"`)
+      );
+      element.productModel = `"${jsonProductModelString}"`;
+
+      const jsonSplitProductsBoxString = JSON.stringify(
+        element.splitProductsBox?.map((str) => `"${str}"`)
+      );
+      element.splitProductsBox = `"${jsonSplitProductsBoxString}"`;
+
+      const jsonSplitQuantitySingleProductString = JSON.stringify(
+        element.splitQuantitySingleProduct.map((str) => `"${str}"`)
+      );
+      element.splitQuantitySingleProduct = `"${jsonSplitQuantitySingleProductString}"`;
+    });
+    const data = JSON.stringify(sessionDataClone);
+    console.log(data);
+    await axios
+      .post(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Successfully Uploaded to server", {
+          position: "top-center",
+        });
+        // navigate("/exportimport");
+        console.log(res);
+      })
+      .catch((err) => {
+        toast.error("Error coming from server please try again later");
+        console.log(err);
+      });
 
     toast.success("Data successfully uploaded", { position: "top-center" });
     setSessionData([]);
-    navigate("/exportimport");
-    console.log(newData);
+    setSessionDataClone([]);
   };
 
   const handlePrint = useReactToPrint({
