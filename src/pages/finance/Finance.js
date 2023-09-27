@@ -13,7 +13,6 @@ const Finance = () => {
   const [totalUSD, setTotalUSD] = useState(0);
   const [beNumber, setBENumber] = useState("");
   const [ipNumber, setIPNumber] = useState("");
-  const [selectedRemarkDate, setSelectedRemarkDate] = useState(null);
   const [totalNetWeight, setTotalNetWeight] = useState(0);
   const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
   const [palletRemarks, setPalletRemarks] = useState("Pallet");
@@ -59,10 +58,6 @@ const Finance = () => {
     setIPNumber(e.target.value);
   };
 
-  const handleRemarkDateChange = (date) => {
-    setSelectedRemarkDate(date);
-  };
-
   const handletotalNetWeightChange = (e) => {
     setTotalNetWeight(e.target.value);
   };
@@ -80,7 +75,6 @@ const Finance = () => {
       totalUSD: parseFloat(totalUSD),
       beNumber: beNumber,
       ipNumber: ipNumber,
-      remarkDate: selectedRemarkDate,
       totalNetWeight: parseFloat(totalNetWeight),
       totalPalletQuantity: parseInt(totalPalletQuantity),
       palletRemarks: palletRemarks,

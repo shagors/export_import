@@ -231,7 +231,6 @@ const ProductBoxes = () => {
   // data send to server
   const formSubmit = async (e) => {
     e.preventDefault();
-
     // map for data convert to stringify
     sessionDataClone.forEach((element, index) => {
       const jsonProductModelString = JSON.stringify(
@@ -249,7 +248,6 @@ const ProductBoxes = () => {
       );
       element.splitQuantitySingleProduct = `"${jsonSplitQuantitySingleProductString}"`;
     });
-
     // for loop use for data single pass from the array
     for (const item of sessionDataClone) {
       try {
@@ -301,159 +299,6 @@ const ProductBoxes = () => {
           <div className="lg:flex justify-between items-center">
             <div className="form-control card-body">
               <div className="w-full">
-                {/* if single products need */}
-                {/* {selectedProductsData?.map((product) => (
-                  <div
-                    key={product.id}
-                    className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                    
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="productName">
-                        Product Name
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Product Name"
-                        type="text"
-                        value={product.productName || ""}
-                        readOnly
-                        onChange={(e) => {
-                          const updatedProductsData = selectedProductsData.map(
-                            (p) =>
-                              p.id === product.id
-                                ? { ...p, productName: e.target.value }
-                                : p
-                          );
-                          setSelectedProductsData(updatedProductsData);
-                        }}
-                      />
-                    </div>
-                    
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="productModel">
-                        Product Model
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Product Name"
-                        type="text"
-                        value={product.productModel || ""}
-                        readOnly
-                        onChange={(e) => {
-                          const updatedProductsData = selectedProductsData.map(
-                            (p) =>
-                              p.id === product.id
-                                ? { ...p, productModel: e.target.value }
-                                : p
-                          );
-                          setSelectedProductsData(updatedProductsData);
-                        }}
-                      />
-                    </div>
-                    
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="productQuantity">
-                        Product Quantity
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Product Name"
-                        type="text"
-                        name="quantity"
-                        value={product.productQuantity || ""}
-                        onChange={(e) => {
-                          const updatedProductsData = selectedProductsData.map(
-                            (p) =>
-                              p.id === product.id
-                                ? { ...p, productQuantity: e.target.value }
-                                : p
-                          );
-                          setSelectedProductsData(updatedProductsData);
-                        }}
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="productPerBox">
-                        Product Per Box
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Per Box Product Quantity"
-                        type="number"
-                        name="productPerBox"
-                        required
-                        // onChange={(e) => setProductPerBox(e.target.value)}
-                        onChange={(e) => {
-                          const updatedProductsData = selectedProductsData.map(
-                            (p) =>
-                              p.id === product.id
-                                ? { ...p, productPerBox: e.target.value }
-                                : p
-                          );
-                          setSelectedProductsData(updatedProductsData);
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="boxQuantiy">
-                        How Many Boxes
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Box Quantity"
-                        type="number"
-                        name="totalBox"
-                        required
-                        // onChange={(e) => setBoxQuantiy(e.target.value)}
-                        onChange={(e) => {
-                          const updatedProductsData = selectedProductsData.map(
-                            (p) =>
-                              p.id === product.id
-                                ? { ...p, boxQuantiy: e.target.value }
-                                : p
-                          );
-                          setSelectedProductsData(updatedProductsData);
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="boxQuantiy">
-                        Number of Pallet
-                      </label>
-                      <input
-                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Pallent Quantity"
-                        type="text"
-                        name="totalPallet"
-                        required
-                        // onChange={(e) => setPallet(e.target.value)}
-                        onChange={(e) => {
-                          const updatedProductsData = selectedProductsData.map(
-                            (p) =>
-                              p.id === product.id
-                                ? { ...p, pallet: e.target.value }
-                                : p
-                          );
-                          setSelectedProductsData(updatedProductsData);
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))} */}
-
                 {/* Products Add */}
                 <div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -489,28 +334,6 @@ const ProductBoxes = () => {
                     </div>
 
                     {/* product Model */}
-                    {/* <div>
-                      <label
-                        className="text-lg font-semibold"
-                        htmlFor="productQuantity">
-                        Product Model
-                      </label>
-                      {filteredProductModels.length > 0 && (
-                        <select
-                          className="select select-info w-full max-w-xs"
-                          value={selectedProductModels}
-                          name="productName"
-                          onChange={(e) =>
-                            setSelectedProductModels(e.target.value)
-                          }>
-                          <option value="">Choose product Model</option>
-                          {filteredProductModels.map((productModel, index) => (
-                            <option key={index}>{productModel}</option>
-                          ))}
-                        </select>
-                      )}
-                    </div> */}
-
                     <div className="">
                       <label className="text-lg font-semibold">
                         Select Models:

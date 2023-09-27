@@ -6,6 +6,7 @@ import { addDays, format } from "date-fns";
 
 const Transportservice = () => {
   const [products, setProducts] = useState([]);
+  const [productBoxes, setProductBoxes] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -17,11 +18,11 @@ const Transportservice = () => {
     },
   ]);
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
   const refOne = useRef(null);
 
   useEffect(() => {
     // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts
-    // https://64d88afe5f9bf5b879ce54e8.mockapi.io/products
     axios
       .get(
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
@@ -33,10 +34,22 @@ const Transportservice = () => {
       .catch((error) =>
         toast.error("Something wrong Please try again later!!")
       );
-
     document.addEventListener("keydown", hideOnEscape, true);
     document.addEventListener("click", hideOnClickOutside, true);
+
+    fetchProductInBoxes();
   }, []);
+
+  const fetchProductInBoxes = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
+      );
+      setProductBoxes(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const hideOnEscape = (e) => {
     if (e.key === "Escape") {
@@ -69,9 +82,27 @@ const Transportservice = () => {
     key: "selection",
   };
 
+  useEffect(() => {
+    const jsonString =
+      '[{"id":79,"productName":"Dot Matrix","productModel":"[\\"AK890\\",\\"TH880\\"]","quantity":2600,"splitProductsBox":"[\\"2\\",\\"2\\"]","splitQuantitySingleProduct":"[\\"1300\\",\\"1300\\"]","productPerBox":"4","totalBox":650,"totalPallet":"shaking001","truckNumber":"Exp001"},{"id":80,"productName":"Dot Matrix","productModel":"[\\"AK890\\",\\"TH880\\"]","quantity":2800,"splitProductsBox":"[\\"2\\",\\"2\\"]","splitQuantitySingleProduct":"[\\"1400\\",\\"1400\\"]","productPerBox":"4","totalBox":700,"totalPallet":"shaking001","truckNumber":"Exp001"},{"id":81,"productName":"Thermal Printer","productModel":"[\\"TP210A\\",\\"TP210B\\"]","quantity":4600,"splitProductsBox":"[\\"2\\",\\"2\\"]","splitQuantitySingleProduct":"[\\"2300\\",\\"2300\\"]","productPerBox":"4","totalBox":1150,"totalPallet":"shaking001","truckNumber":"Exp001"}]';
+
+    // const jsonString = productBoxes;
+    const parsedData = JSON.parse(jsonString);
+
+    // Parse the stringified arrays back to actual arrays
+    const updatedData = parsedData.map((item) => ({
+      ...item,
+      productModel: JSON.parse(item.productModel),
+      splitProductsBox: JSON.parse(item.splitProductsBox),
+      splitQuantitySingleProduct: JSON.parse(item.splitQuantitySingleProduct),
+    }));
+
+    setData(updatedData);
+  }, []);
+
   return (
     <>
-      <div className="overflow-x-auto h-[700px] mb-5">
+      {/* <div className="overflow-x-auto h-[700px] mb-5">
         <div className="text-center my-4 calendarWrap">
           <input
             value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
@@ -116,6 +147,45 @@ const Transportservice = () => {
                   <td>{product.productName}</td>
                   <td>{product.productModel}</td>
                   <td>{date.toLocaleDateString()}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div> */}
+
+      <div className="overflow-x-auto h-[700px] mb-5">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Product Name</th>
+              <th>Product Model</th>
+              <th>Quantity</th>
+              <th>Product/Box</th>
+              <th>Split product</th>
+              <th>Split Quantity</th>
+              <th>Total Box</th>
+              <th>Pallent</th>
+              <th>Truck NO.</th>
+            </tr>
+          </thead>
+          <tbody>
+            {productBoxes?.map((product) => {
+              return (
+                <tr key={product.id}>
+                  <th>{product.id}</th>
+                  <td>{product.productName}</td>
+                  <td>{product.productModel}</td>
+                  {/* <td>{product.productModel.join(", ")}</td> */}
+                  <td>{product.quantity}</td>
+                  <td>{product.productPerBox}</td>
+                  <td>{product.totalBox}</td>
+                  <td>{product.splitProductsBox}</td>
+                  {/* <td>{product.splitProductsBox.join(", ")}</td> */}
+                  <td>{product.splitQuantitySingleProduct}</td>
+                  <td>{product.totalPallet}</td>
+                  <td>{product.truckNumber}</td>
                 </tr>
               );
             })}
