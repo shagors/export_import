@@ -247,29 +247,48 @@ const ProductBoxes = () => {
       );
       element.splitQuantitySingleProduct = `"${jsonSplitQuantitySingleProductString}"`;
     });
-    const data = JSON.stringify(sessionDataClone);
-    console.log(data);
-    await axios
-      .post(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        toast.success("Successfully Uploaded to server", {
-          position: "top-center",
-        });
-        // navigate("/exportimport");
-        console.log(res);
-      })
-      .catch((err) => {
-        toast.error("Error coming from server please try again later");
-        console.log(err);
-      });
+
+    for (const item of sessionDataClone) {
+      try {
+        const response = await fetch(
+          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(item),
+          }
+        );
+
+        const result = await response.json();
+        console.log("Data saved:", result);
+      } catch (error) {
+        console.error("Error saving data:", error);
+      }
+    }
+
+    // await axios
+    //   .post(
+    //     "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
+    //     sessionDataClone[0],
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     toast.success("Successfully Uploaded to server", {
+    //       position: "top-center",
+    //     });
+    //     // navigate("/exportimport");
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     toast.error("Error coming from server please try again later");
+    //     console.log(err);
+    //   });
 
     toast.success("Data successfully uploaded", { position: "top-center" });
     setSessionData([]);
