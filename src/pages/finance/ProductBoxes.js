@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
-import { Link, json, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useReactToPrint } from "react-to-print";
 
@@ -189,7 +189,7 @@ const ProductBoxes = () => {
     setErrorMessage("");
   };
 
-  // save the products for instant save
+  // save the products for instant save and show the below table also for print
   const handleInstantStore = (e) => {
     e.preventDefault();
     // error handle
@@ -231,23 +231,26 @@ const ProductBoxes = () => {
   // data send to server
   const formSubmit = async (e) => {
     e.preventDefault();
+
+    // map for data convert to stringify
     sessionDataClone.forEach((element, index) => {
       const jsonProductModelString = JSON.stringify(
-        element.productModel.map((str) => `"${str}"`)
+        element?.productModel?.map((str) => `"${str}"`)
       );
       element.productModel = `"${jsonProductModelString}"`;
 
       const jsonSplitProductsBoxString = JSON.stringify(
-        element.splitProductsBox?.map((str) => `"${str}"`)
+        element?.splitProductsBox?.map((str) => `"${str}"`)
       );
       element.splitProductsBox = `"${jsonSplitProductsBoxString}"`;
 
       const jsonSplitQuantitySingleProductString = JSON.stringify(
-        element.splitQuantitySingleProduct.map((str) => `"${str}"`)
+        element?.splitQuantitySingleProduct?.map((str) => `"${str}"`)
       );
       element.splitQuantitySingleProduct = `"${jsonSplitQuantitySingleProductString}"`;
     });
 
+    // for loop use for data single pass from the array
     for (const item of sessionDataClone) {
       try {
         const response = await fetch(
@@ -261,38 +264,24 @@ const ProductBoxes = () => {
           }
         );
 
-        const result = await response.json();
-        console.log("Data saved:", result);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        await response.json();
+        // const result = await response.json();
+        toast.success("Successfully Uploaded to server", {
+          position: "top-center",
+        });
+        navigate("/exportimport");
+        // console.log(response);
+        // console.log("Data saved:", result);
       } catch (error) {
-        console.error("Error saving data:", error);
+        toast.error("Network Error. Please try again later", {
+          position: "top-center",
+        });
       }
     }
-
-    // await axios
-    //   .post(
-    //     "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
-    //     sessionDataClone[0],
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server", {
-    //       position: "top-center",
-    //     });
-    //     // navigate("/exportimport");
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     toast.error("Error coming from server please try again later");
-    //     console.log(err);
-    //   });
-
-    toast.success("Data successfully uploaded", { position: "top-center" });
-    setSessionData([]);
-    setSessionDataClone([]);
   };
 
   const handlePrint = useReactToPrint({
