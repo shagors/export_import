@@ -63,7 +63,7 @@ const DataInput = () => {
                 Product Name
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
                 placeholder="Enter Product Name"
                 type="text"
                 name="productName"
@@ -77,7 +77,7 @@ const DataInput = () => {
                 Product Brand
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
                 placeholder="Enter Product Brand"
                 type="text"
                 name="productBrand"
@@ -91,7 +91,7 @@ const DataInput = () => {
                 Product Model
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
                 placeholder="Enter Product Model"
                 type="text"
                 name="productModel"
@@ -105,7 +105,7 @@ const DataInput = () => {
                 Product Weight/KG
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
                 placeholder="Enter Product Weight/KG"
                 type="text"
                 name="productWeight"
