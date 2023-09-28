@@ -171,6 +171,7 @@ const Purchase = () => {
               className="bg-base-100 rounded-lg shadow-xl mt-5"
               onSubmit={formSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-3">
+                {/* Shipment Way */}
                 <div className="form-control  card-body">
                   <label className="mb-[10px] lebel-text text-lg font-semibold">
                     Shipment Way
@@ -191,6 +192,8 @@ const Purchase = () => {
                     </select>
                   </div>
                 </div>
+
+                {/* Shipment Country */}
                 <div className="form-control card-body">
                   <label className="mb-[10px] lebel-text text-lg font-semibold">
                     Shipment Country
@@ -211,6 +214,8 @@ const Purchase = () => {
                     </select>
                   </div>
                 </div>
+
+                {/* Invoice No. */}
                 <div className="form-control card-body">
                   <div>
                     <label
@@ -219,7 +224,7 @@ const Purchase = () => {
                       Invoice No.
                     </label>
                     <input
-                      className="w-full border-2 border-info rounded-xl p-3 mt-3 bg-transparent"
+                      className="w-full border-[1px] border-info rounded-md p-3 mt-3 bg-transparent"
                       placeholder="Invoice No"
                       type="text"
                       name="invoiceno"
@@ -229,13 +234,15 @@ const Purchase = () => {
                     />
                   </div>
                 </div>
+
+                {/* IP No. */}
                 <div className="form-control card-body">
                   <div>
                     <label className="text-lg font-semibold" htmlFor="ipNo">
                       IP No.
                     </label>
                     <input
-                      className="w-full border-2 border-info rounded-xl p-4 mt-3 bg-transparent"
+                      className="w-full border-[1px] border-info rounded-md p-3 mt-3 bg-transparent"
                       placeholder="IP No."
                       type="text"
                       name="ipNo"
@@ -245,13 +252,15 @@ const Purchase = () => {
                     />
                   </div>
                 </div>
+
+                {/* Total (USD) */}
                 <div className="form-control card-body">
                   <div>
                     <label className="text-lg font-semibold" htmlFor="total">
                       Total (USD)
                     </label>
                     <input
-                      className="w-full border-2 border-info rounded-xl p-4 mt-3 bg-transparent"
+                      className="w-full border-[1px] border-info rounded-md p-3 mt-3 bg-transparent"
                       placeholder="Total in USD"
                       type="text"
                       name="total"
