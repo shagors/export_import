@@ -162,6 +162,7 @@ const Accounts = ({ brand, model }) => {
                     placeholder="Quantity of Product"
                     type="number"
                     name="productQuantity"
+                    min="0"
                     value={formData.productQuantity || ""}
                     onChange={handleChange}
                   />

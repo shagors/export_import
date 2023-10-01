@@ -19,7 +19,6 @@ const TransportRoutes = () => {
   };
 
   // http://localhost:5001/transport
-  // http://43.154.22.219:3091/api/dev
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,6 +76,7 @@ const TransportRoutes = () => {
                 id="transportCost"
                 onChange={handleChange}
                 required
+                min="0"
               />
             </div>
             <div className="mt-5 flex justify-end gap-y-4">
