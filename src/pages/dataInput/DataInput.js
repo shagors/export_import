@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 const DataInput = () => {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ const DataInput = () => {
     productWeight: "",
   });
 
+  const [products, setProducts] = useState([]);
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -20,8 +23,25 @@ const DataInput = () => {
     });
   };
 
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  // products fetch from server
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
+      );
+      setProducts(response?.data);
+    } catch (error) {
+      toast.error("Error getting data from server!", {
+        position: "top-center",
+      });
+    }
+  };
+
   // http://localhost:5001/products
-  // http://43.154.22.219:3091/api/dev
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,12 +69,26 @@ const DataInput = () => {
       );
   };
 
+  // product delete from server and also frontend
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products/${id}`
+      );
+      toast.warn("Data successfully Deleted!!", { position: "top-center" });
+      fetchProducts();
+    } catch (error) {
+      toast.error("You can't delete now. Please try again later!", {
+        position: "top-center",
+      });
+    }
+  };
+
   return (
     <div className="mb-6">
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
         Data Entry Form
       </h1>
-
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-8">
@@ -126,6 +160,47 @@ const DataInput = () => {
             </div>
           </div>
         </form>
+      </div>
+
+      {/* Table data get from products database */}
+      <div>
+        <h1 className="text-center my-6 text-2xl text-info font-bold bg-slate-500 p-[10px] rounded-lg uppercase">
+          All Stored Product's Details
+        </h1>
+        <div className="overflow-x-auto add__scrollbar">
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Product Brand</th>
+                <th>Product Model</th>
+                <th>Product Weight/KG</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products?.map((product) => (
+                <tr className="hover cursor-pointer" key={product.id}>
+                  <td>{product.id}</td>
+                  <td>{product.productName}</td>
+                  <td>{product.productBrand}</td>
+                  <td>{product.productModel}</td>
+                  <td>{product.productWeight}</td>
+                  <td className="flex justify-evenly items-center">
+                    <Link to={`/datainput/${product.id}`}>
+                      <AiOutlineEdit className="w-6 h-6 text-purple-600" />
+                    </Link>
+                    <button onClick={() => handleDelete(product?.id)}>
+                      <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

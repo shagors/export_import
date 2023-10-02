@@ -23,6 +23,7 @@ import AddChargesUpdate from "../pages/dataInput/AddChargesUpdate";
 import ProductBoxes from "../pages/finance/ProductBoxes";
 import Home from "../pages/Home/Home";
 import Finance from "../pages/finance/Finance";
+import DataInputUpdate from "../pages/dataInput/DataInputUpdate";
 
 const Routers = () => {
   return (
@@ -40,6 +41,7 @@ const Routers = () => {
         <Route path="/transport" element={<Transport />} />
         <Route path="/transportroutes" element={<TransportRoutes />} />
         <Route path="/datainput" element={<DataInput />} />
+        <Route path="/datainput/:id" element={<DataInputUpdate />} />
         <Route path="/transportcountry" element={<TransportCountry />} />
         <Route path="/purchase" element={<Purchase />} />
         <Route path="/transportservice" element={<Transportservice />} />

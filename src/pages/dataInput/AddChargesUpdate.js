@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BsArrowLeft } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -8,34 +7,35 @@ const AddChargesUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [values, setValues] = useState({
+    id,
+    particularExpenseName: "",
+    particularExpenseCost: 0,
+  });
+
   // http://localhost:5001/addcharges/:id
-  // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/
   useEffect(() => {
     axios
       .get(
         `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges/${id}`
       )
       .then((res) => {
+        // console.log(res.data);
         setValues({
           ...values,
-          // particularExpencessName: res?.data[0].particularExpencessName,
-          // particularExpencessCost: res?.data[0].particularExpencessCost,
           particularExpenseName: res?.data.particularExpenseName,
           particularExpenseCost: res?.data.particularExpenseCost,
         });
       })
-      .catch((error) => setValues(error));
+      .catch((error) =>
+        toast.error("Error coming from server please try again later", {
+          position: "top-center",
+        })
+      );
   }, []);
-
-  const [values, setValues] = useState({
-    id,
-    particularExpencessName: "",
-    particularExpencessCost: 0,
-  });
 
   // http://localhost:5001/addcharges/:id
   // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -61,12 +61,6 @@ const AddChargesUpdate = () => {
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
         Charges Data Update Form
       </h1>
-      <div className="mt-8">
-        <Link to="/addcharges" className="">
-          <BsArrowLeft className="w-56 lg:w-[380px] h-[35px] text-purple-500" />
-          <div className="w-8 h-[2px] bg-green-700 ml-[95px] lg:ml-[175px] animate-pulse"></div>
-        </Link>
-      </div>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-6">
@@ -130,9 +124,12 @@ const AddChargesUpdate = () => {
                 required
               />
             </div>
-            <div className="mt-5 flex flex-col gap-y-4">
+            <div className="mt-5 gap-y-4">
+              <Link to="/exportimport" className="btn btn-info px-10 mx-5">
+                Back
+              </Link>
               <button
-                className="active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
+                className="btn btn-info px-10 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-lg bg-violet-500 text-white font-bold hover:text-black"
                 type="submit">
                 Update
               </button>
