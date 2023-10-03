@@ -146,7 +146,7 @@ const Purchase = () => {
           position: "top-center",
         });
         navigate("/exportimport");
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) =>
         toast.error("This error coming from server please try again later!!", {

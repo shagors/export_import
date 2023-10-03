@@ -6,6 +6,7 @@ import { addDays, format } from "date-fns";
 
 const Transportservice = () => {
   const [products, setProducts] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   const [productBoxes, setProductBoxes] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
@@ -38,6 +39,7 @@ const Transportservice = () => {
     document.addEventListener("click", hideOnClickOutside, true);
 
     fetchProductInBoxes();
+    fetchExpenses();
   }, []);
 
   const fetchProductInBoxes = async () => {
@@ -46,6 +48,17 @@ const Transportservice = () => {
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
       );
       setProductBoxes(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchExpenses = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase"
+      );
+      setExpenses(response?.data);
     } catch (error) {
       console.log(error);
     }
@@ -102,6 +115,7 @@ const Transportservice = () => {
 
   return (
     <>
+      {/* date and date by search filter table query */}
       {/* <div className="overflow-x-auto h-[700px] mb-5">
         <div className="text-center my-4 calendarWrap">
           <input
@@ -154,6 +168,10 @@ const Transportservice = () => {
         </table>
       </div> */}
 
+      {/* products boxes table check and data get from server */}
+      <h1 className="text-2xl text-center my-3 font-bold underline">
+        Products checks Box
+      </h1>
       <div className="overflow-x-auto h-[700px] mb-5">
         <table className="table">
           <thead>
@@ -186,6 +204,56 @@ const Transportservice = () => {
                   <td>{product.splitQuantitySingleProduct}</td>
                   <td>{product.totalPallet}</td>
                   <td>{product.truckNumber}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* products boxes table check and data get from server */}
+      <h1 className="text-2xl text-center my-3 font-bold underline">
+        Expenses
+      </h1>
+      <div className="overflow-x-auto h-[700px] mb-5">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>invoiceNo</th>
+              <th>ipNo</th>
+              <th>officeAccount</th>
+              <th>particularExpenseNames</th>
+              <th>transportCountryName</th>
+              <th>transportWay</th>
+              <th>total</th>
+              <th>totalCost</th>
+              <th>truckNo.</th>
+            </tr>
+          </thead>
+          <tbody>
+            {expenses?.map((expense) => {
+              return (
+                <tr key={expense.id}>
+                  <td>{expense.id}</td>
+                  <td>{expense.invoiceNo}</td>
+                  <td>{expense.ipNo}</td>
+                  <td>{expense.officeAccount}</td>
+                  <td>
+                    <ul>
+                      {expense.particularExpenseNames.map((ex) => (
+                        <li key={ex.expenseId}>
+                          {ex.particularExpenseName}:{ex.particularExpenseCost}{" "}
+                          -{ex.remark} - {ex.date}
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td>{expense.transportCountryName}</td>
+                  <td>{expense.transportWay}</td>
+                  <td>{expense.total}</td>
+                  <td>{expense.totalCost}</td>
+                  <td>{expense.truckNo}</td>
                 </tr>
               );
             })}
