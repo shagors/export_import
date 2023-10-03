@@ -277,13 +277,11 @@ const ProductBoxes = () => {
         }
 
         // await response.json();
-        console.log(response);
-        // const result = await response.json();
+        // console.log(response);
         toast.success("Successfully Uploaded to server", {
           position: "top-center",
         });
         navigate("/exportimport");
-        // console.log("Data saved:", result);
       } catch (error) {
         toast.error("Network Error. Please try again later", {
           position: "top-center",

@@ -123,18 +123,18 @@ const Purchase = () => {
       transportWay: transportWay, // id pass
       transportCountryName: transportCountryName, // id pass
       officeAccount: productData, //id pass
-      particular_expense_name: saveExpense,
-      totalCost: parseFloat(totalCost),
+      // particularExpenseNames: savedExpenses,
+      particularExpenseNames: saveExpense,
+      totalCost: totalCost,
       invoiceNo: invoiceNo,
       total: total,
       ipNo: ipNo,
       truckNo: truckNo,
     };
 
-    toast.success("Data Successfully uploaded!", { position: "top-center" });
+    // toast.success("Data Successfully uploaded!", { position: "top-center" });
     console.log(data);
 
-    // http://localhost:5001/purchase
     // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account
 
     axios
