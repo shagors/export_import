@@ -116,27 +116,21 @@ const Purchase = () => {
     setTotalCost(newTotalCost);
   };
 
-  // save data
+  // data send to server
   const formSubmit = (e) => {
     e.preventDefault();
     const data = {
       transportWay: transportWay, // id pass
       transportCountryName: transportCountryName, // id pass
       officeAccount: productData, //id pass
-      // particularExpenseNames: savedExpenses,
-      particularExpenseNames: saveExpense,
+      particularExpenseNames: savedExpenses,
       totalCost: totalCost,
       invoiceNo: invoiceNo,
       total: total,
       ipNo: ipNo,
       truckNo: truckNo,
     };
-
-    // toast.success("Data Successfully uploaded!", { position: "top-center" });
-    console.log(data);
-
-    // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account
-
+    // console.log(data);
     axios
       .post(
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase",
