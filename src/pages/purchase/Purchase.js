@@ -19,10 +19,12 @@ const Purchase = () => {
   const [invoiceNo, setInvoiceNo] = useState("");
   const [total, setTotal] = useState("");
   const [ipNo, setIpNo] = useState("");
+  const [truckNo, setTruckNo] = useState("");
 
   const navigate = useNavigate();
 
   const productData = JSON.stringify(productChecks);
+  const saveExpense = JSON.stringify(savedExpenses);
 
   // Data fetch from server
   useEffect(() => {
@@ -121,11 +123,12 @@ const Purchase = () => {
       transportWay: transportWay, // id pass
       transportCountryName: transportCountryName, // id pass
       officeAccount: productData, //id pass
-      particular_expense_name: savedExpenses,
+      particular_expense_name: saveExpense,
       totalCost: parseFloat(totalCost),
       invoiceNo: invoiceNo,
       total: total,
       ipNo: ipNo,
+      truckNo: truckNo,
     };
 
     toast.success("Data Successfully uploaded!", { position: "top-center" });
@@ -134,28 +137,28 @@ const Purchase = () => {
     // http://localhost:5001/purchase
     // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase_account
 
-    // axios
-    //   .post(
-    //     "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase",
-    //     data,
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server", {
-    //       position: "top-center",
-    //     });
-    //     navigate("/exportimport");
-    //     // console.log(res);
-    //   })
-    //   .catch((err) =>
-    //     toast.error("This error coming from server please try again later!!", {
-    //       position: "top-center",
-    //     })
-    //   );
+    axios
+      .post(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Successfully Uploaded to server", {
+          position: "top-center",
+        });
+        navigate("/exportimport");
+        console.log(res);
+      })
+      .catch((err) =>
+        toast.error("This error coming from server please try again later!!", {
+          position: "top-center",
+        })
+      );
   };
 
   return (
@@ -249,6 +252,24 @@ const Purchase = () => {
                       value={ipNo}
                       required
                       onChange={(e) => setIpNo(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                {/* Truck No. */}
+                <div className="form-control card-body">
+                  <div>
+                    <label className="text-lg font-semibold" htmlFor="ipNo">
+                      Truck No.
+                    </label>
+                    <input
+                      className="w-full border-[1px] border-info rounded-md p-3 mt-3 bg-transparent"
+                      placeholder="Truck No."
+                      type="text"
+                      name="truckNo"
+                      value={truckNo}
+                      required
+                      onChange={(e) => setTruckNo(e.target.value)}
                     />
                   </div>
                 </div>

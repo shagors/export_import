@@ -251,28 +251,38 @@ const ProductBoxes = () => {
     // for loop use for data single pass from the array
     for (const item of sessionDataClone) {
       try {
-        const response = await fetch(
+        // const response = await fetch(
+        //   "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
+        //   {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(item),
+        //   }
+        // );
+
+        const response = await axios.post(
           "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
+          item,
           {
-            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(item),
           }
         );
 
-        if (!response.ok) {
+        if (response.status !== 201) {
           throw new Error("Network response was not ok");
         }
 
-        await response.json();
+        // await response.json();
+        console.log(response);
         // const result = await response.json();
         toast.success("Successfully Uploaded to server", {
           position: "top-center",
         });
         navigate("/exportimport");
-        // console.log(response);
         // console.log("Data saved:", result);
       } catch (error) {
         toast.error("Network Error. Please try again later", {
