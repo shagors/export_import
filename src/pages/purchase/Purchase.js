@@ -24,7 +24,6 @@ const Purchase = () => {
   const navigate = useNavigate();
 
   const productData = JSON.stringify(productChecks);
-  const saveExpense = JSON.stringify(savedExpenses);
 
   // Data fetch from server
   useEffect(() => {

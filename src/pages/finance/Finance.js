@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
-import { AiOutlineDelete } from "react-icons/ai";
 import axios from "axios";
 
 const Finance = () => {
-  const [accounts, setAccounts] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   const [selectedBEDate, setSelectedBEDate] = useState(null);
   const [exim, setExim] = useState("");
   const [invoiceNo, setInvoiceNo] = useState("");
@@ -15,20 +14,21 @@ const Finance = () => {
   const [ipNumber, setIPNumber] = useState("");
   const [totalNetWeight, setTotalNetWeight] = useState(0);
   const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
+  const [truckNo, setTruckNo] = useState(0);
   const [palletRemarks, setPalletRemarks] = useState("Pallet");
 
   // Data fetch from server
   useEffect(() => {
-    //   getting accounts data from office_accounts server
-    fetchAccounts();
+    //   getting expenses data from office_accounts server
+    fetchExpenses();
   }, []);
 
-  const fetchAccounts = async () => {
+  const fetchExpenses = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase"
       );
-      setAccounts(response?.data);
+      setExpenses(response?.data);
     } catch (error) {
       toast.error("Error from server to get data!!");
     }
@@ -66,6 +66,10 @@ const Finance = () => {
     setTotalPalletQuantity(e.target.value);
   };
 
+  const handleTruckNo = (e) => {
+    setTruckNo(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -78,6 +82,7 @@ const Finance = () => {
       totalNetWeight: parseFloat(totalNetWeight),
       totalPalletQuantity: parseInt(totalPalletQuantity),
       palletRemarks: palletRemarks,
+      truckNo: truckNo,
     };
     toast.success("Data successfully Saved!!", { position: "top-center" });
     console.log(data);
@@ -218,6 +223,19 @@ const Finance = () => {
                 onChange={handleTotalPalletQuantityChange}
               />
             </div>
+            {/*  Truck No */}
+            <div>
+              <label className="text-lg font-semibold" htmlFor="productName">
+                Truck No
+              </label>
+              <input
+                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                type="text"
+                required
+                name="truckNo"
+                onChange={handleTruckNo}
+              />
+            </div>
             {/*  Remarks for Pallet */}
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
@@ -258,17 +276,17 @@ const Finance = () => {
                 <tr>
                   {/* <th>Select</th> */}
                   <th>ID</th>
-                  <th>Product Name</th>
-                  <th>Product Brand</th>
-                  <th>Product Model</th>
-                  <th>Quantity</th>
-                  <th>Date</th>
+                  <th>Invoice No</th>
+                  <th>IP No</th>
+                  <th>Total (USD)</th>
+                  <th>Expenses (TK)</th>
+                  <th>Products Name</th>
                   {/* <th>Action</th> */}
                 </tr>
               </thead>
               <tbody>
-                {accounts?.map((product) => (
-                  <tr className={`hover cursor-pointer`} key={product.id}>
+                {expenses?.map((expense) => (
+                  <tr className={`hover cursor-pointer`} key={expense.id}>
                     {/* <td>
                       <input
                         type="checkbox"
@@ -278,17 +296,12 @@ const Finance = () => {
                         onClick={() => handleProductCheck(product)}
                       />
                     </td> */}
-                    <td>{product.id}</td>
-                    <td>{product.productName}</td>
-                    <td>{product.productBrand}</td>
-                    <td>{product.productModel}</td>
-                    <td>{product.productQuantity}</td>
-                    <td>{product.date}</td>
-                    {/* <td>
-                      <button onClick={() => handleDelete(product?.id)}>
-                        <AiOutlineDelete className="w-6 h-6 text-red-600" />
-                      </button>
-                    </td> */}
+                    <td>{expense.id}</td>
+                    <td>{expense.invoiceNo}</td>
+                    <td>{expense.ipNo}</td>
+                    <td>{expense.total}</td>
+                    <td>{expense.totalCost}</td>
+                    <td>{expense.officeAccount}</td>
                   </tr>
                 ))}
               </tbody>
