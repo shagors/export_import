@@ -42,12 +42,6 @@ const ExpensesForm = ({ expenses, onExpenseSave, onTotalCostChange }) => {
     // console.log(selectedExpenseData);
   };
 
-  const handleReset = () => {
-    setSelectedExpenses([]);
-    setRemarks({});
-    setDates({});
-  };
-
   const totalCost = selectedExpenses
     .reduce((total, id) => {
       const expense = expenses.find((expense) => expense.id === Number(id));
@@ -106,11 +100,6 @@ const ExpensesForm = ({ expenses, onExpenseSave, onTotalCostChange }) => {
           onClick={handleSave}>
           Save
         </button>
-        {/* <button
-          className="rounded-md bg-red-500 text-white px-4 py-2"
-          onClick={handleReset}>
-          Cancel
-        </button> */}
       </div>
       <div className="font-bold text-2xl text-center text-sky-400">
         Total Cost: ${totalCost}

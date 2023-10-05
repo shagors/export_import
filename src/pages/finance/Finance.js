@@ -292,7 +292,6 @@ const Finance = () => {
               {/* head */}
               <thead>
                 <tr>
-                  {/* <th>Select</th> */}
                   <th>ID</th>
                   <th>Invoice No</th>
                   <th>IP No</th>
