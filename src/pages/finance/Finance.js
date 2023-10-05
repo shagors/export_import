@@ -7,14 +7,11 @@ import axios from "axios";
 const Finance = () => {
   const [expenses, setExpenses] = useState([]);
   const [selectedBEDate, setSelectedBEDate] = useState(null);
+  const [formData, setFormData] = useState({});
   const [exim, setExim] = useState("");
-  const [invoiceNo, setInvoiceNo] = useState("");
-  const [totalUSD, setTotalUSD] = useState(0);
   const [beNumber, setBENumber] = useState("");
-  const [ipNumber, setIPNumber] = useState("");
   const [totalNetWeight, setTotalNetWeight] = useState(0);
   const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
-  const [truckNo, setTruckNo] = useState(0);
   const [palletRemarks, setPalletRemarks] = useState("Pallet");
 
   // Data fetch from server
@@ -42,20 +39,8 @@ const Finance = () => {
     setExim(e.target.value);
   };
 
-  const handleInvoiceNoChange = (e) => {
-    setInvoiceNo(e.target.value);
-  };
-
-  const handleTotalUSDChange = (e) => {
-    setTotalUSD(e.target.value);
-  };
-
   const handleBENumberChange = (e) => {
     setBENumber(e.target.value);
-  };
-
-  const handleIPNumberChange = (e) => {
-    setIPNumber(e.target.value);
   };
 
   const handletotalNetWeightChange = (e) => {
@@ -66,26 +51,31 @@ const Finance = () => {
     setTotalPalletQuantity(e.target.value);
   };
 
-  const handleTruckNo = (e) => {
-    setTruckNo(e.target.value);
+  const handleRowClick = (rowData) => {
+    setFormData(rowData);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
-      beDate: selectedBEDate,
+      selectedBEDate: selectedBEDate,
       exim: exim,
-      invoiceNo: invoiceNo,
-      totalUSD: parseFloat(totalUSD),
       beNumber: beNumber,
-      ipNumber: ipNumber,
-      totalNetWeight: parseFloat(totalNetWeight),
-      totalPalletQuantity: parseInt(totalPalletQuantity),
+      totalNetWeight: totalNetWeight,
+      totalPalletQuantity: totalPalletQuantity,
       palletRemarks: palletRemarks,
-      truckNo: truckNo,
     };
+    // Send formData to your API for saving
+
+    // Reset selectedRow and formData after successful save
+    setFormData({});
     toast.success("Data successfully Saved!!", { position: "top-center" });
-    console.log(data);
+    console.log(formData);
   };
   return (
     <div>
@@ -130,11 +120,12 @@ const Finance = () => {
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Invoice Number"
+                placeholder="Invoice Number"
                 type="text"
-                required
+                readOnly
                 name="invoiceNo"
-                onChange={handleInvoiceNoChange}
+                value={formData.invoiceNo}
+                onChange={handleInputChange}
               />
             </div>
             {/*  Total USD */}
@@ -144,11 +135,11 @@ const Finance = () => {
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Enter Total USD Payment"
+                placeholder="Total USD Payment"
                 type="text"
-                required
-                name="totalUSD"
-                onChange={handleTotalUSDChange}
+                name="total"
+                value={formData.total}
+                onChange={handleInputChange}
               />
             </div>
             {/*  B/E Number */}
@@ -174,12 +165,27 @@ const Finance = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 placeholder="Enter IP Number"
                 type="text"
-                required
-                name="ipNumber"
-                onChange={handleIPNumberChange}
+                readOnly
+                name="ipNo"
+                value={formData.ipNo}
+                onChange={handleInputChange}
               />
             </div>
-
+            {/*  Particular Expenses cost */}
+            <div>
+              <label className="text-lg font-semibold" htmlFor="productName">
+                Particular Expenses cost
+              </label>
+              <input
+                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                placeholder="Product Name come API"
+                type="text"
+                readOnly
+                name="totalCost"
+                value={formData.totalCost}
+                onChange={handleInputChange}
+              />
+            </div>
             {/*  Product Name */}
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
@@ -190,10 +196,12 @@ const Finance = () => {
                 placeholder="Product Name come API"
                 type="text"
                 required
-                name="productsName"
-                //   onChange={handleChange}
+                name="officeAccount"
+                value={formData.officeAccount}
+                onChange={handleInputChange}
               />
             </div>
+
             {/*  Total Net Weight */}
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
@@ -231,9 +239,10 @@ const Finance = () => {
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                 type="text"
-                required
+                readOnly
                 name="truckNo"
-                onChange={handleTruckNo}
+                value={formData.truckNo}
+                onChange={handleInputChange}
               />
             </div>
             {/*  Remarks for Pallet */}
@@ -267,7 +276,7 @@ const Finance = () => {
         {/* Table data get from accouts input database */}
         <div>
           <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
-            Data Get From accounts Page
+            Purchase Data
           </h1>
           <div className="overflow-x-auto add__scrollbar">
             <table className="table">
@@ -286,16 +295,10 @@ const Finance = () => {
               </thead>
               <tbody>
                 {expenses?.map((expense) => (
-                  <tr className={`hover cursor-pointer`} key={expense.id}>
-                    {/* <td>
-                      <input
-                        type="checkbox"
-                        className="checkbox checkbox-info"
-                        name="product"
-                        value={product.id}
-                        onClick={() => handleProductCheck(product)}
-                      />
-                    </td> */}
+                  <tr
+                    className={`hover cursor-pointer`}
+                    key={expense.id}
+                    onClick={() => handleRowClick(expense)}>
                     <td>{expense.id}</td>
                     <td>{expense.invoiceNo}</td>
                     <td>{expense.ipNo}</td>
