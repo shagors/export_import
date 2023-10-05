@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import DatePicker from "react-datepicker";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -14,12 +13,14 @@ const Finance = () => {
   const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
   const [palletRemarks, setPalletRemarks] = useState("Pallet");
 
-  // Data fetch from server
+  const navigate = useNavigate();
+
   useEffect(() => {
     //   getting expenses data from office_accounts server
     fetchExpenses();
   }, []);
 
+  // Data fetch from server
   const fetchExpenses = async () => {
     try {
       const response = await axios.get(
@@ -29,10 +30,6 @@ const Finance = () => {
     } catch (error) {
       toast.error("Error from server to get data!!");
     }
-  };
-
-  const handleBEDateChange = (date) => {
-    setSelectedBEDate(date);
   };
 
   const handleEXIMChange = (e) => {
@@ -60,6 +57,7 @@ const Finance = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // merge data old and new data set to formData
   const handleAddNewData = () => {
     const data = {
       selectedBEDate: selectedBEDate,
@@ -76,14 +74,14 @@ const Finance = () => {
     }));
   };
 
+  // data save and send to server
   const handleSubmit = (e) => {
     e.preventDefault();
     // Send formData to your API for saving
 
-    // Reset selectedRow and formData after successful save
-    setFormData({});
     toast.success("Data successfully Saved!!", { position: "top-center" });
     console.log(formData);
+    navigate("/exportimport");
   };
 
   return (
