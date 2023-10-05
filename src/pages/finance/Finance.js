@@ -60,8 +60,7 @@ const Finance = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleAddNewData = () => {
     const data = {
       selectedBEDate: selectedBEDate,
       exim: exim,
@@ -70,6 +69,15 @@ const Finance = () => {
       totalPalletQuantity: totalPalletQuantity,
       palletRemarks: palletRemarks,
     };
+
+    setFormData((prevData) => ({
+      ...prevData, // Retain previous data
+      ...data, // Add new fields
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     // Send formData to your API for saving
 
     // Reset selectedRow and formData after successful save
@@ -77,6 +85,7 @@ const Finance = () => {
     toast.success("Data successfully Saved!!", { position: "top-center" });
     console.log(formData);
   };
+
   return (
     <div>
       <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
@@ -90,12 +99,10 @@ const Finance = () => {
               <label className="text-lg font-semibold" htmlFor="productName">
                 B/E Date
               </label>
-              <DatePicker
-                selected={selectedBEDate}
-                onChange={handleBEDateChange}
-                dateFormat="MM/dd/yyyy"
-                placeholderText="MM/DD/YYYY"
-                className="border rounded-xl w-60 py-[18px] px-3 mt-1 text-gray-700 leading-tight"
+              <input
+                type="date"
+                onChange={(e) => setSelectedBEDate(e.target.value)}
+                className="border rounded-xl w-60 p-[13px] lg:p-[13px] mt-1 text-gray-700 leading-tight"
                 required
               />
             </div>
@@ -105,7 +112,7 @@ const Finance = () => {
                 Export/Import
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Export/Import"
                 type="text"
                 required
@@ -119,7 +126,7 @@ const Finance = () => {
                 Invoice Number
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Invoice Number"
                 type="text"
                 readOnly
@@ -134,7 +141,7 @@ const Finance = () => {
                 Total In USD
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Total USD Payment"
                 type="text"
                 name="total"
@@ -148,7 +155,7 @@ const Finance = () => {
                 B/E Number
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Enter B/E Number"
                 type="text"
                 required
@@ -162,7 +169,7 @@ const Finance = () => {
                 IP Number
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Enter IP Number"
                 type="text"
                 readOnly
@@ -177,7 +184,7 @@ const Finance = () => {
                 Particular Expenses cost
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Product Name come API"
                 type="text"
                 readOnly
@@ -192,7 +199,7 @@ const Finance = () => {
                 Product Name
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Product Name come API"
                 type="text"
                 required
@@ -201,15 +208,14 @@ const Finance = () => {
                 onChange={handleInputChange}
               />
             </div>
-
             {/*  Total Net Weight */}
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
                 Net Weight
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Total Weight come API"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
+                placeholder="Enter Total Weight"
                 type="text"
                 required
                 name="totalNetWeight"
@@ -222,8 +228,8 @@ const Finance = () => {
                 Pallet Quantity
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Total Pallet Quantity"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
+                placeholder="Enter Total Pallet Quantity"
                 type="number"
                 required
                 min={0}
@@ -237,7 +243,7 @@ const Finance = () => {
                 Truck No
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 type="text"
                 readOnly
                 name="truckNo"
@@ -251,7 +257,7 @@ const Finance = () => {
                 Pallet Remarks
               </label>
               <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Pallet Remarks"
                 type="text"
                 required
@@ -265,6 +271,11 @@ const Finance = () => {
             <Link to="/exportimport" className="btn btn-info px-10 mx-5">
               Back
             </Link>
+            <p
+              className="btn btn-info px-10 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-lg bg-violet-500 text-white font-bold hover:text-black mb-6 mr-5"
+              onClick={handleAddNewData}>
+              Merge Data
+            </p>
             <button
               className="btn btn-info px-10 active:scale-[.98] active:duration-75 hover:scale-[1.03] ease-in-out transition-all py-3 rounded-lg bg-violet-500 text-white font-bold hover:text-black mb-6"
               type="submit">
@@ -290,6 +301,7 @@ const Finance = () => {
                   <th>Total (USD)</th>
                   <th>Expenses (TK)</th>
                   <th>Products Name</th>
+                  <th>Expenses List</th>
                   {/* <th>Action</th> */}
                 </tr>
               </thead>
@@ -305,6 +317,16 @@ const Finance = () => {
                     <td>{expense.total}</td>
                     <td>{expense.totalCost}</td>
                     <td>{expense.officeAccount}</td>
+                    <td>
+                      <ul>
+                        {expense.particularExpenseNames.map((ex) => (
+                          <li key={ex.expenseId}>
+                            {ex.particularExpenseName}:
+                            {ex.particularExpenseCost}
+                          </li>
+                        ))}
+                      </ul>
+                    </td>
                   </tr>
                 ))}
               </tbody>
