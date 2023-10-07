@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Finance = () => {
   const [expenses, setExpenses] = useState([]);
+  const [accounts, setAccounts] = useState([]);
   const [selectedBEDate, setSelectedBEDate] = useState(null);
   const [formData, setFormData] = useState({});
   const [exim, setExim] = useState("");
@@ -18,6 +19,7 @@ const Finance = () => {
   useEffect(() => {
     //   getting expenses data from office_accounts server
     fetchExpenses();
+    fetchAccounts();
   }, []);
 
   // Data fetch from server
@@ -27,6 +29,18 @@ const Finance = () => {
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase"
       );
       setExpenses(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
+
+  // Data fetch from server
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+      );
+      setAccounts(response?.data);
     } catch (error) {
       toast.error("Error from server to get data!!");
     }
@@ -56,6 +70,18 @@ const Finance = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  // map and extract from array
+  const matchedIds = expenses?.map((ex) => ex.officeAccount);
+
+  // array stringify for filtered
+  const formattedIds = matchedIds.map((idString) => JSON.parse(idString));
+
+  // match the seleted id with accounts and filter out seleted products name
+  const matchedProducts = accounts.filter((account) =>
+    formattedIds.some((idArray) => idArray.includes(account.id))
+  );
+  // console.log(matchedProducts);
 
   // merge data old and new data set to formData
   const handleAddNewData = () => {
@@ -143,6 +169,7 @@ const Finance = () => {
                 placeholder="Total USD Payment"
                 type="text"
                 name="total"
+                readOnly
                 value={formData.total}
                 onChange={handleInputChange}
               />
@@ -201,6 +228,7 @@ const Finance = () => {
                 placeholder="Product Name come API"
                 type="text"
                 required
+                readOnly
                 name="officeAccount"
                 value={formData.officeAccount}
                 onChange={handleInputChange}
@@ -299,7 +327,6 @@ const Finance = () => {
                   <th>Expenses (TK)</th>
                   <th>Products Name</th>
                   <th>Expenses List</th>
-                  {/* <th>Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -313,7 +340,9 @@ const Finance = () => {
                     <td>{expense.ipNo}</td>
                     <td>{expense.total}</td>
                     <td>{expense.totalCost}</td>
-                    <td>{expense.officeAccount}</td>
+                    <td>
+                      {matchedProducts.map((p) => p.productName).join(",")}
+                    </td>
                     <td>
                       <ul>
                         {expense.particularExpenseNames.map((ex) => (
