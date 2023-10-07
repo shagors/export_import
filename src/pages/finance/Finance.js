@@ -13,6 +13,7 @@ const Finance = () => {
   const [totalNetWeight, setTotalNetWeight] = useState(0);
   const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
   const [palletRemarks, setPalletRemarks] = useState("Pallet");
+  const [data, setData] = useState([]);
 
   const navigate = useNavigate();
 
@@ -71,17 +72,16 @@ const Finance = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // map and extract from array
-  const matchedIds = expenses?.map((ex) => ex.officeAccount);
+  // // map and extract from array
+  // const matchedIds = expenses?.map((ex) => ex.officeAccount);
 
-  // array stringify for filtered
-  const formattedIds = matchedIds.map((idString) => JSON.parse(idString));
+  // // array stringify for filtered
+  // const formattedIds = matchedIds.map((idString) => JSON.parse(idString));
 
-  // match the seleted id with accounts and filter out seleted products name
-  const matchedProducts = accounts.filter((account) =>
-    formattedIds.some((idArray) => idArray.includes(account.id))
-  );
-  // console.log(matchedProducts);
+  // // match the seleted id with accounts and filter out seleted products name
+  // const matchedProducts = accounts.filter((account) =>
+  //   formattedIds.some((item) => item.includes(account.id))
+  // );
 
   // merge data old and new data set to formData
   const handleAddNewData = () => {
@@ -330,31 +330,44 @@ const Finance = () => {
                 </tr>
               </thead>
               <tbody>
-                {expenses?.map((expense) => (
-                  <tr
-                    className={`hover cursor-pointer`}
-                    key={expense.id}
-                    onClick={() => handleRowClick(expense)}>
-                    <td>{expense.id}</td>
-                    <td>{expense.invoiceNo}</td>
-                    <td>{expense.ipNo}</td>
-                    <td>{expense.total}</td>
-                    <td>{expense.totalCost}</td>
-                    <td>
-                      {matchedProducts.map((p) => p.productName).join(",")}
-                    </td>
-                    <td>
-                      <ul>
-                        {expense.particularExpenseNames.map((ex) => (
-                          <li key={ex.expenseId}>
-                            {ex.particularExpenseName}:
-                            {ex.particularExpenseCost}
-                          </li>
-                        ))}
-                      </ul>
-                    </td>
-                  </tr>
-                ))}
+                {expenses?.map((expense) => {
+                  const officeID = expense.officeAccount;
+                  // console.log(officeID);
+                  const matchedProducts = accounts.filter((account) =>
+                    officeID.includes(account.id)
+                  );
+                  // console.log(matchedProducts);
+
+                  return (
+                    <tr
+                      className={`hover cursor-pointer`}
+                      key={expense.id}
+                      onClick={() => handleRowClick(expense)}>
+                      <td>{expense.id}</td>
+                      <td>{expense.invoiceNo}</td>
+                      <td>{expense.ipNo}</td>
+                      <td>{expense.total}</td>
+                      <td>{expense.totalCost}</td>
+                      <td>
+                        {matchedProducts
+                          ?.map((p) => {
+                            return p.productName;
+                          })
+                          .join(",")}
+                      </td>
+                      <td>
+                        <ul>
+                          {expense.particularExpenseNames.map((ex) => (
+                            <li key={ex.expenseId}>
+                              {ex.particularExpenseName}:
+                              {ex.particularExpenseCost}
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
