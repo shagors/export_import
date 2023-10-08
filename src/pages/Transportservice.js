@@ -229,6 +229,7 @@ const Transportservice = () => {
               <th>total</th>
               <th>totalCost</th>
               <th>truckNo.</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -254,6 +255,7 @@ const Transportservice = () => {
                   <td>{expense.total}</td>
                   <td>{expense.totalCost}</td>
                   <td>{expense.truckNo}</td>
+                  <td>Delete</td>
                 </tr>
               );
             })}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const Finance = () => {
   const [expenses, setExpenses] = useState([]);
@@ -108,6 +109,21 @@ const Finance = () => {
     toast.success("Data successfully Saved!!", { position: "top-center" });
     console.log(formData);
     navigate("/exportimport");
+  };
+
+  // product delete from server and also frontend
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase/${id}`
+      );
+      toast.warn("Data successfully Deleted!!", { position: "top-center" });
+      fetchExpenses();
+    } catch (error) {
+      toast.error("You can't delete now. Please try again later!", {
+        position: "top-center",
+      });
+    }
   };
 
   return (
@@ -327,6 +343,7 @@ const Finance = () => {
                   <th>Expenses (TK)</th>
                   <th>Products Name</th>
                   <th>Expenses List</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -364,6 +381,11 @@ const Finance = () => {
                             </li>
                           ))}
                         </ul>
+                      </td>
+                      <td>
+                        <button onClick={() => handleDelete(expense?.id)}>
+                          <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                        </button>
                       </td>
                     </tr>
                   );
