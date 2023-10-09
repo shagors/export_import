@@ -34,16 +34,19 @@ const Footer = () => {
             <a
               href="https://bd.linkedin.com/company/thtuepz"
               className="cursor-pointer"
-              target="_blank">
+              rel="opener">
               <BsLinkedin className="w-4 h-4 rounded" />
             </a>
             <a
               href="https://www.facebook.com/thtUEPZ/"
               className="cursor-pointer"
-              target="_blank">
+              rel="opener">
               <FaFacebookSquare className="w-4 h-4 rounded" />
             </a>
-            <a>
+            <a
+              href="https://www.wechat.com/"
+              rel="opener"
+              className="cursor-pointer">
               <BsWechat className="w-4 h-4 rounded" />
             </a>
           </div>

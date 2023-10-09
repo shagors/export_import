@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 const DataInput = () => {
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -13,8 +14,6 @@ const DataInput = () => {
     productModel: "",
     productWeight: "",
   });
-
-  const [products, setProducts] = useState([]);
 
   const handleChange = (event) => {
     setFormData({
@@ -71,16 +70,21 @@ const DataInput = () => {
 
   // product delete from server and also frontend
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products/${id}`
-      );
-      toast.warn("Data successfully Deleted!!", { position: "top-center" });
-      fetchProducts();
-    } catch (error) {
-      toast.error("You can't delete now. Please try again later!", {
-        position: "top-center",
-      });
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+    if (confirmDelete) {
+      try {
+        await axios.delete(
+          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products/${id}`
+        );
+        toast.warn("Data successfully Deleted!!", { position: "top-center" });
+        fetchProducts();
+      } catch (error) {
+        toast.error("You can't delete now. Please try again later!", {
+          position: "top-center",
+        });
+      }
     }
   };
 
@@ -192,7 +196,7 @@ const DataInput = () => {
                     <Link to={`/datainput/${product.id}`}>
                       <AiOutlineEdit className="w-6 h-6 text-purple-600" />
                     </Link>
-                    <button onClick={() => handleDelete(product?.id)}>
+                    <button onClick={() => handleDelete(product.id)}>
                       <AiOutlineDelete className="w-6 h-6 text-red-600" />
                     </button>
                   </td>
