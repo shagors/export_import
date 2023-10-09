@@ -41,7 +41,6 @@ const DataInput = () => {
   };
 
   // http://localhost:5001/products
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(formData);
@@ -56,7 +55,7 @@ const DataInput = () => {
         }
       )
       .then((res) => {
-        toast.success("Successfully Uploaded to server", {
+        toast.success("Successfully Data Uploaded", {
           position: "top-center",
         });
         navigate("/exportimport");
@@ -71,7 +70,7 @@ const DataInput = () => {
   // product delete from server and also frontend
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this item?"
+      "Are you sure, you want to delete this Product Data?"
     );
     if (confirmDelete) {
       try {
