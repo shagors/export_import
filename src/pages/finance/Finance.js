@@ -14,7 +14,6 @@ const Finance = () => {
   const [totalNetWeight, setTotalNetWeight] = useState(0);
   const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
   const [palletRemarks, setPalletRemarks] = useState("Pallet");
-  const [data, setData] = useState([]);
 
   const navigate = useNavigate();
 
@@ -333,31 +332,33 @@ const Finance = () => {
           </h1>
           <div className="overflow-x-auto add__scrollbar">
             <table className="table">
-              {/* head */}
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Invoice No</th>
-                  <th>IP No</th>
-                  <th>Total (USD)</th>
-                  <th>Expenses (TK)</th>
-                  <th>Products Name</th>
-                  <th>Expenses List</th>
-                  <th>Action</th>
+                  <th className="sticky top-0 bg-gray-200">ID</th>
+                  <th className="sticky top-0 bg-gray-200">Invoice No</th>
+                  <th className="sticky top-0 bg-gray-200">IP No</th>
+                  <th className="sticky top-0 bg-gray-200">
+                    Total <span className="text-red-600">(USD)</span>
+                  </th>
+                  <th className="sticky top-0 bg-gray-200">
+                    Expenses <span className="text-blue-600">(TK)</span>
+                  </th>
+                  <th className="sticky top-0 bg-gray-200">Products Name</th>
+                  <th className="sticky top-0 bg-gray-200">Expenses List</th>
+                  <th className="sticky top-0 bg-gray-200">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {expenses?.map((expense) => {
-                  const officeID = expense.officeAccount;
+                  const officeID = expense?.officeAccount;
                   // console.log(officeID);
-                  const matchedProducts = accounts.filter((account) =>
-                    officeID.includes(account.id)
+                  const matchedProducts = accounts?.filter((account) =>
+                    officeID?.includes(account.id)
                   );
                   // console.log(matchedProducts);
-
                   return (
                     <tr
-                      className={`hover cursor-pointer`}
+                      className={`hover cursor-pointer text-[13px]`}
                       key={expense.id}
                       onClick={() => handleRowClick(expense)}>
                       <td>{expense.id}</td>

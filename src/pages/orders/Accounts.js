@@ -196,12 +196,12 @@ const Accounts = ({ brand, model }) => {
             {/* head */}
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Product Name</th>
-                <th>Product Brand</th>
-                <th>Product Model</th>
-                <th>Quantity</th>
-                <th>Date</th>
+                <th className="sticky top-0 bg-gray-200">ID</th>
+                <th className="sticky top-0 bg-gray-200">Product Name</th>
+                <th className="sticky top-0 bg-gray-200">Product Brand</th>
+                <th className="sticky top-0 bg-gray-200">Product Model</th>
+                <th className="sticky top-0 bg-gray-200">Quantity</th>
+                <th className="sticky top-0 bg-gray-200">Date</th>
               </tr>
             </thead>
             <tbody>

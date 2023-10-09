@@ -153,10 +153,10 @@ const AddCharges = () => {
             {/* head */}
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Expencess Name</th>
-                <th>Expencess Cost</th>
-                <th>Actions</th>
+                <th className="sticky top-0 bg-gray-200">ID</th>
+                <th className="sticky top-0 bg-gray-200">Expencess Name</th>
+                <th className="sticky top-0 bg-gray-200">Expencess Cost</th>
+                <th className="sticky top-0 bg-gray-200">Actions</th>
               </tr>
             </thead>
             <tbody>

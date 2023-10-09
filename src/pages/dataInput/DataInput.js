@@ -172,12 +172,12 @@ const DataInput = () => {
             {/* head */}
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Product Name</th>
-                <th>Product Brand</th>
-                <th>Product Model</th>
-                <th>Product Weight/KG</th>
-                <th>Actions</th>
+                <th className="sticky top-0 bg-gray-200">ID</th>
+                <th className="sticky top-0 bg-gray-200">Product Name</th>
+                <th className="sticky top-0 bg-gray-200">Product Brand</th>
+                <th className="sticky top-0 bg-gray-200">Product Model</th>
+                <th className="sticky top-0 bg-gray-200">Product Weight/KG</th>
+                <th className="sticky top-0 bg-gray-200">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -188,7 +188,7 @@ const DataInput = () => {
                   <td>{product.productBrand}</td>
                   <td>{product.productModel}</td>
                   <td>{product.productWeight}</td>
-                  <td className="flex justify-evenly items-center">
+                  <td className="flex justify-around items-center">
                     <Link to={`/datainput/${product.id}`}>
                       <AiOutlineEdit className="w-6 h-6 text-purple-600" />
                     </Link>

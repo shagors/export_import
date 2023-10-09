@@ -306,14 +306,14 @@ const Purchase = () => {
               {/* head */}
               <thead>
                 <tr>
-                  <th>Select</th>
-                  <th>ID</th>
-                  <th>Product Name</th>
-                  <th>Product Brand</th>
-                  <th>Product Model</th>
-                  <th>Quantity</th>
-                  <th>Date</th>
-                  <th>Action</th>
+                  <th className="sticky top-0 bg-gray-200">Select</th>
+                  <th className="sticky top-0 bg-gray-200">ID</th>
+                  <th className="sticky top-0 bg-gray-200">Product Name</th>
+                  <th className="sticky top-0 bg-gray-200">Product Brand</th>
+                  <th className="sticky top-0 bg-gray-200">Product Model</th>
+                  <th className="sticky top-0 bg-gray-200">Quantity</th>
+                  <th className="sticky top-0 bg-gray-200">Date</th>
+                  <th className="sticky top-0 bg-gray-200">Action</th>
                 </tr>
               </thead>
               <tbody>
