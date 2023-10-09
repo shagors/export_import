@@ -271,7 +271,7 @@ const Purchase = () => {
                 <div className="form-control card-body">
                   <div>
                     <label className="text-lg font-semibold" htmlFor="total">
-                      Total (USD)
+                      Total <span className="text-red-600">(USD)</span>
                     </label>
                     <input
                       className="w-full border-[1px] border-info rounded-md p-3 mt-3 bg-transparent"

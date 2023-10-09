@@ -5,59 +5,66 @@ import { FaFacebookSquare } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="footer py-10 bg-slate-200 px-5 md:mx-0 lg:flex items-center justify-evenly">
-      <div className="">
-        <span className="footer-title">Services</span>
-        <a className="link link-hover">Customer Care</a>
-        <a className="link link-hover">Translator</a>
-        <a className="link link-hover">Marketing</a>
-        <a className="link link-hover">Data Analysis</a>
-      </div>
-      <div>
-        <span className="footer-title">Company</span>
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <a className="link link-hover">Press kit</a>
-      </div>
-      <div>
-        <span className="footer-title">Company</span>
-        <a className="link link-hover">Career</a>
-        <a className="link link-hover">Portal</a>
-        <a className="link link-hover">News</a>
-        <a className="link link-hover">Products</a>
-      </div>
-      <div>
-        <span className="footer-title">Social</span>
-        <div className="grid grid-flow-col gap-4">
-          <a
-            href="https://bd.linkedin.com/company/thtuepz"
-            className="cursor-pointer"
-            target="_blank">
-            <BsLinkedin className="w-7 h-7 rounded" />
-          </a>
-          <a
-            href="https://www.facebook.com/thtUEPZ/"
-            className="cursor-pointer"
-            target="_blank">
-            <FaFacebookSquare className="w-7 h-7 rounded" />
-          </a>
-          <a>
-            <BsWechat className="w-7 h-7 rounded" />
-          </a>
+    <footer className=" bg-slate-200">
+      <div className="footer py-10 px-5 md:mx-0 lg:flex items-center justify-evenly">
+        <div className="">
+          <span className="footer-title">Services</span>
+          <a className="link link-hover">Customer Care</a>
+          <a className="link link-hover">Translator</a>
+          <a className="link link-hover">Marketing</a>
+          <a className="link link-hover">Data Analysis</a>
         </div>
-        <p className=" mt-5 font-semibold text-lg">
-          &copy; 2023. All rights reserved by <br /> THT-space electrical
-          company Ltd.
-          <div className="flex gap-2">
-            <BsFillTelephoneFill />
-            09638-322304
+        <div>
+          <span className="footer-title">Company</span>
+          <a className="link link-hover">About us</a>
+          <a className="link link-hover">Contact</a>
+          <a className="link link-hover">Jobs</a>
+          <a className="link link-hover">Press kit</a>
+        </div>
+        <div>
+          <span className="footer-title">Company</span>
+          <a className="link link-hover">Career</a>
+          <a className="link link-hover">Portal</a>
+          <a className="link link-hover">News</a>
+          <a className="link link-hover">Products</a>
+        </div>
+        <div>
+          <span className="footer-title">Social</span>
+          <div className="grid grid-flow-col gap-2">
+            <a
+              href="https://bd.linkedin.com/company/thtuepz"
+              className="cursor-pointer"
+              target="_blank">
+              <BsLinkedin className="w-4 h-4 rounded" />
+            </a>
+            <a
+              href="https://www.facebook.com/thtUEPZ/"
+              className="cursor-pointer"
+              target="_blank">
+              <FaFacebookSquare className="w-4 h-4 rounded" />
+            </a>
+            <a>
+              <BsWechat className="w-4 h-4 rounded" />
+            </a>
           </div>
-          <div className="flex gap-2">
-            <AiOutlineMail className="w-7 h-7 rounded" />
-            thtuepz@gmail.com
+          <div className="text-[12px] font-semibold">
+            <div className="flex items-center gap-1">
+              <BsFillTelephoneFill className="w-4 h-4" />
+              09638-322304
+            </div>
+            <div className="flex items-center gap-1">
+              <AiOutlineMail className="w-4 h-4 rounded" />
+              thtuepz@gmail.com
+            </div>
           </div>
-        </p>
+        </div>
+      </div>
+      <hr className="border solid h-[3px] w-3/4 mx-auto bg-sky-500" />
+      <div className=" mt-5 text-lg flex items-center justify-center mx-16 mb-3">
+        <div className="text-[11px]">
+          <span className="font-semibold text-[13px]">&copy; 2023.</span> All
+          rights reserved by THT-space electrical company Ltd.
+        </div>
       </div>
     </footer>
   );
