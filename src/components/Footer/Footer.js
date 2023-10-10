@@ -28,8 +28,8 @@ const Footer = () => {
           <a className="link link-hover">News</a>
           <a className="link link-hover">Products</a>
         </div>
-        <div>
-          <span className="footer-title">Social</span>
+        <div className="">
+          <span className="footer-title">Contact Us</span>
           <div className="grid grid-flow-col gap-2">
             <a
               href="https://bd.linkedin.com/company/thtuepz"

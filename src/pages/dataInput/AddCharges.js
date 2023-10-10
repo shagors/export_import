@@ -148,7 +148,7 @@ const AddCharges = () => {
       </div>
 
       {/* Table data get from accouts input database */}
-      <div>
+      <div className="w-full lg:w-3/4 mx-auto">
         <h1 className="text-center my-6 text-2xl text-info font-bold bg-slate-500 p-[10px] rounded-lg uppercase">
           All Stored Expencess's Details
         </h1>

@@ -169,7 +169,59 @@ const Purchase = () => {
           <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
             Shipment Details Add
           </h1>
-          <div className="mt-5 lg:flex justify-center items-center">
+
+          {/* Table data get from accouts input database */}
+          <div className="w-full lg:w-3/4 mx-auto">
+            <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
+              Select the Product
+            </h1>
+            <div className="overflow-x-auto add__scrollbar">
+              <table className="table">
+                {/* head */}
+                <thead>
+                  <tr>
+                    <th className="sticky top-0 bg-gray-200">Select</th>
+                    <th className="sticky top-0 bg-gray-200">ID</th>
+                    <th className="sticky top-0 bg-gray-200">Product Name</th>
+                    <th className="sticky top-0 bg-gray-200">Product Brand</th>
+                    <th className="sticky top-0 bg-gray-200">Product Model</th>
+                    <th className="sticky top-0 bg-gray-200">Quantity</th>
+                    <th className="sticky top-0 bg-gray-200">Date</th>
+                    <th className="sticky top-0 bg-gray-200">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {accounts?.map((product) => (
+                    <tr className={`hover cursor-pointer`} key={product.id}>
+                      <td>
+                        <input
+                          type="checkbox"
+                          className="checkbox checkbox-info"
+                          name="product"
+                          value={product.id}
+                          onClick={() => handleProductCheck(product)}
+                        />
+                      </td>
+                      <td>{product.id}</td>
+                      <td>{product.productName}</td>
+                      <td>{product.productBrand}</td>
+                      <td>{product.productModel}</td>
+                      <td>{product.productQuantity}</td>
+                      <td>{product.date}</td>
+                      <td>
+                        <button onClick={() => handleDelete(product?.id)}>
+                          <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* form for details add */}
+          <div className="mt-4 lg:flex justify-center items-center w-full lg:w-3/4 mx-auto">
             <form
               className="bg-base-100 rounded-lg shadow-xl mt-5"
               onSubmit={formSubmit}>
@@ -300,56 +352,6 @@ const Purchase = () => {
                 onTotalCostChange={handleTotalCostChange}
               />
             </form>
-          </div>
-        </div>
-
-        {/* Table data get from accouts input database */}
-        <div>
-          <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
-            Data Get From accounts Page
-          </h1>
-          <div className="overflow-x-auto add__scrollbar">
-            <table className="table">
-              {/* head */}
-              <thead>
-                <tr>
-                  <th className="sticky top-0 bg-gray-200">Select</th>
-                  <th className="sticky top-0 bg-gray-200">ID</th>
-                  <th className="sticky top-0 bg-gray-200">Product Name</th>
-                  <th className="sticky top-0 bg-gray-200">Product Brand</th>
-                  <th className="sticky top-0 bg-gray-200">Product Model</th>
-                  <th className="sticky top-0 bg-gray-200">Quantity</th>
-                  <th className="sticky top-0 bg-gray-200">Date</th>
-                  <th className="sticky top-0 bg-gray-200">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {accounts?.map((product) => (
-                  <tr className={`hover cursor-pointer`} key={product.id}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        className="checkbox checkbox-info"
-                        name="product"
-                        value={product.id}
-                        onClick={() => handleProductCheck(product)}
-                      />
-                    </td>
-                    <td>{product.id}</td>
-                    <td>{product.productName}</td>
-                    <td>{product.productBrand}</td>
-                    <td>{product.productModel}</td>
-                    <td>{product.productQuantity}</td>
-                    <td>{product.date}</td>
-                    <td>
-                      <button onClick={() => handleDelete(product?.id)}>
-                        <AiOutlineDelete className="w-6 h-6 text-red-600" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
         </div>
       </div>

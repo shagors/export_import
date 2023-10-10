@@ -74,27 +74,85 @@ const Accounts = ({ brand, model }) => {
           <form
             className="lg:w-[800px] bg-base-100 shadow-xl mt-3"
             onSubmit={formSubmit}>
-            <div className="lg:flex justify-around items-center my-3">
-              <div className="form-control mb-2 lg:mb-0">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-6">
+              {/* product name */}
+              <div className="form-control">
                 <label className="text-center mb-3">
                   <span className="lebel-text text-lg font-semibold">
                     Product Name
                   </span>
                 </label>
-                <div className="input-group  flex lg:flex-none justify-center items-center">
-                  <select
-                    className="select select-info w-full max-w-xs"
-                    id="selectOption"
-                    value={formData.productName}
-                    name="productName"
-                    onChange={handleChange}>
-                    <option value="">---- Pick product Name ----</option>
-                    {serverData?.map((product, index) => (
-                      <option key={index}>{product.productName}</option>
-                    ))}
-                  </select>
-                </div>
+                <select
+                  className="select select-info w-full max-w-xs"
+                  id="selectOption"
+                  value={formData.productName}
+                  name="productName"
+                  onChange={handleChange}>
+                  <option value="">---- Pick product Name ----</option>
+                  {serverData?.map((product, index) => (
+                    <option key={index}>{product.productName}</option>
+                  ))}
+                </select>
               </div>
+
+              {/* product Brand */}
+              <div className="form-control">
+                <label className="text-center mb-3">
+                  <span className="lebel-text text-lg font-semibold">
+                    Product Brand
+                  </span>
+                </label>
+                <select
+                  className="select select-info w-full max-w-xs"
+                  id="selectOption"
+                  value={formData.productBrand || ""}
+                  name="productBrand"
+                  onChange={handleChange}>
+                  <option value="">---- Pick product Brand ----</option>
+                  {serverData?.map((product, index) => (
+                    <option key={index}>{product?.productBrand}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* product Model */}
+              <div className="form-control">
+                <label className="text-center mb-3">
+                  <span className="lebel-text text-lg font-semibold">
+                    Product Model
+                  </span>
+                </label>
+                <select
+                  className="select select-info w-full max-w-xs"
+                  id="selectOption"
+                  value={formData.productModel || ""}
+                  name="productModel"
+                  onChange={handleChange}>
+                  <option value="">---- Pick product Brand ----</option>
+                  {serverData?.map((product, index) => (
+                    <option key={index}>{product.productModel}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* product Quantity */}
+              <div className="form-control">
+                <label className="text-center mb-3">
+                  <span className="lebel-text text-lg font-semibold text-center">
+                    Product Quantity
+                  </span>
+                </label>
+                <input
+                  className="input input-bordered rounded-md join-item select-info"
+                  placeholder="Quantity of Product"
+                  type="number"
+                  name="productQuantity"
+                  min="0"
+                  value={formData.productQuantity || ""}
+                  onChange={handleChange}
+                />
+              </div>
+
               {/* date field */}
               <div className="form-control lg:pr-2 text-center flex flex-col justify-center items-center">
                 <label className="text-center mb-2">
@@ -107,67 +165,6 @@ const Accounts = ({ brand, model }) => {
                   value={formData?.date}
                   className="border-2 select-info rounded-md text-lg p-[6px]"
                 />
-              </div>
-            </div>
-            <div className="flex flex-col  justify-between items-center px-8 mt-3 lg:mt-0 w-full">
-              <div className="join mb-3">
-                <div className="form-control">
-                  <label className="text-center mb-3">
-                    <span className="lebel-text text-lg font-semibold">
-                      Product Brand
-                    </span>
-                  </label>
-                  <select
-                    className="select select-info w-full max-w-xs"
-                    id="selectOption"
-                    value={formData.productBrand || ""}
-                    name="productBrand"
-                    onChange={handleChange}>
-                    <option value="">---- Pick product Brand ----</option>
-                    {serverData?.map((product, index) => (
-                      <option key={index}>{product?.productBrand}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div className="join mb-3">
-                <div className="form-control">
-                  <label className="text-center mb-3">
-                    <span className="lebel-text text-lg font-semibold">
-                      Product Model
-                    </span>
-                  </label>
-                  <select
-                    className="select select-info w-full max-w-xs"
-                    id="selectOption"
-                    value={formData.productModel || ""}
-                    name="productModel"
-                    onChange={handleChange}>
-                    <option value="">---- Pick product Brand ----</option>
-                    {serverData?.map((product, index) => (
-                      <option key={index}>{product.productModel}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div className="join mb-3">
-                <div>
-                  <label className="label">
-                    <span className="lebel-text text-lg font-semibold text-center">
-                      Product Quantity
-                    </span>
-                  </label>
-                  <input
-                    className="input input-bordered rounded-md join-item select-info"
-                    placeholder="Quantity of Product"
-                    type="number"
-                    name="productQuantity"
-                    min="0"
-                    value={formData.productQuantity || ""}
-                    onChange={handleChange}
-                  />
-                  <p className="btn join-item rounded-r-full">Pcs</p>
-                </div>
               </div>
             </div>
             <div className="mt-4 mr-7 flex justify-end">
@@ -187,7 +184,7 @@ const Accounts = ({ brand, model }) => {
       </div>
 
       {/* Table data get from accouts input database */}
-      <div className="mb-6">
+      <div className="mb-6 w-full lg:w-3/4 mx-auto">
         <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
           Product's Data Table
         </h1>

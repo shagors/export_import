@@ -333,7 +333,7 @@ const Finance = () => {
         {/* Table data get from accouts input database */}
         <div>
           <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
-            Purchase Data
+            Export Products Details
           </h1>
           <div className="overflow-x-auto add__scrollbar">
             <table className="table">
