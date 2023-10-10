@@ -144,8 +144,7 @@ const DataInput = () => {
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
                 placeholder="Enter Product Weight/KG"
-                type="number"
-                min={0}
+                type="text"
                 name="productWeight"
                 id="productWeight"
                 onChange={handleChange}

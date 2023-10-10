@@ -302,7 +302,7 @@ const ProductBoxes = () => {
       <div className="mt-5 lg:flex justify-center items-center mb-4">
         <form className="card shadow-xl mt-5 p-3" onSubmit={handleInstantStore}>
           <h2 className="text-4xl font-bold text-violet-500 text-center mt-3">
-            Selected Products
+            Products Listed For Export
           </h2>
           <div className="lg:flex justify-between items-center">
             <div className="form-control card-body">

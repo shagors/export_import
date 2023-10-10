@@ -67,8 +67,8 @@ const Accounts = ({ brand, model }) => {
   return (
     <>
       <div>
-        <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
-          Add Accounts Data :
+        <h1 className="flex justify-center items-center text-3xl my-4 uppercase text-info font-bold">
+          Accounts Added Product Form
         </h1>
         <div className="mt-3 lg:flex justify-center items-center">
           <form
@@ -189,7 +189,7 @@ const Accounts = ({ brand, model }) => {
       {/* Table data get from accouts input database */}
       <div className="mb-6">
         <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
-          Data Table
+          Product's Data Table
         </h1>
         <div className="overflow-x-auto add__scrollbar">
           <table className="table">

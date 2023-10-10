@@ -20,7 +20,6 @@ const TransportCountry = () => {
 
   // http://localhost:5001/transport_country
   // http://43.154.22.219:3091/api/dev
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -41,10 +40,11 @@ const TransportCountry = () => {
         })
       );
   };
+
   return (
     <div className="mb-6">
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
-        Entry Form For Export Country
+        Export Country Entry Form
       </h1>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">

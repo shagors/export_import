@@ -73,7 +73,6 @@ const AddCharges = () => {
 
   // data delete from server and also frontend
   // http://localhost:5001/delete/:id
-
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure, you want to delete this Charge?"
@@ -96,7 +95,7 @@ const AddCharges = () => {
   return (
     <div className="mb-6">
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
-        All Charges Entry Form
+        Charges Entry Form
       </h1>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">

@@ -167,7 +167,7 @@ const Purchase = () => {
         {/* top form select and checkbox design */}
         <div className="">
           <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
-            Add Shipment Data :
+            Shipment Details Add
           </h1>
           <div className="mt-5 lg:flex justify-center items-center">
             <form
