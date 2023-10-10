@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { UserContext } from "../../components/context/authContext";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const { loginUser } = useContext(UserContext);
   const [values, setValues] = useState({
     userEmail: "",
     password: "",
@@ -22,11 +23,9 @@ const Login = () => {
       )
       .then((res) => {
         if (res.data === true) {
-          localStorage.setItem("values", JSON.stringify(values?.userEmail));
+          loginUser(values?.userEmail);
           toast.success("Login Successfully", { position: "top-center" });
           navigate("/");
-          // window.location.reload();
-          // console.log(res);
         } else {
           toast.error("Email & password don't match!!", {
             position: "top-center",

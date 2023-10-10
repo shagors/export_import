@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/authContext";
 
 const Navbar = () => {
-  const [user, setUser] = useState("");
   const navigate = useNavigate();
+  const { user, logoutUser } = useContext(UserContext);
 
-  useEffect(() => {
-    setUser(localStorage.getItem("values"));
-  }, []);
-
-  // console.log(user);
   const handleLogout = () => {
-    localStorage.removeItem("values");
-    setUser("");
+    logoutUser();
     navigate("/");
   };
 
