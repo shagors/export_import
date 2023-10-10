@@ -5,7 +5,7 @@ const Services = () => {
   return (
     <div className="mt-7">
       <div className="text-center">
-        <h1 className="text-3xl font-semibold text-purple-600">Working Flow</h1>
+        <h1 className="text-3xl font-semibold text-purple-600">Work Flow</h1>
       </div>
       <div className="grid md:grid-cols-3 gap-3 px-2 my-8 text-center">
         <Link

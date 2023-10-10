@@ -90,7 +90,7 @@ const DataInput = () => {
   return (
     <div className="mb-6">
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
-        Data Entry Form
+        New Product Entry Form
       </h1>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
@@ -144,7 +144,8 @@ const DataInput = () => {
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
                 placeholder="Enter Product Weight/KG"
-                type="text"
+                type="number"
+                min={0}
                 name="productWeight"
                 id="productWeight"
                 onChange={handleChange}
@@ -168,7 +169,7 @@ const DataInput = () => {
       {/* Table data get from products database */}
       <div>
         <h1 className="text-center my-6 text-2xl text-info font-bold bg-slate-500 p-[10px] rounded-lg uppercase">
-          All Stored Product's Details
+          All Product's List
         </h1>
         <div className="overflow-x-auto add__scrollbar">
           <table className="table">

@@ -92,19 +92,26 @@ const Purchase = () => {
   };
 
   const handleDelete = (id) => {
-    axios
-      .delete(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
-      )
-      .then((res) => {
-        toast.warn("Data Successfully Deleted!!", {
-          position: "top-center",
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this Product Data?"
+    );
+    if (confirmDelete) {
+      axios
+        .delete(
+          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
+        )
+        .then((res) => {
+          toast.warn("Data Successfully Deleted!!", {
+            position: "top-center",
+          });
+          fetchAccounts();
+        })
+        .catch((error) => {
+          toast.error("Something wrong can't delete", {
+            position: "top-center",
+          });
         });
-        fetchAccounts();
-      })
-      .catch((error) => {
-        toast.error("Something wrong can't delete", { position: "top-center" });
-      });
+    }
   };
 
   const handleExpenseSave = (selectedExpenseData) => {

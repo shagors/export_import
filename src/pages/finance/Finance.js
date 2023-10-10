@@ -112,16 +112,21 @@ const Finance = () => {
 
   // product delete from server and also frontend
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase/${id}`
-      );
-      toast.warn("Data successfully Deleted!!", { position: "top-center" });
-      fetchExpenses();
-    } catch (error) {
-      toast.error("You can't delete now. Please try again later!", {
-        position: "top-center",
-      });
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this Product Data?"
+    );
+    if (confirmDelete) {
+      try {
+        await axios.delete(
+          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase/${id}`
+        );
+        toast.warn("Data successfully Deleted!!", { position: "top-center" });
+        fetchExpenses();
+      } catch (error) {
+        toast.error("You can't delete now. Please try again later!", {
+          position: "top-center",
+        });
+      }
     }
   };
 
