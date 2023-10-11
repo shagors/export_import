@@ -376,7 +376,7 @@ const Finance = () => {
                   </th>
                   <th className="sticky top-0 bg-gray-200">Products Name</th>
                   <th className="sticky top-0 bg-gray-200">Expenses List</th>
-                  <th className="sticky top-0 bg-gray-200">Action</th>
+                  {/* <th className="sticky top-0 bg-gray-200">Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -414,11 +414,11 @@ const Finance = () => {
                           ))}
                         </ul>
                       </td>
-                      <td>
+                      {/* <td>
                         <button onClick={() => handleDelete(expense?.id)}>
                           <AiOutlineDelete className="w-6 h-6 text-red-600" />
                         </button>
-                      </td>
+                      </td> */}
                     </tr>
                   );
                 })}

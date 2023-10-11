@@ -27,7 +27,7 @@ const DataInputUpdate = () => {
           position: "top-center",
         })
       );
-  }, []);
+  }, [id]);
 
   // update data submit
   const handleSubmit = (e) => {
@@ -53,7 +53,7 @@ const DataInputUpdate = () => {
   return (
     <div className="mb-6">
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
-        Data Entry Form
+        Product Update Form
       </h1>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">

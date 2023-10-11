@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AiOutlineEdit } from "react-icons/ai";
 
 const Accounts = ({ brand, model }) => {
   const [serverData, setServerData] = useState([]);
@@ -202,6 +203,7 @@ const Accounts = ({ brand, model }) => {
                 <th className="sticky top-0 bg-gray-200">Product Model</th>
                 <th className="sticky top-0 bg-gray-200">Quantity</th>
                 <th className="sticky top-0 bg-gray-200">Date</th>
+                <th className="sticky top-0 bg-gray-200">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -213,6 +215,11 @@ const Accounts = ({ brand, model }) => {
                   <td>{product.productModel}</td>
                   <td>{product.productQuantity}</td>
                   <td>{product.date}</td>
+                  <td>
+                    <Link to={`/accounts/${product.id}`}>
+                      <AiOutlineEdit className="w-6 h-6 text-purple-600" />
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

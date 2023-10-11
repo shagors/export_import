@@ -24,6 +24,7 @@ import ProductBoxes from "../pages/finance/ProductBoxes";
 import Home from "../pages/Home/Home";
 import Finance from "../pages/finance/Finance";
 import DataInputUpdate from "../pages/dataInput/DataInputUpdate";
+import AccountsUpdate from "../pages/orders/AccountsUpdate";
 
 const Routers = () => {
   return (
@@ -37,6 +38,7 @@ const Routers = () => {
         <Route path="/export" element={<Export />} />
         <Route path="/import" element={<Import />} />
         <Route path="/accounts" element={<Accounts />} />
+        <Route path="/accounts/:id" element={<AccountsUpdate />} />
         <Route path="/warehouse" element={<Warehouse />} />
         <Route path="/transport" element={<Transport />} />
         <Route path="/transportroutes" element={<TransportRoutes />} />
