@@ -32,7 +32,9 @@ const DataInput = () => {
       const response = await axios.get(
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
       );
-      setProducts(response?.data);
+      // data see in table descending order
+      const sortedData = response?.data.sort((a, b) => b.id - a.id);
+      setProducts(sortedData);
     } catch (error) {
       toast.error("Error getting data from server!", {
         position: "top-center",

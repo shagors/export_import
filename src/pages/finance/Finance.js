@@ -29,7 +29,10 @@ const Finance = () => {
       const response = await axios.get(
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase"
       );
-      setExpenses(response?.data);
+      // data see in table descending order
+      const sortedData = response?.data.sort((a, b) => b.id - a.id);
+      // const data = JSON.parse(sortedData);
+      setExpenses(sortedData);
     } catch (error) {
       toast.error("Error from server to get data!!");
     }
@@ -65,6 +68,8 @@ const Finance = () => {
 
   const handleRowClick = (rowData) => {
     setFormData(rowData);
+    // console.log(rowData);
+    // setFormData({ parseFloat(rowData.total), parseFloat(rowData.totalCost), ...rowData });
   };
 
   const handleInputChange = (e) => {
@@ -89,11 +94,10 @@ const Finance = () => {
       selectedBEDate: selectedBEDate,
       exim: exim,
       beNumber: beNumber,
-      totalNetWeight: totalNetWeight,
-      totalPalletQuantity: totalPalletQuantity,
+      totalNetWeight: parseFloat(totalNetWeight),
+      totalPalletQuantity: parseFloat(totalPalletQuantity),
       palletRemarks: palletRemarks,
     };
-
     setFormData((prevData) => ({
       ...prevData, // Retain previous data
       ...data, // Add new fields
@@ -104,10 +108,32 @@ const Finance = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Send formData to your API for saving
+    axios
+      .post(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Successfully Uploaded to server", {
+          position: "top-center",
+        });
+        // navigate("/exportimport");
+        console.log(res);
+      })
+      .catch((err) =>
+        toast.error("This error coming from server please try again later!!", {
+          position: "top-center",
+        })
+      );
 
     toast.success("Data successfully Saved!!", { position: "top-center" });
     console.log(formData);
-    navigate("/exportimport");
+    // navigate("/exportimport");
   };
 
   // product delete from server and also frontend

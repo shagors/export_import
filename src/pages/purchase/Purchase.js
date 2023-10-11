@@ -42,7 +42,9 @@ const Purchase = () => {
       const response = await axios.get(
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       );
-      setAccounts(response?.data);
+      // data see in table descending order
+      const sortedData = response?.data.sort((a, b) => b.id - a.id);
+      setAccounts(sortedData);
     } catch (error) {
       toast.error("Error from server to get data!!");
     }
@@ -177,7 +179,6 @@ const Purchase = () => {
             </h1>
             <div className="overflow-x-auto add__scrollbar">
               <table className="table">
-                {/* head */}
                 <thead>
                   <tr>
                     <th className="sticky top-0 bg-gray-200">Select</th>

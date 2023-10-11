@@ -32,7 +32,7 @@ const AddChargesUpdate = () => {
           position: "top-center",
         })
       );
-  }, []);
+  }, [id, values]);
 
   // http://localhost:5001/addcharges/:id
   // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges
