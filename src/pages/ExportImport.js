@@ -51,6 +51,11 @@ const ExportImport = () => {
           className="btn btn-info w-60 p-1 text-white font-bold text-xl mt-4">
           Finance
         </Link>
+        <Link
+          to="/finaldata"
+          className="btn btn-info w-60 p-1 text-white font-bold text-xl mt-4">
+          Final Data
+        </Link>
       </div>
     </div>
   );

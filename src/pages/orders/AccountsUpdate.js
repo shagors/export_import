@@ -22,7 +22,7 @@ const AccountsUpdate = () => {
         `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setFormData(res?.data);
       })
       .catch((error) =>
@@ -64,6 +64,26 @@ const AccountsUpdate = () => {
             className="lg:w-[800px] bg-base-100 shadow-xl mt-3"
             onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-6">
+              {/* product ID */}
+              <div className="mt-3">
+                <label className="text-lg font-semibold" htmlFor="ID">
+                  ID
+                </label>
+                <input
+                  className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
+                  type="text"
+                  name="id"
+                  readOnly
+                  aria-readonly
+                  value={formData.id}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      productName: e.target.value,
+                    })
+                  }
+                />
+              </div>
               {/* product name */}
               <div className="mt-3">
                 <label className="text-lg font-semibold" htmlFor="productName">

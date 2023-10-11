@@ -122,8 +122,8 @@ const Finance = () => {
         toast.success("Successfully Uploaded to server", {
           position: "top-center",
         });
-        // navigate("/exportimport");
-        console.log(res);
+        navigate("/finaldata");
+        // console.log(res);
       })
       .catch((err) =>
         toast.error("This error coming from server please try again later!!", {
@@ -131,8 +131,8 @@ const Finance = () => {
         })
       );
 
-    toast.success("Data successfully Saved!!", { position: "top-center" });
-    console.log(formData);
+    // toast.success("Data successfully Saved!!", { position: "top-center" });
+    // console.log(formData);
     // navigate("/exportimport");
   };
 

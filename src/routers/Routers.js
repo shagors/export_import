@@ -25,6 +25,7 @@ import Home from "../pages/Home/Home";
 import Finance from "../pages/finance/Finance";
 import DataInputUpdate from "../pages/dataInput/DataInputUpdate";
 import AccountsUpdate from "../pages/orders/AccountsUpdate";
+import FinalData from "../pages/finance/FinalData";
 
 const Routers = () => {
   return (
@@ -51,6 +52,7 @@ const Routers = () => {
         <Route path="/addcharges/:id" element={<AddChargesUpdate />} />
         <Route path="/productinboxes" element={<ProductBoxes />} />
         <Route path="/finance" element={<Finance />} />
+        <Route path="/finaldata" element={<FinalData />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
