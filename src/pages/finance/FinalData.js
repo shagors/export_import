@@ -13,12 +13,12 @@ const FinalData = () => {
   const [itemsPerPage] = useState(4);
 
   useEffect(() => {
-    //   getting expenses data from office_accounts server
     fetchExpenses();
     fetchAccounts();
     fetchFinance();
   }, []);
 
+  // for pagination function
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
@@ -65,6 +65,7 @@ const FinalData = () => {
     }
   };
 
+  // pagination calculation
   const offset = currentPage * itemsPerPage;
   const currentData = finances.slice(offset, offset + itemsPerPage);
 
@@ -108,8 +109,8 @@ const FinalData = () => {
                   officeID?.includes(account.id)
                 );
                 // console.log(matchedProducts);
-                const dateString = finance.selectedBEDate; // Your date string here
-
+                //   convert date string
+                const dateString = finance.selectedBEDate;
                 const dateObj = new Date(dateString);
                 const localDate = dateObj.toLocaleDateString();
                 return (
@@ -155,6 +156,7 @@ const FinalData = () => {
             </tbody>
           </table>
         </div>
+        {/* for pagination code */}
         <ReactPaginate
           previousLabel={"< Previous"}
           nextLabel={"Next >"}
@@ -164,8 +166,8 @@ const FinalData = () => {
           containerClassName={"pagination flex gap-2 justify-center mt-4"}
           pageClassName={"page-item"}
           pageLinkClassName={"page-link text-gray-800 px-2 py-2"}
-          activeClassName={"active bg-purple-400 rounded-md"}
-          className="bg-sky-300 flex items-center justify-center py-[4px]"
+          activeClassName={"active bg-sky-300 rounded-md"}
+          className="flex items-center justify-center py-[4px]"
         />
       </div>
     </>
