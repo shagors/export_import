@@ -129,7 +129,7 @@ const FinalData = () => {
                   const matchedProducts = accounts?.filter((account) =>
                     officeID?.includes(account.id)
                   );
-                  console.log(matchedProducts);
+                  // console.log(matchedProducts);
                   //   convert date string
                   const dateString = finance.selectedBEDate;
                   const dateObj = new Date(dateString);
@@ -149,8 +149,8 @@ const FinalData = () => {
                         <ul>
                           {finance.particularExpenseNames.map((ex) => (
                             <li key={ex.expenseId}>
-                              {ex.particularExpenseName}:
-                              {ex.particularExpenseCost}:{ex.date}:{ex.remark}
+                              {ex.particularExpenseName}-
+                              {ex.particularExpenseCost}-{ex.date}-{ex.remark}
                             </li>
                           ))}
                         </ul>

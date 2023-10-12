@@ -113,8 +113,17 @@ const Transportservice = () => {
     setData(updatedData);
   }, []);
 
+  // test calculations for future dashboard
+  const stringNumbers = expenses.map((ex) => ex.total);
+  const sum = stringNumbers.reduce((accumulator, currentValue) => {
+    return accumulator + parseInt(currentValue);
+  }, 0);
+
   return (
     <>
+      <div>
+        <p>Sum of numbers: {sum}</p>
+      </div>
       {/* date and date by search filter table query */}
       {/* <div className="overflow-x-auto h-[700px] mb-5">
         <div className="text-center my-4 calendarWrap">

@@ -439,7 +439,7 @@ const Finance = () => {
                           <ul>
                             {expense.particularExpenseNames.map((ex) => (
                               <li key={ex.expenseId}>
-                                {ex.particularExpenseName}:
+                                {ex.particularExpenseName}-
                                 {ex.particularExpenseCost}
                               </li>
                             ))}
