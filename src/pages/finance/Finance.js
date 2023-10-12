@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, CSSProperties } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -409,6 +409,14 @@ const Finance = () => {
                     const matchedProducts = accounts?.filter((account) =>
                       officeID?.includes(account.id)
                     );
+                    // const matchedProducts = accounts?.filter((account) => {
+                    //   for (const id of officeID) {
+                    //     if (account.id === id) {
+                    //       return true;
+                    //     }
+                    //   }
+                    //   return false;
+                    // });
                     // console.log(matchedProducts);
                     return (
                       <tr

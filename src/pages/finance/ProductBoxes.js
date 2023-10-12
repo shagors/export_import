@@ -34,7 +34,7 @@ const ProductBoxes = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
       );
       setAccounts(response?.data);
     } catch (error) {
