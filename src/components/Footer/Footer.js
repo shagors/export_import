@@ -6,7 +6,7 @@ import { FaFacebookSquare } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className=" bg-slate-200">
-      <div className="footer py-10 px-5 md:mx-0 lg:flex items-center justify-evenly">
+      <div className="footer text-base-content p-10 md:flex justify-evenly">
         <div className="">
           <span className="footer-title">Services</span>
           <a className="link link-hover">Customer Care</a>
