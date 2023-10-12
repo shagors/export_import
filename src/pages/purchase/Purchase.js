@@ -1,10 +1,17 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../styles/purchase.css";
 import { AiOutlineDelete } from "react-icons/ai";
 import ExpensesForm from "./PurchaseCalculation";
+import { ClipLoader } from "react-spinners";
+
+// loader css style
+const override: CSSProperties = {
+  display: "block",
+  margin: "25px auto",
+};
 
 const Purchase = () => {
   const [transportPath, setTransportPath] = useState([]);
@@ -20,6 +27,7 @@ const Purchase = () => {
   const [total, setTotal] = useState("");
   const [ipNo, setIpNo] = useState("");
   const [truckNo, setTruckNo] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -27,6 +35,7 @@ const Purchase = () => {
 
   // Data fetch from server
   useEffect(() => {
+    setLoading(true);
     //   getting transport data from server
     fetchTransportRoute();
     //   getting transport country data from server
@@ -37,6 +46,7 @@ const Purchase = () => {
     fetchCharges();
   }, []);
 
+  // data get from office_accounts API
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
@@ -45,10 +55,12 @@ const Purchase = () => {
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
       setAccounts(sortedData);
+      setLoading(false);
     } catch (error) {
       toast.error("Error from server to get data!!");
     }
   };
+
   const fetchCharges = async () => {
     try {
       const response = await axios.get(
@@ -178,46 +190,64 @@ const Purchase = () => {
               Select the Product
             </h1>
             <div className="overflow-x-auto add__scrollbar">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th className="sticky top-0 bg-gray-200">Select</th>
-                    <th className="sticky top-0 bg-gray-200">ID</th>
-                    <th className="sticky top-0 bg-gray-200">Product Name</th>
-                    <th className="sticky top-0 bg-gray-200">Product Brand</th>
-                    <th className="sticky top-0 bg-gray-200">Product Model</th>
-                    <th className="sticky top-0 bg-gray-200">Quantity</th>
-                    <th className="sticky top-0 bg-gray-200">Date</th>
-                    <th className="sticky top-0 bg-gray-200">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {accounts?.map((product) => (
-                    <tr className={`hover cursor-pointer`} key={product.id}>
-                      <td>
-                        <input
-                          type="checkbox"
-                          className="checkbox checkbox-info"
-                          name="product"
-                          value={product.id}
-                          onClick={() => handleProductCheck(product)}
-                        />
-                      </td>
-                      <td>{product.id}</td>
-                      <td>{product.productName}</td>
-                      <td>{product.productBrand}</td>
-                      <td>{product.productModel}</td>
-                      <td>{product.productQuantity}</td>
-                      <td>{product.date}</td>
-                      <td>
-                        <button onClick={() => handleDelete(product?.id)}>
-                          <AiOutlineDelete className="w-6 h-6 text-red-600" />
-                        </button>
-                      </td>
+              {loading ? (
+                <div className="">
+                  <ClipLoader
+                    color={"#36d7b7"}
+                    loading={loading}
+                    size={50}
+                    cssOverride={override}
+                  />
+                  <p className="text-center font-extralight text-xl text-green-400">
+                    Please wait ....
+                  </p>
+                </div>
+              ) : (
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th className="sticky top-0 bg-gray-200">Select</th>
+                      <th className="sticky top-0 bg-gray-200">ID</th>
+                      <th className="sticky top-0 bg-gray-200">Product Name</th>
+                      <th className="sticky top-0 bg-gray-200">
+                        Product Brand
+                      </th>
+                      <th className="sticky top-0 bg-gray-200">
+                        Product Model
+                      </th>
+                      <th className="sticky top-0 bg-gray-200">Quantity</th>
+                      <th className="sticky top-0 bg-gray-200">Date</th>
+                      <th className="sticky top-0 bg-gray-200">Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {accounts?.map((product) => (
+                      <tr className={`hover cursor-pointer`} key={product.id}>
+                        <td>
+                          <input
+                            type="checkbox"
+                            className="checkbox checkbox-info"
+                            name="product"
+                            value={product.id}
+                            onClick={() => handleProductCheck(product)}
+                          />
+                        </td>
+                        <td>{product.id}</td>
+                        <td>{product.productName}</td>
+                        <td>{product.productBrand}</td>
+                        <td>{product.productModel}</td>
+                        <td>{product.productQuantity}</td>
+                        <td>{product.date}</td>
+                        <td>
+                          <button onClick={() => handleDelete(product?.id)}>
+                            <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
 

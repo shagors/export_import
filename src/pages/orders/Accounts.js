@@ -1,12 +1,20 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, CSSProperties } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AiOutlineEdit } from "react-icons/ai";
+import { ClipLoader } from "react-spinners";
+
+// loader css style
+const override: CSSProperties = {
+  display: "block",
+  margin: "25px auto",
+};
 
 const Accounts = ({ brand, model }) => {
   const [serverData, setServerData] = useState([]);
   const [accounts, setAccounts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [formData, setFormData] = useState([
     {
@@ -24,22 +32,37 @@ const Accounts = ({ brand, model }) => {
   // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products
 
   useEffect(() => {
-    axios
-      .get("https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products")
-      .then((res) => setServerData(res?.data))
-      .catch((error) => setServerData(error));
-
-    axios
-      .get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
-      )
-      .then((res) => {
-        // data see in table descending order
-        const sortedData = res?.data.sort((a, b) => b.id - a.id);
-        setAccounts(sortedData);
-      })
-      .catch((error) => setAccounts(error));
+    setLoading(true);
+    fetchProducts();
+    fetchAccounts();
   }, []);
+
+  // Data fetch from products API
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
+      );
+      setServerData(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
+
+  // Data fetch from office_accounts API
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+      );
+      // data see in table descending order
+      const sortedData = response?.data.sort((a, b) => b.id - a.id);
+      setAccounts(sortedData);
+      setLoading(false);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
 
   const handleChange = (event) => {
     setFormData({
@@ -194,36 +217,50 @@ const Accounts = ({ brand, model }) => {
           Product's Data Table
         </h1>
         <div className="overflow-x-auto add__scrollbar">
-          <table className="table">
-            <thead>
-              <tr>
-                <th className="sticky top-0 bg-gray-200">ID</th>
-                <th className="sticky top-0 bg-gray-200">Product Name</th>
-                <th className="sticky top-0 bg-gray-200">Product Brand</th>
-                <th className="sticky top-0 bg-gray-200">Product Model</th>
-                <th className="sticky top-0 bg-gray-200">Quantity</th>
-                <th className="sticky top-0 bg-gray-200">Date</th>
-                <th className="sticky top-0 bg-gray-200">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {accounts?.map((product) => (
-                <tr className="hover cursor-pointer" key={product.id}>
-                  <td>{product.id}</td>
-                  <td>{product.productName}</td>
-                  <td>{product.productBrand}</td>
-                  <td>{product.productModel}</td>
-                  <td>{product.productQuantity}</td>
-                  <td>{product.date}</td>
-                  <td>
-                    <Link to={`/accounts/${product.id}`}>
-                      <AiOutlineEdit className="w-6 h-6 text-purple-600" />
-                    </Link>
-                  </td>
+          {loading ? (
+            <div className="">
+              <ClipLoader
+                color={"#36d7b7"}
+                loading={loading}
+                size={50}
+                cssOverride={override}
+              />
+              <p className="text-center font-extralight text-xl text-green-400">
+                Please wait ....
+              </p>
+            </div>
+          ) : (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th className="sticky top-0 bg-gray-200">ID</th>
+                  <th className="sticky top-0 bg-gray-200">Product Name</th>
+                  <th className="sticky top-0 bg-gray-200">Product Brand</th>
+                  <th className="sticky top-0 bg-gray-200">Product Model</th>
+                  <th className="sticky top-0 bg-gray-200">Quantity</th>
+                  <th className="sticky top-0 bg-gray-200">Date</th>
+                  <th className="sticky top-0 bg-gray-200">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {accounts?.map((product) => (
+                  <tr className="hover cursor-pointer" key={product.id}>
+                    <td>{product.id}</td>
+                    <td>{product.productName}</td>
+                    <td>{product.productBrand}</td>
+                    <td>{product.productModel}</td>
+                    <td>{product.productQuantity}</td>
+                    <td>{product.date}</td>
+                    <td>
+                      <Link to={`/accounts/${product.id}`}>
+                        <AiOutlineEdit className="w-6 h-6 text-purple-600" />
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </>

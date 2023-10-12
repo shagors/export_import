@@ -1,7 +1,6 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useState, CSSProperties } from "react";
 import { toast } from "react-toastify";
+import { useState, useEffect, CSSProperties } from "react";
 import ReactPaginate from "react-paginate";
 import { ClipLoader } from "react-spinners";
 
@@ -17,7 +16,7 @@ const FinalData = () => {
   const [finances, setFinances] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage] = useState(4);
+  const [itemsPerPage] = useState(5);
 
   useEffect(() => {
     setLoading(true);

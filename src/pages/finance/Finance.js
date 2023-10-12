@@ -3,6 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { AiOutlineDelete } from "react-icons/ai";
+import { ClipLoader } from "react-spinners";
+
+// loader css style
+const override: CSSProperties = {
+  display: "block",
+  margin: "25px auto",
+};
 
 const Finance = () => {
   const [expenses, setExpenses] = useState([]);
@@ -14,10 +21,12 @@ const Finance = () => {
   const [totalNetWeight, setTotalNetWeight] = useState(0);
   const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
   const [palletRemarks, setPalletRemarks] = useState("Pallet");
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true);
     //   getting expenses data from office_accounts server
     fetchExpenses();
     fetchAccounts();
@@ -33,6 +42,7 @@ const Finance = () => {
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
       // const data = JSON.parse(sortedData);
       setExpenses(sortedData);
+      setLoading(false);
     } catch (error) {
       toast.error("Error from server to get data!!");
     }
@@ -362,68 +372,82 @@ const Finance = () => {
             Export Products Details
           </h1>
           <div className="overflow-x-auto add__scrollbar">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th className="sticky top-0 bg-gray-200">ID</th>
-                  <th className="sticky top-0 bg-gray-200">Invoice No</th>
-                  <th className="sticky top-0 bg-gray-200">IP No</th>
-                  <th className="sticky top-0 bg-gray-200">
-                    Total <span className="text-red-600">(USD)</span>
-                  </th>
-                  <th className="sticky top-0 bg-gray-200">
-                    Expenses <span className="text-blue-600">(TK)</span>
-                  </th>
-                  <th className="sticky top-0 bg-gray-200">Products Name</th>
-                  <th className="sticky top-0 bg-gray-200">Expenses List</th>
-                  {/* <th className="sticky top-0 bg-gray-200">Action</th> */}
-                </tr>
-              </thead>
-              <tbody>
-                {expenses?.map((expense) => {
-                  const officeID = expense?.officeAccount;
-                  // console.log(officeID);
-                  const matchedProducts = accounts?.filter((account) =>
-                    officeID?.includes(account.id)
-                  );
-                  // console.log(matchedProducts);
-                  return (
-                    <tr
-                      className={`hover cursor-pointer text-[13px]`}
-                      key={expense.id}
-                      onClick={() => handleRowClick(expense)}>
-                      <td>{expense.id}</td>
-                      <td>{expense.invoiceNo}</td>
-                      <td>{expense.ipNo}</td>
-                      <td>{expense.total}</td>
-                      <td>{expense.totalCost}</td>
-                      <td>
-                        {matchedProducts
-                          ?.map((p) => {
-                            return p.productName;
-                          })
-                          .join(",")}
-                      </td>
-                      <td>
-                        <ul>
-                          {expense.particularExpenseNames.map((ex) => (
-                            <li key={ex.expenseId}>
-                              {ex.particularExpenseName}:
-                              {ex.particularExpenseCost}
-                            </li>
-                          ))}
-                        </ul>
-                      </td>
-                      {/* <td>
+            {loading ? (
+              <div className="">
+                <ClipLoader
+                  color={"#36d7b7"}
+                  loading={loading}
+                  size={50}
+                  cssOverride={override}
+                />
+                <p className="text-center font-extralight text-xl text-green-400">
+                  Please wait ....
+                </p>
+              </div>
+            ) : (
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th className="sticky top-0 bg-gray-200">ID</th>
+                    <th className="sticky top-0 bg-gray-200">Invoice No</th>
+                    <th className="sticky top-0 bg-gray-200">IP No</th>
+                    <th className="sticky top-0 bg-gray-200">
+                      Total <span className="text-red-600">(USD)</span>
+                    </th>
+                    <th className="sticky top-0 bg-gray-200">
+                      Expenses <span className="text-blue-600">(TK)</span>
+                    </th>
+                    <th className="sticky top-0 bg-gray-200">Products Name</th>
+                    <th className="sticky top-0 bg-gray-200">Expenses List</th>
+                    {/* <th className="sticky top-0 bg-gray-200">Action</th> */}
+                  </tr>
+                </thead>
+                <tbody>
+                  {expenses?.map((expense) => {
+                    const officeID = expense?.officeAccount;
+                    // console.log(officeID);
+                    const matchedProducts = accounts?.filter((account) =>
+                      officeID?.includes(account.id)
+                    );
+                    // console.log(matchedProducts);
+                    return (
+                      <tr
+                        className={`hover cursor-pointer text-[13px]`}
+                        key={expense.id}
+                        onClick={() => handleRowClick(expense)}>
+                        <td>{expense.id}</td>
+                        <td>{expense.invoiceNo}</td>
+                        <td>{expense.ipNo}</td>
+                        <td>{expense.total}</td>
+                        <td>{expense.totalCost}</td>
+                        <td>
+                          {matchedProducts
+                            ?.map((p) => {
+                              return p.productName;
+                            })
+                            .join(",")}
+                        </td>
+                        <td>
+                          <ul>
+                            {expense.particularExpenseNames.map((ex) => (
+                              <li key={ex.expenseId}>
+                                {ex.particularExpenseName}:
+                                {ex.particularExpenseCost}
+                              </li>
+                            ))}
+                          </ul>
+                        </td>
+                        {/* <td>
                         <button onClick={() => handleDelete(expense?.id)}>
                           <AiOutlineDelete className="w-6 h-6 text-red-600" />
                         </button>
                       </td> */}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </div>

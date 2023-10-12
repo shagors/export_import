@@ -1,11 +1,19 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, CSSProperties } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { ClipLoader } from "react-spinners";
+
+// loader css style
+const override: CSSProperties = {
+  display: "block",
+  margin: "25px auto",
+};
 
 const DataInput = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -23,6 +31,7 @@ const DataInput = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchProducts();
   }, []);
 
@@ -35,6 +44,7 @@ const DataInput = () => {
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
       setProducts(sortedData);
+      setLoading(false);
     } catch (error) {
       toast.error("Error getting data from server!", {
         position: "top-center",
@@ -173,38 +183,54 @@ const DataInput = () => {
           All Product's List
         </h1>
         <div className="overflow-x-auto add__scrollbar">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="sticky top-0 bg-gray-200">ID</th>
-                <th className="sticky top-0 bg-gray-200">Product Name</th>
-                <th className="sticky top-0 bg-gray-200">Product Brand</th>
-                <th className="sticky top-0 bg-gray-200">Product Model</th>
-                <th className="sticky top-0 bg-gray-200">Product Weight/KG</th>
-                <th className="sticky top-0 bg-gray-200">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products?.map((product) => (
-                <tr className="hover cursor-pointer" key={product.id}>
-                  <td>{product.id}</td>
-                  <td>{product.productName}</td>
-                  <td>{product.productBrand}</td>
-                  <td>{product.productModel}</td>
-                  <td>{product.productWeight}</td>
-                  <td className="flex justify-around items-center">
-                    <Link to={`/datainput/${product.id}`}>
-                      <AiOutlineEdit className="w-6 h-6 text-purple-600" />
-                    </Link>
-                    <button onClick={() => handleDelete(product.id)}>
-                      <AiOutlineDelete className="w-6 h-6 text-red-600" />
-                    </button>
-                  </td>
+          {loading ? (
+            <div className="">
+              <ClipLoader
+                color={"#36d7b7"}
+                loading={loading}
+                size={50}
+                cssOverride={override}
+              />
+              <p className="text-center font-extralight text-xl text-green-400">
+                Please wait ....
+              </p>
+            </div>
+          ) : (
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th className="sticky top-0 bg-gray-200">ID</th>
+                  <th className="sticky top-0 bg-gray-200">Product Name</th>
+                  <th className="sticky top-0 bg-gray-200">Product Brand</th>
+                  <th className="sticky top-0 bg-gray-200">Product Model</th>
+                  <th className="sticky top-0 bg-gray-200">
+                    Product Weight/KG
+                  </th>
+                  <th className="sticky top-0 bg-gray-200">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {products?.map((product) => (
+                  <tr className="hover cursor-pointer" key={product.id}>
+                    <td>{product.id}</td>
+                    <td>{product.productName}</td>
+                    <td>{product.productBrand}</td>
+                    <td>{product.productModel}</td>
+                    <td>{product.productWeight}</td>
+                    <td className="flex justify-around items-center">
+                      <Link to={`/datainput/${product.id}`}>
+                        <AiOutlineEdit className="w-6 h-6 text-purple-600" />
+                      </Link>
+                      <button onClick={() => handleDelete(product.id)}>
+                        <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>

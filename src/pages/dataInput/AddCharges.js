@@ -1,12 +1,20 @@
 /* eslint-disable no-restricted-globals */
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, CSSProperties } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { ClipLoader } from "react-spinners";
+
+// loader css style
+const override: CSSProperties = {
+  display: "block",
+  margin: "25px auto",
+};
 
 const AddCharges = () => {
   const [charges, setCharges] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -54,6 +62,7 @@ const AddCharges = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchAccounts();
   }, []);
 
@@ -64,6 +73,7 @@ const AddCharges = () => {
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges"
       );
       setCharges(response?.data);
+      setLoading(false);
     } catch (error) {
       toast.error("Error getting data from server!", {
         position: "top-center",
@@ -153,34 +163,48 @@ const AddCharges = () => {
           All Stored Expencess's Details
         </h1>
         <div className="overflow-x-auto add__scrollbar">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="sticky top-0 bg-gray-200">ID</th>
-                <th className="sticky top-0 bg-gray-200">Expencess Name</th>
-                <th className="sticky top-0 bg-gray-200">Expencess Cost</th>
-                <th className="sticky top-0 bg-gray-200">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {charges?.map((charge) => (
-                <tr className="hover cursor-pointer" key={charge.id}>
-                  <td>{charge.id}</td>
-                  <td>{charge.particularExpenseName}</td>
-                  <td>{charge.particularExpenseCost * 1}</td>
-                  <td className="flex justify-evenly items-center">
-                    <Link to={`/addcharges/${charge.id}`}>
-                      <AiOutlineEdit className="w-6 h-6 text-purple-600" />
-                    </Link>
-                    <button onClick={() => handleDelete(charge?.id)}>
-                      <AiOutlineDelete className="w-6 h-6 text-red-600" />
-                    </button>
-                  </td>
+          {loading ? (
+            <div className="">
+              <ClipLoader
+                color={"#36d7b7"}
+                loading={loading}
+                size={50}
+                cssOverride={override}
+              />
+              <p className="text-center font-extralight text-xl text-green-400">
+                Please wait ....
+              </p>
+            </div>
+          ) : (
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th className="sticky top-0 bg-gray-200">ID</th>
+                  <th className="sticky top-0 bg-gray-200">Expencess Name</th>
+                  <th className="sticky top-0 bg-gray-200">Expencess Cost</th>
+                  <th className="sticky top-0 bg-gray-200">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {charges?.map((charge) => (
+                  <tr className="hover cursor-pointer" key={charge.id}>
+                    <td>{charge.id}</td>
+                    <td>{charge.particularExpenseName}</td>
+                    <td>{charge.particularExpenseCost * 1}</td>
+                    <td className="flex justify-evenly items-center">
+                      <Link to={`/addcharges/${charge.id}`}>
+                        <AiOutlineEdit className="w-6 h-6 text-purple-600" />
+                      </Link>
+                      <button onClick={() => handleDelete(charge?.id)}>
+                        <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>
