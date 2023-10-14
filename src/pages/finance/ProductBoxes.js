@@ -526,7 +526,7 @@ const ProductBoxes = () => {
       {/* instant save Data */}
       <div className="my-7">
         <h1 className="text-center font-bold text-2xl text-info shadow-lg rounded p-2">
-          Add Products All
+          Temporary List for Export Products
         </h1>
 
         <div

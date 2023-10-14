@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { ClipLoader } from "react-spinners";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 
 // loader css style
 const override = {
@@ -17,6 +19,7 @@ const FinalData = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage] = useState(5);
+  const componentPDF = useRef();
 
   useEffect(() => {
     setLoading(true);
@@ -79,13 +82,22 @@ const FinalData = () => {
 
   //   console.log(finances);
 
+  const handlePrint = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: "Product",
+    onAfterPrint: () => alert("Data send to printer for print"),
+  });
+
   return (
     <>
       <div className="mb-3">
         <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
-          Export Products Details
+          Export Products List
         </h1>
-        <div className="overflow-x-auto mx-2 mb-3">
+        <div
+          className="overflow-x-auto mx-2 mb-3"
+          ref={componentPDF}
+          style={{ width: "100%" }}>
           {loading ? (
             <div className="">
               <ClipLoader
@@ -191,6 +203,11 @@ const FinalData = () => {
           activeClassName={"active bg-sky-300 rounded-md"}
           className="flex items-center justify-center py-[4px]"
         />
+        {/* <button
+          className="btn-info font-bold px-7 py-2 mt-4 rounded-lg text-purple-950 hover:text-amber-500 w-1/4 mx-auto"
+          onClick={handlePrint}>
+          Print
+        </button> */}
       </div>
     </>
   );

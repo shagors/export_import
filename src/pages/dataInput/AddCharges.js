@@ -160,7 +160,7 @@ const AddCharges = () => {
       {/* Table data get from accouts input database */}
       <div className="w-full lg:w-3/4 mx-auto">
         <h1 className="text-center my-6 text-2xl text-info font-bold bg-slate-500 p-[10px] rounded-lg uppercase">
-          All Stored Expencess's Details
+          Charges List
         </h1>
         <div className="overflow-x-auto add__scrollbar">
           {loading ? (

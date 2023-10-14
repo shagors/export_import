@@ -96,7 +96,7 @@ const Accounts = ({ brand, model }) => {
     <>
       <div>
         <h1 className="flex justify-center items-center text-3xl my-4 uppercase text-info font-bold">
-          Accounts Added Product Form
+          Production Quantities
         </h1>
         <div className="mt-3 lg:flex justify-center items-center">
           <form
@@ -214,7 +214,7 @@ const Accounts = ({ brand, model }) => {
       {/* Table data get from accouts input database */}
       <div className="mb-6 w-full lg:w-3/4 mx-auto">
         <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
-          Product's Data Table
+          Production Quantities Data Table
         </h1>
         <div className="overflow-x-auto add__scrollbar">
           {loading ? (

@@ -112,6 +112,9 @@ const Finance = () => {
       ...prevData, // Retain previous data
       ...data, // Add new fields
     }));
+    toast.success("Successfully data merged. Save Now", {
+      position: "top-center",
+    });
   };
 
   // data save and send to server
