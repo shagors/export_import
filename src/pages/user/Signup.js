@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { UserContext } from "../../components/context/authContext";
 
 const Signup = () => {
   const [userName, setUserName] = useState("");
@@ -9,6 +10,8 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const { loginUser } = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,7 +40,7 @@ const Signup = () => {
           { userName, userEmail, password }
         )
         .then((res) => {
-          localStorage.setItem("values", JSON.stringify(userEmail));
+          loginUser(userEmail);
           toast.success("User create Successfully", { position: "top-center" });
           navigate("/");
           // window.location.reload();

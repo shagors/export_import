@@ -1,4 +1,4 @@
-import React, { useEffect, useState, CSSProperties } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -6,7 +6,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { ClipLoader } from "react-spinners";
 
 // loader css style
-const override: CSSProperties = {
+const override = {
   display: "block",
   margin: "25px auto",
 };

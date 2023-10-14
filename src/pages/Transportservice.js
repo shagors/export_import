@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { DateRangePicker } from "react-date-range";
 import { toast } from "react-toastify";
 import { addDays, format } from "date-fns";
+import useFetch from "../hooks/useFetch";
 
 const Transportservice = () => {
   const [products, setProducts] = useState([]);
@@ -19,8 +20,11 @@ const Transportservice = () => {
     },
   ]);
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState([]);
+  const [datas, setDatas] = useState([]);
   const refOne = useRef(null);
+
+  const { data, loading, error, dataGet, dataPost, dataUpdate, dataDelete } =
+    useFetch();
 
   useEffect(() => {
     // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts
@@ -110,10 +114,10 @@ const Transportservice = () => {
       splitQuantitySingleProduct: JSON.parse(item.splitQuantitySingleProduct),
     }));
 
-    setData(updatedData);
+    setDatas(updatedData);
   }, []);
 
-  // test calculations for future dashboard
+  // test calculations for future dashboard here (USD) calculation from purchase API
   const stringNumbers = expenses.map((ex) => ex.total);
   const sum = stringNumbers.reduce((accumulator, currentValue) => {
     return accumulator + parseInt(currentValue);

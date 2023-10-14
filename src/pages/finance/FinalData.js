@@ -1,11 +1,11 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useState, useEffect, CSSProperties } from "react";
+import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { ClipLoader } from "react-spinners";
 
 // loader css style
-const override: CSSProperties = {
+const override = {
   display: "block",
   margin: "25px auto",
 };
