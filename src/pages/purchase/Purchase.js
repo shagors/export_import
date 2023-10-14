@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, CSSProperties } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../styles/purchase.css";
@@ -8,7 +8,7 @@ import ExpensesForm from "./PurchaseCalculation";
 import { ClipLoader } from "react-spinners";
 
 // loader css style
-const override: CSSProperties = {
+const override = {
   display: "block",
   margin: "25px auto",
 };
@@ -20,7 +20,7 @@ const Purchase = () => {
   const [charges, setCharges] = useState([]);
   const [transportWay, setTransportWay] = useState("");
   const [transportCountryName, setTransportCountryName] = useState("");
-  const [productChecks, setProductChecks] = useState([]);
+  // const [productChecks, setProductChecks] = useState([]);
   const [savedExpenses, setSavedExpenses] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
   const [invoiceNo, setInvoiceNo] = useState("");
@@ -28,10 +28,11 @@ const Purchase = () => {
   const [ipNo, setIpNo] = useState("");
   const [truckNo, setTruckNo] = useState("");
   const [loading, setLoading] = useState(true);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const navigate = useNavigate();
 
-  const productData = JSON.stringify(productChecks);
+  const productData = JSON.stringify(selectedItems);
 
   // Data fetch from server
   useEffect(() => {
@@ -71,6 +72,7 @@ const Purchase = () => {
       toast.error("Error from server to get data!!");
     }
   };
+
   const fetchTransportCountry = async () => {
     try {
       const response = await axios.get(
@@ -81,6 +83,7 @@ const Purchase = () => {
       toast.error("Error from server to get data!!");
     }
   };
+
   const fetchTransportRoute = async () => {
     try {
       const response = await axios.get(
@@ -93,8 +96,16 @@ const Purchase = () => {
   };
 
   // below table products select checkbox
-  const handleProductCheck = (product) => {
-    setProductChecks([...productChecks, product.id]);
+  // const handleProductCheck = (product) => {
+  //   setProductChecks([...productChecks, product.id]);
+  // };
+
+  const handleCheckboxChange = (id) => {
+    if (selectedItems.includes(id)) {
+      setSelectedItems(selectedItems.filter((item) => item !== id));
+    } else {
+      setSelectedItems([...selectedItems, id]);
+    }
   };
 
   const handleTransportWay = (event) => {
@@ -229,7 +240,9 @@ const Purchase = () => {
                             className="checkbox checkbox-info"
                             name="product"
                             value={product.id}
-                            onClick={() => handleProductCheck(product)}
+                            checked={selectedItems.includes(product.id)}
+                            onChange={() => handleCheckboxChange(product.id)}
+                            // onClick={() => handleProductCheck(product)}
                           />
                         </td>
                         <td>{product.id}</td>
