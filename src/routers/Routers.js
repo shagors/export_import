@@ -26,6 +26,8 @@ import Finance from "../pages/finance/Finance";
 import DataInputUpdate from "../pages/dataInput/DataInputUpdate";
 import AccountsUpdate from "../pages/orders/AccountsUpdate";
 import FinalData from "../pages/finance/FinalData";
+import NewProduct from "../pages/dataInput/NewProduct";
+import NewBrand from "../pages/dataInput/NewBrand";
 
 const Routers = () => {
   return (
@@ -43,6 +45,8 @@ const Routers = () => {
         <Route path="/warehouse" element={<Warehouse />} />
         <Route path="/transport" element={<Transport />} />
         <Route path="/transportroutes" element={<TransportRoutes />} />
+        <Route path="/newproduct" element={<NewProduct />} />
+        <Route path="/newbrand" element={<NewBrand />} />
         <Route path="/datainput" element={<DataInput />} />
         <Route path="/datainput/:id" element={<DataInputUpdate />} />
         <Route path="/transportcountry" element={<TransportCountry />} />

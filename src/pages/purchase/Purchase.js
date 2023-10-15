@@ -140,6 +140,10 @@ const Purchase = () => {
     setSelectedTransportCountryPort(event.target.value);
   };
 
+  const handleTruckNo = (event) => {
+    setTruckNo(event.target.value);
+  };
+
   const handleDelete = (id) => {
     const confirmDelete = window.confirm(
       "Are you sure, you want to delete this Product Data?"
@@ -210,7 +214,7 @@ const Purchase = () => {
       );
   };
 
-  // console.log(transportCountry);
+  // console.log(boxData);
 
   return (
     <>
@@ -412,19 +416,25 @@ const Purchase = () => {
 
                 {/* Truck No. */}
                 <div className="">
-                  <div>
-                    <label className="text-lg font-semibold" htmlFor="ipNo">
-                      Truck No.
-                    </label>
-                    <input
-                      className="w-full border-[1px] border-info rounded-md p-3 mt-3 bg-transparent"
-                      placeholder="Truck No."
-                      type="text"
-                      name="truckNo"
+                  <label className="text-lg font-semibold" htmlFor="ipNo">
+                    Truck No.
+                  </label>
+                  <div className="mt-3">
+                    <select
+                      className="select select-info w-full"
+                      id="selectOption"
                       value={truckNo}
-                      required
-                      onChange={(e) => setTruckNo(e.target.value)}
-                    />
+                      name="truckNumber"
+                      onChange={handleTruckNo}>
+                      <option value="">---- Pick Truck No. ----</option>
+                      {boxData
+                        ?.sort((a, b) => b.truckNumber - a.truckNumber)
+                        ?.map((data, index) => (
+                          <option value={data.truckNumber} key={index}>
+                            {data.truckNumber}
+                          </option>
+                        ))}
+                    </select>
                   </div>
                 </div>
 

@@ -14,6 +14,7 @@ const override = {
 const Finance = () => {
   const [expenses, setExpenses] = useState([]);
   const [accounts, setAccounts] = useState([]);
+  const [boxData, setBoxData] = useState([]);
   const [selectedBEDate, setSelectedBEDate] = useState(null);
   const [formData, setFormData] = useState({});
   const [exim, setExim] = useState("");
@@ -30,6 +31,7 @@ const Finance = () => {
     //   getting expenses data from office_accounts server
     fetchExpenses();
     fetchAccounts();
+    fetchBoxData();
   }, []);
 
   // Data fetch from server
@@ -55,6 +57,18 @@ const Finance = () => {
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       );
       setAccounts(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
+
+  // Data fetch from server
+  const fetchBoxData = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
+      );
+      setBoxData(response?.data);
     } catch (error) {
       toast.error("Error from server to get data!!");
     }
@@ -351,6 +365,20 @@ const Finance = () => {
                 onChange={(e) => setPalletRemarks(e.target.value)}
               />
             </div>
+            {/*  Expenses Data list */}
+            <div>
+              <label className="text-lg font-semibold" htmlFor="productName">
+                Expenses List
+              </label>
+              <textarea
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
+                type="text"
+                name="particularExpenseNames"
+                value={formData.particularExpenseNames?.map(
+                  (p) => p.particularExpenseName
+                )}
+              />
+            </div>
           </div>
           <div className="mt-3 mr-7 flex justify-end gap-y-4">
             <Link to="/exportimport" className="btn btn-info px-10 mx-5">
@@ -409,8 +437,8 @@ const Finance = () => {
                   {expenses?.map((expense) => {
                     const officeID = expense?.officeAccount;
                     // console.log(officeID);
-                    const matchedProducts = accounts?.filter((account) =>
-                      officeID?.includes(account.id)
+                    const matchedProducts = boxData?.filter((data) =>
+                      officeID?.includes(data.id)
                     );
                     // const matchedProducts = accounts?.filter((account) => {
                     //   for (const id of officeID) {
