@@ -1,28 +1,28 @@
 import axios from "axios";
-import React, { useEffect, useState, CSSProperties } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AiOutlineEdit } from "react-icons/ai";
 import { ClipLoader } from "react-spinners";
 
 // loader css style
-const override: CSSProperties = {
+const override = {
   display: "block",
   margin: "25px auto",
 };
 
-const Accounts = ({ brand, model }) => {
+const Accounts = () => {
   const [serverData, setServerData] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [formData, setFormData] = useState([
     {
-      productModel: "",
       productName: "",
-      date: "",
       productBrand: "",
+      productModel: "",
       productQuantity: 0,
+      date: "",
     },
   ]);
 
@@ -139,11 +139,16 @@ const Accounts = ({ brand, model }) => {
                   name="productBrand"
                   required
                   aria-required
-                  onChange={handleChange}>
+                  onChange={handleChange}
+                  disabled={!formData.productName}>
                   <option value="">---- Pick product Brand ----</option>
-                  {serverData?.map((product, index) => (
-                    <option key={index}>{product?.productBrand}</option>
-                  ))}
+                  {serverData
+                    ?.filter(
+                      (product) => product.productName === formData.productName
+                    )
+                    .map((product, index) => (
+                      <option key={index}>{product.productBrand}</option>
+                    ))}
                 </select>
               </div>
 
@@ -161,11 +166,18 @@ const Accounts = ({ brand, model }) => {
                   name="productModel"
                   required
                   aria-required
-                  onChange={handleChange}>
-                  <option value="">---- Pick product Brand ----</option>
-                  {serverData?.map((product, index) => (
-                    <option key={index}>{product.productModel}</option>
-                  ))}
+                  onChange={handleChange}
+                  disabled={!formData.productBrand}>
+                  <option value="">---- Pick product Model ----</option>
+                  {serverData
+                    ?.filter(
+                      (product) =>
+                        product.productName === formData.productName &&
+                        product.productBrand === formData.productBrand
+                    )
+                    .map((product, index) => (
+                      <option key={index}>{product.productModel}</option>
+                    ))}
                 </select>
               </div>
 

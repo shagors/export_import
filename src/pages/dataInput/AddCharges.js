@@ -18,8 +18,8 @@ const AddCharges = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    // particularExpencessName: "",
-    // particularExpencessCost: "",
+    // particularExpensesName: "",
+    // particularExpensesCost: "",
     particularExpenseName: "",
     particularExpenseCost: "",
   });
@@ -112,11 +112,11 @@ const AddCharges = () => {
           <div className="mt-6">
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
-                What Type of Expencess
+                What Type of Expenses
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-2 bg-transparent"
-                placeholder="Enter Expencess Type"
+                placeholder="Enter Expenses Type"
                 type="text"
                 name="particularExpenseName"
                 onChange={handleChange}
@@ -125,11 +125,11 @@ const AddCharges = () => {
             </div>
             <div className="mt-4">
               <label className="text-lg font-semibold" htmlFor="productName">
-                Expencess Cost
+                Expenses Cost
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-2 bg-transparent"
-                placeholder="Enter Expencess Cost"
+                placeholder="Enter Expenses Cost"
                 type="text"
                 inputMode="decimal"
                 pattern="[0-9]*[.]?[0-9]*"
@@ -181,8 +181,8 @@ const AddCharges = () => {
               <thead>
                 <tr>
                   <th className="sticky top-0 bg-gray-200">ID</th>
-                  <th className="sticky top-0 bg-gray-200">Expencess Name</th>
-                  <th className="sticky top-0 bg-gray-200">Expencess Cost</th>
+                  <th className="sticky top-0 bg-gray-200">Expenses Name</th>
+                  <th className="sticky top-0 bg-gray-200">Expenses Cost</th>
                   <th className="sticky top-0 bg-gray-200">Actions</th>
                 </tr>
               </thead>

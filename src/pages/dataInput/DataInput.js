@@ -72,28 +72,36 @@ const DataInput = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    // console.log(formData);
-    axios
-      .post(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        toast.success("Successfully Data Uploaded", {
-          position: "top-center",
-        });
-        navigate("/exportimport");
-      })
-      .catch((err) =>
-        toast.error("Error coming from server please try again later", {
-          position: "top-center",
+    const isModelExists = products.some(
+      (item) => item.productModel === formData.productModel
+    );
+    if (isModelExists) {
+      toast.error("This Model already exists. Check table Data", {
+        position: "top-center",
+      });
+    } else {
+      axios
+        .post(
+          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products",
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          toast.success("Successfully Data Uploaded", {
+            position: "top-center",
+          });
+          navigate("/exportimport");
         })
-      );
+        .catch((err) =>
+          toast.error("Error coming from server please try again later", {
+            position: "top-center",
+          })
+        );
+    }
   };
 
   // product delete from server and also frontend
