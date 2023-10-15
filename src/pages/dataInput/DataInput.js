@@ -1,12 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState, CSSProperties } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { ClipLoader } from "react-spinners";
 
 // loader css style
-const override: CSSProperties = {
+const override = {
   display: "block",
   margin: "25px auto",
 };
@@ -14,6 +14,7 @@ const override: CSSProperties = {
 const DataInput = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -24,10 +25,25 @@ const DataInput = () => {
   });
 
   const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    // Check if the value is a valid float number
+    if (name === "productWeight" && !/^\d*\.?\d*$/.test(value)) {
+      setError("Please enter valid product weight");
+      return;
+    } else {
+      setError("");
+    }
+
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value,
+      [name]: value,
     });
+
+    // setFormData({
+    //   ...formData,
+    //   [event.target.name]: event.target.value,
+    // });
   };
 
   useEffect(() => {
@@ -55,6 +71,7 @@ const DataInput = () => {
   // http://localhost:5001/products
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
     // console.log(formData);
     axios
       .post(
@@ -107,6 +124,7 @@ const DataInput = () => {
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-8">
+            {/* product Name */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productName">
                 Product Name
@@ -121,6 +139,7 @@ const DataInput = () => {
                 required
               />
             </div>
+            {/* product Brand */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productBrand">
                 Product Brand
@@ -135,6 +154,7 @@ const DataInput = () => {
                 required
               />
             </div>
+            {/* product Model */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productModel">
                 Product Model
@@ -149,6 +169,7 @@ const DataInput = () => {
                 required
               />
             </div>
+            {/* product Weight */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productModel">
                 Product Weight/KG
@@ -162,6 +183,11 @@ const DataInput = () => {
                 onChange={handleChange}
                 required
               />
+              {error && (
+                <p className="text-red-600 font-semibold text-xs mt-1">
+                  {error}
+                </p>
+              )}
             </div>
             <div className="mt-5 flex justify-end gap-y-4">
               <Link to="/exportimport" className="btn btn-info px-10 mx-5">

@@ -115,6 +115,8 @@ const Accounts = ({ brand, model }) => {
                   id="selectOption"
                   value={formData.productName}
                   name="productName"
+                  required
+                  aria-required
                   onChange={handleChange}>
                   <option value="">---- Pick product Name ----</option>
                   {serverData?.map((product, index) => (
@@ -135,6 +137,8 @@ const Accounts = ({ brand, model }) => {
                   id="selectOption"
                   value={formData.productBrand || ""}
                   name="productBrand"
+                  required
+                  aria-required
                   onChange={handleChange}>
                   <option value="">---- Pick product Brand ----</option>
                   {serverData?.map((product, index) => (
@@ -155,6 +159,8 @@ const Accounts = ({ brand, model }) => {
                   id="selectOption"
                   value={formData.productModel || ""}
                   name="productModel"
+                  required
+                  aria-required
                   onChange={handleChange}>
                   <option value="">---- Pick product Brand ----</option>
                   {serverData?.map((product, index) => (
@@ -176,6 +182,8 @@ const Accounts = ({ brand, model }) => {
                   type="number"
                   name="productQuantity"
                   min="0"
+                  required
+                  aria-required
                   value={formData.productQuantity || ""}
                   onChange={handleChange}
                 />
@@ -190,6 +198,8 @@ const Accounts = ({ brand, model }) => {
                   type="date"
                   onChange={handleChange}
                   name="date"
+                  required
+                  aria-required
                   value={formData?.date}
                   className="border-2 select-info rounded-md text-lg p-[6px]"
                 />

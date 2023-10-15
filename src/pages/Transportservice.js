@@ -129,7 +129,7 @@ const Transportservice = () => {
         <p>Sum of numbers: {sum}</p>
       </div>
       {/* date and date by search filter table query */}
-      {/* <div className="overflow-x-auto h-[700px] mb-5">
+      <div className="overflow-x-auto h-[700px] mb-5">
         <div className="text-center my-4 calendarWrap">
           <input
             value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
@@ -179,10 +179,10 @@ const Transportservice = () => {
             })}
           </tbody>
         </table>
-      </div> */}
+      </div>
 
       {/* products boxes table check and data get from server */}
-      <h1 className="text-2xl text-center my-3 font-bold underline">
+      {/* <h1 className="text-2xl text-center my-3 font-bold underline">
         Products checks Box
       </h1>
       <div className="overflow-x-auto h-[700px] mb-5">
@@ -208,12 +208,12 @@ const Transportservice = () => {
                   <th>{product.id}</th>
                   <td>{product.productName}</td>
                   <td>{product.productModel}</td>
-                  {/* <td>{product.productModel.join(", ")}</td> */}
+
                   <td>{product.quantity}</td>
                   <td>{product.productPerBox}</td>
                   <td>{product.totalBox}</td>
                   <td>{product.splitProductsBox}</td>
-                  {/* <td>{product.splitProductsBox.join(", ")}</td> */}
+
                   <td>{product.splitQuantitySingleProduct}</td>
                   <td>{product.totalPallet}</td>
                   <td>{product.truckNumber}</td>
@@ -222,10 +222,10 @@ const Transportservice = () => {
             })}
           </tbody>
         </table>
-      </div>
+      </div> */}
 
       {/* products boxes table check and data get from server */}
-      <h1 className="text-2xl text-center my-3 font-bold underline">
+      {/* <h1 className="text-2xl text-center my-3 font-bold underline">
         Expenses
       </h1>
       <div className="overflow-x-auto h-[700px] mb-5">
@@ -274,7 +274,7 @@ const Transportservice = () => {
             })}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </>
   );
 };

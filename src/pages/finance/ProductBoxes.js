@@ -193,14 +193,14 @@ const ProductBoxes = () => {
   const handleInstantStore = (e) => {
     e.preventDefault();
     // error handle
-    if (
-      selectedProductPallet === "" ||
-      selectedProductName === "" ||
-      truckNumber === ""
-    ) {
-      setErrorMessage("Please fill out all fields properly.");
-      return;
-    }
+    // if (
+    //   selectedProductPallet === "" ||
+    //   selectedProductName === "" ||
+    //   truckNumber === ""
+    // ) {
+    //   setErrorMessage("Please fill out all fields properly.");
+    //   return;
+    // }
     const newData = {
       productName: selectedProductName,
       productModel: selectedProductModelNames,
@@ -320,6 +320,8 @@ const ProductBoxes = () => {
                           className="select select-secondary w-full max-w-xs focus:outline-none"
                           value={selectedProductName}
                           name="productName"
+                          required
+                          aria-required
                           onChange={handleNameInputChange}
                           // onChange={(e) =>
                           //   setSelectedProductName(e.target.value)
@@ -365,8 +367,9 @@ const ProductBoxes = () => {
                                 min="0"
                                 name="perBoxProduct"
                                 required
-                                onBlur={handleInputValueChange}
-                                // onChange={handleInputValueChange}
+                                aria-required
+                                // onBlur={handleInputValueChange}
+                                onChange={handleInputValueChange}
                                 placeholder="per Box"
                                 className="w-[75px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
@@ -378,6 +381,7 @@ const ProductBoxes = () => {
                                 min="0"
                                 name="quantityProduct"
                                 required
+                                aria-required
                                 onBlur={handleInputValueChange}
                                 // onChange={handleInputValueChange}
                                 placeholder={"Enter Quantity"}
@@ -401,8 +405,9 @@ const ProductBoxes = () => {
                         placeholder="Per Box Product Quantity"
                         type="number"
                         name="productPerBox"
-                        value={perBoxProducts.perBoxProduct}
                         required
+                        aria-required
+                        value={perBoxProducts.perBoxProduct}
                         readOnly
                         // onChange={(e) =>
                         //   setSelectedProductPerBox(e.target.value)
@@ -423,6 +428,7 @@ const ProductBoxes = () => {
                         min="0"
                         readOnly
                         required
+                        aria-required
                         name="boxQuantiy"
                         value={totalBox}
                         onChange={(e) => setTotalBox(e.target.value)}
@@ -442,6 +448,7 @@ const ProductBoxes = () => {
                         type="number"
                         min="0"
                         required
+                        aria-required
                         readOnly
                         value={resultsValues.quantityProduct}
                         name="quantity"
@@ -461,6 +468,8 @@ const ProductBoxes = () => {
                         placeholder="Enter Pallent Quantity"
                         type="text"
                         name="pallet"
+                        required
+                        aria-required
                         onChange={handlePalletInputChange}
                         // onChange={(e) =>
                         //   setSelectedProductPallet(e.target.value)
@@ -470,6 +479,7 @@ const ProductBoxes = () => {
                         <p className="text-red-500">{errorMessage}</p>
                       )}
                     </div>
+
                     {/* Truck Number */}
                     <div className="">
                       <label
@@ -482,6 +492,8 @@ const ProductBoxes = () => {
                         placeholder="Enter Pallent Quantity"
                         type="text"
                         name="truckNumber"
+                        required
+                        aria-required
                         onChange={handleTruckNumberInputChange}
                       />
                       {errorMessage && (
