@@ -18,8 +18,12 @@ const Purchase = () => {
   const [transportCountry, setTransportCountry] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [charges, setCharges] = useState([]);
+  const [boxData, setBoxData] = useState([]);
   const [transportWay, setTransportWay] = useState("");
   const [transportCountryName, setTransportCountryName] = useState("");
+  const [selectedTransportCountryPort, setSelectedTransportCountryPort] =
+    useState("");
+
   // const [productChecks, setProductChecks] = useState([]);
   const [savedExpenses, setSavedExpenses] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
@@ -45,6 +49,7 @@ const Purchase = () => {
     fetchAccounts();
     // geeting charges api call
     fetchCharges();
+    fetchBoxData();
   }, []);
 
   // data get from office_accounts API
@@ -68,6 +73,21 @@ const Purchase = () => {
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges"
       );
       setCharges(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
+
+  const fetchBoxData = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
+      );
+      // data see in table descending order
+      const sortedData = response?.data.sort((a, b) => b.id - a.id);
+      // const data = JSON.parse(sortedData);
+      setBoxData(sortedData);
+      setLoading(false);
     } catch (error) {
       toast.error("Error from server to get data!!");
     }
@@ -116,6 +136,10 @@ const Purchase = () => {
     setTransportCountryName(event.target.value);
   };
 
+  const handleTransportCountryPort = (event) => {
+    setSelectedTransportCountryPort(event.target.value);
+  };
+
   const handleDelete = (id) => {
     const confirmDelete = window.confirm(
       "Are you sure, you want to delete this Product Data?"
@@ -123,7 +147,7 @@ const Purchase = () => {
     if (confirmDelete) {
       axios
         .delete(
-          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
+          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes/${id}`
         )
         .then((res) => {
           toast.warn("Data Successfully Deleted!!", {
@@ -186,6 +210,8 @@ const Purchase = () => {
       );
   };
 
+  // console.log(transportCountry);
+
   return (
     <>
       <div className="mb-6">
@@ -221,18 +247,16 @@ const Purchase = () => {
                       <th className="sticky top-0 bg-gray-200">ID</th>
                       <th className="sticky top-0 bg-gray-200">Product Name</th>
                       <th className="sticky top-0 bg-gray-200">
-                        Product Brand
-                      </th>
-                      <th className="sticky top-0 bg-gray-200">
                         Product Model
                       </th>
                       <th className="sticky top-0 bg-gray-200">Quantity</th>
-                      <th className="sticky top-0 bg-gray-200">Date</th>
+                      <th className="sticky top-0 bg-gray-200">Pallet No.</th>
+                      <th className="sticky top-0 bg-gray-200">Truck No.</th>
                       <th className="sticky top-0 bg-gray-200">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {accounts?.map((product) => (
+                    {boxData?.map((product) => (
                       <tr className={`hover cursor-pointer`} key={product.id}>
                         <td>
                           <input
@@ -247,10 +271,10 @@ const Purchase = () => {
                         </td>
                         <td>{product.id}</td>
                         <td>{product.productName}</td>
-                        <td>{product.productBrand}</td>
                         <td>{product.productModel}</td>
-                        <td>{product.productQuantity}</td>
-                        <td>{product.date}</td>
+                        <td>{product.quantity}</td>
+                        <td>{product.totalPallet}</td>
+                        <td>{product.truckNumber}</td>
                         <td>
                           <button onClick={() => handleDelete(product?.id)}>
                             <AiOutlineDelete className="w-6 h-6 text-red-600" />
@@ -267,17 +291,17 @@ const Purchase = () => {
           {/* form for details add */}
           <div className="mt-4 lg:flex justify-center items-center w-full lg:w-3/4 mx-auto">
             <form
-              className="bg-base-100 rounded-lg shadow-xl mt-5"
+              className="bg-base-100 rounded-lg shadow-xl my-5 p-[12px]"
               onSubmit={formSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {/* Shipment Way */}
-                <div className="form-control  card-body">
+                <div className="">
                   <label className="mb-[10px] lebel-text text-lg font-semibold">
                     Shipment Way
                   </label>
-                  <div className="input-group  flex lg:flex-none justify-center items-center">
+                  <div className="mt-3">
                     <select
-                      className="select select-info w-full max-w-xs"
+                      className="select select-info w-full"
                       id="selectOption"
                       value={transportWay}
                       name="transportWay"
@@ -293,13 +317,13 @@ const Purchase = () => {
                 </div>
 
                 {/* Shipment Country */}
-                <div className="form-control card-body">
+                <div className="">
                   <label className="mb-[10px] lebel-text text-lg font-semibold">
                     Shipment Country
                   </label>
-                  <div className="input-group flex lg:flex-none justify-center items-center">
+                  <div className="mt-3">
                     <select
-                      className="select select-info w-full max-w-xs"
+                      className="select select-info w-full"
                       id="selectOption"
                       value={transportCountryName}
                       name="transportCountryName"
@@ -314,8 +338,42 @@ const Purchase = () => {
                   </div>
                 </div>
 
+                {/* shipment port */}
+                <div className="">
+                  <label className="mb-[10px] lebel-text text-lg font-semibold">
+                    Shipment Port
+                  </label>
+                  <div className="mt-3">
+                    <select
+                      className="select select-info w-full"
+                      id="selectOption"
+                      value={selectedTransportCountryPort}
+                      name="transportCountryPort"
+                      disabled={!transportCountryName}
+                      onChange={handleTransportCountryPort}>
+                      <option value="">---- Pick Shipment Port ----</option>
+                      {transportCountry.map((port, index) => (
+                        <option key={index} value={port.id}>
+                          {port.countryPort}
+                        </option>
+                      ))}
+                      {/* {transportCountry
+                        ?.filter(
+                          (port) =>
+                            port.countryName.toLowerCase() ===
+                            transportCountryName.toLowerCase()
+                        )
+                        .map((port, index) => (
+                          <option key={index} value={port.id}>
+                            {port.countryPort}
+                          </option>
+                        ))} */}
+                    </select>
+                  </div>
+                </div>
+
                 {/* Invoice No. */}
-                <div className="form-control card-body">
+                <div className="">
                   <div>
                     <label
                       className="lebel-text text-lg font-semibold"
@@ -335,7 +393,7 @@ const Purchase = () => {
                 </div>
 
                 {/* IP No. */}
-                <div className="form-control card-body">
+                <div className="">
                   <div>
                     <label className="text-lg font-semibold" htmlFor="ipNo">
                       IP No.
@@ -353,7 +411,7 @@ const Purchase = () => {
                 </div>
 
                 {/* Truck No. */}
-                <div className="form-control card-body">
+                <div className="">
                   <div>
                     <label className="text-lg font-semibold" htmlFor="ipNo">
                       Truck No.
@@ -370,8 +428,8 @@ const Purchase = () => {
                   </div>
                 </div>
 
-                {/* Total (USD) */}
-                <div className="form-control card-body">
+                {/* Total */}
+                {/* <div className="">
                   <div>
                     <label className="text-lg font-semibold" htmlFor="total">
                       Total <span className="text-red-600">(USD)</span>
@@ -386,7 +444,7 @@ const Purchase = () => {
                       onChange={(e) => setTotal(e.target.value)}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* checking element for calculation */}

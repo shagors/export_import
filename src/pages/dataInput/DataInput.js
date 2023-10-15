@@ -102,6 +102,8 @@ const DataInput = () => {
           })
         );
     }
+
+    // console.log(formData);
   };
 
   // product delete from server and also frontend
@@ -132,8 +134,8 @@ const DataInput = () => {
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-8">
-            {/* product Name */}
-            <div className="mt-3">
+            {/* product Name & brand*/}
+            {/* <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productName">
                 Product Name
               </label>
@@ -147,7 +149,6 @@ const DataInput = () => {
                 required
               />
             </div>
-            {/* product Brand */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productBrand">
                 Product Brand
@@ -161,7 +162,59 @@ const DataInput = () => {
                 onChange={handleChange}
                 required
               />
+            </div> */}
+
+            {/* product name */}
+            <div className="mt-3 flex flex-col">
+              <label
+                className="text-lg font-semibold mb-2"
+                htmlFor="productName">
+                <span className="lebel-text text-lg font-semibold">
+                  Product Name
+                </span>
+              </label>
+              <select
+                className="select border-2 border-gray-100 w-full"
+                id="selectOption"
+                value={formData.productName}
+                name="productName"
+                required
+                aria-required
+                onChange={handleChange}>
+                <option value="">---- Pick product Name ----</option>
+                {products?.map((product, index) => (
+                  <option key={index}>{product.productName}</option>
+                ))}
+              </select>
             </div>
+
+            {/* product Brand */}
+            <div className="mt-3 flex flex-col">
+              <label className="text-lg font-semibold mb-2">
+                <span className="lebel-text text-lg font-semibold">
+                  Product Brand
+                </span>
+              </label>
+              <select
+                className="select border-2 border-gray-100"
+                id="selectOption"
+                value={formData.productBrand || ""}
+                name="productBrand"
+                required
+                aria-required
+                onChange={handleChange}
+                disabled={!formData.productName}>
+                <option value="">---- Pick product Brand ----</option>
+                {products
+                  ?.filter(
+                    (product) => product.productName === formData.productName
+                  )
+                  .map((product, index) => (
+                    <option key={index}>{product.productBrand}</option>
+                  ))}
+              </select>
+            </div>
+
             {/* product Model */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productModel">
