@@ -37,6 +37,15 @@ const Purchase = () => {
   const navigate = useNavigate();
 
   const productData = JSON.stringify(selectedItems);
+  // const data = JSON.parse(boxData);
+  const data = boxData.map((b) => b.productModel);
+
+  const extractedData = data.map((str) => {
+    const jsonStr = str.replace(/^"|"$/g, ""); // Remove leading and trailing quotes
+    return JSON.parse(jsonStr);
+  });
+
+  console.log(extractedData);
 
   // Data fetch from server
   useEffect(() => {
