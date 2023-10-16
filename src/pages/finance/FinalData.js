@@ -5,6 +5,7 @@ import ReactPaginate from "react-paginate";
 import { ClipLoader } from "react-spinners";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
+import PrintableComponent, { generatePDF } from "./PrintablePage";
 
 // loader css style
 const override = {
@@ -21,6 +22,7 @@ const FinalData = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage] = useState(5);
   const componentPDF = useRef();
+  // const [showPrintable, setShowPrintable] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -90,17 +92,24 @@ const FinalData = () => {
     }
   };
 
+  // console.log(finances);
+
   // pagination calculation
   const offset = currentPage * itemsPerPage;
   const currentData = finances.slice(offset, offset + itemsPerPage);
 
   //   console.log(finances);
 
-  const handlePrint = useReactToPrint({
-    content: () => componentPDF.current,
-    documentTitle: "Product",
-    onAfterPrint: () => alert("Data send to printer for print"),
-  });
+  // const handlePrint = useReactToPrint({
+  //   content: () => componentPDF.current,
+  //   documentTitle: "Product",
+  //   onAfterPrint: () => alert("Data send to printer for print"),
+  //   content: () => <PrintableComponent finance={currentData[currentPage]} />,
+  // });
+
+  const handlePrint = () => {
+    generatePDF(currentData[currentPage]);
+  };
 
   return (
     <>
@@ -133,7 +142,7 @@ const FinalData = () => {
                   <th className="sticky top-0 bg-gray-200">Export/Import</th>
                   <th className="sticky top-0 bg-gray-200">Invoice No</th>
                   <th className="sticky top-0 bg-gray-200">
-                    Total <span className="text-red-600">(USD)</span>
+                    Total <span className="text-red-600">(TK)</span>
                   </th>
                   <th className="sticky top-0 bg-gray-200">B/E No</th>
                   <th className="sticky top-0 bg-gray-200">IP No</th>
@@ -146,6 +155,7 @@ const FinalData = () => {
                   <th className="sticky top-0 bg-gray-200">Net Weight</th>
                   <th className="sticky top-0 bg-gray-200">Pallet Quantity</th>
                   <th className="sticky top-0 bg-gray-200">Remarks</th>
+                  <th className="sticky top-0 bg-gray-200">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -162,7 +172,7 @@ const FinalData = () => {
                   const localDate = dateObj.toLocaleDateString();
                   return (
                     <tr
-                      className={`hover cursor-pointer text-[13px]`}
+                      className={`hover cursor-pointer text-[12px]`}
                       key={finance.financeId}>
                       <td>{finance.financeId}</td>
                       <td>{localDate}</td>
@@ -192,6 +202,13 @@ const FinalData = () => {
                       <td>{finance.totalNetWeight}</td>
                       <td>{finance.totalPalletQuantity}</td>
                       <td>{finance.palletRemarks}</td>
+                      <td>
+                        <button
+                          className="btn-info font-bold px-[20px] py-[3px] mt-4 rounded-lg text-purple-950 hover:text-amber-500"
+                          onClick={handlePrint}>
+                          Print
+                        </button>
+                      </td>
                       {/* <td>
                         <button onClick={() => handleDelete(expense?.id)}>
                           <AiOutlineDelete className="w-6 h-6 text-red-600" />
@@ -217,6 +234,7 @@ const FinalData = () => {
           activeClassName={"active bg-sky-300 rounded-md"}
           className="flex items-center justify-center py-[4px]"
         />
+        {/* <PrintableComponent finance={currentData[currentPage]} /> */}
         {/* <button
           className="btn-info font-bold px-7 py-2 mt-4 rounded-lg text-purple-950 hover:text-amber-500 w-1/4 mx-auto"
           onClick={handlePrint}>

@@ -586,11 +586,11 @@ const ProductBoxes = () => {
             </tbody>
           </table>
         </div>
-        <button
+        {/* <button
           className="btn-info font-bold px-7 py-2 mt-4 rounded-lg text-purple-950 hover:text-amber-500"
           onClick={handlePrint}>
           Print
-        </button>
+        </button> */}
       </div>
     </div>
   );

@@ -93,11 +93,13 @@ const Finance = () => {
 
   const handleRowClick = (rowData) => {
     setFormData(rowData);
-    console.log(rowData);
+    // console.log(rowData);
     // setFormData({ parseFloat(rowData.total), parseFloat(rowData.totalCost), ...rowData });
-    const truckNumber = rowData.truckNumber;
-    const matchingExpenses = expenses.filter(
-      (expense) => expense.truckNumber === truckNumber
+    const truckNumber = rowData?.truckNo;
+    // console.log(truckNumber);
+    const matchingExpenses = boxData.filter(
+      (expense) =>
+        expense.truckNumber.toLowerCase() === truckNumber.toLowerCase()
     );
     const matchingPallets = matchingExpenses.map(
       (expense) => expense.totalPallet
@@ -129,7 +131,7 @@ const Finance = () => {
       exim: exim,
       beNumber: beNumber,
       totalNetWeight: parseFloat(totalNetWeight),
-      totalPalletQuantity: parseFloat(totalPalletQuantity),
+      totalPalletQuantity: parseFloat(totalPalletCount),
       palletRemarks: palletRemarks,
     };
     setFormData((prevData) => ({
@@ -218,14 +220,25 @@ const Finance = () => {
               <label className="text-lg font-semibold" htmlFor="productName">
                 Export/Import
               </label>
-              <input
+              <select
+                className="select border-2 border-gray-100 w-full"
+                id="selectOption"
+                name="exim"
+                required
+                aria-required
+                onChange={handleEXIMChange}>
+                <option value="">--Select Type --</option>
+                <option value="export">Export</option>
+                <option value="import">Import</option>
+              </select>
+              {/* <input
                 className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Export/Import"
                 type="text"
                 required
                 name="exim"
                 onChange={handleEXIMChange}
-              />
+              /> */}
             </div>
             {/*  Invoice No */}
             <div>
@@ -341,10 +354,11 @@ const Finance = () => {
                 placeholder="Enter Total Pallet Quantity"
                 type="number"
                 required
-                min={0}
-                name="totalPalletQuantity"
+                readOnly
+                aria-readonly
                 value={totalPalletCount}
-                onChange={handleTotalPalletQuantityChange}
+                // name="totalPalletQuantity"
+                // onChange={handleTotalPalletQuantityChange}
               />
             </div>
             {/*  Truck No */}
@@ -381,10 +395,11 @@ const Finance = () => {
               <label className="text-lg font-semibold" htmlFor="productName">
                 Expenses List
               </label>
-              <ul>
+              <ul className="max-h-[100px] max-w-[450px] overflow-y-auto">
                 {formData.particularExpenseNames?.map((p) => (
                   <p>
-                    {p.particularExpenseName}-{p.particularExpenseCost}
+                    {p.particularExpenseName}-{p.particularExpenseCost}-{p.date}
+                    -{p.remark}
                   </p>
                 ))}
               </ul>

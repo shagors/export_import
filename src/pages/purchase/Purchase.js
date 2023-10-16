@@ -151,28 +151,28 @@ const Purchase = () => {
     setTruckNo(event.target.value);
   };
 
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure, you want to delete this Product Data?"
-    );
-    if (confirmDelete) {
-      axios
-        .delete(
-          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes/${id}`
-        )
-        .then((res) => {
-          toast.warn("Data Successfully Deleted!!", {
-            position: "top-center",
-          });
-          fetchAccounts();
-        })
-        .catch((error) => {
-          toast.error("Something wrong can't delete", {
-            position: "top-center",
-          });
-        });
-    }
-  };
+  // const handleDelete = (id) => {
+  //   const confirmDelete = window.confirm(
+  //     "Are you sure, you want to delete this Product Data?"
+  //   );
+  //   if (confirmDelete) {
+  //     axios
+  //       .delete(
+  //         `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes/${id}`
+  //       )
+  //       .then((res) => {
+  //         toast.warn("Data Successfully Deleted!!", {
+  //           position: "top-center",
+  //         });
+  //         fetchAccounts();
+  //       })
+  //       .catch((error) => {
+  //         toast.error("Something wrong can't delete", {
+  //           position: "top-center",
+  //         });
+  //       });
+  //   }
+  // };
 
   const handleExpenseSave = (selectedExpenseData) => {
     setSavedExpenses(selectedExpenseData);
@@ -457,7 +457,7 @@ const Purchase = () => {
                       className="select select-info w-full"
                       id="selectOption"
                       value={truckNo}
-                      name="truckNumber"
+                      name="truckNo"
                       onChange={handleTruckNo}>
                       <option value="">---- Pick Truck No. ----</option>
                       {boxData
