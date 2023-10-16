@@ -9,6 +9,10 @@ const Transportservice = () => {
   const [products, setProducts] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [productBoxes, setProductBoxes] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedModels, setSelectedModels] = useState([]);
+  const [inputValues, setInputValues] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -35,6 +39,15 @@ const Transportservice = () => {
       .then((res) => {
         setAllProducts(res?.data);
         setProducts(res?.data);
+      })
+      .catch((error) =>
+        toast.error("Something wrong Please try again later!!")
+      );
+
+    axios
+      .get("https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products")
+      .then((res) => {
+        setProduct(res?.data);
       })
       .catch((error) =>
         toast.error("Something wrong Please try again later!!")
@@ -123,6 +136,49 @@ const Transportservice = () => {
     return accumulator + parseInt(currentValue);
   }, 0);
 
+  // test for product in box
+  const handleProductChange = (e) => {
+    const productName = e.target.value;
+    setSelectedProduct(productName);
+
+    // Reset selected models and input values
+    setSelectedModels([]);
+    setInputValues([]);
+  };
+
+  const handleModelChange = (e) => {
+    const model = e.target.value;
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setSelectedModels([...selectedModels, model]);
+    } else {
+      setSelectedModels(selectedModels.filter((item) => item !== model));
+    }
+
+    // Reset input values
+    setInputValues([]);
+  };
+
+  const handleInputChange = (index, field, value) => {
+    const newInputValues = [...inputValues];
+    newInputValues[index] = { ...newInputValues[index], [field]: value };
+    setInputValues(newInputValues);
+  };
+
+  const handleCalculate = (index) => {
+    const { everyboxProduct, productQuantity } = inputValues[index];
+    const calculatedValues = {
+      everyboxProduct,
+      productQuantity,
+      total: everyboxProduct * productQuantity,
+    };
+
+    const newInputValues = [...inputValues];
+    newInputValues[index] = { ...newInputValues[index], ...calculatedValues };
+    setInputValues(newInputValues);
+  };
+
   return (
     <>
       <div>
@@ -182,7 +238,7 @@ const Transportservice = () => {
       </div> */}
 
       {/* products boxes table check and data get from server */}
-      <h1 className="text-2xl text-center my-3 font-bold underline">
+      {/* <h1 className="text-2xl text-center my-3 font-bold underline">
         Products checks Box
       </h1>
       <div className="overflow-x-auto h-[700px] mb-5">
@@ -222,7 +278,7 @@ const Transportservice = () => {
             })}
           </tbody>
         </table>
-      </div>
+      </div> */}
 
       {/* products boxes table check and data get from server */}
       {/* <h1 className="text-2xl text-center my-3 font-bold underline">
@@ -275,6 +331,74 @@ const Transportservice = () => {
           </tbody>
         </table>
       </div> */}
+
+      <div>
+        <div>
+          <label htmlFor="productName">Select Product Name</label>
+          <select
+            id="productName"
+            value={selectedProduct}
+            onChange={handleProductChange}>
+            <option value="">Select</option>
+            {product.map((pd) => (
+              <option value={pd.productName}>{pd.productName}</option>
+            ))}
+          </select>
+        </div>
+
+        {selectedProduct && (
+          <div>
+            <label>Available Models</label>
+            {product
+              .filter((item) => item.productName === selectedProduct)
+              .map((item) => (
+                <div key={item.id}>
+                  <input
+                    type="checkbox"
+                    value={item.productModel}
+                    checked={selectedModels.includes(item.productModel)}
+                    onChange={handleModelChange}
+                  />
+                  {item.productModel}
+                </div>
+              ))}
+          </div>
+        )}
+
+        {selectedModels.length > 0 && (
+          <div>
+            {selectedModels.map((model, index) => (
+              <div key={model}>
+                <h3>{model}</h3>
+                <input
+                  type="number"
+                  placeholder="Everybox Product"
+                  value={inputValues[index]?.everyboxProduct || ""}
+                  onChange={(e) =>
+                    handleInputChange(index, "everyboxProduct", e.target.value)
+                  }
+                />
+                <input
+                  type="number"
+                  placeholder="Product Quantity"
+                  value={inputValues[index]?.productQuantity || ""}
+                  onChange={(e) =>
+                    handleInputChange(index, "productQuantity", e.target.value)
+                  }
+                />
+                <button onClick={() => handleCalculate(index)}>
+                  Calculate
+                </button>
+                {inputValues[index]?.total && (
+                  <div>
+                    <p>Total: {inputValues[index].total}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </>
   );
 };

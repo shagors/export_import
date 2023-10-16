@@ -126,7 +126,7 @@ const NewProduct = () => {
               />
             </div>
             <div className="mt-5 flex justify-end gap-y-4">
-              <Link to="/exportimport" className="btn btn-info px-10 mx-5">
+              <Link to="/admin" className="btn btn-info px-10 mx-5">
                 Back
               </Link>
               <button

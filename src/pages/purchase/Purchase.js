@@ -40,12 +40,10 @@ const Purchase = () => {
   // const data = JSON.parse(boxData);
   const data = boxData.map((b) => b.productModel);
 
-  const extractedData = data.map((str) => {
-    const jsonStr = str.replace(/^"|"$/g, ""); // Remove leading and trailing quotes
-    return JSON.parse(jsonStr);
-  });
-
-  console.log(extractedData);
+  // const extractedData = data.map((str) => {
+  //   const jsonStr = str.replace(/^"|"$/g, ""); // Remove leading and trailing quotes
+  //   return JSON.parse(jsonStr);
+  // });
 
   // Data fetch from server
   useEffect(() => {
@@ -186,6 +184,7 @@ const Purchase = () => {
 
   // data send to server
   const formSubmit = (e) => {
+    const newEx = parseFloat(totalCost) + parseFloat(total);
     e.preventDefault();
     const data = {
       transportWay: transportWay, // id pass
@@ -194,7 +193,7 @@ const Purchase = () => {
       particularExpenseNames: savedExpenses,
       totalCost: totalCost,
       invoiceNo: invoiceNo,
-      total: total,
+      total: newEx,
       ipNo: ipNo,
       truckNo: truckNo,
     };
@@ -426,6 +425,24 @@ const Purchase = () => {
                       value={ipNo}
                       required
                       onChange={(e) => setIpNo(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                {/* Total Expense */}
+                <div className="">
+                  <div>
+                    <label className="text-lg font-semibold" htmlFor="ipNo">
+                      Expense
+                    </label>
+                    <input
+                      className="w-full border-[1px] border-info rounded-md p-3 mt-3 bg-transparent"
+                      placeholder="Expense"
+                      type="number"
+                      name="total"
+                      value={total}
+                      required
+                      onChange={(e) => setTotal(e.target.value)}
                     />
                   </div>
                 </div>

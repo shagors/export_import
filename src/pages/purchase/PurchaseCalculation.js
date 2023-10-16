@@ -102,7 +102,7 @@ const ExpensesForm = ({ expenses, onExpenseSave, onTotalCostChange }) => {
         </button>
       </div>
       <div className="font-bold text-2xl text-center text-sky-400">
-        Total Cost: ${totalCost}
+        Total Cost(TK): {totalCost}
       </div>
     </div>
   );

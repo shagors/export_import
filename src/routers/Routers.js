@@ -47,10 +47,10 @@ const Routers = () => {
         <Route path="/warehouse" element={<Warehouse />} />
         <Route path="/transport" element={<Transport />} />
         <Route path="/transportroutes" element={<TransportRoutes />} />
-        <Route path="/newproduct" element={<NewProduct />} />
+        {/* <Route path="/newproduct" element={<NewProduct />} />
         <Route path="/newproduct/:id" element={<NewProductUpdate />} />
         <Route path="/newbrand" element={<NewBrand />} />
-        <Route path="/newbrand/:id" element={<NewBrandUpdate />} />
+        <Route path="/newbrand/:id" element={<NewBrandUpdate />} /> */}
         <Route path="/datainput" element={<DataInput />} />
         <Route path="/datainput/:id" element={<DataInputUpdate />} />
         <Route path="/transportcountry" element={<TransportCountry />} />
@@ -63,6 +63,10 @@ const Routers = () => {
         <Route path="/finaldata" element={<FinalData />} />
       </Route>
       <Route element={<AdminRoute />}>
+        <Route path="/newproduct" element={<NewProduct />} />
+        <Route path="/newproduct/:id" element={<NewProductUpdate />} />
+        <Route path="/newbrand" element={<NewBrand />} />
+        <Route path="/newbrand/:id" element={<NewBrandUpdate />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin" element={<Admin />} />
       </Route>

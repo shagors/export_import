@@ -23,6 +23,7 @@ const Finance = () => {
   const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
   const [palletRemarks, setPalletRemarks] = useState("Pallet");
   const [loading, setLoading] = useState(true);
+  const [totalPalletCount, setTotalPalletCount] = useState(0);
 
   const navigate = useNavigate();
 
@@ -92,8 +93,17 @@ const Finance = () => {
 
   const handleRowClick = (rowData) => {
     setFormData(rowData);
-    // console.log(rowData);
+    console.log(rowData);
     // setFormData({ parseFloat(rowData.total), parseFloat(rowData.totalCost), ...rowData });
+    const truckNumber = rowData.truckNumber;
+    const matchingExpenses = expenses.filter(
+      (expense) => expense.truckNumber === truckNumber
+    );
+    const matchingPallets = matchingExpenses.map(
+      (expense) => expense.totalPallet
+    );
+    const totalPalletCount = matchingPallets.length;
+    setTotalPalletCount(totalPalletCount);
   };
 
   const handleInputChange = (e) => {
@@ -235,11 +245,11 @@ const Finance = () => {
             {/*  Total USD */}
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
-                Total In USD
+                Total Expenses
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
-                placeholder="Total USD Payment"
+                placeholder="Total Expenses"
                 type="text"
                 name="total"
                 readOnly
@@ -333,6 +343,7 @@ const Finance = () => {
                 required
                 min={0}
                 name="totalPalletQuantity"
+                value={totalPalletCount}
                 onChange={handleTotalPalletQuantityChange}
               />
             </div>
@@ -430,7 +441,7 @@ const Finance = () => {
                     <th className="sticky top-0 bg-gray-200">Invoice No</th>
                     <th className="sticky top-0 bg-gray-200">IP No</th>
                     <th className="sticky top-0 bg-gray-200">
-                      Total <span className="text-red-600">(USD)</span>
+                      Total <span className="text-red-600">(TK)</span>
                     </th>
                     <th className="sticky top-0 bg-gray-200">
                       Expenses <span className="text-blue-600">(TK)</span>
