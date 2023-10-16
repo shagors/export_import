@@ -94,7 +94,15 @@ const DataInput = () => {
           toast.success("Successfully Data Uploaded", {
             position: "top-center",
           });
-          navigate("/exportimport");
+          // navigate("/exportimport");
+          fetchProducts(); // Assuming res.data doesn't have the new record
+          setFormData({
+            productName: "",
+            productBrand: "",
+            productModel: "",
+            productWeight: "",
+          });
+          setFormData({});
         })
         .catch((err) =>
           toast.error("Error coming from server please try again later", {

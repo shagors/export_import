@@ -370,14 +370,21 @@ const Finance = () => {
               <label className="text-lg font-semibold" htmlFor="productName">
                 Expenses List
               </label>
-              <textarea
+              <ul>
+                {formData.particularExpenseNames?.map((p) => (
+                  <p>
+                    {p.particularExpenseName}-{p.particularExpenseCost}
+                  </p>
+                ))}
+              </ul>
+              {/* <textarea
                 className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 type="text"
                 name="particularExpenseNames"
                 value={formData.particularExpenseNames?.map(
                   (p) => p.particularExpenseName
                 )}
-              />
+              /> */}
             </div>
           </div>
           <div className="mt-3 mr-7 flex justify-end gap-y-4">

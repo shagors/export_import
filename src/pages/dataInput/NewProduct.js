@@ -173,7 +173,7 @@ const NewProduct = () => {
                     <td>{product.id}</td>
                     <td>{product.productName}</td>
                     <td className="flex justify-around items-center">
-                      <Link to={`/datainput/${product.id}`}>
+                      <Link to={`/newproduct/${product.id}`}>
                         <AiOutlineEdit className="w-6 h-6 text-purple-600" />
                       </Link>
                       <button onClick={() => handleDelete(product.id)}>

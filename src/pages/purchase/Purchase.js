@@ -265,36 +265,43 @@ const Purchase = () => {
                       <th className="sticky top-0 bg-gray-200">Quantity</th>
                       <th className="sticky top-0 bg-gray-200">Pallet No.</th>
                       <th className="sticky top-0 bg-gray-200">Truck No.</th>
-                      <th className="sticky top-0 bg-gray-200">Action</th>
+                      {/* <th className="sticky top-0 bg-gray-200">Action</th> */}
                     </tr>
                   </thead>
                   <tbody>
-                    {boxData?.map((product) => (
-                      <tr className={`hover cursor-pointer`} key={product.id}>
-                        <td>
-                          <input
-                            type="checkbox"
-                            className="checkbox checkbox-info"
-                            name="product"
-                            value={product.id}
-                            checked={selectedItems.includes(product.id)}
-                            onChange={() => handleCheckboxChange(product.id)}
-                            // onClick={() => handleProductCheck(product)}
-                          />
-                        </td>
-                        <td>{product.id}</td>
-                        <td>{product.productName}</td>
-                        <td>{product.productModel}</td>
-                        <td>{product.quantity}</td>
-                        <td>{product.totalPallet}</td>
-                        <td>{product.truckNumber}</td>
-                        <td>
-                          <button onClick={() => handleDelete(product?.id)}>
-                            <AiOutlineDelete className="w-6 h-6 text-red-600" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    {boxData?.map((product) => {
+                      const jsonStr = product.productModel.replace(
+                        /^"|"$/g,
+                        ""
+                      ); // Remove leading and trailing quotes
+                      const data = JSON.parse(jsonStr);
+                      return (
+                        <tr className={`hover cursor-pointer`} key={product.id}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              className="checkbox checkbox-info"
+                              name="product"
+                              value={product.id}
+                              checked={selectedItems.includes(product.id)}
+                              onChange={() => handleCheckboxChange(product.id)}
+                              // onClick={() => handleProductCheck(product)}
+                            />
+                          </td>
+                          <td>{product.id}</td>
+                          <td>{product.productName}</td>
+                          <td>{data}</td>
+                          <td>{product.quantity}</td>
+                          <td>{product.totalPallet}</td>
+                          <td>{product.truckNumber}</td>
+                          {/* <td>
+                            <button onClick={() => handleDelete(product?.id)}>
+                              <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                            </button>
+                          </td> */}
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               )}

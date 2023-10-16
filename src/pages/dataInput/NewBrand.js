@@ -140,6 +140,7 @@ const NewBrand = () => {
                 id="productBrand"
                 onChange={handleChange}
                 required
+                disabled={!formData.productName}
               />
             </div>
             <div className="mt-5 flex justify-end gap-y-4">
@@ -192,7 +193,7 @@ const NewBrand = () => {
                     <td>{product.productName}</td>
                     <td>{product.productBrand}</td>
                     <td className="flex justify-around items-center">
-                      <Link to={`/datainput/${product.id}`}>
+                      <Link to={`/newbrand/${product.id}`}>
                         <AiOutlineEdit className="w-6 h-6 text-purple-600" />
                       </Link>
                       <button onClick={() => handleDelete(product.id)}>
