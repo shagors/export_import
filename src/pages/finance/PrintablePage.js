@@ -23,8 +23,8 @@ export const generatePDF = (finance) => {
   doc.text(`Product Name: ${finance.productName}`, 7, 60);
   doc.setFontSize(40);
   doc.text(`Total Box: 80`, 7, 100);
-  doc.setFontSize(20);
-  doc.text(`Made in Bangladesh`, 80, 140);
+  doc.setFontSize(30);
+  doc.text(`Made in Bangladesh`, 65, 140);
   doc.setFontSize(60);
   doc.text(`Total Pallet: ${finance.totalPalletQuantity}`, 40, 175);
   // doc.setFontSize(16);
@@ -34,7 +34,7 @@ export const generatePDF = (finance) => {
     head: [["Model", "Date", "Total Pallet", "Pallet", "Remark"]], // Replace with your table headers
     body: [
       [
-        "test101",
+        "TP210A",
         localDate,
         "20",
         finance.totalPalletQuantity,
@@ -42,6 +42,12 @@ export const generatePDF = (finance) => {
       ],
     ], // Replace with your table data
     startY: 200, // Adjust the Y position based on your content above
+    styles: {
+      head: {
+        fillColor: [255, 255, 255], // Set the header background color to white
+        textColor: [0, 0, 0], // Set the header text color to black
+      },
+    },
   });
 
   // Add more fields as needed

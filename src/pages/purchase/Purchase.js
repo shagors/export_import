@@ -81,7 +81,7 @@ const Purchase = () => {
     const filteredTruckNumbers = productInBoxTruckNumbers.filter(
       (truckNo) => !commonTruckNumbers.includes(truckNo)
     );
-    // console.log(filteredTruckNumbers);
+    console.log(filteredTruckNumbers);
 
     setFilteredTruckNumbers(filteredTruckNumbers);
     localStorage.setItem(
