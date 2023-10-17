@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { AiOutlineDelete } from "react-icons/ai";
 import { ClipLoader } from "react-spinners";
 
 // loader css style
@@ -20,7 +19,7 @@ const Finance = () => {
   const [exim, setExim] = useState("");
   const [beNumber, setBENumber] = useState("");
   const [totalNetWeight, setTotalNetWeight] = useState(0);
-  const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
+  // const [totalPalletQuantity, setTotalPalletQuantity] = useState(0);
   const [palletRemarks, setPalletRemarks] = useState("Pallet");
   const [loading, setLoading] = useState(true);
   const [totalPalletCount, setTotalPalletCount] = useState(0);
@@ -87,9 +86,9 @@ const Finance = () => {
     setTotalNetWeight(e.target.value);
   };
 
-  const handleTotalPalletQuantityChange = (e) => {
-    setTotalPalletQuantity(e.target.value);
-  };
+  // const handleTotalPalletQuantityChange = (e) => {
+  //   setTotalPalletQuantity(e.target.value);
+  // };
 
   const handleRowClick = (rowData) => {
     setFormData(rowData);

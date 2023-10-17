@@ -14,7 +14,6 @@ const override = {
 const NewProduct = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -53,7 +52,6 @@ const NewProduct = () => {
   // http://localhost:5001/products
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
     console.log(formData);
     const isModelExists = products.some(
       (item) => item.productModel === formData.productModel

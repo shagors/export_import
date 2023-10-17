@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { ClipLoader } from "react-spinners";
 import { useRef } from "react";
-import { useReactToPrint } from "react-to-print";
-import PrintableComponent, { generatePDF } from "./PrintablePage";
+import { generatePDF } from "./PrintablePage";
 
 // loader css style
 const override = {

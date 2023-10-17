@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../styles/purchase.css";
-import { AiOutlineDelete } from "react-icons/ai";
+// import { AiOutlineDelete } from "react-icons/ai";
 import ExpensesForm from "./PurchaseCalculation";
 import { ClipLoader } from "react-spinners";
 
@@ -35,17 +35,30 @@ const Purchase = () => {
   const [truckNo, setTruckNo] = useState("");
   const [loading, setLoading] = useState(true);
   const [selectedItems, setSelectedItems] = useState([]);
+  // const filteredTruckNumbersRef = useRef([]);
 
   const navigate = useNavigate();
 
   const productData = JSON.stringify(selectedItems);
   // const data = JSON.parse(boxData);
-  const data = boxData.map((b) => b.productModel);
+  // const data = boxData.map((b) => b.productModel);
 
   // const extractedData = data.map((str) => {
   //   const jsonStr = str.replace(/^"|"$/g, ""); // Remove leading and trailing quotes
   //   return JSON.parse(jsonStr);
   // });
+
+  // const saveFilteredTruckNumbersToLocalStorage = (filteredTruckNumbers) => {
+  //   localStorage.setItem(
+  //     "filteredTruckNumbers",
+  //     JSON.stringify(filteredTruckNumbers)
+  //   );
+  // };
+
+  // const getFilteredTruckNumbersFromLocalStorage = () => {
+  //   const storedFilteredData = localStorage.getItem("filteredTruckNumbers");
+  //   return storedFilteredData ? JSON.parse(storedFilteredData) : [];
+  // };
 
   // Data fetch from server
   useEffect(() => {
@@ -70,27 +83,53 @@ const Purchase = () => {
       (item) => item.truckNumber
     );
     // console.log(productInBoxTruckNumbers);
-    const financeTruckNumbers = financeApiData.map((item) => item.truckNo);
+    const financeTruckNumbers = financeApiData?.map((item) => item.truckNo);
     // console.log(financeTruckNumbers);
-
-    const commonTruckNumbers = productInBoxTruckNumbers.filter((truckNo) =>
-      financeTruckNumbers.includes(truckNo)
+    const commonTruckNumbers = productInBoxTruckNumbers?.filter((truckNo) =>
+      financeTruckNumbers?.includes(truckNo)
     );
     // console.log(commonTruckNumbers);
-
-    const filteredTruckNumbers = productInBoxTruckNumbers.filter(
-      (truckNo) => !commonTruckNumbers.includes(truckNo)
+    const filteredTruckNumbers = productInBoxTruckNumbers?.filter(
+      (truckNo) => !commonTruckNumbers?.includes(truckNo)
     );
-    console.log(filteredTruckNumbers);
-
     setFilteredTruckNumbers(filteredTruckNumbers);
-    localStorage.setItem(
-      "filteredTruckNumbers",
-      JSON.stringify(filteredTruckNumbers)
-    );
+    // console.log(filteredTruckNumbers);
+    // saveFilteredTruckNumbersToLocalStorage(filteredTruckNumbers);
+
+    // const savedFilteredTruckNumbers = getFilteredTruckNumbersFromLocalStorage();
+    // setFilteredTruckNumbers(savedFilteredTruckNumbers);
   }, []);
 
-  console.log(filteredTruckNumbers);
+  // useEffect(() => {
+  //   Promise.all([
+  //     fetchTransportRoute(),
+  //     fetchTransportCountry(),
+  //     fetchAccounts(),
+  //     fetchCharges(),
+  //     fetchBoxData(),
+  //     fetchFinance(),
+  //   ]).then(() => {
+  //     const productInBoxData = boxData;
+  //     const financeApiData = finances;
+
+  //     const productInBoxTruckNumbers = productInBoxData.map(
+  //       (item) => item.truckNumber
+  //     );
+
+  //     const financeTruckNumbers = financeApiData?.map((item) => item.truckNo);
+
+  //     const commonTruckNumbers = productInBoxTruckNumbers?.filter((truckNo) =>
+  //       financeTruckNumbers?.includes(truckNo)
+  //     );
+
+  //     const filteredTruckNumbers = productInBoxTruckNumbers?.filter(
+  //       (truckNo) => !commonTruckNumbers?.includes(truckNo)
+  //     );
+
+  //     setFilteredTruckNumbers(filteredTruckNumbers);
+  //     setLoading(false);
+  //   });
+  // }, []);
 
   // data get from office_accounts API
   const fetchAccounts = async () => {
@@ -226,15 +265,8 @@ const Purchase = () => {
     setTotalCost(newTotalCost);
   };
 
-  useEffect(() => {
-    const storedFilteredData = localStorage.getItem("filteredTruckNumbers");
-    if (storedFilteredData) {
-      const parsedData = JSON.parse(storedFilteredData);
-      setFilteredTruckNumbers(parsedData);
-    }
-  }, []);
-
   // data send to server
+
   const formSubmit = (e) => {
     const newEx = parseFloat(totalCost) + parseFloat(total);
     e.preventDefault();
