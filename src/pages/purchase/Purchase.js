@@ -23,6 +23,8 @@ const Purchase = () => {
   const [transportCountryName, setTransportCountryName] = useState("");
   const [selectedTransportCountryPort, setSelectedTransportCountryPort] =
     useState("");
+  const [filteredTruckNumbers, setFilteredTruckNumbers] = useState([]);
+  const [finances, setFinances] = useState([]);
 
   // const [productChecks, setProductChecks] = useState([]);
   const [savedExpenses, setSavedExpenses] = useState([]);
@@ -56,8 +58,39 @@ const Purchase = () => {
     fetchAccounts();
     // geeting charges api call
     fetchCharges();
+    // fetch box data
     fetchBoxData();
+    // fetch finance data
+    fetchFinance();
+
+    const productInBoxData = boxData;
+    const financeApiData = finances;
+
+    const productInBoxTruckNumbers = productInBoxData.map(
+      (item) => item.truckNumber
+    );
+    // console.log(productInBoxTruckNumbers);
+    const financeTruckNumbers = financeApiData.map((item) => item.truckNo);
+    // console.log(financeTruckNumbers);
+
+    const commonTruckNumbers = productInBoxTruckNumbers.filter((truckNo) =>
+      financeTruckNumbers.includes(truckNo)
+    );
+    // console.log(commonTruckNumbers);
+
+    const filteredTruckNumbers = productInBoxTruckNumbers.filter(
+      (truckNo) => !commonTruckNumbers.includes(truckNo)
+    );
+    // console.log(filteredTruckNumbers);
+
+    setFilteredTruckNumbers(filteredTruckNumbers);
+    localStorage.setItem(
+      "filteredTruckNumbers",
+      JSON.stringify(filteredTruckNumbers)
+    );
   }, []);
+
+  console.log(filteredTruckNumbers);
 
   // data get from office_accounts API
   const fetchAccounts = async () => {
@@ -122,6 +155,17 @@ const Purchase = () => {
     }
   };
 
+  const fetchFinance = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance"
+      );
+      setFinances(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
+
   // below table products select checkbox
   // const handleProductCheck = (product) => {
   //   setProductChecks([...productChecks, product.id]);
@@ -181,6 +225,14 @@ const Purchase = () => {
   const handleTotalCostChange = (newTotalCost) => {
     setTotalCost(newTotalCost);
   };
+
+  useEffect(() => {
+    const storedFilteredData = localStorage.getItem("filteredTruckNumbers");
+    if (storedFilteredData) {
+      const parsedData = JSON.parse(storedFilteredData);
+      setFilteredTruckNumbers(parsedData);
+    }
+  }, []);
 
   // data send to server
   const formSubmit = (e) => {
@@ -460,13 +512,18 @@ const Purchase = () => {
                       name="truckNo"
                       onChange={handleTruckNo}>
                       <option value="">---- Pick Truck No. ----</option>
-                      {boxData
+                      {filteredTruckNumbers
                         ?.sort((a, b) => b.truckNumber - a.truckNumber)
                         ?.map((data, index) => (
                           <option value={data.truckNumber} key={index}>
-                            {data.truckNumber}
+                            {data}
                           </option>
                         ))}
+                      {/* {filteredTruckNumbers.map((item, index) => (
+                        <option key={index} value={item.truckNo}>
+                          {item.truckNo}
+                        </option>
+                      ))} */}
                     </select>
                   </div>
                 </div>

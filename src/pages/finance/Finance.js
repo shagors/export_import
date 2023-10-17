@@ -195,6 +195,14 @@ const Finance = () => {
     }
   };
 
+  // const produtNameShow = formData.officeAccount?.map((finance) => {
+  //   const officeID = finance?.officeAccount;
+  //   console.log(officeID);
+  //   const matchedProducts = boxData?.filter((account) =>
+  //     officeID?.includes(account.id)
+  //   );
+  // });
+
   return (
     <div>
       <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
@@ -395,14 +403,16 @@ const Finance = () => {
               <label className="text-lg font-semibold" htmlFor="productName">
                 Expenses List
               </label>
-              <ul className="max-h-[100px] max-w-[450px] overflow-y-auto">
+              <ol
+                type="1"
+                className="max-h-[100px] max-w-[450px] overflow-y-auto">
                 {formData.particularExpenseNames?.map((p) => (
-                  <p>
+                  <p key={p.id}>
                     {p.particularExpenseName}-{p.particularExpenseCost}-{p.date}
                     -{p.remark}
                   </p>
                 ))}
-              </ul>
+              </ol>
               {/* <textarea
                 className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 type="text"
