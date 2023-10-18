@@ -112,23 +112,29 @@ const Finance = () => {
     const matchedProducts = boxData?.filter((item) =>
       officeAccountIds.includes(item.id)
     );
-    console.log(matchedProducts);
+    // console.log(matchedProducts);
 
     const productNameArray = matchedProducts?.map((item) => item.productName);
-    // const productModelArray = matchedProducts.map((item) => {
-    //   const models = JSON.parse(item.productModel);
-    //   return models[0]; // Assuming productModel is a JSON array with one element
-    // });
-    // console.log(productNameArray);
+    const totalBoxArray = matchedProducts?.map((item) => item.totalBox);
+    const quantityArray = matchedProducts?.map((item) => item.quantity);
+    const productModelArray = matchedProducts.map((item) => {
+      const jsonStr = item.productModel.replace(/^"|"$/g, "");
+      const data = JSON.parse(jsonStr);
+      const result = data.join(",");
+      return result;
+    });
+    // console.log(productModelArray);
 
     // Set the productName and productModel arrays in the formData state
     setFormData((prevData) => ({
       ...prevData,
       productName: productNameArray,
-      // productModel: productModelArray,
+      totalBox: totalBoxArray,
+      totalQuantity: quantityArray,
+      productModel: productModelArray,
     }));
   };
-  // console.log(formData);
+  console.log(formData);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -169,31 +175,31 @@ const Finance = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Send formData to your API for saving
-    axios
-      .post(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        toast.success("Successfully Uploaded to server", {
-          position: "top-center",
-        });
-        navigate("/finaldata");
-        // console.log(res);
-      })
-      .catch((err) =>
-        toast.error("This error coming from server please try again later!!", {
-          position: "top-center",
-        })
-      );
+    // axios
+    //   .post(
+    //     "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance",
+    //     formData,
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     toast.success("Successfully Uploaded to server", {
+    //       position: "top-center",
+    //     });
+    //     navigate("/finaldata");
+    //     // console.log(res);
+    //   })
+    //   .catch((err) =>
+    //     toast.error("This error coming from server please try again later!!", {
+    //       position: "top-center",
+    //     })
+    //   );
 
     // toast.success("Data successfully Saved!!", { position: "top-center" });
-    // console.log(formData);
+    console.log(formData);
     // navigate("/exportimport");
   };
 
@@ -216,14 +222,6 @@ const Finance = () => {
       }
     }
   };
-
-  // const produtNameShow = formData.officeAccount?.map((finance) => {
-  //   const officeID = finance?.officeAccount;
-  //   console.log(officeID);
-  //   const matchedProducts = boxData?.filter((account) =>
-  //     officeID?.includes(account.id)
-  //   );
-  // });
 
   return (
     <div>
@@ -349,13 +347,13 @@ const Finance = () => {
               <label className="text-lg font-semibold" htmlFor="productName">
                 Product Name
               </label>
-              <input
+              <textarea
                 className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Product Name come API"
                 type="text"
                 required
                 readOnly
-                name="officeAccount"
+                name="productName"
                 value={formData.productName}
                 onChange={handleInputChange}
               />
@@ -365,13 +363,13 @@ const Finance = () => {
               <label className="text-lg font-semibold" htmlFor="productModel">
                 Product Model
               </label>
-              <input
+              <textarea
                 className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                 placeholder="Product Model come API"
                 type="text"
                 required
                 readOnly
-                name="officeAccount"
+                name="productModel"
                 value={formData.productModel}
                 onChange={handleInputChange}
               />

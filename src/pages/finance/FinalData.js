@@ -110,6 +110,10 @@ const FinalData = () => {
     generatePDF(currentData[currentPage]);
   };
 
+  // console.log(
+  //   formData.totalBox?.reduce((acc, currentValue) => acc + currentValue, 0)
+  // );
+
   return (
     <>
       <div className="mb-3">

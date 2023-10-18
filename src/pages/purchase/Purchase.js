@@ -171,6 +171,11 @@ const Purchase = () => {
 
     // const savedFilteredTruckNumbers = getFilteredTruckNumbersFromLocalStorage();
     // setFilteredTruckNumbers(savedFilteredTruckNumbers);
+
+    // fetch box data
+    fetchBoxData();
+    // fetch finance data
+    fetchFinance();
   }, []);
 
   // useEffect(() => {
@@ -304,8 +309,6 @@ const Purchase = () => {
         })
       );
   };
-
-  // console.log(boxData);
 
   return (
     <>
@@ -544,13 +547,20 @@ const Purchase = () => {
                       name="truckNo"
                       onChange={handleTruckNo}>
                       <option value="">---- Pick Truck No. ----</option>
-                      {filteredTruckNumbers
+                      {boxData
+                        .sort((a, b) => b.truckNumber - a.truckNumber)
+                        .map((p, index) => (
+                          <option value={p.truckNumber} key={index}>
+                            {p.truckNumber}
+                          </option>
+                        ))}
+                      {/* {filteredTruckNumbers
                         ?.sort((a, b) => b.truckNumber - a.truckNumber)
                         ?.map((data, index) => (
                           <option value={data.truckNumber} key={index}>
                             {data}
                           </option>
-                        ))}
+                        ))} */}
                       {/* {filteredTruckNumbers.map((item, index) => (
                         <option key={index} value={item.truckNo}>
                           {item.truckNo}
