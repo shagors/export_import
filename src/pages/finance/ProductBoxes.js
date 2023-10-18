@@ -290,11 +290,11 @@ const ProductBoxes = () => {
     }
   };
 
-  const handlePrint = useReactToPrint({
-    content: () => componentPDF.current,
-    documentTitle: "Product",
-    onAfterPrint: () => alert("Data send to printer for print"),
-  });
+  // const handlePrint = useReactToPrint({
+  //   content: () => componentPDF.current,
+  //   documentTitle: "Product",
+  //   onAfterPrint: () => alert("Data send to printer for print"),
+  // });
 
   return (
     <div>

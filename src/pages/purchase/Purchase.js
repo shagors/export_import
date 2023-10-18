@@ -60,77 +60,6 @@ const Purchase = () => {
   //   return storedFilteredData ? JSON.parse(storedFilteredData) : [];
   // };
 
-  // Data fetch from server
-  useEffect(() => {
-    setLoading(true);
-    //   getting transport data from server
-    fetchTransportRoute();
-    //   getting transport country data from server
-    fetchTransportCountry();
-    //   getting accounts data from office_accounts server
-    fetchAccounts();
-    // geeting charges api call
-    fetchCharges();
-    // fetch box data
-    fetchBoxData();
-    // fetch finance data
-    fetchFinance();
-
-    const productInBoxData = boxData;
-    const financeApiData = finances;
-
-    const productInBoxTruckNumbers = productInBoxData.map(
-      (item) => item.truckNumber
-    );
-    // console.log(productInBoxTruckNumbers);
-    const financeTruckNumbers = financeApiData?.map((item) => item.truckNo);
-    // console.log(financeTruckNumbers);
-    const commonTruckNumbers = productInBoxTruckNumbers?.filter((truckNo) =>
-      financeTruckNumbers?.includes(truckNo)
-    );
-    // console.log(commonTruckNumbers);
-    const filteredTruckNumbers = productInBoxTruckNumbers?.filter(
-      (truckNo) => !commonTruckNumbers?.includes(truckNo)
-    );
-    setFilteredTruckNumbers(filteredTruckNumbers);
-    // console.log(filteredTruckNumbers);
-    // saveFilteredTruckNumbersToLocalStorage(filteredTruckNumbers);
-
-    // const savedFilteredTruckNumbers = getFilteredTruckNumbersFromLocalStorage();
-    // setFilteredTruckNumbers(savedFilteredTruckNumbers);
-  }, []);
-
-  // useEffect(() => {
-  //   Promise.all([
-  //     fetchTransportRoute(),
-  //     fetchTransportCountry(),
-  //     fetchAccounts(),
-  //     fetchCharges(),
-  //     fetchBoxData(),
-  //     fetchFinance(),
-  //   ]).then(() => {
-  //     const productInBoxData = boxData;
-  //     const financeApiData = finances;
-
-  //     const productInBoxTruckNumbers = productInBoxData.map(
-  //       (item) => item.truckNumber
-  //     );
-
-  //     const financeTruckNumbers = financeApiData?.map((item) => item.truckNo);
-
-  //     const commonTruckNumbers = productInBoxTruckNumbers?.filter((truckNo) =>
-  //       financeTruckNumbers?.includes(truckNo)
-  //     );
-
-  //     const filteredTruckNumbers = productInBoxTruckNumbers?.filter(
-  //       (truckNo) => !commonTruckNumbers?.includes(truckNo)
-  //     );
-
-  //     setFilteredTruckNumbers(filteredTruckNumbers);
-  //     setLoading(false);
-  //   });
-  // }, []);
-
   // data get from office_accounts API
   const fetchAccounts = async () => {
     try {
@@ -204,6 +133,76 @@ const Purchase = () => {
       toast.error("Error from server to get data!!");
     }
   };
+
+  useEffect(() => {
+    setLoading(true);
+    //   getting transport data from server
+    fetchTransportRoute();
+    //   getting transport country data from server
+    fetchTransportCountry();
+    //   getting accounts data from office_accounts server
+    fetchAccounts();
+    // geeting charges api call
+    fetchCharges();
+    // fetch box data
+    fetchBoxData();
+    // fetch finance data
+    fetchFinance();
+
+    const productInBoxData = boxData;
+    const financeApiData = finances;
+
+    const productInBoxTruckNumbers = productInBoxData.map(
+      (item) => item.truckNumber
+    );
+    // console.log(productInBoxTruckNumbers);
+    const financeTruckNumbers = financeApiData?.map((item) => item.truckNo);
+    // console.log(financeTruckNumbers);
+    const commonTruckNumbers = productInBoxTruckNumbers?.filter((truckNo) =>
+      financeTruckNumbers?.includes(truckNo)
+    );
+    // console.log(commonTruckNumbers);
+    const filteredTruckNumbers = productInBoxTruckNumbers?.filter(
+      (truckNo) => !commonTruckNumbers?.includes(truckNo)
+    );
+    setFilteredTruckNumbers(filteredTruckNumbers);
+    // console.log(filteredTruckNumbers);
+    // saveFilteredTruckNumbersToLocalStorage(filteredTruckNumbers);
+
+    // const savedFilteredTruckNumbers = getFilteredTruckNumbersFromLocalStorage();
+    // setFilteredTruckNumbers(savedFilteredTruckNumbers);
+  }, []);
+
+  // useEffect(() => {
+  //   Promise.all([
+  //     fetchTransportRoute(),
+  //     fetchTransportCountry(),
+  //     fetchAccounts(),
+  //     fetchCharges(),
+  //     fetchBoxData(),
+  //     fetchFinance(),
+  //   ]).then(() => {
+  //     const productInBoxData = boxData;
+  //     const financeApiData = finances;
+
+  //     const productInBoxTruckNumbers = productInBoxData.map(
+  //       (item) => item.truckNumber
+  //     );
+
+  //     const financeTruckNumbers = financeApiData?.map((item) => item.truckNo);
+
+  //     const commonTruckNumbers = productInBoxTruckNumbers?.filter((truckNo) =>
+  //       financeTruckNumbers?.includes(truckNo)
+  //     );
+
+  //     const filteredTruckNumbers = productInBoxTruckNumbers?.filter(
+  //       (truckNo) => !commonTruckNumbers?.includes(truckNo)
+  //     );
+
+  //     setFilteredTruckNumbers(filteredTruckNumbers);
+  //     setLoading(false);
+  //   });
+  // }, []);
 
   // below table products select checkbox
   // const handleProductCheck = (product) => {
@@ -356,8 +355,9 @@ const Purchase = () => {
                       const jsonStr = product.productModel.replace(
                         /^"|"$/g,
                         ""
-                      ); // Remove leading and trailing quotes
+                      );
                       const data = JSON.parse(jsonStr);
+                      const result = data.join(",");
                       return (
                         <tr className={`hover cursor-pointer`} key={product.id}>
                           <td>
@@ -373,7 +373,7 @@ const Purchase = () => {
                           </td>
                           <td>{product.id}</td>
                           <td>{product.productName}</td>
-                          <td>{data}</td>
+                          <td>{result}</td>
                           <td>{product.quantity}</td>
                           <td>{product.totalPallet}</td>
                           <td>{product.truckNumber}</td>

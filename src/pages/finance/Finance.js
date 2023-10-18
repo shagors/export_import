@@ -91,6 +91,8 @@ const Finance = () => {
   // };
 
   const handleRowClick = (rowData) => {
+    const officeAccountIds = JSON.parse(rowData.officeAccount);
+
     setFormData(rowData);
     // console.log(rowData);
     // setFormData({ parseFloat(rowData.total), parseFloat(rowData.totalCost), ...rowData });
@@ -105,7 +107,28 @@ const Finance = () => {
     );
     const totalPalletCount = matchingPallets.length;
     setTotalPalletCount(totalPalletCount);
+
+    // product matches with id and get name and model
+    const matchedProducts = boxData?.filter((item) =>
+      officeAccountIds.includes(item.id)
+    );
+    console.log(matchedProducts);
+
+    const productNameArray = matchedProducts?.map((item) => item.productName);
+    // const productModelArray = matchedProducts.map((item) => {
+    //   const models = JSON.parse(item.productModel);
+    //   return models[0]; // Assuming productModel is a JSON array with one element
+    // });
+    // console.log(productNameArray);
+
+    // Set the productName and productModel arrays in the formData state
+    setFormData((prevData) => ({
+      ...prevData,
+      productName: productNameArray,
+      // productModel: productModelArray,
+    }));
   };
+  // console.log(formData);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -333,13 +356,29 @@ const Finance = () => {
                 required
                 readOnly
                 name="officeAccount"
-                value={formData.officeAccount}
+                value={formData.productName}
+                onChange={handleInputChange}
+              />
+            </div>
+            {/*  Product Model */}
+            <div>
+              <label className="text-lg font-semibold" htmlFor="productModel">
+                Product Model
+              </label>
+              <input
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
+                placeholder="Product Model come API"
+                type="text"
+                required
+                readOnly
+                name="officeAccount"
+                value={formData.productModel}
                 onChange={handleInputChange}
               />
             </div>
             {/*  Total Net Weight */}
             <div>
-              <label className="text-lg font-semibold" htmlFor="productName">
+              <label className="text-lg font-semibold" htmlFor="productWeight">
                 Net Weight
               </label>
               <input
@@ -470,8 +509,9 @@ const Finance = () => {
                     <th className="sticky top-0 bg-gray-200">
                       Expenses <span className="text-blue-600">(TK)</span>
                     </th>
-                    <th className="sticky top-0 bg-gray-200">Products Name</th>
                     <th className="sticky top-0 bg-gray-200">Expenses List</th>
+                    <th className="sticky top-0 bg-gray-200">Products Name</th>
+                    <th className="sticky top-0 bg-gray-200">Products Model</th>
                     {/* <th className="sticky top-0 bg-gray-200">Action</th> */}
                   </tr>
                 </thead>
@@ -500,14 +540,8 @@ const Finance = () => {
                         <td>{expense.invoiceNo}</td>
                         <td>{expense.ipNo}</td>
                         <td>{expense.total}</td>
+
                         <td>{expense.totalCost}</td>
-                        <td>
-                          {matchedProducts
-                            ?.map((p) => {
-                              return p.productName;
-                            })
-                            .join(",")}
-                        </td>
                         <td>
                           <ul>
                             {expense.particularExpenseNames.map((ex) => (
@@ -517,6 +551,26 @@ const Finance = () => {
                               </li>
                             ))}
                           </ul>
+                        </td>
+                        <td>
+                          {matchedProducts
+                            ?.map((p) => {
+                              return p.productName;
+                            })
+                            .join(",")}
+                        </td>
+                        <td>
+                          {matchedProducts
+                            ?.map((p) => {
+                              const jsonStr = p.productModel.replace(
+                                /^"|"$/g,
+                                ""
+                              );
+                              const data = JSON.parse(jsonStr);
+                              const result = data.join(",");
+                              return result;
+                            })
+                            .join(",")}
                         </td>
                         {/* <td>
                         <button onClick={() => handleDelete(expense?.id)}>

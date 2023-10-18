@@ -197,6 +197,7 @@ const FinalData = () => {
                             return p.productName;
                           })
                           .join(",")}
+                        {/* {finance.officeAccount} */}
                       </td>
                       <td>{finance.totalNetWeight}</td>
                       <td>{finance.totalPalletQuantity}</td>
