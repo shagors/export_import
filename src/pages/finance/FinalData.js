@@ -97,7 +97,7 @@ const FinalData = () => {
   const offset = currentPage * itemsPerPage;
   const currentData = finances.slice(offset, offset + itemsPerPage);
 
-  //   console.log(finances);
+  // console.log(finances);
 
   // const handlePrint = useReactToPrint({
   //   content: () => componentPDF.current,
@@ -106,8 +106,9 @@ const FinalData = () => {
   //   content: () => <PrintableComponent finance={currentData[currentPage]} />,
   // });
 
-  const handlePrint = () => {
-    generatePDF(currentData[currentPage]);
+  const handlePrint = (finance) => {
+    // generatePDF(finances[currentPage]);
+    generatePDF(finance);
   };
 
   // console.log(
@@ -209,7 +210,7 @@ const FinalData = () => {
                       <td>
                         <button
                           className="btn-info font-bold px-[20px] py-[3px] mt-4 rounded-lg text-purple-950 hover:text-amber-500"
-                          onClick={handlePrint}>
+                          onClick={() => handlePrint(finance)}>
                           Print
                         </button>
                       </td>

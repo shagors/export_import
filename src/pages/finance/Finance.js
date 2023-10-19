@@ -134,7 +134,7 @@ const Finance = () => {
       productModel: productModelArray,
     }));
   };
-  console.log(formData);
+  // console.log(formData);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
