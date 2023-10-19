@@ -36,7 +36,7 @@ const NewProduct = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newproduct"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
@@ -62,11 +62,15 @@ const NewProduct = () => {
       });
     } else {
       axios
-        .post("", formData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        .post(
+          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newproduct",
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((res) => {
           toast.success("Successfully Data Uploaded", {
             position: "top-center",
@@ -89,7 +93,9 @@ const NewProduct = () => {
     );
     if (confirmDelete) {
       try {
-        await axios.delete(`/${id}`);
+        await axios.delete(
+          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newproduct/${id}`
+        );
         toast.warn("Data successfully Deleted!!", { position: "top-center" });
         fetchProducts();
       } catch (error) {

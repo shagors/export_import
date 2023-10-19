@@ -9,14 +9,12 @@ const NewBrandUpdate = () => {
   const [formData, setFormData] = useState({
     productName: "",
     productBrand: "",
-    productModel: "",
-    productWeight: "",
   });
 
   useEffect(() => {
     axios
       .get(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products/${id}`
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newbrand/${id}`
       )
       .then((res) => {
         // console.log(res);
@@ -34,14 +32,14 @@ const NewBrandUpdate = () => {
     e.preventDefault();
     axios
       .put(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products`,
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newbrand`,
         formData
       )
       .then((res) => {
         toast.success("Successfully Data Updated!!", {
           position: "top-center",
         });
-        navigate("/datainput");
+        navigate("/newbrand");
       })
       .catch((error) =>
         toast.error("Something went wrong try again later", {
@@ -53,7 +51,7 @@ const NewBrandUpdate = () => {
   return (
     <div className="mb-6">
       <h1 className="text-4xl font-bold text-violet-500 text-center mt-5">
-        Product Update Form
+        Brand Update Form
       </h1>
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">

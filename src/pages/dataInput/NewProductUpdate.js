@@ -13,7 +13,7 @@ const NewProductUpdate = () => {
   useEffect(() => {
     axios
       .get(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products/${id}`
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newproduct/${id}`
       )
       .then((res) => {
         // console.log(res);
@@ -31,14 +31,14 @@ const NewProductUpdate = () => {
     e.preventDefault();
     axios
       .put(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products`,
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newproduct`,
         formData
       )
       .then((res) => {
         toast.success("Successfully Data Updated!!", {
           position: "top-center",
         });
-        navigate("/datainput");
+        navigate("/admin");
       })
       .catch((error) =>
         toast.error("Something went wrong try again later", {

@@ -12,6 +12,7 @@ const override = {
 };
 
 const NewBrand = () => {
+  const [productsName, setProductsName] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -30,14 +31,32 @@ const NewBrand = () => {
 
   useEffect(() => {
     setLoading(true);
+    fetchProductsName();
     fetchProducts();
   }, []);
 
   // products fetch from server
+  const fetchProductsName = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newproduct"
+      );
+      // data see in table descending order
+      const sortedData = response?.data.sort((a, b) => b.id - a.id);
+      setProductsName(sortedData);
+      setLoading(false);
+    } catch (error) {
+      toast.error("Error getting data from server!", {
+        position: "top-center",
+      });
+    }
+  };
+
+  // products brand fetch from server
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newbrand"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
@@ -53,18 +72,22 @@ const NewBrand = () => {
   // http://localhost:5001/products
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     axios
-      .post("", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      .post(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newbrand",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         toast.success("Successfully Data Uploaded", {
           position: "top-center",
         });
-        navigate("/datainput");
+        navigate("/admin");
       })
       .catch((err) =>
         toast.error("Error coming from server please try again later", {
@@ -82,7 +105,9 @@ const NewBrand = () => {
     );
     if (confirmDelete) {
       try {
-        await axios.delete(`/${id}`);
+        await axios.delete(
+          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newbrand/${id}`
+        );
         toast.warn("Data successfully Deleted!!", { position: "top-center" });
         fetchProducts();
       } catch (error) {
@@ -119,7 +144,7 @@ const NewBrand = () => {
                 aria-required
                 onChange={handleChange}>
                 <option value="">---- Pick product Name ----</option>
-                {products?.map((product, index) => (
+                {productsName?.map((product, index) => (
                   <option key={index}>{product.productName}</option>
                 ))}
               </select>

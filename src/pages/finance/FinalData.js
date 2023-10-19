@@ -97,15 +97,7 @@ const FinalData = () => {
   const offset = currentPage * itemsPerPage;
   const currentData = finances.slice(offset, offset + itemsPerPage);
 
-  // console.log(finances);
-
-  // const handlePrint = useReactToPrint({
-  //   content: () => componentPDF.current,
-  //   documentTitle: "Product",
-  //   onAfterPrint: () => alert("Data send to printer for print"),
-  //   content: () => <PrintableComponent finance={currentData[currentPage]} />,
-  // });
-
+  // print and pdf function
   const handlePrint = (finance) => {
     // generatePDF(finances[currentPage]);
     generatePDF(finance);

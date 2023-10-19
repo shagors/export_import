@@ -22,7 +22,7 @@ export const generatePDF = (finance) => {
   doc.setFontSize(40);
   doc.text(`Product Name: ${finance.productName}`, 7, 60);
   doc.setFontSize(40);
-  doc.text(`Total Box: 80`, 7, 100);
+  doc.text(`Total Box: 180 boxes`, 7, 100);
   doc.setFontSize(30);
   doc.text(`Made in Bangladesh`, 65, 140);
   doc.setFontSize(60);
@@ -38,7 +38,7 @@ export const generatePDF = (finance) => {
         localDate,
         "20",
         finance.totalPalletQuantity,
-        finance.palletRemarks,
+        `${finance.palletRemarks} boxes`,
       ],
     ], // Replace with your table data
     startY: 200, // Adjust the Y position based on your content above
