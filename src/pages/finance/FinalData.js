@@ -91,7 +91,7 @@ const FinalData = () => {
     }
   };
 
-  // console.log(finances);
+  console.log(finances);
 
   // pagination calculation
   const offset = currentPage * itemsPerPage;
@@ -102,10 +102,6 @@ const FinalData = () => {
     // generatePDF(finances[currentPage]);
     generatePDF(finance);
   };
-
-  // console.log(
-  //   formData.totalBox?.reduce((acc, currentValue) => acc + currentValue, 0)
-  // );
 
   return (
     <>

@@ -5,6 +5,13 @@ export const generatePDF = (finance) => {
   const dateString = finance.selectedBEDate;
   const dateObj = new Date(dateString);
   const localDate = dateObj.toLocaleDateString();
+  const productNameParse = JSON.parse(finance?.productName);
+  const totalBoxParse = JSON.parse(finance?.totalBox);
+  const totalBox = totalBoxParse?.reduce(
+    (acc, currentValue) => acc + currentValue,
+    0
+  );
+  const productModelParse = JSON.parse(finance.productModel);
 
   const doc = new jsPDF();
 
@@ -20,9 +27,9 @@ export const generatePDF = (finance) => {
   doc.setFontSize(60);
   doc.text("Mark", 85, 30);
   doc.setFontSize(40);
-  doc.text(`Product Name: ${finance.productName}`, 7, 60);
+  doc.text(`Product Name: ${productNameParse}`, 7, 60);
   doc.setFontSize(40);
-  doc.text(`Total Box: 180 boxes`, 7, 100);
+  doc.text(`Total Box: ${totalBox} boxes`, 7, 100);
   doc.setFontSize(30);
   doc.text(`Made in Bangladesh`, 65, 140);
   doc.setFontSize(60);
@@ -34,7 +41,7 @@ export const generatePDF = (finance) => {
     head: [["Model", "Date", "Total Pallet", "Pallet", "Remark"]], // Replace with your table headers
     body: [
       [
-        "TP210A",
+        productModelParse,
         localDate,
         "20",
         finance.totalPalletQuantity,

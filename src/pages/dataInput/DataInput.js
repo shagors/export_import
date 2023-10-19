@@ -55,7 +55,7 @@ const DataInput = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newbrand"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);

@@ -12,6 +12,7 @@ const override = {
 };
 
 const NewProduct = () => {
+  // const [productName, setProductName] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -48,16 +49,17 @@ const NewProduct = () => {
       });
     }
   };
+  // console.log(products);
 
-  // http://localhost:5001/products
+  // handle save button
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    const isModelExists = products.some(
-      (item) => item.productModel === formData.productModel
+    // console.log(formData.productName);
+    const isProductExists = products.some(
+      (item) => item.productName === formData.productName
     );
-    if (isModelExists) {
-      toast.error("This Model already exists. Check table Data", {
+    if (isProductExists) {
+      toast.error("This Product already exists. Check table Data", {
         position: "top-center",
       });
     } else {
@@ -125,6 +127,8 @@ const NewProduct = () => {
                 type="text"
                 name="productName"
                 id="productName"
+                // value={productName}
+                // onChange={(e) => setProductName(e.target.value)}
                 onChange={handleChange}
                 required
               />

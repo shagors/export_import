@@ -128,10 +128,10 @@ const Finance = () => {
     // Set the productName and productModel arrays in the formData state
     setFormData((prevData) => ({
       ...prevData,
-      productName: productNameArray,
-      totalBox: totalBoxArray,
-      totalQuantity: quantityArray,
-      productModel: productModelArray,
+      productName: JSON.stringify(productNameArray),
+      totalBox: JSON.stringify(totalBoxArray),
+      totalQuantity: JSON.stringify(quantityArray),
+      productModel: JSON.stringify(productModelArray),
     }));
   };
   // console.log(formData);
@@ -175,31 +175,31 @@ const Finance = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Send formData to your API for saving
-    // axios
-    //   .post(
-    //     "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance",
-    //     formData,
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     toast.success("Successfully Uploaded to server", {
-    //       position: "top-center",
-    //     });
-    //     navigate("/finaldata");
-    //     // console.log(res);
-    //   })
-    //   .catch((err) =>
-    //     toast.error("This error coming from server please try again later!!", {
-    //       position: "top-center",
-    //     })
-    //   );
+    axios
+      .post(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Successfully Uploaded to server", {
+          position: "top-center",
+        });
+        navigate("/finaldata");
+        // console.log(res);
+      })
+      .catch((err) =>
+        toast.error("This error coming from server please try again later!!", {
+          position: "top-center",
+        })
+      );
 
     // toast.success("Data successfully Saved!!", { position: "top-center" });
-    console.log(formData);
+    // console.log(formData);
     // navigate("/exportimport");
   };
 
