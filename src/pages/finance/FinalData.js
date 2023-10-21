@@ -162,6 +162,7 @@ const FinalData = () => {
                   const dateString = finance.selectedBEDate;
                   const dateObj = new Date(dateString);
                   const localDate = dateObj.toLocaleDateString();
+                  // console.log(JSON.parse(finance.productName).map((p) => p));
                   return (
                     <tr
                       className={`hover cursor-pointer text-[12px]`}
@@ -185,12 +186,12 @@ const FinalData = () => {
                       </td>
                       <td>{finance.totalCost}</td>
                       <td>
-                        {matchedProducts
+                        {/* {matchedProducts
                           ?.map((p) => {
                             return p.productName;
                           })
-                          .join(",")}
-                        {/* {finance.officeAccount} */}
+                          .join(",")} */}
+                        {finance.productName}
                       </td>
                       <td>{finance.totalNetWeight}</td>
                       <td>{finance.totalPalletQuantity}</td>

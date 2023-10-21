@@ -2,9 +2,6 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 export const generatePDF = (finance) => {
-  const dateString = finance.selectedBEDate;
-  const dateObj = new Date(dateString);
-  const localDate = dateObj.toLocaleDateString();
   const productNameParse = JSON.parse(finance?.productName);
   const totalBoxParse = JSON.parse(finance?.totalBox);
   const totalBox = totalBoxParse?.reduce(
@@ -37,24 +34,33 @@ export const generatePDF = (finance) => {
   // doc.setFontSize(16);
   // doc.text(`Date: ${localDate}`, 10, 150);
 
-  doc.autoTable({
-    head: [["Model", "Date", "Total Pallet", "Pallet", "Remark"]], // Replace with your table headers
-    body: [
-      [
-        productModelParse,
-        localDate,
-        "20",
-        finance.totalPalletQuantity,
-        `${finance.palletRemarks} boxes`,
-      ],
-    ], // Replace with your table data
-    startY: 200, // Adjust the Y position based on your content above
-    styles: {
-      head: {
-        fillColor: [255, 255, 255], // Set the header background color to white
-        textColor: [0, 0, 0], // Set the header text color to black
+  productModelParse.forEach((model, index) => {
+    const dateString = finance.selectedBEDate;
+    const dateObj = new Date(dateString);
+    const localDate = dateObj.toLocaleDateString();
+
+    const totalBox = JSON.parse(finance.totalBox)[index];
+
+    doc.autoTable({
+      head: [["Model", "Date", "Total Pallet", "Pallet", "Remark"]], // Replace with your table headers
+      body: [
+        [
+          model,
+          localDate,
+          "20",
+          finance.totalPalletQuantity,
+          `${totalBox} boxes`,
+          // `${finance.palletRemarks} boxes`,
+        ],
+      ], // Replace with your table data
+      startY: 200 + index * 30, // Adjust the Y position based on your content above
+      styles: {
+        head: {
+          fillColor: [255, 255, 255], // Set the header background color to white
+          textColor: [0, 0, 0], // Set the header text color to black
+        },
       },
-    },
+    });
   });
 
   // Add more fields as needed
