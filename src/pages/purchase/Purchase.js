@@ -277,6 +277,7 @@ const Purchase = () => {
     const data = {
       transportWay: transportWay, // id pass
       transportCountryName: transportCountryName, // id pass
+      transportCountryPort: selectedTransportCountryPort, // id pass
       officeAccount: productData, //id pass
       particularExpenseNames: savedExpenses,
       totalCost: totalCost,
@@ -459,7 +460,7 @@ const Purchase = () => {
                       onChange={handleTransportCountryPort}>
                       <option value="">---- Pick Shipment Port ----</option>
                       {transportCountry.map((port, index) => (
-                        <option key={index} value={port.id}>
+                        <option key={index} value={port.countryPort}>
                           {port.countryPort}
                         </option>
                       ))}
