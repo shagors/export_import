@@ -21,20 +21,20 @@ export const generatePDF = (finance) => {
     "S"
   );
 
-  doc.setFontSize(60);
-  doc.text("Mark", 85, 30);
+  doc.setFontSize(55);
+  doc.text("Mark", 78, 30);
   const productNameLines = doc.splitTextToSize(
     `Product Name: ${productNameParse}`,
-    220
+    250
   );
   doc.setFontSize(38);
   doc.text(productNameLines, 7, 60);
   doc.setFontSize(40);
   doc.text(`Total Box: ${totalBox} boxes`, 7, 115);
   doc.setFontSize(30);
-  doc.text(`Made in Bangladesh`, 65, 140);
+  doc.text(`Made in Bangladesh`, 62, 140);
   doc.setFontSize(60);
-  doc.text(`Total Pallet: ${finance.totalPalletQuantity}`, 40, 175);
+  doc.text(`Pallet: ${finance.totalPalletQuantity}`, 65, 175);
   // doc.setFontSize(16);
   // doc.text(`Date: ${localDate}`, 10, 150);
 
@@ -78,8 +78,7 @@ export const generatePDF = (finance) => {
   // });
 
   // this code is try style and style some fixed
-  let columnWidths = [45, 40, 30, 30, 36]; // Adjust these values as needed
-  const lineHeight = 14; // Adjust as needed
+  let columnWidths = [40, 30, 30, 35, 45]; // Adjust these values as needed
 
   // Calculate column widths based on content length
   productModelParse.forEach((model, index) => {
@@ -96,13 +95,10 @@ export const generatePDF = (finance) => {
   });
 
   doc.autoTable({
-    head: [["Model", "Date", "Total Pallet", "Pallet", "Remark"]],
+    head: [["Model", "Date", "Total", "Pallet", "Remark"]],
     startY: 200,
     styles: {
-      head: {
-        textColor: [0, 0, 0],
-        lineHeight: lineHeight,
-      },
+      halign: "center",
     },
     columnStyles: {
       0: { cellWidth: columnWidths[0] },
@@ -134,7 +130,8 @@ export const generatePDF = (finance) => {
       startY: 208 + index * 8,
       styles: {
         overflow: "linebreak",
-        lineHeight: lineHeight,
+        lineHeight: 14,
+        halign: "center",
       },
       columnStyles: {
         0: { cellWidth: columnWidths[0] },

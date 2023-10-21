@@ -91,7 +91,7 @@ const FinalData = () => {
     }
   };
 
-  console.log(finances);
+  // console.log(finances);
 
   // pagination calculation
   const offset = currentPage * itemsPerPage;
@@ -146,23 +146,25 @@ const FinalData = () => {
 
                   <th className="sticky top-0 bg-gray-200">Net Weight</th>
                   <th className="sticky top-0 bg-gray-200">Pallet Quantity</th>
-                  <th className="sticky top-0 bg-gray-200">Remarks</th>
+                  {/* <th className="sticky top-0 bg-gray-200">Remarks</th> */}
                   <th className="sticky top-0 bg-gray-200">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {currentData?.map((finance) => {
-                  const officeID = finance?.officeAccount;
+                  // const officeID = finance?.officeAccount;
                   // console.log(officeID);
-                  const matchedProducts = boxData?.filter((account) =>
-                    officeID?.includes(account.id)
-                  );
+                  // const matchedProducts = boxData?.filter((account) =>
+                  //   officeID?.includes(account.id)
+                  // );
                   // console.log(matchedProducts);
                   //   convert date string
                   const dateString = finance.selectedBEDate;
                   const dateObj = new Date(dateString);
                   const localDate = dateObj.toLocaleDateString();
-                  // console.log(JSON.parse(finance.productName).map((p) => p));
+                  // const productParse = JSON.parse(finance?.productName);
+                  // const pdName = productParse?.map((p) => p);
+
                   return (
                     <tr
                       className={`hover cursor-pointer text-[12px]`}
@@ -191,11 +193,12 @@ const FinalData = () => {
                             return p.productName;
                           })
                           .join(",")} */}
+                        {/* {pdName.join(",")} */}
                         {finance.productName}
                       </td>
                       <td>{finance.totalNetWeight}</td>
                       <td>{finance.totalPalletQuantity}</td>
-                      <td>{finance.palletRemarks}</td>
+                      {/* <td>{finance.palletRemarks}</td> */}
                       <td>
                         <button
                           className="btn-info font-bold px-[20px] py-[3px] mt-4 rounded-lg text-purple-950 hover:text-amber-500"
