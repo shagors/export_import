@@ -13,6 +13,7 @@ const override = {
 
 const DataInput = () => {
   const [products, setProducts] = useState([]);
+  const [productsName, setProductsName] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -49,17 +50,35 @@ const DataInput = () => {
   useEffect(() => {
     setLoading(true);
     fetchProducts();
+    fetchProductsName();
   }, []);
 
   // products fetch from server
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newbrand"
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
       setProducts(sortedData);
+      setLoading(false);
+    } catch (error) {
+      toast.error("Error getting data from server!", {
+        position: "top-center",
+      });
+    }
+  };
+
+  // products name and brand fetch from server
+  const fetchProductsName = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newbrand"
+      );
+      // data see in table descending order
+      const sortedData = response?.data.sort((a, b) => b.id - a.id);
+      setProductsName(sortedData);
       setLoading(false);
     } catch (error) {
       toast.error("Error getting data from server!", {
@@ -190,8 +209,13 @@ const DataInput = () => {
                 aria-required
                 onChange={handleChange}>
                 <option value="">---- Pick product Name ----</option>
-                {products?.map((product, index) => (
+                {/* {productsName?.map((product, index) => (
                   <option key={index}>{product.productName}</option>
+                ))} */}
+                {Array.from(
+                  new Set(productsName?.map((product) => product.productName))
+                ).map((productName, index) => (
+                  <option key={index}>{productName}</option>
                 ))}
               </select>
             </div>
@@ -213,7 +237,7 @@ const DataInput = () => {
                 onChange={handleChange}
                 disabled={!formData.productName}>
                 <option value="">---- Pick product Brand ----</option>
-                {products
+                {productsName
                   ?.filter(
                     (product) => product.productName === formData.productName
                   )

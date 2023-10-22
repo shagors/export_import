@@ -119,8 +119,13 @@ const Accounts = () => {
                   aria-required
                   onChange={handleChange}>
                   <option value="">---- Pick product Name ----</option>
-                  {serverData?.map((product, index) => (
+                  {/* {serverData?.map((product, index) => (
                     <option key={index}>{product.productName}</option>
+                  ))} */}
+                  {Array.from(
+                    new Set(serverData?.map((product) => product.productName))
+                  ).map((productName, index) => (
+                    <option key={index}>{productName}</option>
                   ))}
                 </select>
               </div>
@@ -142,13 +147,25 @@ const Accounts = () => {
                   onChange={handleChange}
                   disabled={!formData.productName}>
                   <option value="">---- Pick product Brand ----</option>
-                  {serverData
+                  {/* {serverData
                     ?.filter(
                       (product) => product.productName === formData.productName
                     )
                     .map((product, index) => (
                       <option key={index}>{product.productBrand}</option>
-                    ))}
+                    ))} */}
+                  {Array.from(
+                    new Set(
+                      serverData
+                        ?.filter(
+                          (product) =>
+                            product.productName === formData.productName
+                        )
+                        .map((product) => product.productBrand)
+                    )
+                  ).map((productBrand, index) => (
+                    <option key={index}>{productBrand}</option>
+                  ))}
                 </select>
               </div>
 
