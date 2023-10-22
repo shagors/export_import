@@ -29,17 +29,30 @@ const DataInput = () => {
     const { name, value } = event.target;
 
     // Check if the value is a valid float number
-    if (name === "productWeight" && !/^\d*\.?\d*$/.test(value)) {
-      setError("Please enter valid product weight");
-      return;
+    // if (name === "productWeight" && !/^\d*\.?\d*$/.test(value)) {
+    //   setError("Please enter valid product weight");
+    //   return;
+    // } else {
+    //   setError("");
+    // }
+
+    // Check if the value is a valid number
+    if (name === "productWeight" && isNaN(value)) {
+      // console.log("Invalid input detected");
+      setError("Product Weight/KG must be a number");
     } else {
       setError("");
     }
 
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
+
+    // setFormData({
+    //   ...formData,
+    //   [name]: value,
+    // });
 
     // setFormData({
     //   ...formData,
@@ -90,6 +103,9 @@ const DataInput = () => {
   // data save to server
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (error) {
+      return;
+    }
     setError("");
     const isModelExists = products.some(
       (item) => item.productModel === formData.productModel
