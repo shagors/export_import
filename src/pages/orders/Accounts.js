@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { ClipLoader } from "react-spinners";
 
 // loader css style
@@ -90,6 +90,26 @@ const Accounts = () => {
           position: "top-center",
         })
       );
+  };
+
+  // account delete from server and also frontend
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure, you want to delete this Product Data?"
+    );
+    if (confirmDelete) {
+      try {
+        await axios.delete(
+          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
+        );
+        toast.warn("Data successfully Deleted!!", { position: "top-center" });
+        fetchAccounts();
+      } catch (error) {
+        toast.error("You can't delete now. Please try again later!", {
+          position: "top-center",
+        });
+      }
+    }
   };
 
   return (
@@ -290,10 +310,13 @@ const Accounts = () => {
                     <td>{product.productModel}</td>
                     <td>{product.productQuantity}</td>
                     <td>{product.date}</td>
-                    <td>
+                    <td className="flex justify-around items-center">
                       <Link to={`/accounts/${product.id}`}>
                         <AiOutlineEdit className="w-6 h-6 text-purple-600" />
                       </Link>
+                      <button onClick={() => handleDelete(product.id)}>
+                        <AiOutlineDelete className="w-6 h-6 text-red-600" />
+                      </button>
                     </td>
                   </tr>
                 ))}

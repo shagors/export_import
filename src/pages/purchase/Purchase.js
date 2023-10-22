@@ -178,6 +178,7 @@ const Purchase = () => {
     fetchFinance();
   }, []);
 
+  // If truck number filter then this useEffect need
   // useEffect(() => {
   //   Promise.all([
   //     fetchTransportRoute(),
@@ -436,10 +437,19 @@ const Purchase = () => {
                       name="transportCountryName"
                       onChange={handleTransportCountryName}>
                       <option value="">---- Pick Shipment Country ----</option>
-                      {transportCountry?.map((product, index) => (
+                      {/* {transportCountry?.map((product, index) => (
                         <option value={product.id} key={index}>
                           {product.countryName}
                         </option>
+                      ))} */}
+                      {Array.from(
+                        new Set(
+                          transportCountry?.map(
+                            (product) => product.countryName
+                          )
+                        )
+                      ).map((countryName, index) => (
+                        <option key={index}>{countryName}</option>
                       ))}
                     </select>
                   </div>
@@ -459,12 +469,12 @@ const Purchase = () => {
                       disabled={!transportCountryName}
                       onChange={handleTransportCountryPort}>
                       <option value="">---- Pick Shipment Port ----</option>
-                      {transportCountry.map((port, index) => (
+                      {/* {transportCountry.map((port, index) => (
                         <option key={index} value={port.countryPort}>
                           {port.countryPort}
                         </option>
-                      ))}
-                      {/* {transportCountry
+                      ))} */}
+                      {transportCountry
                         ?.filter(
                           (port) =>
                             port.countryName.toLowerCase() ===
@@ -474,7 +484,7 @@ const Purchase = () => {
                           <option key={index} value={port.id}>
                             {port.countryPort}
                           </option>
-                        ))} */}
+                        ))}
                     </select>
                   </div>
                 </div>
@@ -528,8 +538,9 @@ const Purchase = () => {
                       placeholder="Expense"
                       type="number"
                       name="total"
-                      value={total}
+                      min={0}
                       required
+                      value={total}
                       onChange={(e) => setTotal(e.target.value)}
                     />
                   </div>
@@ -548,6 +559,7 @@ const Purchase = () => {
                       name="truckNo"
                       onChange={handleTruckNo}>
                       <option value="">---- Pick Truck No. ----</option>
+                      {/* show all truck truck number */}
                       {boxData
                         .sort((a, b) => b.truckNumber - a.truckNumber)
                         .map((p, index) => (
@@ -555,6 +567,7 @@ const Purchase = () => {
                             {p.truckNumber}
                           </option>
                         ))}
+                      {/* filter truck number If any truck number save then hide automatically */}
                       {/* {filteredTruckNumbers
                         ?.sort((a, b) => b.truckNumber - a.truckNumber)
                         ?.map((data, index) => (
@@ -562,9 +575,10 @@ const Purchase = () => {
                             {data}
                           </option>
                         ))} */}
+                      {/* check truck number not use it */}
                       {/* {filteredTruckNumbers.map((item, index) => (
-                        <option key={index} value={item.truckNo}>
-                          {item.truckNo}
+                        <option key={index} value={item.truckNumber}>
+                          {item.truckNumber}
                         </option>
                       ))} */}
                     </select>

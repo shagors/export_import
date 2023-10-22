@@ -1,13 +1,13 @@
 /* eslint-disable no-restricted-globals */
 import axios from "axios";
-import React, { useEffect, useState, CSSProperties } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { ClipLoader } from "react-spinners";
 
 // loader css style
-const override: CSSProperties = {
+const override = {
   display: "block",
   margin: "25px auto",
 };
@@ -31,36 +31,6 @@ const AddCharges = () => {
     });
   };
 
-  // Data save for server
-  //  http://localhost:5001/addcharges
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .post(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        toast.success("Data Successfully Uploaded to server", {
-          position: "top-center",
-        });
-        fetchAccounts();
-        navigate("/exportimport");
-        // console.log(res);
-      })
-      .catch((err) =>
-        toast.error("Error coming from server please try again later", {
-          position: "top-center",
-        })
-      );
-  };
-
   useEffect(() => {
     setLoading(true);
     fetchAccounts();
@@ -78,6 +48,47 @@ const AddCharges = () => {
       toast.error("Error getting data from server!", {
         position: "top-center",
       });
+    }
+  };
+
+  // Data save for server
+  //  http://localhost:5001/addcharges
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const isChargeExists = charges.some(
+      (item) =>
+        item.particularExpenseName.toLowerCase() ===
+        formData.particularExpenseName.toLowerCase()
+    );
+    if (isChargeExists) {
+      toast.error("This Charge already exists. Add another", {
+        position: "top-center",
+      });
+    } else {
+      axios
+        .post(
+          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges",
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          toast.success("Data Successfully Uploaded to server", {
+            position: "top-center",
+          });
+          fetchAccounts();
+          navigate("/exportimport");
+          // console.log(res);
+        })
+        .catch((err) =>
+          toast.error("Error coming from server please try again later", {
+            position: "top-center",
+          })
+        );
     }
   };
 

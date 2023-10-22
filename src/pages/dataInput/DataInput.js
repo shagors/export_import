@@ -87,7 +87,7 @@ const DataInput = () => {
     }
   };
 
-  // http://localhost:5001/products
+  // data save to server
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
@@ -113,7 +113,7 @@ const DataInput = () => {
           toast.success("Successfully Data Uploaded", {
             position: "top-center",
           });
-          // navigate("/exportimport");
+          navigate("/exportimport");
           fetchProducts(); // Assuming res.data doesn't have the new record
           setFormData({
             productName: "",
@@ -269,7 +269,7 @@ const DataInput = () => {
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
-                placeholder="Enter Product Weight/KG"
+                placeholder="Product Weight/KG must be number"
                 type="text"
                 name="productWeight"
                 id="productWeight"
