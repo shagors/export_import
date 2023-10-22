@@ -413,6 +413,8 @@ const Purchase = () => {
                       id="selectOption"
                       value={transportWay}
                       name="transportWay"
+                      required
+                      aria-required
                       onChange={handleTransportWay}>
                       <option value="">---- Pick Transport Way ----</option>
                       {transportPath?.map((product, index) => (
@@ -433,6 +435,8 @@ const Purchase = () => {
                     <select
                       className="select select-info w-full"
                       id="selectOption"
+                      required
+                      aria-required
                       value={transportCountryName}
                       name="transportCountryName"
                       onChange={handleTransportCountryName}>
@@ -464,6 +468,8 @@ const Purchase = () => {
                     <select
                       className="select select-info w-full"
                       id="selectOption"
+                      required
+                      aria-required
                       value={selectedTransportCountryPort}
                       name="transportCountryPort"
                       disabled={!transportCountryName}
@@ -504,6 +510,7 @@ const Purchase = () => {
                       name="invoiceno"
                       value={invoiceNo}
                       required
+                      aria-required
                       onChange={(e) => setInvoiceNo(e.target.value)}
                     />
                   </div>
@@ -520,8 +527,9 @@ const Purchase = () => {
                       placeholder="IP No."
                       type="text"
                       name="ipNo"
-                      value={ipNo}
                       required
+                      aria-required
+                      value={ipNo}
                       onChange={(e) => setIpNo(e.target.value)}
                     />
                   </div>
@@ -540,6 +548,7 @@ const Purchase = () => {
                       name="total"
                       min={0}
                       required
+                      aria-required
                       value={total}
                       onChange={(e) => setTotal(e.target.value)}
                     />
@@ -557,6 +566,8 @@ const Purchase = () => {
                       id="selectOption"
                       value={truckNo}
                       name="truckNo"
+                      required
+                      aria-required
                       onChange={handleTruckNo}>
                       <option value="">---- Pick Truck No. ----</option>
                       {/* show all truck truck number */}

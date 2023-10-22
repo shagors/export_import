@@ -28,14 +28,6 @@ const DataInput = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    // Check if the value is a valid float number
-    // if (name === "productWeight" && !/^\d*\.?\d*$/.test(value)) {
-    //   setError("Please enter valid product weight");
-    //   return;
-    // } else {
-    //   setError("");
-    // }
-
     // Check if the value is a valid number
     if (name === "productWeight" && isNaN(value)) {
       // console.log("Invalid input detected");
@@ -44,10 +36,19 @@ const DataInput = () => {
       setError("");
     }
 
+    // store the data after validate and previous data current data store it
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+
+    // Check if the value is a valid float number
+    // if (name === "productWeight" && !/^\d*\.?\d*$/.test(value)) {
+    //   setError("Please enter valid product weight");
+    //   return;
+    // } else {
+    //   setError("");
+    // }
 
     // setFormData({
     //   ...formData,
@@ -278,6 +279,7 @@ const DataInput = () => {
                 required
               />
             </div>
+
             {/* product Weight */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productModel">

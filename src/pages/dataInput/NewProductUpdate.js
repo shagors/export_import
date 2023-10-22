@@ -73,7 +73,6 @@ const NewProductUpdate = () => {
                 required
               />
             </div>
-
             <div className="mt-5 flex justify-end gap-y-4">
               <Link to="/newproduct" className="btn btn-info px-10 mx-5">
                 Back

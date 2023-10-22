@@ -58,6 +58,7 @@ const DataInputUpdate = () => {
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-8">
+            {/* product Name */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productName">
                 Product Name
@@ -66,6 +67,8 @@ const DataInputUpdate = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
                 type="text"
                 name="productName"
+                readOnly
+                aria-readonly
                 value={formData.productName}
                 onChange={(e) =>
                   setFormData({
@@ -76,6 +79,7 @@ const DataInputUpdate = () => {
                 required
               />
             </div>
+            {/* product Brand */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productBrand">
                 Product Brand
@@ -84,6 +88,8 @@ const DataInputUpdate = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
                 type="text"
                 name="productBrand"
+                readOnly
+                aria-readonly
                 value={formData.productBrand}
                 onChange={(e) =>
                   setFormData({
@@ -94,6 +100,7 @@ const DataInputUpdate = () => {
                 required
               />
             </div>
+            {/* product Model editable */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productModel">
                 Product Model
@@ -112,6 +119,7 @@ const DataInputUpdate = () => {
                 required
               />
             </div>
+            {/* product weight editable */}
             <div className="mt-3">
               <label className="text-lg font-semibold" htmlFor="productModel">
                 Product Weight/KG
