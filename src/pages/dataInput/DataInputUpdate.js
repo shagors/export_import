@@ -12,6 +12,7 @@ const DataInputUpdate = () => {
     productModel: "",
     productWeight: "",
   });
+  const [error, setError] = useState("");
 
   useEffect(() => {
     axios
@@ -32,22 +33,28 @@ const DataInputUpdate = () => {
   // update data submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .put(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products`,
-        formData
-      )
-      .then((res) => {
-        toast.success("Successfully Data Updated!!", {
-          position: "top-center",
-        });
-        navigate("/datainput");
-      })
-      .catch((error) =>
-        toast.error("Something went wrong try again later", {
-          position: "top-center",
+    // Validate productWeight as a float
+    if (!/^\d+(\.\d+)?$/.test(formData.productWeight)) {
+      setError("Product Weight must be a valid number.");
+      return;
+    } else {
+      axios
+        .put(
+          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products`,
+          formData
+        )
+        .then((res) => {
+          toast.success("Successfully Data Updated!!", {
+            position: "top-center",
+          });
+          navigate("/datainput");
         })
-      );
+        .catch((error) =>
+          toast.error("Something went wrong try again later", {
+            position: "top-center",
+          })
+        );
+    }
   };
 
   return (
@@ -137,6 +144,7 @@ const DataInputUpdate = () => {
                 }
                 required
               />
+              {error && <p className="text-red-600">{error}</p>}
             </div>
             <div className="mt-5 flex justify-end gap-y-4">
               <Link to="/exportimport" className="btn btn-info px-10 mx-5">

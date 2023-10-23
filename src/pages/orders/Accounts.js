@@ -233,6 +233,7 @@ const Accounts = () => {
                   min="0"
                   required
                   aria-required
+                  onWheel={(e) => e.target.blur()}
                   value={formData.productQuantity || ""}
                   onChange={handleChange}
                 />

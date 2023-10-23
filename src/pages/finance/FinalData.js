@@ -5,6 +5,8 @@ import ReactPaginate from "react-paginate";
 import { ClipLoader } from "react-spinners";
 import { useRef } from "react";
 import { generatePDF } from "./PrintablePage";
+import { addDays, format } from "date-fns";
+import { DateRangePicker } from "react-date-range";
 
 // loader css style
 const override = {
@@ -22,6 +24,18 @@ const FinalData = () => {
   const [itemsPerPage] = useState(5);
   const componentPDF = useRef();
   // const [showPrintable, setShowPrintable] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [range, setRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ]);
+  const refOne = useRef([]);
 
   useEffect(() => {
     setLoading(true);
@@ -29,6 +43,10 @@ const FinalData = () => {
     fetchAccounts();
     fetchBoxData();
     fetchFinance();
+
+    // for date search option hide
+    document.addEventListener("keydown", hideOnEscape, true);
+    document.addEventListener("click", hideOnClickOutside, true);
   }, []);
 
   // for pagination function
@@ -91,11 +109,52 @@ const FinalData = () => {
     }
   };
 
-  // console.log(finances);
+  // for date wise search functions start here
+  const hideOnEscape = (e) => {
+    if (e.key === "Escape") {
+      setOpen(false);
+    }
+  };
+
+  const hideOnClickOutside = (e) => {
+    if (refOne.current && !refOne.current.contains(e.target)) {
+      setOpen(false);
+    }
+  };
+
+  const handleSelect = (date) => {
+    // console.log(date);
+    const filtered = finances?.filter((product) => {
+      const productDateGet = new Date(product?.selectedBEDate);
+      const productDate = productDateGet.toLocaleDateString();
+      // console.log(productDate);
+      return (
+        productDate >= date?.selection?.startDate &&
+        productDate <= date?.selection?.endDate
+      );
+    });
+    setStartDate(date.selection.startDate);
+    setEndDate(date.selection.endDate);
+    setFilteredData(filtered);
+  };
+  // console.log(finances.map((d) => d.selectedBEDate));
+  // console.log(startDate);
+  // console.log(endDate);
+  console.log(filteredData.length);
+
+  const selectionRange = {
+    startDate: startDate,
+    endDate: endDate,
+    key: "selection",
+  };
 
   // pagination calculation
   const offset = currentPage * itemsPerPage;
-  const currentData = finances.slice(offset, offset + itemsPerPage);
+  // const currentData = finances.slice(offset, offset + itemsPerPage);
+  const currentData =
+    filteredData.length > 0
+      ? filteredData
+      : finances.slice(offset, offset + itemsPerPage);
 
   // print and pdf function
   const handlePrint = (finance) => {
@@ -106,11 +165,39 @@ const FinalData = () => {
   return (
     <>
       <div className="mb-3">
-        <h1 className="text-center my-6 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
+        <h1 className="text-center my-4 text-3xl text-info font-bold bg-slate-500 p-3 rounded-lg uppercase">
           Export Products List
         </h1>
+        {/* search by date */}
+        <div className="mb-3 calendarWrap text-center w-3/4 mx-36">
+          <h3 className="mb-[8px] text-xl text-sky-400">Search by Date</h3>
+          <input
+            value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
+              range[0].endDate,
+              "MM/dd/yyyy"
+            )}`}
+            readOnly
+            className="inputBox border-2 border-indigo-600 p-2 w-2/4 rounded text-center"
+            onClick={() => setOpen((open) => !open)}
+          />
+          <div ref={refOne} className="">
+            {open && (
+              <DateRangePicker
+                className="flex justify-center calendarElement"
+                onChange={handleSelect}
+                // onChange={(item) => setRange([item.selection])}
+                editableDateInputs={true}
+                ranges={[selectionRange]}
+                months={2}
+                direction="horizontal"
+                staticRanges={[]}
+                inputRanges={[]}
+              />
+            )}
+          </div>
+        </div>
         <div
-          className="overflow-x-auto mx-2 mb-3"
+          className="overflow-x-auto mx-2 mb-2"
           ref={componentPDF}
           style={{ width: "100%" }}>
           {loading ? (
@@ -223,7 +310,11 @@ const FinalData = () => {
           previousLabel={"< Previous"}
           nextLabel={"Next >"}
           breakLabel={"..."}
-          pageCount={Math.ceil(finances.length / itemsPerPage)}
+          // pageCount={Math.ceil(finances.length / itemsPerPage)}
+          pageCount={Math.ceil(
+            (filteredData.length > 0 ? filteredData.length : finances.length) /
+              itemsPerPage
+          )}
           onPageChange={handlePageChange}
           containerClassName={"pagination flex gap-2 justify-center mt-4"}
           pageClassName={"page-item"}

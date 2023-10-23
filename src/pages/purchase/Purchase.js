@@ -35,6 +35,7 @@ const Purchase = () => {
   const [truckNo, setTruckNo] = useState("");
   const [loading, setLoading] = useState(true);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [error, setError] = useState("");
   // const filteredTruckNumbersRef = useRef([]);
 
   const navigate = useNavigate();
@@ -302,7 +303,7 @@ const Purchase = () => {
         toast.success("Successfully Uploaded to server", {
           position: "top-center",
         });
-        navigate("/exportimport");
+        navigate("/finance");
         // console.log(res);
       })
       .catch((err) =>
@@ -320,6 +321,10 @@ const Purchase = () => {
           <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
             Shipment Details Add
           </h1>
+          <p className="text-red-600 text-sm text-center font-medium">
+            ** Please Fillup this from carefully & check all fields You can't
+            modified it **
+          </p>
 
           {/* Table data get from accouts input database */}
           <div className="w-full lg:w-3/4 mx-auto">
@@ -550,6 +555,7 @@ const Purchase = () => {
                       required
                       aria-required
                       value={total}
+                      onWheel={(e) => e.target.blur()}
                       onChange={(e) => setTotal(e.target.value)}
                     />
                   </div>

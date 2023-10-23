@@ -228,6 +228,9 @@ const Finance = () => {
       <h1 className="flex justify-center items-center text-4xl my-4 uppercase text-info font-bold">
         Finance
       </h1>
+      <p className="text-red-600 text-sm text-center font-medium">
+        ** Please Fillup this from carefully You can't modified it **
+      </p>
       <div>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 my-6 mx-4">
