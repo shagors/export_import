@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useReactToPrint } from "react-to-print";
+// import { useReactToPrint } from "react-to-print";
 
 const ProductBoxes = () => {
   const [accounts, setAccounts] = useState([]);
@@ -330,12 +330,21 @@ const ProductBoxes = () => {
                           <option value="" className="mt-2">
                             Pick product Name
                           </option>
-                          {products &&
+                          {/* {products &&
                             products.map((product, index) => (
                               <option value={product} key={index}>
                                 {product}
                               </option>
-                            ))}
+                            ))} */}
+                          {Array.from(
+                            new Set(
+                              accounts?.map((product) => product.productName)
+                            )
+                          ).map((productName, index) => (
+                            <option key={index} value={productName}>
+                              {productName}
+                            </option>
+                          ))}
                         </select>
                       </div>
                       {errorMessage && (
