@@ -10,10 +10,9 @@ const AddChargesUpdate = () => {
   const [values, setValues] = useState({
     id,
     particularExpenseName: "",
-    particularExpenseCost: 0,
+    particularExpenseCost: "",
   });
 
-  // http://localhost:5001/addcharges/:id
   useEffect(() => {
     axios
       .get(
@@ -21,21 +20,19 @@ const AddChargesUpdate = () => {
       )
       .then((res) => {
         // console.log(res.data);
-        setValues({
-          ...values,
+        setValues((prevValues) => ({
+          ...prevValues,
           particularExpenseName: res?.data.particularExpenseName,
           particularExpenseCost: res?.data.particularExpenseCost,
-        });
+        }));
       })
       .catch((error) =>
         toast.error("Error coming from server please try again later", {
           position: "top-center",
         })
       );
-  }, [id, values]);
+  }, [id]);
 
-  // http://localhost:5001/addcharges/:id
-  // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -64,26 +61,20 @@ const AddChargesUpdate = () => {
       <div className="flex justify-center items-center">
         <form onSubmit={handleSubmit} className="w-[70%]">
           <div className="mt-6">
+            {/* ID */}
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
                 Id
               </label>
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-4 mt-2 bg-transparent"
-                placeholder="Enter Expencess Type"
                 type="number"
                 name="id"
                 value={values.id}
                 disabled
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    particularExpenseName: e.target.value,
-                  })
-                }
-                required
               />
             </div>
+            {/* Expenses */}
             <div>
               <label className="text-lg font-semibold" htmlFor="productName">
                 What Type of Expencess
@@ -96,14 +87,14 @@ const AddChargesUpdate = () => {
                 value={values.particularExpenseName}
                 id="particularExpencessName"
                 onChange={(e) =>
-                  setValues({
-                    ...values,
+                  setValues((prevValues) => ({
+                    ...prevValues,
                     particularExpenseName: e.target.value,
-                  })
+                  }))
                 }
-                required
               />
             </div>
+            {/* Expenses Cost */}
             <div className="mt-4">
               <label className="text-lg font-semibold" htmlFor="productName">
                 Expencess Cost
@@ -114,18 +105,20 @@ const AddChargesUpdate = () => {
                 type="text"
                 name="particularExpencessCost"
                 id="particularExpencessCost"
+                inputMode="decimal"
+                pattern="[0-9]*[.]?[0-9]*"
+                step="any"
                 value={values.particularExpenseCost}
                 onChange={(e) =>
-                  setValues({
-                    ...values,
+                  setValues((prevValues) => ({
+                    ...prevValues,
                     particularExpenseCost: e.target.value,
-                  })
+                  }))
                 }
-                required
               />
             </div>
             <div className="mt-5 gap-y-4">
-              <Link to="/exportimport" className="btn btn-info px-10 mx-5">
+              <Link to="/addcharges" className="btn btn-info px-10 mx-5">
                 Back
               </Link>
               <button

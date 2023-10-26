@@ -18,8 +18,6 @@ const AddCharges = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    // particularExpensesName: "",
-    // particularExpensesCost: "",
     particularExpenseName: "",
     particularExpenseCost: "",
   });
@@ -52,8 +50,6 @@ const AddCharges = () => {
   };
 
   // Data save for server
-  //  http://localhost:5001/addcharges
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const isChargeExists = charges.some(
@@ -93,7 +89,6 @@ const AddCharges = () => {
   };
 
   // data delete from server and also frontend
-  // http://localhost:5001/delete/:id
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure, you want to delete this Charge?"
