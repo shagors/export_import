@@ -215,7 +215,7 @@ const NewBrand = () => {
                     <td>{product.id}</td>
                     <td>{product.productName}</td>
                     <td>{product.productBrand}</td>
-                    <td className="flex justify-around items-center">
+                    <td className="flex space-x-10">
                       <Link to={`/newbrand/${product.id}`}>
                         <AiOutlineEdit className="w-6 h-6 text-purple-600" />
                       </Link>

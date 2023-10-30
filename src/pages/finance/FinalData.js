@@ -169,7 +169,7 @@ const FinalData = () => {
           Export Products List
         </h1>
         {/* search by date */}
-        <div className="mb-3 calendarWrap text-center w-3/4 mx-36">
+        {/* <div className="mb-3 calendarWrap text-center w-3/4 mx-36">
           <h3 className="mb-[8px] text-xl text-sky-400">Search by Date</h3>
           <input
             value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
@@ -195,7 +195,7 @@ const FinalData = () => {
               />
             )}
           </div>
-        </div>
+        </div> */}
         <div
           className="overflow-x-auto mx-2 mb-2"
           ref={componentPDF}

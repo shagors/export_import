@@ -317,7 +317,7 @@ const ProductBoxes = () => {
                       </label>
                       <div className="input-group">
                         <select
-                          className="select select-secondary w-full max-w-xs focus:outline-none"
+                          className="select select-secondary w-full focus:outline-none"
                           value={selectedProductName}
                           name="productName"
                           required
@@ -353,15 +353,15 @@ const ProductBoxes = () => {
                     </div>
 
                     {/* product Model */}
-                    <div className="">
+                    <div className="w-full mx-[2px]">
                       <label className="text-lg font-semibold">
                         Select Models:
                       </label>
-                      <div className="scrollable-container">
+                      <div className="w-full">
                         {filteredProductModels.map((productModel, index) => (
                           <div key={index} className="flex items-center">
                             <input
-                              className="mr-[6px] my-[3px] checkbox checkbox-xs checkbox-info"
+                              className="mr-[4px] my-[3px] checkbox checkbox-xs checkbox-info"
                               type="checkbox"
                               value={productModel}
                               checked={
@@ -377,10 +377,11 @@ const ProductBoxes = () => {
                                 name="perBoxProduct"
                                 required
                                 aria-required
-                                // onBlur={handleInputValueChange}
-                                onChange={handleInputValueChange}
+                                onWheel={(e) => e.target.blur()}
+                                onBlur={handleInputValueChange}
+                                // onChange={handleInputValueChange}
                                 placeholder="per Box"
-                                className="w-[75px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
+                                className="w-[95px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
                             )}
 
@@ -391,10 +392,11 @@ const ProductBoxes = () => {
                                 name="quantityProduct"
                                 required
                                 aria-required
+                                onWheel={(e) => e.target.blur()}
                                 onBlur={handleInputValueChange}
                                 // onChange={handleInputValueChange}
-                                placeholder={"Enter Quantity"}
-                                className="w-[120px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
+                                placeholder={"Quantity"}
+                                className="w-[130px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
                             )}
                           </div>
@@ -411,7 +413,7 @@ const ProductBoxes = () => {
                       </label>
                       <input
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Per Box Product Quantity"
+                        placeholder="Data coming form Per Box Total Sum"
                         type="number"
                         name="productPerBox"
                         required
@@ -453,7 +455,7 @@ const ProductBoxes = () => {
                       </label>
                       <input
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Product Name"
+                        placeholder="Total product"
                         type="number"
                         min="0"
                         required
@@ -470,11 +472,11 @@ const ProductBoxes = () => {
                       <label
                         className="text-lg font-semibold"
                         htmlFor="boxQuantiy">
-                        Number of Pallet
+                        Pallet Number
                       </label>
                       <input
                         className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                        placeholder="Enter Pallent Quantity"
+                        placeholder="Enter Pallent Number"
                         type="text"
                         name="pallet"
                         required

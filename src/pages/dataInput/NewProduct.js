@@ -180,7 +180,7 @@ const NewProduct = () => {
                   <tr className="hover cursor-pointer" key={product.id}>
                     <td>{product.id}</td>
                     <td>{product.productName}</td>
-                    <td className="flex justify-around items-center">
+                    <td className="flex space-x-10">
                       <Link to={`/newproduct/${product.id}`}>
                         <AiOutlineEdit className="w-6 h-6 text-purple-600" />
                       </Link>
