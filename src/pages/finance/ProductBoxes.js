@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const ProductBoxes = () => {
   const [accounts, setAccounts] = useState([]);
-  const [productDetails, setProductDetails] = useState([]);
+  const [account, setAccount] = useState([]);
   const navigate = useNavigate();
 
   // for multiple product add
@@ -26,12 +26,12 @@ const ProductBoxes = () => {
   const componentPDF = useRef();
 
   useEffect(() => {
+    fetchProducts();
     fetchAccounts();
-    fetchProductsDetails();
   }, [sessionData]);
 
-  // accounts data fetch from server
-  const fetchAccounts = async () => {
+  // products data fetch from server
+  const fetchProducts = async () => {
     try {
       const response = await axios.get(
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
@@ -43,12 +43,12 @@ const ProductBoxes = () => {
   };
 
   // product Details fetch from server
-  const fetchProductsDetails = async () => {
+  const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       );
-      setProductDetails(response?.data);
+      setAccount(response?.data);
     } catch (error) {
       toast.error("Error getting data from server!");
     }
@@ -87,6 +87,7 @@ const ProductBoxes = () => {
       [value]: !prevSelectedModels[value],
     }));
   };
+  console.log(selectedProductModels);
 
   const selectedProductModelNames = Object.keys(selectedProductModels).filter(
     (modelName) => selectedProductModels[modelName]
@@ -276,6 +277,16 @@ const ProductBoxes = () => {
           throw new Error("Network response was not ok");
         }
 
+        // Check if productModel exists in accounts API
+        const productModelExists = await checkProductModelExists(
+          JSON.parse(item?.productModel)
+        );
+
+        if (productModelExists) {
+          // If productModel exists, reduce the quantity in accounts API
+          await reduceQuantityInAccountsAPI(JSON.parse(item?.productModel));
+        }
+
         // await response.json();
         // console.log(response);
         toast.success("Successfully Uploaded to server", {
@@ -289,6 +300,40 @@ const ProductBoxes = () => {
       }
     }
   };
+
+  const checkProductModelExists = async (productModel) => {
+    try {
+      const response = await axios.get(
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts?productModel=${productModel}`
+      );
+
+      return response.data.length > 0; // Return true if productModel exists, false otherwise
+    } catch (error) {
+      console.error("Error checking productModel existence:", error);
+      throw error; // Rethrow the error to be caught in the catch block above
+    }
+  };
+
+  const reduceQuantityInAccountsAPI = async (productModel) => {
+    try {
+      await axios.patch(
+        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts?productModel=${productModel}`,
+        {
+          // Add any data you need to send for reducing quantity
+          // For example, { quantity: newQuantity }
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error reducing quantity in accounts API:", error);
+      throw error; // Rethrow the error to be caught in the catch block above
+    }
+  };
+  // console.log(account);
 
   // const handlePrint = useReactToPrint({
   //   content: () => componentPDF.current,
@@ -399,6 +444,7 @@ const ProductBoxes = () => {
                                 className="w-[130px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
                             )}
+                            {}
                           </div>
                         ))}
                       </div>

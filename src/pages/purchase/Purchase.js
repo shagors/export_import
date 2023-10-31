@@ -19,6 +19,7 @@ const Purchase = () => {
   const [accounts, setAccounts] = useState([]);
   const [charges, setCharges] = useState([]);
   const [boxData, setBoxData] = useState([]);
+  const [purchase, setPurchase] = useState([]);
   const [transportWay, setTransportWay] = useState("");
   const [transportCountryName, setTransportCountryName] = useState("");
   const [selectedTransportCountryPort, setSelectedTransportCountryPort] =
@@ -36,6 +37,7 @@ const Purchase = () => {
   const [loading, setLoading] = useState(true);
   const [selectedItems, setSelectedItems] = useState([]);
   const [error, setError] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
   // const filteredTruckNumbersRef = useRef([]);
 
   const navigate = useNavigate();
@@ -124,6 +126,17 @@ const Purchase = () => {
     }
   };
 
+  const fetchPurchase = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance"
+      );
+      setPurchase(response?.data);
+    } catch (error) {
+      toast.error("Error from server to get data!!");
+    }
+  };
+
   const fetchFinance = async () => {
     try {
       const response = await axios.get(
@@ -149,6 +162,8 @@ const Purchase = () => {
     fetchBoxData();
     // fetch finance data
     fetchFinance();
+    // fetch purchase data
+    fetchPurchase();
 
     const productInBoxData = boxData;
     const financeApiData = finances;
@@ -173,11 +188,25 @@ const Purchase = () => {
     // const savedFilteredTruckNumbers = getFilteredTruckNumbersFromLocalStorage();
     // setFilteredTruckNumbers(savedFilteredTruckNumbers);
 
+    const api2Ids = purchase?.map((item) => item?.officeAccount).flat();
+    // console.log(api2Ids);
+    const api2IdsPasrse = api2Ids?.map((a) => JSON.parse(a)).flat();
+    // console.log(api2IdsPasrse);
+
+    const filteredBoxData = boxData?.filter(
+      (item) => !api2IdsPasrse.includes(item.id)
+    );
+    // console.log(filteredBoxData);
+
+    setFilteredData(filteredBoxData);
+
     // fetch box data
     fetchBoxData();
     // fetch finance data
     fetchFinance();
   }, []);
+
+  // console.log(filteredData);
 
   // If truck number filter then this useEffect need
   // useEffect(() => {
