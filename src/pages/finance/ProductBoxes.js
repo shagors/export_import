@@ -87,7 +87,7 @@ const ProductBoxes = () => {
       [value]: !prevSelectedModels[value],
     }));
   };
-  console.log(selectedProductModels);
+  // console.log(selectedProductModels);
 
   const selectedProductModelNames = Object.keys(selectedProductModels).filter(
     (modelName) => selectedProductModels[modelName]

@@ -199,11 +199,6 @@ const Purchase = () => {
     // console.log(filteredBoxData);
 
     setFilteredData(filteredBoxData);
-
-    // fetch box data
-    fetchBoxData();
-    // fetch finance data
-    fetchFinance();
   }, []);
 
   // console.log(filteredData);
@@ -301,7 +296,6 @@ const Purchase = () => {
   };
 
   // data send to server
-
   const formSubmit = (e) => {
     const newEx = parseFloat(totalCost) + parseFloat(total);
     e.preventDefault();
