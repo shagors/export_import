@@ -181,25 +181,61 @@ const Purchase = () => {
     const filteredTruckNumbers = productInBoxTruckNumbers?.filter(
       (truckNo) => !commonTruckNumbers?.includes(truckNo)
     );
-    setFilteredTruckNumbers(filteredTruckNumbers);
+    // setFilteredTruckNumbers(filteredTruckNumbers);
     // console.log(filteredTruckNumbers);
     // saveFilteredTruckNumbersToLocalStorage(filteredTruckNumbers);
-
     // const savedFilteredTruckNumbers = getFilteredTruckNumbersFromLocalStorage();
     // setFilteredTruckNumbers(savedFilteredTruckNumbers);
 
-    const api2Ids = purchase?.map((item) => item?.officeAccount).flat();
-    // console.log(api2Ids);
-    const api2IdsPasrse = api2Ids?.map((a) => JSON.parse(a)).flat();
-    // console.log(api2IdsPasrse);
+    // id matches for table
+    // const api2Ids = purchase?.map((item) => item?.officeAccount).flat();
+    // // console.log(api2Ids);
+    // const api2IdsPasrse = api2Ids?.map((a) => JSON.parse(a)).flat();
+    // // console.log(api2IdsPasrse);
 
-    const filteredBoxData = boxData?.filter(
-      (item) => !api2IdsPasrse.includes(item.id)
-    );
-    // console.log(filteredBoxData);
-
-    setFilteredData(filteredBoxData);
+    // const filteredBoxData = boxData?.filter(
+    //   (item) => !api2IdsPasrse.includes(item.id)
+    // );
+    // setFilteredData(filteredBoxData);
   }, []);
+
+  useEffect(() => {
+    // hide table data if it's selected works it
+    if (boxData.length > 0 && purchase.length > 0) {
+      // const api2Ids = purchase.flatMap((item) => item.officeAccount);
+      // const filteredBoxData = boxData.filter(
+      //   (item) => !api2Ids.includes(item.id)
+      // );
+
+      const api2Ids = purchase?.map((item) => item?.officeAccount).flat();
+      const api2IdsPasrse = api2Ids?.map((a) => JSON.parse(a)).flat();
+      const filteredBoxData = boxData?.filter(
+        (item) => !api2IdsPasrse.includes(item.id)
+      );
+
+      setFilteredData(filteredBoxData);
+    }
+
+    if (boxData.length > 0 && finances.length > 0) {
+      const productInBoxData = boxData;
+      const financeApiData = finances;
+
+      const productInBoxTruckNumbers = productInBoxData.map(
+        (item) => item.truckNumber
+      );
+      // console.log(productInBoxTruckNumbers);
+      const financeTruckNumbers = financeApiData?.map((item) => item.truckNo);
+      // console.log(financeTruckNumbers);
+      const commonTruckNumbers = productInBoxTruckNumbers?.filter((truckNo) =>
+        financeTruckNumbers?.includes(truckNo)
+      );
+      // console.log(commonTruckNumbers);
+      const filteredTruckNumbers = productInBoxTruckNumbers?.filter(
+        (truckNo) => !commonTruckNumbers?.includes(truckNo)
+      );
+      setFilteredTruckNumbers(filteredTruckNumbers);
+    }
+  }, [boxData, purchase, finances]);
 
   // console.log(filteredData);
 
@@ -384,7 +420,7 @@ const Purchase = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {boxData?.map((product) => {
+                    {filteredData?.map((product) => {
                       const jsonStr = product.productModel.replace(
                         /^"|"$/g,
                         ""
@@ -600,21 +636,21 @@ const Purchase = () => {
                       onChange={handleTruckNo}>
                       <option value="">---- Pick Truck No. ----</option>
                       {/* show all truck truck number */}
-                      {boxData
+                      {/* {boxData
                         .sort((a, b) => b.truckNumber - a.truckNumber)
                         .map((p, index) => (
                           <option value={p.truckNumber} key={index}>
                             {p.truckNumber}
                           </option>
-                        ))}
+                        ))} */}
                       {/* filter truck number If any truck number save then hide automatically */}
-                      {/* {filteredTruckNumbers
+                      {filteredTruckNumbers
                         ?.sort((a, b) => b.truckNumber - a.truckNumber)
                         ?.map((data, index) => (
                           <option value={data.truckNumber} key={index}>
                             {data}
                           </option>
-                        ))} */}
+                        ))}
                       {/* check truck number not use it */}
                       {/* {filteredTruckNumbers.map((item, index) => (
                         <option key={index} value={item.truckNumber}>
