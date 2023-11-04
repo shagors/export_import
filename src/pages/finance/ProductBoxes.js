@@ -2,11 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { useReactToPrint } from "react-to-print";
 
 const ProductBoxes = () => {
   const [accounts, setAccounts] = useState([]);
   const [account, setAccount] = useState([]);
+  const [boxProducts, setBoxProducts] = useState([]);
   const navigate = useNavigate();
 
   // for multiple product add
@@ -28,6 +28,7 @@ const ProductBoxes = () => {
   useEffect(() => {
     fetchProducts();
     fetchAccounts();
+    fetchBoxProducts();
   }, [sessionData]);
 
   // products data fetch from server
@@ -49,6 +50,18 @@ const ProductBoxes = () => {
         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       );
       setAccount(response?.data);
+    } catch (error) {
+      toast.error("Error getting data from server!");
+    }
+  };
+
+  // product Details fetch from server
+  const fetchBoxProducts = async () => {
+    try {
+      const response = await axios.get(
+        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
+      );
+      setBoxProducts(response?.data);
     } catch (error) {
       toast.error("Error getting data from server!");
     }
@@ -276,16 +289,34 @@ const ProductBoxes = () => {
         if (response.status !== 201) {
           throw new Error("Network response was not ok");
         }
+        // const res = JSON.parse(response?.data);
+        // console.log(res);
 
-        // Check if productModel exists in accounts API
-        const productModelExists = await checkProductModelExists(
-          JSON.parse(item?.productModel)
-        );
-
-        if (productModelExists) {
-          // If productModel exists, reduce the quantity in accounts API
-          await reduceQuantityInAccountsAPI(JSON.parse(item?.productModel));
-        }
+        // Match the data from the post request with the first API data
+        // const matchedData = res?.map((postItem) => {
+        //   const matchingFirstApiData = account.find(
+        //     (firstItem) => firstItem.id === postItem.id
+        //   );
+        //   if (matchingFirstApiData) {
+        //     const updatedQuantity =
+        //       matchingFirstApiData.productQuantity - postItem.quantity;
+        //     return {
+        //       ...matchingFirstApiData,
+        //       productQuantity: updatedQuantity,
+        //     };
+        //   }
+        //   return matchingFirstApiData;
+        // });
+        // console.log(matchedData);
+        // await axios.patch(
+        //   "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts",
+        //   matchedData,
+        //   {
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   }
+        // );
 
         // await response.json();
         // console.log(response);
@@ -300,46 +331,7 @@ const ProductBoxes = () => {
       }
     }
   };
-
-  const checkProductModelExists = async (productModel) => {
-    try {
-      const response = await axios.get(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts?productModel=${productModel}`
-      );
-
-      return response.data.length > 0; // Return true if productModel exists, false otherwise
-    } catch (error) {
-      console.error("Error checking productModel existence:", error);
-      throw error; // Rethrow the error to be caught in the catch block above
-    }
-  };
-
-  const reduceQuantityInAccountsAPI = async (productModel) => {
-    try {
-      await axios.patch(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts?productModel=${productModel}`,
-        {
-          // Add any data you need to send for reducing quantity
-          // For example, { quantity: newQuantity }
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    } catch (error) {
-      console.error("Error reducing quantity in accounts API:", error);
-      throw error; // Rethrow the error to be caught in the catch block above
-    }
-  };
   // console.log(account);
-
-  // const handlePrint = useReactToPrint({
-  //   content: () => componentPDF.current,
-  //   documentTitle: "Product",
-  //   onAfterPrint: () => alert("Data send to printer for print"),
-  // });
 
   return (
     <div>

@@ -36,7 +36,7 @@ const Purchase = () => {
   const [truckNo, setTruckNo] = useState("");
   const [loading, setLoading] = useState(true);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   // const filteredTruckNumbersRef = useRef([]);
 

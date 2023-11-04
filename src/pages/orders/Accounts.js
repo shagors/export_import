@@ -28,9 +28,6 @@ const Accounts = () => {
 
   const navigate = useNavigate();
 
-  // http://localhost:5001/products
-  // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products
-
   useEffect(() => {
     setLoading(true);
     fetchProducts();
