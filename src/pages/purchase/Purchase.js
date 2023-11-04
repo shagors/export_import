@@ -165,22 +165,22 @@ const Purchase = () => {
     // fetch purchase data
     fetchPurchase();
 
-    const productInBoxData = boxData;
-    const financeApiData = finances;
+    // const productInBoxData = boxData;
+    // const financeApiData = finances;
 
-    const productInBoxTruckNumbers = productInBoxData.map(
-      (item) => item.truckNumber
-    );
-    // console.log(productInBoxTruckNumbers);
-    const financeTruckNumbers = financeApiData?.map((item) => item.truckNo);
-    // console.log(financeTruckNumbers);
-    const commonTruckNumbers = productInBoxTruckNumbers?.filter((truckNo) =>
-      financeTruckNumbers?.includes(truckNo)
-    );
-    // console.log(commonTruckNumbers);
-    const filteredTruckNumbers = productInBoxTruckNumbers?.filter(
-      (truckNo) => !commonTruckNumbers?.includes(truckNo)
-    );
+    // const productInBoxTruckNumbers = productInBoxData.map(
+    //   (item) => item.truckNumber
+    // );
+    // // console.log(productInBoxTruckNumbers);
+    // const financeTruckNumbers = financeApiData?.map((item) => item.truckNo);
+    // // console.log(financeTruckNumbers);
+    // const commonTruckNumbers = productInBoxTruckNumbers?.filter((truckNo) =>
+    //   financeTruckNumbers?.includes(truckNo)
+    // );
+    // // console.log(commonTruckNumbers);
+    // const filteredTruckNumbers = productInBoxTruckNumbers?.filter(
+    //   (truckNo) => !commonTruckNumbers?.includes(truckNo)
+    // );
     // setFilteredTruckNumbers(filteredTruckNumbers);
     // console.log(filteredTruckNumbers);
     // saveFilteredTruckNumbersToLocalStorage(filteredTruckNumbers);
@@ -216,6 +216,7 @@ const Purchase = () => {
       setFilteredData(filteredBoxData);
     }
 
+    // hide truck number if truck number selected
     if (boxData.length > 0 && finances.length > 0) {
       const productInBoxData = boxData;
       const financeApiData = finances;
