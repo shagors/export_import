@@ -179,13 +179,105 @@ const Transportservice = () => {
     setInputValues(newInputValues);
   };
 
+  const [formData, setFormData] = useState({
+    productModel: "",
+    productQuantity: 0,
+  });
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleCalcSubmit = (e) => {
+    e.preventDefault();
+
+    const { productModel, productQuantity } = formData;
+
+    // First, make a POST request to save the data to modelcalc API
+    axios
+      .post("http://localhost:5001/modelcalc", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        toast.success("Successfully Data Uploaded", {
+          position: "top-center",
+        });
+
+        // Then, make a PATCH request to update quantity in office_accounts API
+        axios
+          .patch(`http://localhost:5001/office_accounts/${productModel}`, {
+            productQuantity,
+          })
+          .then((res) => {
+            toast.success("Successfully Quantity Updated", {
+              position: "top-center",
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            toast.error("Error updating quantity", {
+              position: "top-center",
+            });
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Error saving data", {
+          position: "top-center",
+        });
+      });
+  };
+
   return (
     <>
       <div>
         <p>Sum of numbers: {sum}</p>
       </div>
+
+      {/* product quantity decrease check code */}
+      <div className="my-10">
+        <form onSubmit={handleCalcSubmit}>
+          <div>
+            <label className="text-lg font-semibold" htmlFor="productModel">
+              Model
+            </label>
+            <input
+              className="w-full border-2 border-gray-100 rounded-xl p-4 mt-2 bg-transparent"
+              placeholder="Enter Model"
+              type="text"
+              name="productModel"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-lg font-semibold" htmlFor="productQuantity">
+              Product Quantity
+            </label>
+            <input
+              className="w-full border-2 border-gray-100 rounded-xl p-4 mt-2 bg-transparent"
+              placeholder="Enter product Quantity"
+              type="number"
+              name="productQuantity"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button
+            className="text-center btn btn-info mt-3 w-1/3 mx-auto"
+            type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
+
       {/* date and date by search filter table query */}
-      <div className="overflow-x-auto h-[700px] mb-5">
+      {/* <div className="overflow-x-auto h-[700px] mb-5">
         <div className="text-center my-4 calendarWrap">
           <input
             value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
@@ -235,7 +327,7 @@ const Transportservice = () => {
             })}
           </tbody>
         </table>
-      </div>
+      </div> */}
 
       {/* products boxes table check and data get from server */}
       {/* <h1 className="text-2xl text-center my-3 font-bold underline">
