@@ -4,6 +4,7 @@ import { DateRangePicker } from "react-date-range";
 import { toast } from "react-toastify";
 import { addDays, format } from "date-fns";
 import useFetch from "../hooks/useFetch";
+import { ClipLoader } from "react-spinners";
 
 const Transportservice = () => {
   const [products, setProducts] = useState([]);
@@ -57,6 +58,7 @@ const Transportservice = () => {
 
     fetchProductInBoxes();
     fetchExpenses();
+    fetchProductAccounts();
   }, []);
 
   const fetchProductInBoxes = async () => {
@@ -183,6 +185,8 @@ const Transportservice = () => {
     productModel: "",
     productQuantity: 0,
   });
+  const [productsData, setProductsData] = useState([]);
+  // const [loading, setLoading] = useState(true);
 
   const handleChange = (event) => {
     setFormData({
@@ -193,9 +197,7 @@ const Transportservice = () => {
 
   const handleCalcSubmit = (e) => {
     e.preventDefault();
-
     const { productModel, productQuantity } = formData;
-
     // First, make a POST request to save the data to modelcalc API
     axios
       .post("http://localhost:5001/modelcalc", formData, {
@@ -214,7 +216,7 @@ const Transportservice = () => {
             productQuantity,
           })
           .then((res) => {
-            toast.success("Successfully Quantity Updated", {
+            toast.success("Product Quantity Updated", {
               position: "top-center",
             });
           })
@@ -233,14 +235,23 @@ const Transportservice = () => {
       });
   };
 
+  const fetchProductAccounts = async () => {
+    try {
+      const response = await axios.get("http://localhost:5001/office_accounts");
+      setProductsData(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <div>
+      {/* <div>
         <p>Sum of numbers: {sum}</p>
-      </div>
+      </div> */}
 
       {/* product quantity decrease check code */}
-      <div className="my-10">
+      <div className="my-10 w-full lg:w-3/4 mx-auto">
         <form onSubmit={handleCalcSubmit}>
           <div>
             <label className="text-lg font-semibold" htmlFor="productModel">
@@ -274,6 +285,37 @@ const Transportservice = () => {
             Submit
           </button>
         </form>
+      </div>
+      {/* Table data get from products database */}
+      <div className="w-full lg:w-3/4 mx-auto">
+        <h1 className="text-center my-6 text-2xl text-info font-bold bg-slate-500 p-[10px] rounded-lg uppercase">
+          All Product's List
+        </h1>
+        <div className="overflow-x-auto add__scrollbar">
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                <th className="sticky top-0 bg-gray-200">ID</th>
+                <th className="sticky top-0 bg-gray-200">Product Name</th>
+                <th className="sticky top-0 bg-gray-200">Product Brand</th>
+                <th className="sticky top-0 bg-gray-200">Product Model</th>
+                <th className="sticky top-0 bg-gray-200">Product Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {productsData?.map((product) => (
+                <tr className="hover cursor-pointer" key={product.id}>
+                  <td>{product.id}</td>
+                  <td>{product.productName}</td>
+                  <td>{product.productBrand}</td>
+                  <td>{product.productModel}</td>
+                  <td>{product.productQuantity}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* date and date by search filter table query */}

@@ -247,35 +247,38 @@ const ProductBoxes = () => {
     e.preventDefault();
     // map for data convert to stringify
     sessionDataClone.forEach((element, index) => {
-      const jsonProductModelString = JSON.stringify(
-        element?.productModel?.map((str) => `"${str}"`)
-      );
-      element.productModel = `"${jsonProductModelString}"`;
+      // const jsonProductModelString = JSON.stringify(
+      //   element?.productModel?.map((str) => `${str}`)
+      // );
+      // console.log(jsonProductModelString);
+      // element.productModel = `"${jsonProductModelString}"`;
+      // element.productModel = JSON.stringify(jsonProductModelString);
+      // element.productModel = `"${element.productModel}"`;
+      element.productModel = JSON.stringify(element.productModel);
+      // console.log(element.productModel);
 
-      const jsonSplitProductsBoxString = JSON.stringify(
-        element?.splitProductsBox?.map((str) => `"${str}"`)
-      );
-      element.splitProductsBox = `"${jsonSplitProductsBoxString}"`;
+      // const jsonSplitProductsBoxString = JSON.stringify(
+      //   element?.splitProductsBox?.map((str) => `${str}`)
+      // );
+      // element.splitProductsBox = `"${jsonSplitProductsBoxString}"`;
+      element.splitProductsBox = JSON.stringify(element.splitProductsBox);
+      // console.log(element.splitProductsBox);
 
-      const jsonSplitQuantitySingleProductString = JSON.stringify(
-        element?.splitQuantitySingleProduct?.map((str) => `"${str}"`)
+      // const jsonSplitQuantitySingleProductString = JSON.stringify(
+      //   element?.splitQuantitySingleProduct?.map((str) => `${str}`)
+      // );
+      // element.splitQuantitySingleProduct = `"${jsonSplitQuantitySingleProductString}"`;
+      element.splitQuantitySingleProduct = JSON.stringify(
+        element.splitQuantitySingleProduct
       );
-      element.splitQuantitySingleProduct = `"${jsonSplitQuantitySingleProductString}"`;
+      // console.log(element.splitQuantitySingleProduct);
     });
     // for loop use for data single pass from the array
     for (const item of sessionDataClone) {
-      try {
-        // const response = await fetch(
-        //   "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(item),
-        //   }
-        // );
+      const { productModel, quantity: productQuantity } = item;
+      // console.log(productModel, productQuantity);
 
+      try {
         const response = await axios.post(
           "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
           item,
@@ -285,45 +288,38 @@ const ProductBoxes = () => {
             },
           }
         );
+        // console.log(item);
 
-        if (response.status !== 201) {
-          throw new Error("Network response was not ok");
-        }
-        // const res = JSON.parse(response?.data);
-        // console.log(res);
+        axios
+          .patch(
+            `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub`,
+            {
+              productModel,
+              productQuantity,
+            }
+          )
+          .then((res) => {
+            toast.success("Product Quantity Updated", {
+              position: "top-center",
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            toast.error("Error updating quantity", {
+              position: "top-center",
+            });
+          });
 
-        // Match the data from the post request with the first API data
-        // const matchedData = res?.map((postItem) => {
-        //   const matchingFirstApiData = account.find(
-        //     (firstItem) => firstItem.id === postItem.id
-        //   );
-        //   if (matchingFirstApiData) {
-        //     const updatedQuantity =
-        //       matchingFirstApiData.productQuantity - postItem.quantity;
-        //     return {
-        //       ...matchingFirstApiData,
-        //       productQuantity: updatedQuantity,
-        //     };
-        //   }
-        //   return matchingFirstApiData;
-        // });
-        // console.log(matchedData);
-        // await axios.patch(
-        //   "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts",
-        //   matchedData,
-        //   {
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //   }
-        // );
+        // if (response.status !== 201) {
+        //   throw new Error("Network response was not ok");
+        // }
 
         // await response.json();
         // console.log(response);
         toast.success("Successfully Uploaded to server", {
           position: "top-center",
         });
-        navigate("/exportimport");
+        // navigate("/exportimport");
       } catch (error) {
         toast.error("Network Error. Please try again later", {
           position: "top-center",
@@ -331,7 +327,11 @@ const ProductBoxes = () => {
       }
     }
   };
-  // console.log(account);
+  // console.log(sessionDataClone);
+
+  // const parseData = JSON.parse(item?.productModel);
+  // console.log(item);
+  // console.log(parseData);
 
   return (
     <div>
