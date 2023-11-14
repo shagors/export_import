@@ -289,6 +289,9 @@ const DataInput = () => {
                 className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
                 placeholder="Product Weight/KG must be number"
                 type="text"
+                inputMode="decimal"
+                pattern="[0-9]*[.,]?[0-9]*"
+                step="0.01"
                 name="productWeight"
                 id="productWeight"
                 onChange={handleChange}

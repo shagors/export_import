@@ -541,7 +541,6 @@ const Finance = () => {
                         <td>{expense.invoiceNo}</td>
                         <td>{expense.ipNo}</td>
                         <td>{expense.total}</td>
-
                         <td>{expense.totalCost}</td>
                         <td>
                           <ul>
@@ -563,13 +562,15 @@ const Finance = () => {
                         <td>
                           {matchedProducts
                             ?.map((p) => {
-                              const jsonStr = p.productModel.replace(
-                                /^"|"$/g,
-                                ""
-                              );
-                              const data = JSON.parse(jsonStr);
-                              const result = data.join(",");
-                              return result;
+                              // const convert = JSON.parse();
+                              // console.log(p.productModel);
+                              // const jsonStr = p.productModel.replace(
+                              //   /^"|"$/g,
+                              //   ""
+                              // );
+                              // const data = JSON.parse(p.productModel);
+                              // const result = data.join(",");
+                              return p.productModel;
                             })
                             .join(",")}
                         </td>

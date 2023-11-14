@@ -134,6 +134,9 @@ const DataInputUpdate = () => {
               <input
                 className="w-full border-2 border-gray-100 rounded-xl p-[10px] mt-1 bg-transparent"
                 type="text"
+                inputMode="decimal"
+                pattern="[0-9]*[.,]?[0-9]*"
+                step="0.01"
                 name="productWeight"
                 value={formData.productWeight}
                 onChange={(e) =>

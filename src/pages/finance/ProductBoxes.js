@@ -310,16 +310,16 @@ const ProductBoxes = () => {
             });
           });
 
-        // if (response.status !== 201) {
-        //   throw new Error("Network response was not ok");
-        // }
+        if (response.status !== 201) {
+          throw new Error("Network response was not ok");
+        }
 
         // await response.json();
         // console.log(response);
         toast.success("Successfully Uploaded to server", {
           position: "top-center",
         });
-        // navigate("/exportimport");
+        navigate("/exportimport");
       } catch (error) {
         toast.error("Network Error. Please try again later", {
           position: "top-center",
@@ -328,8 +328,6 @@ const ProductBoxes = () => {
     }
   };
   // console.log(sessionDataClone);
-
-  // const parseData = JSON.parse(item?.productModel);
   // console.log(item);
   // console.log(parseData);
 
@@ -418,7 +416,7 @@ const ProductBoxes = () => {
                                 onBlur={handleInputValueChange}
                                 // onChange={handleInputValueChange}
                                 placeholder="per Box"
-                                className="w-[95px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
+                                className="w-[100px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
                             )}
 
@@ -432,8 +430,8 @@ const ProductBoxes = () => {
                                 onWheel={(e) => e.target.blur()}
                                 onBlur={handleInputValueChange}
                                 // onChange={handleInputValueChange}
-                                placeholder={"Quantity"}
-                                className="w-[130px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
+                                placeholder="Product Quantity"
+                                className="w-[170px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
                             )}
                             {}

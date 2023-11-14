@@ -201,7 +201,7 @@ const Purchase = () => {
 
   useEffect(() => {
     // hide table data if it's selected works it
-    if (boxData.length > 0 && purchase.length > 0) {
+    if (boxData?.length > 0 && purchase?.length >= 0) {
       // const api2Ids = purchase.flatMap((item) => item.officeAccount);
       // const filteredBoxData = boxData.filter(
       //   (item) => !api2Ids.includes(item.id)
@@ -217,7 +217,7 @@ const Purchase = () => {
     }
 
     // hide truck number if truck number selected
-    if (boxData.length > 0 && finances.length > 0) {
+    if (boxData.length > 0 && finances.length >= 0) {
       const productInBoxData = boxData;
       const financeApiData = finances;
 
