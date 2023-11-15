@@ -155,7 +155,7 @@ const ProductBoxes = () => {
     setErrorMessage("");
   };
 
-  const debouncedInputValueChange = debounce(handleInputValueChange, 1000); // 300ms debounce
+  const debouncedInputValueChange = debounce(handleInputValueChange, 800); // 300ms debounce
 
   // console.log(inputValues);
 
@@ -321,35 +321,35 @@ const ProductBoxes = () => {
       // console.log(productData);
       try {
         // main post data send to API
-        // const response = await axios.post(
-        //   "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
-        //   item,
-        //   {
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //   }
-        // );
-        // if (response.status !== 201) {
-        //   throw new Error("Network response was not ok");
-        // }
+        const response = await axios.post(
+          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
+          item,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.status !== 201) {
+          throw new Error("Network response was not ok");
+        }
 
         // This API patch API data send to accounts API and calculate the product Quantityand
-        // const sendIndividualEntries = async () => {
-        //   for (const entry of productData) {
-        //     try {
-        //       await axios.patch(
-        //         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub",
-        //         entry
-        //       );
-        //     } catch (error) {
-        //       toast.error("Network Error. Please try again later", {
-        //         position: "top-center",
-        //       });
-        //     }
-        //   }
-        // };
-        // sendIndividualEntries();
+        const sendIndividualEntries = async () => {
+          for (const entry of productData) {
+            try {
+              await axios.patch(
+                "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub",
+                entry
+              );
+            } catch (error) {
+              toast.error("Network Error. Please try again later", {
+                position: "top-center",
+              });
+            }
+          }
+        };
+        sendIndividualEntries();
 
         // this is test for data send
         // axios
