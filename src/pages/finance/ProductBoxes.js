@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import debounce from "lodash/debounce";
 
 const ProductBoxes = () => {
   const [accounts, setAccounts] = useState([]);
@@ -153,6 +154,8 @@ const ProductBoxes = () => {
     }
     setErrorMessage("");
   };
+
+  const debouncedInputValueChange = debounce(handleInputValueChange, 1000); // 300ms debounce
 
   // console.log(inputValues);
 
@@ -460,7 +463,8 @@ const ProductBoxes = () => {
                                 aria-required
                                 onWheel={(e) => e.target.blur()}
                                 // onBlur={handleInputValueChange}
-                                onChange={handleInputValueChange}
+                                // onChange={handleInputValueChange}
+                                onChange={debouncedInputValueChange}
                                 placeholder="per Box"
                                 className="w-[100px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
@@ -475,7 +479,8 @@ const ProductBoxes = () => {
                                 aria-required
                                 onWheel={(e) => e.target.blur()}
                                 // onBlur={handleInputValueChange}
-                                onChange={handleInputValueChange}
+                                // onChange={handleInputValueChange}
+                                onChange={debouncedInputValueChange}
                                 placeholder="Product Quantity"
                                 className="w-[170px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
