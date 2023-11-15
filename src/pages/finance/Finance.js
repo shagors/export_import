@@ -570,7 +570,7 @@ const Finance = () => {
                               // );
                               // const data = JSON.parse(p.productModel);
                               // const result = data.join(",");
-                              return p.productModel;
+                              return p?.productModel;
                             })
                             .join(",")}
                         </td>

@@ -246,7 +246,7 @@ const ProductBoxes = () => {
   const formSubmit = async (e) => {
     e.preventDefault();
     // map for data convert to stringify
-    sessionDataClone.forEach((element, index) => {
+    sessionDataClone?.forEach((element, index) => {
       // const jsonProductModelString = JSON.stringify(
       //   element?.productModel?.map((str) => `${str}`)
       // );
@@ -275,8 +275,46 @@ const ProductBoxes = () => {
     });
     // for loop use for data single pass from the array
     for (const item of sessionDataClone) {
-      const { productModel, quantity: productQuantity } = item;
-      // console.log(productModel, productQuantity);
+      // console.log(item);
+      const { productModel, splitQuantitySingleProduct } = item;
+      const modelParse = JSON.parse(productModel);
+      const filterModel = modelParse?.map((m) => m);
+      // const filterModel = "TP210A";
+      // console.log(filterModel);
+      const quantityParse = JSON.parse(splitQuantitySingleProduct);
+      const productQuantity = quantityParse?.map((q) => q);
+      // const productQuantity = 100;
+      // console.log(productQuantity);
+
+      const modelArr = filterModel;
+      const quantityArr = productQuantity;
+      // Function to pair elements from two arrays and create an array of formatted strings
+      // const formatModelWithQuantity = (modelArr, quantityArr) => {
+      //   const formattedData = [];
+      //   // Ensure both arrays are of the same length
+      //   if (modelArr.length === quantityArr.length) {
+      //     for (let i = 0; i < modelArr.length; i++) {
+      //       const formatted = `${modelArr[i]}:${quantityArr[i]}`;
+      //       formattedData.push(formatted);
+      //     }
+      //   } else {
+      //     console.error("Arrays must have the same length.");
+      //   }
+      //   return formattedData;
+      // };
+      // // Creating the array of formatted strings
+      // const modelWithQuantity = formatModelWithQuantity(model, quantity);
+      // // Displaying fruits with prices
+      // modelWithQuantity.forEach((data) => {
+      //   console.log(data);
+      // });
+
+      // Transforming the arrays into an array of objects
+      const productData = modelArr?.map((model, index) => ({
+        productModel: model,
+        productQuantity: quantityArr[index],
+      }));
+      // console.log(productData);
 
       try {
         const response = await axios.post(
@@ -293,10 +331,7 @@ const ProductBoxes = () => {
         axios
           .patch(
             `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub`,
-            {
-              productModel,
-              productQuantity,
-            }
+            productData[0]
           )
           .then((res) => {
             toast.success("Product Quantity Updated", {
@@ -313,9 +348,6 @@ const ProductBoxes = () => {
         if (response.status !== 201) {
           throw new Error("Network response was not ok");
         }
-
-        // await response.json();
-        // console.log(response);
         toast.success("Successfully Uploaded to server", {
           position: "top-center",
         });
@@ -327,9 +359,6 @@ const ProductBoxes = () => {
       }
     }
   };
-  // console.log(sessionDataClone);
-  // console.log(item);
-  // console.log(parseData);
 
   return (
     <div>
@@ -393,7 +422,7 @@ const ProductBoxes = () => {
                         Select Models:
                       </label>
                       <div className="w-full">
-                        {filteredProductModels.map((productModel, index) => (
+                        {filteredProductModels?.map((productModel, index) => (
                           <div key={index} className="flex items-center">
                             <input
                               className="mr-[4px] my-[3px] checkbox checkbox-xs checkbox-info"
