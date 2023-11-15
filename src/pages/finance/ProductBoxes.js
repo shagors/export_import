@@ -106,6 +106,10 @@ const ProductBoxes = () => {
     (modelName) => selectedProductModels[modelName]
   );
 
+  // separe the new value from the array then map that array and store the details from there
+  const singBoxPro = singleBoxProducts.map((newQ) => newQ.newQuantity);
+  const singProQuan = singleProductQuantity.map((newQ) => newQ.newQuantity);
+
   const handleInputValueChange = (e) => {
     const name = e.target.name;
     const value = parseFloat(e.target.value);
@@ -150,9 +154,7 @@ const ProductBoxes = () => {
     setErrorMessage("");
   };
 
-  // separe the new value from the array then map that array and store the details from there
-  const singBoxPro = singleBoxProducts.map((newQ) => newQ.newQuantity);
-  const singProQuan = singleProductQuantity.map((newQ) => newQ.newQuantity);
+  // console.log(inputValues);
 
   // calculate the total box
   const handleCalculateData = () => {
@@ -285,7 +287,6 @@ const ProductBoxes = () => {
       const productQuantity = quantityParse?.map((q) => q);
       // const productQuantity = 100;
       // console.log(productQuantity);
-
       const modelArr = filterModel;
       const quantityArr = productQuantity;
       // Function to pair elements from two arrays and create an array of formatted strings
@@ -315,39 +316,55 @@ const ProductBoxes = () => {
         productQuantity: quantityArr[index],
       }));
       // console.log(productData);
-
       try {
-        const response = await axios.post(
-          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
-          item,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        // console.log(item);
+        // main post data send to API
+        // const response = await axios.post(
+        //   "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
+        //   item,
+        //   {
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   }
+        // );
+        // if (response.status !== 201) {
+        //   throw new Error("Network response was not ok");
+        // }
 
-        axios
-          .patch(
-            `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub`,
-            productData[0]
-          )
-          .then((res) => {
-            toast.success("Product Quantity Updated", {
-              position: "top-center",
-            });
-          })
-          .catch((err) => {
-            console.error(err);
-            toast.error("Error updating quantity", {
-              position: "top-center",
-            });
-          });
+        // This API patch API data send to accounts API and calculate the product Quantityand
+        // const sendIndividualEntries = async () => {
+        //   for (const entry of productData) {
+        //     try {
+        //       await axios.patch(
+        //         "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub",
+        //         entry
+        //       );
+        //     } catch (error) {
+        //       toast.error("Network Error. Please try again later", {
+        //         position: "top-center",
+        //       });
+        //     }
+        //   }
+        // };
+        // sendIndividualEntries();
 
-        if (response.status !== 201) {
-          throw new Error("Network response was not ok");
-        }
+        // this is test for data send
+        // axios
+        //   .patch(
+        //     `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub`,
+        //     productData[0]
+        //   )
+        //   .then((res) => {
+        //     toast.success("Product Quantity Updated", {
+        //       position: "top-center",
+        //     });
+        //   })
+        //   .catch((err) => {
+        //     console.error(err);
+        //     toast.error("Error updating quantity", {
+        //       position: "top-center",
+        //     });
+        //   });
         toast.success("Successfully Uploaded to server", {
           position: "top-center",
         });
@@ -442,8 +459,8 @@ const ProductBoxes = () => {
                                 required
                                 aria-required
                                 onWheel={(e) => e.target.blur()}
-                                onBlur={handleInputValueChange}
-                                // onChange={handleInputValueChange}
+                                // onBlur={handleInputValueChange}
+                                onChange={handleInputValueChange}
                                 placeholder="per Box"
                                 className="w-[100px] ml-2 my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
@@ -457,8 +474,8 @@ const ProductBoxes = () => {
                                 required
                                 aria-required
                                 onWheel={(e) => e.target.blur()}
-                                onBlur={handleInputValueChange}
-                                // onChange={handleInputValueChange}
+                                // onBlur={handleInputValueChange}
+                                onChange={handleInputValueChange}
                                 placeholder="Product Quantity"
                                 className="w-[170px] mx-[18px] my-[3px] p-[6px] border border-b-blue-500 focus:outline-none"
                               />
