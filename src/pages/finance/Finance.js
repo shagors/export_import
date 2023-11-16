@@ -523,7 +523,9 @@ const Finance = () => {
                     const matchedProducts = boxData?.filter((data) =>
                       officeID?.includes(data.id)
                     );
-                    console.log(matchedProducts.map((p) => p.productName));
+                    const uniqueProductNames = [
+                      ...new Set(matchedProducts.map((p) => p.productName)),
+                    ];
                     // const matchedProducts = accounts?.filter((account) => {
                     //   for (const id of officeID) {
                     //     if (account.id === id) {
@@ -553,13 +555,7 @@ const Finance = () => {
                             ))}
                           </ul>
                         </td>
-                        <td>
-                          {matchedProducts
-                            ?.map((p) => {
-                              return p.productName;
-                            })
-                            .join(",")}
-                        </td>
+                        <td>{uniqueProductNames.join(",")}</td>
                         <td>
                           {matchedProducts
                             ?.map((p) => {
