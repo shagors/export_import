@@ -3,6 +3,7 @@ import "jspdf-autotable";
 
 export const generatePDF = (finance) => {
   const productNameParse = JSON.parse(finance?.productName);
+  const uniqueProducts = Array.from(new Set(productNameParse));
   const totalBoxParse = JSON.parse(finance?.totalBox);
   const totalBox = totalBoxParse?.reduce(
     (acc, currentValue) => acc + currentValue,
@@ -24,7 +25,7 @@ export const generatePDF = (finance) => {
   doc.setFontSize(55);
   doc.text("Mark", 78, 30);
   const productNameLines = doc.splitTextToSize(
-    `Product Name: ${productNameParse}`,
+    `Product Name: ${uniqueProducts}`,
     250
   );
   doc.setFontSize(38);

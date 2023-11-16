@@ -216,7 +216,7 @@ const FinalData = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th className="sticky top-0 bg-gray-200">ID</th>
+                  {/* <th className="sticky top-0 bg-gray-200">ID</th> */}
                   <th className="sticky top-0 bg-gray-200">BE Date</th>
                   <th className="sticky top-0 bg-gray-200">Export/Import</th>
                   <th className="sticky top-0 bg-gray-200">Invoice No</th>
@@ -249,14 +249,18 @@ const FinalData = () => {
                   const dateString = finance.selectedBEDate;
                   const dateObj = new Date(dateString);
                   const localDate = dateObj.toLocaleDateString();
-                  // const productParse = JSON.parse(finance?.productName);
-                  // const pdName = productParse?.map((p) => p);
-
+                  const productParse = JSON.parse(finance?.productName);
+                  const pdName = productParse?.map((p) => p);
+                  let uniqueArray = Array.from(new Set(pdName));
+                  const printersString = uniqueArray.join(", ");
+                  // const productNameParse = JSON.parse(finance?.productName);
+                  // const uniqueArrayp = Array.from(new Set(productNameParse));
+                  // console.log(uniqueArrayp);
                   return (
                     <tr
                       className={`hover cursor-pointer text-[12px]`}
                       key={finance.financeId}>
-                      <td>{finance.financeId}</td>
+                      {/* <td>{finance.financeId}</td> */}
                       <td>{localDate}</td>
                       <td>{finance.exim}</td>
                       <td>{finance.invoiceNo}</td>
@@ -274,15 +278,7 @@ const FinalData = () => {
                         </ul>
                       </td>
                       <td>{finance.totalCost}</td>
-                      <td>
-                        {/* {matchedProducts
-                          ?.map((p) => {
-                            return p.productName;
-                          })
-                          .join(",")} */}
-                        {/* {pdName.join(",")} */}
-                        {finance.productName}
-                      </td>
+                      <td>{printersString}</td>
                       <td>{finance.totalNetWeight}</td>
                       <td>{finance.totalPalletQuantity}</td>
                       {/* <td>{finance.palletRemarks}</td> */}

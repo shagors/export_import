@@ -523,6 +523,7 @@ const Finance = () => {
                     const matchedProducts = boxData?.filter((data) =>
                       officeID?.includes(data.id)
                     );
+                    console.log(matchedProducts.map((p) => p.productName));
                     // const matchedProducts = accounts?.filter((account) => {
                     //   for (const id of officeID) {
                     //     if (account.id === id) {
@@ -562,15 +563,13 @@ const Finance = () => {
                         <td>
                           {matchedProducts
                             ?.map((p) => {
-                              // const convert = JSON.parse();
-                              // console.log(p.productModel);
-                              // const jsonStr = p.productModel.replace(
-                              //   /^"|"$/g,
-                              //   ""
-                              // );
-                              // const data = JSON.parse(p.productModel);
-                              // const result = data.join(",");
-                              return p?.productModel;
+                              const jsonStr = p.productModel.replace(
+                                /^"|"$/g,
+                                ""
+                              );
+                              const data = JSON.parse(jsonStr);
+                              const result = data.join(",");
+                              return result;
                             })
                             .join(",")}
                         </td>

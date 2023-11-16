@@ -422,12 +422,12 @@ const Purchase = () => {
                   </thead>
                   <tbody>
                     {filteredData?.map((product) => {
-                      // const jsonStr = product.productModel.replace(
-                      //   /^"|"$/g,
-                      //   ""
-                      // );
-                      // const data = JSON.parse(jsonStr);
-                      // const result = data.join(",");
+                      const jsonStr = product.productModel.replace(
+                        /^"|"$/g,
+                        ""
+                      );
+                      const data = JSON.parse(jsonStr);
+                      const result = data.join(",");
                       return (
                         <tr className={`hover cursor-pointer`} key={product.id}>
                           <td>
@@ -443,7 +443,7 @@ const Purchase = () => {
                           </td>
                           <td>{product.id}</td>
                           <td>{product.productName}</td>
-                          <td>{product.productModel}</td>
+                          <td>{result}</td>
                           <td>{product.quantity}</td>
                           <td>{product.totalPallet}</td>
                           <td>{product.truckNumber}</td>
