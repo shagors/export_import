@@ -303,7 +303,9 @@ const FinalData = () => {
         </div>
 
         {/* {currentData.length === 0 && (
-          <p>No products found for the selected date range</p>
+          <p className="text-center text-3xl text-red-600">
+            No products found for the selected date range
+          </p>
         )} */}
 
         {/* for pagination code */}
