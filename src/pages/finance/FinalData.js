@@ -153,7 +153,7 @@ const FinalData = () => {
   // const currentData = finances.slice(offset, offset + itemsPerPage);
   const currentData =
     filteredData.length > 0
-      ? filteredData
+      ? filteredData.slice(offset, offset + itemsPerPage)
       : finances.slice(offset, offset + itemsPerPage);
 
   // print and pdf function
@@ -172,11 +172,11 @@ const FinalData = () => {
         <div className="mb-3 calendarWrap text-center w-3/4 mx-36">
           <h3 className="mb-[8px] text-xl text-sky-400">Search by Date</h3>
           <input
-            value={`${format(range[0].startDate, "MM/dd/yyyy")} to ${format(
-              range[0].endDate,
+            value={`${format(startDate, "MM/dd/yyyy")} to ${format(
+              endDate,
               "MM/dd/yyyy"
             )}`}
-            readOnly
+            // readOnly
             className="inputBox border-2 border-indigo-600 p-2 w-2/4 rounded text-center"
             onClick={() => setOpen((open) => !open)}
           />
@@ -301,6 +301,11 @@ const FinalData = () => {
             </table>
           )}
         </div>
+
+        {/* {currentData.length === 0 && (
+          <p>No products found for the selected date range</p>
+        )} */}
+
         {/* for pagination code */}
         <ReactPaginate
           previousLabel={"< Previous"}

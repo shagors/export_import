@@ -165,6 +165,7 @@ const ProductBoxes = () => {
       Math.ceil(resultsValues.quantityProduct / perBoxProducts.perBoxProduct)
     );
     setTotalBox(totalBoxes);
+    // const debouncedInputValueChange = debounce(handleInputValueChange, 800); // 300ms debounce
   };
 
   const handlePalletInputChange = (e) => {
