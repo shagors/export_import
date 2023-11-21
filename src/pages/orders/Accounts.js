@@ -38,7 +38,7 @@ const Accounts = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/products"
       );
       setServerData(response?.data);
     } catch (error) {
@@ -50,7 +50,7 @@ const Accounts = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
@@ -72,7 +72,7 @@ const Accounts = () => {
     e.preventDefault();
     axios
       .post(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts",
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts",
         formData
       )
       .then((res) => {
@@ -97,7 +97,7 @@ const Accounts = () => {
     if (confirmDelete) {
       try {
         await axios.delete(
-          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
+          `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
         );
         toast.warn("Data successfully Deleted!!", { position: "top-center" });
         fetchAccounts();

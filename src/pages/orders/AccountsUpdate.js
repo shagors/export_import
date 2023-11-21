@@ -19,7 +19,7 @@ const AccountsUpdate = () => {
   useEffect(() => {
     axios
       .get(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
+        `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${id}`
       )
       .then((res) => {
         // console.log(res);
@@ -37,7 +37,7 @@ const AccountsUpdate = () => {
     e.preventDefault();
     axios
       .put(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts`,
+        `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts`,
         formData
       )
       .then((res) => {

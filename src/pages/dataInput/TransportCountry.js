@@ -37,7 +37,7 @@ const TransportCountry = () => {
   const fetchCountries = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
@@ -64,7 +64,7 @@ const TransportCountry = () => {
     } else {
       axios
         .post(
-          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country",
+          "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country",
           formData
         )
         .then((res) => {
@@ -90,7 +90,7 @@ const TransportCountry = () => {
     if (confirmDelete) {
       try {
         await axios.delete(
-          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country/${id}`
+          `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country/${id}`
         );
         toast.warn("Data successfully Deleted!!", { position: "top-center" });
         fetchCountries();

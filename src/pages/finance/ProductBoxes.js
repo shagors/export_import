@@ -36,7 +36,7 @@ const ProductBoxes = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/products"
       );
       setAccounts(response?.data);
     } catch (error) {
@@ -48,7 +48,7 @@ const ProductBoxes = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       );
       setAccount(response?.data);
     } catch (error) {
@@ -60,7 +60,7 @@ const ProductBoxes = () => {
   const fetchBoxProducts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
       );
       setBoxProducts(response?.data);
     } catch (error) {
@@ -323,7 +323,7 @@ const ProductBoxes = () => {
       try {
         // main post data send to API
         const response = await axios.post(
-          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
+          "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes",
           item,
           {
             headers: {
@@ -340,7 +340,7 @@ const ProductBoxes = () => {
           for (const entry of productData) {
             try {
               await axios.patch(
-                "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub",
+                "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub",
                 entry
               );
             } catch (error) {
@@ -355,7 +355,7 @@ const ProductBoxes = () => {
         // this is test for data send
         // axios
         //   .patch(
-        //     `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub`,
+        //     `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/sub`,
         //     productData[0]
         //   )
         //   .then((res) => {

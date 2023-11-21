@@ -67,7 +67,7 @@ const Purchase = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
@@ -81,7 +81,7 @@ const Purchase = () => {
   const fetchCharges = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges"
       );
       setCharges(response?.data);
     } catch (error) {
@@ -92,7 +92,7 @@ const Purchase = () => {
   const fetchBoxData = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
@@ -107,7 +107,7 @@ const Purchase = () => {
   const fetchTransportCountry = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/transport_country"
       );
       setTransportCountry(response?.data);
     } catch (error) {
@@ -118,7 +118,7 @@ const Purchase = () => {
   const fetchTransportRoute = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/transport"
       );
       setTransportPath(response?.data);
     } catch (error) {
@@ -129,7 +129,7 @@ const Purchase = () => {
   const fetchPurchase = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/finance"
       );
       setPurchase(response?.data);
     } catch (error) {
@@ -140,7 +140,7 @@ const Purchase = () => {
   const fetchFinance = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/finance"
       );
       setFinances(response?.data);
     } catch (error) {
@@ -308,7 +308,7 @@ const Purchase = () => {
   //   if (confirmDelete) {
   //     axios
   //       .delete(
-  //         `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes/${id}`
+  //         `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes/${id}`
   //       )
   //       .then((res) => {
   //         toast.warn("Data Successfully Deleted!!", {
@@ -351,7 +351,7 @@ const Purchase = () => {
     // console.log(data);
     axios
       .post(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase",
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/purchase",
         data,
         {
           headers: {

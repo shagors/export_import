@@ -38,7 +38,7 @@ const Finance = () => {
   const fetchExpenses = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/purchase"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
@@ -54,7 +54,7 @@ const Finance = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       );
       setAccounts(response?.data);
     } catch (error) {
@@ -66,7 +66,7 @@ const Finance = () => {
   const fetchBoxData = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
       );
       setBoxData(response?.data);
     } catch (error) {
@@ -177,7 +177,7 @@ const Finance = () => {
     // Send formData to your API for saving
     axios
       .post(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance",
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/finance",
         formData,
         {
           headers: {
@@ -211,7 +211,7 @@ const Finance = () => {
   //   if (confirmDelete) {
   //     try {
   //       await axios.delete(
-  //         `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase/${id}`
+  //         `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/purchase/${id}`
   //       );
   //       toast.warn("Data successfully Deleted!!", { position: "top-center" });
   //       fetchExpenses();

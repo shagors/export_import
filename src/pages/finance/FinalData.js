@@ -58,7 +58,7 @@ const FinalData = () => {
   const fetchExpenses = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/purchase"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
@@ -73,7 +73,7 @@ const FinalData = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       );
       setAccounts(response?.data);
     } catch (error) {
@@ -85,7 +85,7 @@ const FinalData = () => {
   const fetchBoxData = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
       );
       setBoxData(response?.data);
     } catch (error) {
@@ -97,7 +97,7 @@ const FinalData = () => {
   const fetchFinance = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/finance"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/finance"
       );
       const sortedData = response?.data.sort(
         (a, b) => b.financeId - a.financeId

@@ -32,10 +32,10 @@ const Transportservice = () => {
   //   useFetch();
 
   useEffect(() => {
-    // https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts
+    // https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts
     axios
       .get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts"
       )
       .then((res) => {
         setAllProducts(res?.data);
@@ -46,7 +46,9 @@ const Transportservice = () => {
       );
 
     axios
-      .get("https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/products")
+      .get(
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/products"
+      )
       .then((res) => {
         setProduct(res?.data);
       })
@@ -64,7 +66,7 @@ const Transportservice = () => {
   const fetchProductInBoxes = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/product_in_boxes"
       );
       setProductBoxes(response?.data);
     } catch (error) {
@@ -75,7 +77,7 @@ const Transportservice = () => {
   const fetchExpenses = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/purchase"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/purchase"
       );
       setExpenses(response?.data);
     } catch (error) {

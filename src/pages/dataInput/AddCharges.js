@@ -38,7 +38,7 @@ const AddCharges = () => {
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges"
       );
       setCharges(response?.data);
       setLoading(false);
@@ -64,7 +64,7 @@ const AddCharges = () => {
     } else {
       axios
         .post(
-          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges",
+          "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges",
           formData,
           {
             headers: {
@@ -96,7 +96,7 @@ const AddCharges = () => {
     if (confirmDelete) {
       try {
         await axios.delete(
-          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges/${id}`
+          `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges/${id}`
         );
         toast.warn("Data successfully Deleted!!", { position: "top-center" });
         fetchAccounts();

@@ -36,7 +36,7 @@ const Signup = () => {
     if (Object.keys(validationErrors).length === 0) {
       axios
         .post(
-          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/users/signup",
+          "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/users/signup",
           { userName, userEmail, password }
         )
         .then((res) => {

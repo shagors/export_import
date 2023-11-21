@@ -13,7 +13,7 @@ const NewProductUpdate = () => {
   useEffect(() => {
     axios
       .get(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newproduct/${id}`
+        `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/newproduct/${id}`
       )
       .then((res) => {
         // console.log(res);
@@ -31,7 +31,7 @@ const NewProductUpdate = () => {
     e.preventDefault();
     axios
       .put(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/newproduct`,
+        `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/newproduct`,
         formData
       )
       .then((res) => {

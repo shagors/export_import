@@ -16,7 +16,7 @@ const AddChargesUpdate = () => {
   useEffect(() => {
     axios
       .get(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges/${id}`
+        `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges/${id}`
       )
       .then((res) => {
         // console.log(res.data);
@@ -37,7 +37,7 @@ const AddChargesUpdate = () => {
     e.preventDefault();
     axios
       .put(
-        `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges`,
+        `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/addcharges`,
         values
       )
       .then((res) => {

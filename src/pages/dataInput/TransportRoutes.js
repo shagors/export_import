@@ -38,7 +38,7 @@ const TransportRoutes = () => {
   const fetchTransport = async () => {
     try {
       const response = await axios.get(
-        "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport"
+        "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/transport"
       );
       // data see in table descending order
       const sortedData = response?.data.sort((a, b) => b.id - a.id);
@@ -66,7 +66,7 @@ const TransportRoutes = () => {
     } else {
       axios
         .post(
-          "https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport",
+          "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/transport",
           formTransportData
         )
         .then((res) => {
@@ -92,7 +92,7 @@ const TransportRoutes = () => {
     if (confirmDelete) {
       try {
         await axios.delete(
-          `https://grozziie.zjweiting.com:3091/web-api-tht-1/api/dev/transport/${id}`
+          `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/transport/${id}`
         );
         toast.warn("Data successfully Deleted!!", { position: "top-center" });
         fetchTransport();
