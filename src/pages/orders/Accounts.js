@@ -80,47 +80,47 @@ const Accounts = () => {
 
     if (existingModel) {
       // If the productModel exists, update the quantity
-      const updatedQuantity =
-        parseInt(existingModel.productQuantity) + parseInt(productQuantity);
-      console.log(updatedQuantity);
-      // axios
-      //   .put(
-      //     `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/${existingModel.id}`,
-      //     { ...existingModel, productQuantity: updatedQuantity }
-      //   )
-      //   .then((res) => {
-      //     toast.success("Quantity updated successfully!", {
-      //       position: "top-center",
-      //     });
-      //     fetchAccounts(); // Update accounts after modification
-      //     navigate("/exportimport");
-      //   })
-      //   .catch((err) =>
-      //     toast.error("Error updating quantity. Please try again later.", {
-      //       position: "top-center",
-      //     })
-      //   );
+      // const updatedQuantity =
+      //   parseInt(existingModel.productQuantity) + parseInt(productQuantity);
+      // console.log(updatedQuantity);
+      axios
+        .patch(
+          `https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts/add`,
+          { ...existingModel, productQuantity }
+        )
+        .then((res) => {
+          toast.success("Quantity updated successfully!", {
+            position: "top-center",
+          });
+          fetchAccounts(); // Update accounts after modification
+          navigate("/exportimport");
+        })
+        .catch((err) =>
+          toast.error("Error updating quantity. Please try again later.", {
+            position: "top-center",
+          })
+        );
     } else {
-      // axios
-      //   .post(
-      //     "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts",
-      //     formData
-      //   )
-      //   .then((res) => {
-      //     toast.success(
-      //       "Successfully File added to server & check below table",
-      //       {
-      //         position: "top-center",
-      //       }
-      //     );
-      //     // console.log(res);
-      //     navigate("/exportimport");
-      //   })
-      //   .catch((err) =>
-      //     toast.error("Error coming from server please try again later", {
-      //       position: "top-center",
-      //     })
-      //   );
+      axios
+        .post(
+          "https://grozziieget.zjweiting.com:3091/web-api-tht-1/api/dev/office_accounts",
+          formData
+        )
+        .then((res) => {
+          toast.success(
+            "Successfully File added to server & check below table",
+            {
+              position: "top-center",
+            }
+          );
+          // console.log(res);
+          navigate("/exportimport");
+        })
+        .catch((err) =>
+          toast.error("Error coming from server please try again later", {
+            position: "top-center",
+          })
+        );
     }
   };
 
