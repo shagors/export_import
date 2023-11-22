@@ -193,9 +193,7 @@ const AccountsUpdate = () => {
               </div>
             </div>
             <div className="mt-4 mr-7 flex justify-end">
-              <Link
-                to="/exportimport"
-                className="btn btn-info px-10 mx-5  mb-4">
+              <Link to="/accounts" className="btn btn-info px-10 mx-5  mb-4">
                 Back
               </Link>
               <button
