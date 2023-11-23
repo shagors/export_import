@@ -89,10 +89,13 @@ const Accounts = () => {
           { ...existingModel, productQuantity }
         )
         .then((res) => {
-          toast.success("Quantity updated successfully!", {
-            position: "top-center",
-          });
-          fetchAccounts(); // Update accounts after modification
+          toast.success(
+            "Your entry model already in database that's updated successfully!",
+            {
+              position: "top-center",
+            }
+          );
+          fetchAccounts();
           navigate("/exportimport");
         })
         .catch((err) =>
